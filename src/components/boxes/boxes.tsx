@@ -16,7 +16,15 @@ export const Box = forwardRef<
 >(({ children, className, ...props }, ref) => (
     <div
         ref={ref}
-        className={cn('rounded-xl bg-box-background flex flex-col overflow-auto', className)}
+        className={cn(
+            'rounded-xl bg-box-background border border-box-hover/10',
+            'shadow-lg shadow-black/5',
+            'backdrop-blur-sm',
+            'transition-all duration-200 ease-in-out',
+            'hover:border-box-hover/20',
+            'overflow-hidden',
+            className
+        )}
         {...props}
     >
         {children}
@@ -37,7 +45,14 @@ export const InnerBox = forwardRef<
 ));
 
 export const BoxHeader = ({ children, ...props }: { children?: ReactNode }) => (
-    <div className="bg-box-title p-2 flex justify-between items-center" {...props}>
+    <div
+        className={cn(
+            'bg-box-title/50 p-4',
+            'border-b border-box-hover/10',
+            'flex justify-between items-center'
+        )}
+        {...props}
+    >
         {children}
     </div>
 );
@@ -57,7 +72,7 @@ export const BoxContent = ({
 }) => (
     <div
         className={cn(
-            'p-2',
+            'p-4 space-y-4',
             height === 'auto' && 'h-auto',
             height === 'limited' && 'overflow-y-auto max-h-[calc(100vh-144px)]'
         )}

@@ -8,7 +8,7 @@ export const TopBar = () => {
     return (
         <div className="flex w-full items-center">
             <div className="flex-1">
-                <h1 className="text-primary font-semi">
+                <h1 className="text-primary font-bold text-2xl">
                     <Title />
                 </h1>
             </div>

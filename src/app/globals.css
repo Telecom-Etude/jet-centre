@@ -38,13 +38,14 @@
 
         --box-background: 0 0% 0%;
         --box-title: 0 0% 0%;
+        --box-hover: 0 0% 0%;
     }
 
     .dark {
         --background: 234 23% 9%;
         --foreground: 0 0% 90%;
 
-        --card: 0 0% 3.9%;
+        --card: 235 20% 12%;
         --card-foreground: 0 0% 98%;
 
         --popover: 0 0% 3.9%;
@@ -53,19 +54,19 @@
         --primary: 24 98% 60%;
         --primary-foreground: 0 0% 100%;
 
-        --secondary: 0 0% 14.9%;
+        --secondary: 235 16% 16%;
         --secondary-foreground: 0 0% 98%;
 
         --muted: 0 0% 14.9%;
         --muted-foreground: 0 0% 63.9%;
 
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
+        --accent: 235 16% 16%;
+        --accent-foreground: 235 12% 29%;
 
         --destructive: 0 62.8% 30.6%;
         --destructive-foreground: 0 0% 98%;
 
-        --border: 236 12% 29%;
+        --border: 235 16% 16%;
         --input: 236 12% 29%;
         --ring: 0 0% 83.1%;
 
@@ -74,7 +75,8 @@
 
         --box-background: 235 20% 12%;
         --box-title: 235 16% 16%;
-        --box-accent: 234.44 14% 19%;
+        --box-accent: 235 14% 19%;
+        --box-hover: 0 0% 100%;
     }
 }
 
@@ -85,5 +87,39 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+@layer utilities {
+    .border {
+        @apply border-2;
+    }
+
+    .border-l {
+        @apply border-l-2;
+    }
+
+    .border-r {
+        @apply border-r-2;
+    }
+
+    .border-t {
+        @apply border-t-2;
+    }
+
+    .border-b {
+        @apply border-b-2;
+    }
+
+    .animate-in {
+        @apply transition-all duration-300 ease-in-out;
+    }
+
+    .hover-effect {
+        @apply hover:bg-box-hover/10 transition-colors duration-200;
+    }
+
+    .glass-effect {
+        @apply bg-box-background/50 backdrop-blur-sm border border-box-hover/10;
     }
 }

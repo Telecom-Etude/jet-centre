@@ -15,7 +15,7 @@ interface LinkProps {
 }
 
 export const NavigationTemplate = ({ links }: { links: LinkProps[][] }) => (
-    <NavigationMenu className="flex flex-col items-start space-y-main">
+    <NavigationMenu className="flex flex-col max-w-none items-start space-y-main">
         {links.map((section, i) => (
             <React.Fragment key={i}>
                 {i ? <Separator /> : null}
