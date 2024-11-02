@@ -9,13 +9,13 @@ export const metadata = {
 
 export default ({ params: { etude } }: { params: { etude: string } }) => {
     return (
-        <div className="flex space-x-main">
+        <div className="flex space-x-main h-full">
             <Box className="w-full">
                 <BoxHeader>
                     <BoxTitle>MRI-{etude}</BoxTitle>
                     <BoxLink href="/mri-examples">Examples de MRIs</BoxLink>
                 </BoxHeader>
-                <BoxContent>
+                <BoxContent height="limited">
                     <MRICreationForm />
                 </BoxContent>
             </Box>
@@ -23,7 +23,7 @@ export default ({ params: { etude } }: { params: { etude: string } }) => {
                 <BoxHeader>
                     <BoxTitle>Prévisualisation du MRI</BoxTitle>
                 </BoxHeader>
-                <BoxContent>
+                <BoxContent height="limited">
                     <RenderMRI etude={etude} />
                 </BoxContent>
             </Box>

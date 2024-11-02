@@ -17,12 +17,14 @@ export const Box = forwardRef<
     <div
         ref={ref}
         className={cn(
-            'rounded-xl bg-box-background border border-box-hover/10',
+            'flex flex-col',
+            'overflow-hidden',
+            'border border-box-hover/10',
+            'rounded-xl bg-box-background',
             'shadow-lg shadow-black/5',
             'backdrop-blur-sm',
             'transition-all duration-200 ease-in-out',
             'hover:border-box-hover/20',
-            'overflow-hidden',
             className
         )}
         {...props}
@@ -72,9 +74,9 @@ export const BoxContent = ({
 }) => (
     <div
         className={cn(
-            'p-4 space-y-4',
-            height === 'auto' && 'h-auto',
-            height === 'limited' && 'overflow-y-auto max-h-[calc(100vh-144px)]'
+            'p-4 space-y-4 flex-grow overflow-y-scroll max-h-full',
+            height === 'auto' && 'h-auto max-h-auto overflow-y-auto',
+            height === 'limited' && ''
         )}
     >
         {children}

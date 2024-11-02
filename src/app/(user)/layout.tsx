@@ -11,7 +11,7 @@ const Layout = ({
     children: React.ReactNode;
 }>) => {
     return (
-        <div className="flex flex-row h-full bg-gradient-to-br from-background to-background/95">
+        <div className="flex flex-row h-full bg-gradient-to-br from-background to-background/95 h-[100dvh]">
             <ResizablePanelGroup direction="horizontal">
                 <ResizablePanel
                     minSize={15}

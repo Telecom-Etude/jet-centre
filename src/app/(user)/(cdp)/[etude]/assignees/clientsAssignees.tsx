@@ -35,7 +35,7 @@ export default function ClientsAssignees({ assignees }: { assignees: [Assignee, 
 
     return (
         <div className="flex space-x-main w-full h-full">
-            <Box className="w-full">
+            <Box className="flex-1">
                 <BoxHeader>
                     <BoxTitle>Retour des candidatures</BoxTitle>
                 </BoxHeader>
@@ -57,11 +57,11 @@ export default function ClientsAssignees({ assignees }: { assignees: [Assignee, 
                     />
                 </BoxContent>
             </Box>
-            <Box className="w-full h-full">
+            <Box className="flex-1">
                 <BoxHeader>
                     <BoxTitle>{getCurrentTitle(right, current)}</BoxTitle>
                 </BoxHeader>
-                <BoxContent>
+                <BoxContent height="limited">
                     {right === 'cv' && <PDF />}
                     {right === 'pass_interview' && <Interview editable />}
                     {right === 'see_interview' && <Interview />}
