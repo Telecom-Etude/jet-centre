@@ -18,7 +18,7 @@ import {
     BlockTypeSelect,
     CreateLink,
     InsertThematicBreak,
-    type MDXEditorMethods,
+    type MDXEditorMethods
 } from '@mdxeditor/editor';
 
 import '@mdxeditor/editor/style.css';
@@ -50,7 +50,7 @@ export default function InitializedMDXEditor({
                                 <Separator />
                                 <InsertThematicBreak />
                             </>
-                        ),
+                        )
                     })) as any, // Bricolage par ce que j'ai la flemme de faire un push dans un array
                 headingsPlugin(),
                 quotePlugin(),
@@ -58,7 +58,7 @@ export default function InitializedMDXEditor({
                 thematicBreakPlugin(),
                 markdownShortcutPlugin(),
                 linkPlugin(),
-                linkDialogPlugin(),
+                linkDialogPlugin()
             ]}
             {...props}
             ref={editorRef}

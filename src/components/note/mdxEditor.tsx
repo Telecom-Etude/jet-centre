@@ -9,7 +9,7 @@ import { forwardRef } from 'react';
 // This is the only place InitializedMDXEditor is imported directly.
 const Editor = dynamic(() => import('./InitializedMDXEditor'), {
     // Make sure we turn SSR off
-    ssr: false,
+    ssr: false
 });
 
 export type MDXEditorPropsAndToolbar = MDXEditorProps & { displayToolbar?: boolean };

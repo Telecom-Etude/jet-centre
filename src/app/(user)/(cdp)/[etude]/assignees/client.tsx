@@ -4,8 +4,7 @@ import { useState } from 'react';
 
 import { IconType } from 'react-icons/lib';
 import { MdOpenInNew } from 'react-icons/md';
-import { RiExpandUpDownFill, RiContractUpDownFill } from 'react-icons/ri';
-import { FaFilePdf, FaGripLines } from 'react-icons/fa';
+import { FaFilePdf } from 'react-icons/fa';
 
 import {
     InnerBox,

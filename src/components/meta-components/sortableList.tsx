@@ -176,5 +176,5 @@ export function useSortableList<T extends WithId = WithId>(initialItems?: T[]): 
 function transformToCSS(transform: any) {
     const { x, y, scaleX, scaleY } = transform ?? { x: 0, y: 0, scaleX: 1, scaleY: 1 };
 
-    return `translate3d(${x ? Math.round(x) : 0}px, ${y ? Math.round(y) : 0}px, 0)`; //  scaleX(${scaleX}) scaleY(${scaleY})
+    return `translate3d(${x ? Math.round(x) : 0}px, ${y ? Math.round(y) : 0}px, 0)`;
 }

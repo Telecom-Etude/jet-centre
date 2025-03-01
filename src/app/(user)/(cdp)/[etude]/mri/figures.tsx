@@ -1,6 +1,3 @@
-// import BigData from '@/../public/mri/domains/big-data.png';
-// import Research from '@/../public/mri/domains/research.png';
-// import Web from '@/../public/mri/domains/web.png';
 import Data from '@/../public/mri/domains/data.png';
 import Dev from '@/../public/mri/domains/dev.png';
 import Cyber from '@/../public/mri/domains/cyber.png';

@@ -1,4 +1,4 @@
-import { DOMAINS, zDOMAINS } from '@/settings/vars';
+import { zDOMAINS } from '@/settings/vars';
 import { z } from '@/lib/zod';
 
 const zDIFFICULTIES = z.enum(['Faible', 'Moyenne', 'Élevée']);

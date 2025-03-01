@@ -5,7 +5,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem
 } from '@/components/ui/sidebar';
-import { NavigationMenu } from '@/components/ui/navigation-menu';
 import { SideBarGroup } from '@/settings/sidebars/siderbar-trez';
 
 type Props = {
@@ -15,7 +14,6 @@ type Props = {
 export function SidebarList({ sidebar_groups }: Props) {
     return (
         <div className="flex-grow">
-            {/* <NavigationMenu className="flex flex-col max-w-none items-start space-y-main"> */}
             {sidebar_groups.map((sidebar_group, i) => (
                 <SidebarGroup key={sidebar_group.title}>
                     <SidebarGroupLabel>{sidebar_group.title}</SidebarGroupLabel>
@@ -31,7 +29,6 @@ export function SidebarList({ sidebar_groups }: Props) {
                     </SidebarMenu>
                 </SidebarGroup>
             ))}
-            {/* </NavigationMenu> */}
         </div>
     );
 }

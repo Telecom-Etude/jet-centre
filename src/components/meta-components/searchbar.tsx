@@ -87,7 +87,6 @@ export function SearchBar<T>({
 
             <div
                 onFocus={() => setInFocus(true)}
-                // onBlur={() => setInFocus(false)}
                 className={cn('absolute w-[calc(100%+4px)] -left-[2px] z-50', !inFocus && 'hidden')}
             >
                 <Command value={value} onValueChange={setValue} className="rounded-b-md">

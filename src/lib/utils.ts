@@ -31,7 +31,7 @@ export function cn(...inputs: ClassValue[]): string {
  */
 export const NBSP: string = '\u00A0';
 
-function dbg<T>(value: T, msg?: string): T {
+export function dbg<T>(value: T, msg?: string): T {
     console.log(`// DBG ${msg + ' '}// ${value}`);
     return value;
 }

@@ -1,16 +1,7 @@
 import { FaBug } from 'react-icons/fa';
 import { Button } from '../ui/button';
-import { Search } from './search';
 import Link from 'next/link';
 
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator
-} from '@/components/ui/breadcrumb';
 import { SidebarTrigger } from '../ui/sidebar';
 import { SearchBar } from '../meta-components/searchbar';
 
@@ -20,7 +11,6 @@ export const TopBar = () => {
             <SidebarTrigger className="-ml-1" />
             <div className="flex-1"></div>
             <div className="">
-                {/* <Search /> */}
                 <SearchBar label="" />
             </div>
             <div className="flex-1"></div>

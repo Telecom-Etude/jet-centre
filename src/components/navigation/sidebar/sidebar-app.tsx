@@ -2,10 +2,6 @@
 
 import * as React from 'react';
 
-// import { NavMain } from '@/components/nav-main';
-// import { NavProjects } from '@/components/nav-projects';
-// import { NavUser } from '@/components/nav-user';
-// import { TeamSwitcher } from '@/components/team-switcher';
 import { useSidebar } from '@/components/ui/sidebar';
 
 import {
@@ -38,7 +34,7 @@ export function SidebarApp({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarContent>
 
             <SidebarFooter>
-                <UserDropdownMenu isOpen={expanded} isMobile username="Nicolas Glady" />
+                <UserDropdownMenu isOpen={expanded} isMobile={isMobile} username="Nicolas Glady" />
             </SidebarFooter>
         </Sidebar>
     );
