@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { FaHouse } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
 

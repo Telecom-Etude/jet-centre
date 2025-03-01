@@ -1,6 +1,7 @@
 'use client';
 
-import { UseFormReturn } from 'react-hook-form';
+import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
     Box,
@@ -10,10 +11,20 @@ import {
     BoxHeader,
     BoxTitle
 } from '@/components/boxes/boxes';
-import { FormProvider, FormRule } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
 import { InputFormElement } from '@/components/meta-components/form/input';
+import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 
-import { Admin, AdminFormValue, emptyAdminCreationSchema } from './settingsSchema';
+import {
+    Admin,
+    AdminCreationSchema,
+    adminCreationSchema,
+    AdminFormValue,
+    emptyAdminCreationSchema,
+    NewAdmin
+} from './settingsSchema';
+import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
 import { CheckboxFormElement } from '@/components/meta-components/form/checkbox';
 import { StudyCreationSchema } from '../schema';
 import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
@@ -41,6 +52,7 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
     const [collapseAdminForm, setCollapseAdminForm] = useState(true);
 
     // ~~~~~~~~~~~~~~ SearchBar ~~~~~~~~~~~~~~ //
+
     const select = (admin: Admin) => {
         if (!adminList.items.find((a) => a.id === admin.id)) {
             adminList.addItem(admin);
