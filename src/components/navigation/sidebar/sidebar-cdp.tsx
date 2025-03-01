@@ -1,6 +1,7 @@
 'use client';
 
 import { get_user_missions } from '@/actions/cdp';
+import { User } from '@prisma/client';
 import { useState } from 'react';
 import { StudySelection } from './sidebar-study-selection';
 import { useSession } from 'next-auth/react';
@@ -93,6 +94,7 @@ export default function SidebarCdp() {
                     <div>{mission}</div>
                     <SidebarSeparator className="h-1 w-[calc(100%+1rem)] rounded-full bg-secondary"></SidebarSeparator>
                 </div>
+                {/* Large separator */}
                 <StudySelection
                     missions={missions}
                     selectedMission={selectedMission}

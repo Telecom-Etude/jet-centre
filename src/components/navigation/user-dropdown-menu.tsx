@@ -11,7 +11,8 @@ import {
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { BadgeCheck, Bell, CreditCard, LogOut, Sparkles } from 'lucide-react';
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 interface UserDropdownMenuProps {
@@ -21,6 +22,8 @@ interface UserDropdownMenuProps {
 }
 
 export const UserDropdownMenu = ({ username, isMobile, isOpen }: UserDropdownMenuProps) => {
+    const [open, setOpen] = useState(false);
+
     return (
         <SidebarMenu>
             <SidebarMenuItem>

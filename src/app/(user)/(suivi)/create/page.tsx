@@ -65,5 +65,9 @@ export default async function CreateStudy() {
         email: a.user.person.email
     }));
 
-    return <Inner companies={companies} admins={admins} />;
+    return (
+        <>
+            <Inner companies={companies} admins={admins} />
+        </>
+    );
 }

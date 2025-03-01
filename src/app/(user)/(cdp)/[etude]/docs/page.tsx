@@ -6,7 +6,7 @@ import { loader } from '@monaco-editor/react';
 
 // Dynamically import MonacoEditor without SSR
 const MonacoEditor = dynamic(() => import('@monaco-editor/react').then((mod) => mod.default), {
-    ssr: false
+    ssr: false,
 });
 
 const Editor = () => {
@@ -25,16 +25,16 @@ const Editor = () => {
                             [/\\[a-zA-Z]+/, 'keyword'],
                             [/\$[^$]*\$/, 'string'],
                             [/\$\$[^$]*\$\$/, 'string'],
-                            [/\{[^}]*\}/, 'delimiter.curly']
-                        ]
-                    }
+                            [/\{[^}]*\}/, 'delimiter.curly'],
+                        ],
+                    },
                 });
 
                 monaco.languages.setLanguageConfiguration('latex', {
                     comments: {
-                        lineComment: '%'
+                        lineComment: '%',
                     },
-                    brackets: [['{', '}']]
+                    brackets: [['{', '}']],
                 });
             });
         }

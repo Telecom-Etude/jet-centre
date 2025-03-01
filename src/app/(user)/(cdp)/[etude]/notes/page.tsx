@@ -59,6 +59,11 @@ You may be using [Markdown Live Preview](https://markdownlivepreview.com/).
 
 `;
 
+type NoteType = {
+    title: string;
+    markdown: string;
+};
+
 export default function Notes() {
     const notes = [
         {
@@ -85,6 +90,11 @@ export default function Notes() {
             {...mdList}
             className="h-full"
             render={(note, dragHandleProps) => <Note {...note} dragHandleProps={dragHandleProps} />}
+            // defaultItemFactory={(length) => ({
+            //     title: 'Nouvelle Note',
+            //     markdown: '',
+            //     id: `box-${length}`,
+            // })}
         />
     );
 }
