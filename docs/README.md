@@ -6,11 +6,11 @@ This is a centralised app, that will allow CDP to enter once the data, and see i
 
 ## Getting Started
 
-Please refer to the [Getting Started Guide](./docs/GETTING_STARTED.md) to know how to install and launch the project!
+Please refer to the [Getting Started Guide](/docs/GETTING_STARTED.md) to know how to install and launch the project!
 
 ## Contributing
 
-Please refer to the [Contribution Guide](./docs/CONTRIBUTING.md) before contributing to this project.
+Please refer to the [Contribution Guide](/docs/CONTRIBUTING.md) before contributing to this project.
 
 ## External resources
 
