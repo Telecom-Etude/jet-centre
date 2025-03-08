@@ -1,4 +1,4 @@
-export type File = {
+export type DriveFile = {
     id: string;
     name: string;
     icon: string | null;
