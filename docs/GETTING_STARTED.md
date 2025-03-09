@@ -4,8 +4,8 @@
 
 ### Requirements
 
-- [Node.js and npm](https://nodejs.org/en/download)
-- [Postgresql](https://www.postgresql.org/download/)
+-   [Node.js and npm](https://nodejs.org/en/download)
+-   [Postgresql](https://www.postgresql.org/download/)
 
 ### Setting up the database
 
@@ -13,8 +13,8 @@ For a more detailed explanation, read [database.md](./database.md).
 
 You will need to create a database for this project. You can do so either
 
-- in your postgresql environment terminal: Install Postgres, then create a local Postgres database and Postgres role with `CREATEDB`, `LOGIN` and `PASSWORD`.
-- With a gui application, such as [pgAdmin4](https://www.pgadmin.org/download/).
+-   in your postgresql environment terminal: Install Postgres, then create a local Postgres database and Postgres role with `CREATEDB`, `LOGIN` and `PASSWORD`.
+-   With a gui application, such as [pgAdmin4](https://www.pgadmin.org/download/).
 
 With your postgresql login (often `postgres`), database name and password, you can make the database url as such:
 
@@ -24,6 +24,8 @@ postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name
 
 ### Environment variables
 
+> At the end of this step, you can check you have all the variables by looking at `env.d.ts`.
+
 Add the `DB_URL` variable in your `.env.local` file containing the url mentioned above.
 
 > If you just want to test it locally with access to all pages, you can just set `DEV_MODE=true` and enter rubbish in the 3 `AUTH_` variables.
@@ -31,6 +33,8 @@ Add the `DB_URL` variable in your `.env.local` file containing the url mentioned
 Generate a random `AUTH_SECRET` (e.g. by using `openssl rand -base64 255`), and set up the following environment variables in a `.env.local` file at the root of the project.
 
 You must also generate a Google Secret and ID. To set those up, refer to this [tutorial](https://www.youtube.com/watch?v=Rs8018RO5YQ).
+
+Finally, to make tests on your drive, you will need to specify what folder is used by Jet Centre. For that, create a folder in your drive and copy the ID (in the url, after `folders/`) and add it `DOSSIER_SUIVI`.
 
 Here's what your `.env.local` file must look like at this stage:
 
@@ -41,7 +45,7 @@ AUTH_GOOGLE_SECRET=your_google_secret
 
 # Database
 DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
-
+DOSSIER_SUIVI=LJHlkj1LjhLEKJhlKJDHlkjhIUY3063hOIU89367IGd
 ```
 
 ### Initialise the database

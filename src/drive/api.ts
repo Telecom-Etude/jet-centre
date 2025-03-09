@@ -2,7 +2,6 @@
 
 import { auth } from '../actions/auth';
 import { DriveFile } from './types';
-import { DOSSIER_SUIVI } from './consts';
 import { driveFileToDriveFile, FileType, googleDrive, makeMimeType } from './interface';
 
 export async function getFileIds(): Promise<string[]> {
@@ -44,7 +43,7 @@ export async function getFolderContents(folderId: string): Promise<DriveFile[]> 
 }
 
 export async function getMissionFolder(code: string): Promise<string | undefined> {
-    const mission_folders = await getFolderContents(DOSSIER_SUIVI);
+    const mission_folders = await getFolderContents(process.env.DOSSIER_SUIVI);
     const mimeType = makeMimeType(FileType.Folder);
     return mission_folders.find((file) => file.name == code && file.mimeType == mimeType)?.id;
 }
