@@ -4,10 +4,10 @@ import { getFileIds, getFiles } from '@/drive/api';
 import { use, useState } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
-import { File } from '@/lib/drive';
 import { Skeleton } from '../ui/skeleton';
+import { DriveFile } from '@/drive/types';
 
-function FileComponent({ pFile }: { pFile: Promise<File> | null }) {
+function FileComponent({ pFile }: { pFile: Promise<DriveFile> | null }) {
     const file = pFile === null ? null : use(pFile);
 
     const isLoaded = file !== null;
@@ -72,7 +72,7 @@ function FileComponent({ pFile }: { pFile: Promise<File> | null }) {
 
 const FilesBrowser = () => {
     const itemsPerPage = 10;
-    const [files, setFiles] = useState<(Promise<File> | null)[]>([]);
+    const [files, setFiles] = useState<(Promise<DriveFile> | null)[]>([]);
 
     async function fetchFiles() {
         setFiles(new Array(itemsPerPage).fill(null));

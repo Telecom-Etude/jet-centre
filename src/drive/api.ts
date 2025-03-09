@@ -4,6 +4,7 @@ import { auth } from '../actions/auth';
 import { DriveFile } from './types';
 import { driveFileToDriveFile, FileType, googleDrive, makeMimeType } from './interface';
 import { dbg, log } from '@/lib/utils';
+import { drive_v3 } from 'googleapis';
 
 export async function getFileIds(): Promise<string[]> {
     const session = await auth();
@@ -62,12 +63,45 @@ export async function getMissionFolder(code: string): Promise<DriveFile[] | unde
             missionFolderId = dbg(creationResponse.data.id, 'dossier mission') || undefined;
         }
         if (missionFolderId) {
-            const fileList = await drive.files.list({
-                q: `'${missionFolderId}' in parents`,
-            });
-            return fileList.data.files?.map(driveFileToDriveFile);
+            return recursiveSearch(drive, missionFolderId);
+        } else {
+            throw new Error('mission folder id is still none after creation');
         }
     } catch (e) {
         console.error(`[getMissionFolder]`, e);
     }
+}
+
+async function recursiveSearch(
+    drive: drive_v3.Drive,
+    folderId: string
+): Promise<DriveFile[] | undefined> {
+    let folderContent;
+    try {
+        folderContent = await drive.files.list({
+            q: `'${folderId}' in parents`,
+        });
+    } catch (e) {
+        console.log(`[recursiveSearch] ${e}`);
+        return;
+    }
+    const items = folderContent?.data.files;
+    if (items) {
+        const files = [];
+        const folderMimeType = makeMimeType(FileType.Folder);
+        for (const item of items) {
+            if (item.mimeType === folderMimeType) {
+                if (item.id) {
+                    const children = await recursiveSearch(drive, item.id);
+                    if (children) {
+                        files.push(...children);
+                    }
+                }
+            } else {
+                files.push(item);
+            }
+        }
+        return files.map(driveFileToDriveFile);
+    }
+    console.log(`[recursiveSearch] Failed to load content from drive request`);
 }
