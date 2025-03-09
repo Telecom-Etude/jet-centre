@@ -1,5 +1,5 @@
 import { sidebar_trez } from './siderbar-trez';
 
-export default {
+export const sidebars = {
     trez: sidebar_trez,
 };

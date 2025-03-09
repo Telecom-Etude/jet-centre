@@ -15,7 +15,7 @@ model Studies {
 model StudyInfos {
     id               String        @id @default(cuid())
     code             String        @unique
-    googleFolder     String        @unique
+    googleFolder     String?       @unique
     title            String?
     applicationFee   Float?
     duration         Int?

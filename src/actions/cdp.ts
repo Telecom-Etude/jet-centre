@@ -1,3 +1,5 @@
+'use server';
+
 /**
  * Module that communicates with the database for the CDPs.
  */

@@ -1,18 +1,13 @@
-import { drive_v3, google } from 'googleapis';
-import { Session } from 'next-auth';
-import { DriveFile } from './types';
+import { drive_v3 } from 'googleapis';
 
-export function googleDrive(session: Session | null) {
-    const googleAuth = new google.auth.OAuth2({
-        clientId: process.env.AUTH_GOOGLE_ID,
-        clientSecret: process.env.AUTH_GOOGLE_SECRET,
-    });
-    googleAuth.setCredentials({
-        access_token: session?.user.access_token,
-        refresh_token: session?.user.refresh_token,
-    });
-    return google.drive({ version: 'v3', auth: googleAuth });
-}
+export type DriveFile = {
+    id: string;
+    name: string;
+    icon: string | null;
+    thumbnail: string | null;
+    webViewLink: string | null;
+    mimeType: FileType | null;
+};
 
 export function driveFileToDriveFile(file: drive_v3.Schema$File): DriveFile {
     return {
@@ -21,23 +16,35 @@ export function driveFileToDriveFile(file: drive_v3.Schema$File): DriveFile {
         icon: file.iconLink ?? null,
         thumbnail: file.thumbnailLink ?? null,
         webViewLink: file.webViewLink ?? null,
-        mimeType: file.mimeType ?? null,
+        mimeType: (file.mimeType && (file.mimeType as FileType)) || null, //TODO: Type-safety lost: mimeType can be an unknown FileType
     };
 }
 
+const COMMON_PREFIX = 'application/vnd.google-apps.';
+
 export enum FileType {
-    Folder,
-    Document,
+    Folder = `${COMMON_PREFIX}folder`,
+    Document = `${COMMON_PREFIX}document`,
+    Spreadsheets = `${COMMON_PREFIX}spreadsheets`,
+    Presentation = `${COMMON_PREFIX}presentation`,
+    Forms = `${COMMON_PREFIX}forms`,
+    Pdf = 'application/pdf',
 }
 
-export function makeMimeType(file_type: FileType): string {
-    const commonPrefix = 'application/vnd.google-apps.';
-    switch (file_type) {
-        case FileType.Folder: {
-            return commonPrefix + 'folder';
-        }
-        case FileType.Document: {
-            return commonPrefix + 'document';
-        }
+export function googleUrl(id: string, fileType: FileType | null): string | undefined {
+    switch (fileType) {
+        case FileType.Folder:
+            return `https://drive.google.com/drive/folders/${id}`;
+        case FileType.Document:
+            return `https://docs.google.com/document/d/${id}`;
+        case FileType.Spreadsheets:
+            return `https://docs.google.com/spreadsheets/d/${id}`;
+        case FileType.Presentation:
+            return `https://docs.google.com/presentation/d/${id}`;
+        case FileType.Forms:
+            return `https://docs.google.com/forms/d/${id}`;
+        case FileType.Pdf:
+            return `https://drive.google.com/file/d/${id}/view`;
+        default:
     }
 }
