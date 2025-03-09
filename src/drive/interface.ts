@@ -25,7 +25,7 @@ const COMMON_PREFIX = 'application/vnd.google-apps.';
 export enum FileType {
     Folder = `${COMMON_PREFIX}folder`,
     Document = `${COMMON_PREFIX}document`,
-    Spreadsheets = `${COMMON_PREFIX}spreadsheets`,
+    Spreadsheet = `${COMMON_PREFIX}spreadsheet`,
     Presentation = `${COMMON_PREFIX}presentation`,
     Forms = `${COMMON_PREFIX}forms`,
     Pdf = 'application/pdf',
@@ -37,7 +37,7 @@ export function googleUrl(id: string, fileType: FileType | null): string | undef
             return `https://drive.google.com/drive/folders/${id}`;
         case FileType.Document:
             return `https://docs.google.com/document/d/${id}`;
-        case FileType.Spreadsheets:
+        case FileType.Spreadsheet:
             return `https://docs.google.com/spreadsheets/d/${id}`;
         case FileType.Presentation:
             return `https://docs.google.com/presentation/d/${id}`;

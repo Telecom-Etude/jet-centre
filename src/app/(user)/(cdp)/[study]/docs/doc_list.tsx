@@ -14,84 +14,120 @@ import { DriveFile, googleUrl } from '@/drive/interface';
 import { useEffect, useState, useCallback } from 'react';
 import { FaArrowRightFromBracket, FaArrowUpFromBracket } from 'react-icons/fa6';
 import Link from 'next/link';
+import { dbg } from '@/lib/utils';
 
 export function DocumentList({ study }: { study: string }) {
     const [selectedFile, selectFile] = useState<undefined | DriveFile>();
 
-    return (
-        <div className="flex h-full">
-            <FileExplorer study={study} selectFile={selectFile} />
-            {selectedFile && <FrameFile file={selectedFile} />}
-        </div>
-    );
-}
-
-function FrameFile({ file }: { file: DriveFile }) {
-    return (
-        <iframe
-            src={googleUrl(file.id, file.mimeType)}
-            className="w-full flex justify-center h-full"
-        >
-            Loading...
-        </iframe>
-    );
-}
-
-function FileExplorer({
-    study,
-    selectFile,
-}: {
-    study: string;
-    selectFile: (id: DriveFile) => void;
-}) {
-    const [missions, setMissions] = useState<undefined | DriveFile[]>();
+    const [files, setFiles] = useState<undefined | DriveFile[]>();
     const [loading, setLoading] = useState(true);
 
-    const loadMissions = useCallback(() => {
+    const loadFiles = useCallback(() => {
         setLoading(true);
         getMissionFiles(study).then((serverMissions) => {
             if (serverMissions !== undefined) {
-                setMissions(serverMissions);
+                setFiles(serverMissions);
             }
             setLoading(false);
         });
     }, [study]);
 
     useEffect(() => {
-        loadMissions();
-    }, [loadMissions]);
+        loadFiles();
+    }, [loadFiles]);
 
+    return (
+        <div className="flex h-full">
+            {selectedFile ? (
+                <FrameFile file={selectedFile} closeFrame={() => selectFile(undefined)} />
+            ) : (
+                <FileExplorer {...{ selectFile, files, loadFiles, loading }} />
+            )}
+        </div>
+    );
+}
+
+function FrameFile({ file, closeFrame }: { file: DriveFile; closeFrame: () => void }) {
+    return (
+        <div className="relative w-full h-full">
+            <iframe
+                src={googleUrl(file.id, file.mimeType)}
+                className="absolute inset-0 w-full h-full"
+            >
+                Loading...
+            </iframe>
+            <Button
+                className="absolute bottom-4 right-4 z-10 font-bold rounded"
+                onClick={closeFrame}
+            >
+                Close this file!
+            </Button>
+        </div>
+    );
+}
+
+interface FileExplorerProps {
+    files?: DriveFile[];
+    selectFile: (id: DriveFile) => void;
+    loadFiles: () => void;
+    loading: boolean;
+}
+
+function FileExplorer({ selectFile, files, loadFiles, loading }: FileExplorerProps) {
     return (
         <Box className="w-full">
             <BoxHeader>
                 <BoxTitle>Documents de l&apos;étude</BoxTitle>
                 <BoxHeaderBlock>
-                    <BoxButtonReload onClick={loadMissions} />
+                    <BoxButtonReload onClick={loadFiles} />
                 </BoxHeaderBlock>
             </BoxHeader>
             <BoxContent>
                 {loading ? (
                     <p>Loading...</p>
-                ) : missions === undefined ? (
+                ) : files === undefined ? (
                     <p>
                         Erreur lors de la mise à jour des documents.. Merci de faire un ticket SOS
                         (en haut à droite).
                     </p>
-                ) : missions.length !== 0 ? (
-                    <div className="flex flex-col">
-                        {missions.map((mission) => (
-                            <div className="bg-accent text-start p-2 rounded-sm" key={mission.id}>
-                                <p>{mission.name}</p>
-                                <Button variant="ghost" asChild>
-                                    <Link href="">
-                                        <FaArrowUpFromBracket />
-                                    </Link>
-                                </Button>
-                                <Button variant="ghost" onClick={() => selectFile(mission)}>
-                                    <FaArrowRightFromBracket />
-                                </Button>
-                            </div>
-                        ))}
+                ) : files.length !== 0 ? (
+                    <div className="flex flex-col space-y-main">
+                        {dbg(files, 'files').map((file) => {
+                            const url = googleUrl(file.id, file.mimeType);
+                            return (
+                                <div
+                                    className="bg-accent text-start p-2 rounded flex justify-between items-center"
+                                    key={file.id}
+                                >
+                                    <p className="w-full">{file.name}</p>
+                                    <div className="flex items-center space-x-main">
+                                        {url && (
+                                            <Button
+                                                variant="ghost"
+                                                asChild
+                                                className="w-full h-full"
+                                            >
+                                                <Link
+                                                    href={url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="w-full h-full no-padding"
+                                                >
+                                                    <FaArrowUpFromBracket className="w-full h-full" />
+                                                </Link>
+                                            </Button>
+                                        )}
+                                        <Button
+                                            variant="ghost"
+                                            onClick={() => selectFile(file)}
+                                            className="w-full h-full no-padding"
+                                        >
+                                            <FaArrowRightFromBracket className="w-full h-full" />
+                                        </Button>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 ) : (
                     <p>Aucun document n'est présent dans le dossier d'étude.</p>

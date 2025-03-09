@@ -166,3 +166,7 @@ input[type='number'] {
 .mask-bird {
     mask-image: linear-gradient(rgb(0 0 0 / 100%), transparent);
 }
+
+.no-padding {
+    padding: 0;
+}
