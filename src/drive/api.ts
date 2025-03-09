@@ -3,6 +3,7 @@
 import { auth } from '../actions/auth';
 import { DriveFile } from './types';
 import { driveFileToDriveFile, FileType, googleDrive, makeMimeType } from './interface';
+import { dbg, log } from '@/lib/utils';
 
 export async function getFileIds(): Promise<string[]> {
     const session = await auth();
@@ -10,7 +11,6 @@ export async function getFileIds(): Promise<string[]> {
     return googleDrive(session)
         .files.list({
             pageSize: 10,
-            q: `mimeType = '${makeMimeType(FileType.Folder)}'`,
         })
         .then(
             (req) =>
@@ -36,14 +36,38 @@ export async function getFileModifiedDate(fileId: string): Promise<string> {
     return file?.data?.modifiedTime || '';
 }
 
-export async function getFolderContents(folderId: string): Promise<DriveFile[]> {
-    const session = await auth();
-    const response = await googleDrive(session).files.list({ q: `'${folderId}' in parents` });
-    return response.data.files?.map(driveFileToDriveFile) || [];
-}
-
-export async function getMissionFolder(code: string): Promise<string | undefined> {
-    const mission_folders = await getFolderContents(process.env.DOSSIER_SUIVI);
-    const mimeType = makeMimeType(FileType.Folder);
-    return mission_folders.find((file) => file.name == code && file.mimeType == mimeType)?.id;
+export async function getMissionFolder(code: string): Promise<DriveFile[] | undefined> {
+    try {
+        const session = await auth();
+        const drive = googleDrive(session);
+        const folderList = await drive.files.list({
+            q: `'${process.env.DOSSIER_SUIVI}' in parents`,
+        });
+        const mission_folders = folderList.data.files?.map(driveFileToDriveFile) || [];
+        const mimeType = makeMimeType(FileType.Folder);
+        let missionFolderId = mission_folders.find(
+            (file) => file.name == code && file.mimeType == mimeType
+        )?.id;
+        if (!missionFolderId) {
+            log(`Creating folder for study ${code}`);
+            const fileMetadata = {
+                name: code,
+                mimeType,
+                parents: [process.env.DOSSIER_SUIVI],
+            };
+            const creationResponse = await drive.files.create({
+                requestBody: fileMetadata,
+                fields: 'id',
+            });
+            missionFolderId = dbg(creationResponse.data.id, 'dossier mission') || undefined;
+        }
+        if (missionFolderId) {
+            const fileList = await drive.files.list({
+                q: `'${missionFolderId}' in parents`,
+            });
+            return fileList.data.files?.map(driveFileToDriveFile);
+        }
+    } catch (e) {
+        console.error(`[getMissionFolder]`, e);
+    }
 }

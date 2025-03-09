@@ -27,14 +27,17 @@ export function driveFileToDriveFile(file: drive_v3.Schema$File): DriveFile {
 
 export enum FileType {
     Folder,
+    Document,
 }
 
-const COMMON_PREFIX = 'application/vnd.google-apps.';
-
 export function makeMimeType(file_type: FileType): string {
+    const commonPrefix = 'application/vnd.google-apps.';
     switch (file_type) {
         case FileType.Folder: {
-            return COMMON_PREFIX + 'folder';
+            return commonPrefix + 'folder';
+        }
+        case FileType.Document: {
+            return commonPrefix + 'document';
         }
     }
 }
