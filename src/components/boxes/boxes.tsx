@@ -5,10 +5,12 @@ import Link from 'next/link';
 
 import AnimateHeight from 'react-animate-height';
 import { FaGripLines, FaPlus, FaTrash } from 'react-icons/fa6';
+import { HiRefresh } from 'react-icons/hi';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
+import { IconType } from 'react-icons/lib';
 
 export const Box = forwardRef<
     HTMLDivElement,
@@ -139,13 +141,18 @@ export const BoxButtonPlus = ({
     </Button>
 );
 
-export const BoxButtonTrash = ({ onClick }: { onClick: () => void }) => (
+export const BoxButtonTrash = ({ onClick }: { onClick: () => void }) =>
+    BoxButtonIcon({ onClick, Icon: FaTrash });
+export const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
+    BoxButtonIcon({ onClick, Icon: HiRefresh });
+
+export const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: IconType }) => (
     <Button
         onClick={onClick}
         variant="title"
         className="p-[3.5px] h-6 w-6 bg-transparent hover:bg-transparent"
     >
-        <FaTrash className="w-full h-full" />
+        <Icon className="w-full h-full" />
     </Button>
 );
 
