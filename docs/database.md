@@ -8,26 +8,17 @@ We use [PostgreSQL](https://www.postgresql.org/) as our [BDMS](https://en.wikipe
 
 To set up the database, first install postgresql.
 
-### Linux
 ```bash
 apt install postgresql
 ```
-### Windows
-> Check the [PostgreSQL downloads page](https://www.postgresql.org/download/windows/)
 
 Then connect to the postgresql server using the `psql` command as the `postgres` user.
 
-### Linux
 ```bash
 sudo -u postgres psql
 ```
 
 If you have an error, try `sudo sudo -u postgres psql`.
-
-### Windows
-```bash
-psql -U postgres 
-```
 
 Here, create a new role (user in postgresql) who can create a database, login and have a password.
 
@@ -35,7 +26,7 @@ Here, create a new role (user in postgresql) who can create a database, login an
 CREATE ROLE your_pg_user CREATEDB LOGIN PASSWORD 'your_pg_password';
 ```
 
-Finally, create a file named `.env.local` at the root of your project (if it doesn't already exist). In that file, add the following variable. You can put whatever name you want for _your_pg_database_name_.
+Finally, inside the `.env.local` file add the following variable. You can put whatever name you want to _your_pg_database_name_.
 
 ```bash
 DB_URL="postgresql://your_pg_role:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
