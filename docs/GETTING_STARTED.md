@@ -14,7 +14,7 @@ For a more detailed explanation, read [database.md](./database.md).
 You will need to create a database for this project. You can do so either
 
 - in your postgresql environment terminal: Install Postgres, then create a local Postgres database and Postgres role with `CREATEDB`, `LOGIN` and `PASSWORD`.
-- With a gui application, such as [pgAdmin4](https://www.pgadmin.org/download/).
+- with a gui application, such as [pgAdmin4](https://www.pgadmin.org/download/).
 
 With your postgresql login (often `postgres`), database name and password, you can make the database url as such:
 
@@ -50,7 +50,7 @@ DOSSIER_SUIVI=LJHlkj1LjhLEKJhlKJDHlkjhIUY3063hOIU89367IGd
 
 ### Initialise the database
 
-You know need to initialise your database:
+You now need to initialise your database:
 
 ```bash
 npx prisma generate
@@ -90,6 +90,7 @@ Let's focus on the `src/` folder:
 ├── app                 Contains the front-end pages of the app.
 ├── components          Contains the components (see below).
 ├── db                  Contains the database requests.
+├── drive               Contains everything related to Google Drive.
 ├── fonts               Contains the font of the project (`Avenir Next`)
 ├── lib                 Contains utils for different things
 ├── middleware.ts       The middleware is executed between the client request and the server response,

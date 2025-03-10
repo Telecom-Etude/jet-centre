@@ -2,7 +2,7 @@
 
 ## Techstack
 
-We use [Postgresql](https://www.postgresql.org/) as [BDMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and [Prisma](https://www.prisma.io/) to write schema, migration and access to the data in typescript.
+We use [PostgreSQL](https://www.postgresql.org/) as our [BDMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and [Prisma](https://www.prisma.io/) to write schema, migration and access to the data in typescript.
 
 ## Setup
 
@@ -20,7 +20,7 @@ sudo -u postgres psql
 
 If you have an error, try `sudo sudo -u postgres psql`.
 
-Here, create a new role (user in postgresql) how can create a database, login and have a password.
+Here, create a new role (user in postgresql) who can create a database, login and have a password.
 
 ```SQL
 CREATE ROLE your_pg_user CREATEDB LOGIN PASSWORD 'your_pg_password';
@@ -42,7 +42,7 @@ npm run prisma:migrate
 
 Schemas are defined in `*.prisma` files in the `prisma` directory.
 The file `schema.prisma` contains configuration for prisma.
-You do not need to include those file in any way, prisma will look at all `*.prisma` files in the `prisma` directory.
+You do not need to include those files in any way, prisma will look at all `*.prisma` files in the `prisma` directory.
 
 ## Migration
 
@@ -52,12 +52,12 @@ To update the schemas of the database, update them in the `*.prisma` files. Then
 npm run prisma:migration
 ```
 
-When prisma apply a migration, it will also create files in the `node_modules/@prisma/client` directory to provide type in typescript.
+When prisma applies a migration, it will also create files in the `node_modules/@prisma/client` directory to provide types in typescript.
 
 ## Seeding
 
-To seed the database (apply modification when the project is set up), use the `prisma/seed.ts`.
-If you already have set up the database (apply a prisma migration), you can apply the seed with :
+To seed the database (apply modifications when the project is set up), use the `prisma/seed.ts`.
+If you have already set up the database (applied a prisma migration), you can apply the seed with :
 
 ```bash
 npm run prisma:seed
