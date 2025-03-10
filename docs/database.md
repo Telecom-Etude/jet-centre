@@ -29,7 +29,7 @@ CREATE ROLE your_pg_user CREATEDB LOGIN PASSWORD 'your_pg_password';
 Finally, inside the `.env.local` file add the following variable. You can put whatever name you want to _your_pg_database_name_.
 
 ```bash
-DB_URL="postgresql://your_pg_role:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
+DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
 ```
 
 To initialize the database, run a prisma migration.

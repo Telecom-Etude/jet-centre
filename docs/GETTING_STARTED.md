@@ -19,7 +19,7 @@ You will need to create a database for this project. You can do so either
 With your postgresql login (often `postgres`), database name and password, you can make the database url as such:
 
 ```txt
-postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name
+postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public
 ```
 
 ### Environment variables
