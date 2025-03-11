@@ -34,11 +34,20 @@ If you find a bug or have a question:
 
 ### Contributing Code
 
-1. **Read the [Getting Started Guide](/docs/GETTING_STARTED.md)** to set up the project locally.
-2. [Fork](#fork) the project.
-3. Make your changes, ensuring you follow the [Style Guidelines](#style-guidelines).
-4. Once finished with all your code on your fork, make sure you are up-to-date with the `main` branch of `jet-centre`.
-5. Once finished, make a [Pull request](https://github.com/telecom-etude/jet-centre/pulls) with your fork.
+1. [Fork](#fork) the project.
+2. Create a clone of your forked git repo and add a remote pointing to this repo  
+    The remote ensures that your can easily pull more recent changes to your forked repo
+```bash
+git clone https://github.com/<your_username>/jet-centre.git
+git remote upstream add https://github.com/Telecom-Etude/jet-centre.git
+```
+3. **Read the [Getting Started Guide](/docs/GETTING_STARTED.md)** to set up the project locally.
+4. Make your changes, ensuring you follow the [Style Guidelines](#style-guidelines).
+5. Once finished with all your code on your fork, make sure you are up-to-date with the `main` branch of `jet-centre`. You can use the following command to merge your changes with the original repo
+```bash
+git pull upstream main
+```
+6. Once finished, make a [Pull request](https://github.com/telecom-etude/jet-centre/pulls) with your fork.
     - Provide a clear description of the feature.
         - What the changes are.
         - The motivation behind them.

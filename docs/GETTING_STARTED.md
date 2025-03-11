@@ -7,6 +7,14 @@
 - [Node.js and npm](https://nodejs.org/en/download)
 - [Postgresql](https://www.postgresql.org/download/)
 
+### Node setup
+
+Start by installing all project dependencies.
+
+```bash
+npm install
+```
+
 ### Setting up the database
 
 For a more detailed explanation, read [database.md](./database.md).
@@ -32,20 +40,20 @@ Add the `DB_URL` variable in your `.env.local` file containing the url mentioned
 
 Generate a random `AUTH_SECRET` (e.g. by using `openssl rand -base64 255`), and set up the following environment variables in a `.env.local` file at the root of the project.
 
-You must also generate a Google Secret and ID. To set those up, refer to this [tutorial](https://www.youtube.com/watch?v=Rs8018RO5YQ).
+You must also generate a Google Secret and ID. To set those up, refer to this [tutorial](https://www.youtube.com/watch?v=Rs8018RO5YQ&t=252).
 
 Finally, to make tests on your drive, you will need to specify what folder is used by Jet Centre. For that, create a folder in your drive and copy the ID (in the url, after `folders/`) and add it `DOSSIER_SUIVI`.
 
 Here's what your `.env.local` file must look like at this stage:
 
 ```bash
-AUTH_SECRET=your_auth_secret
-AUTH_GOOGLE_ID=your_google_id
-AUTH_GOOGLE_SECRET=your_google_secret
+AUTH_SECRET="your_auth_secret"
+AUTH_GOOGLE_ID="your_google_id"
+AUTH_GOOGLE_SECRET="your_google_secret"
 
 # Database
 DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
-DOSSIER_SUIVI=LJHlkj1LjhLEKJhlKJDHlkjhIUY3063hOIU89367IGd
+DOSSIER_SUIVI="LJHlkj1LjhLEKJhlKJDHlkjhIUY3063hOIU89367IGd"
 ```
 
 ### Initialise the database
@@ -53,16 +61,14 @@ DOSSIER_SUIVI=LJHlkj1LjhLEKJhlKJDHlkjhIUY3063hOIU89367IGd
 You now need to initialise your database:
 
 ```bash
-npx prisma generate
 npm run prisma:migrate
 ```
 
-### Node Setup
+### Running the project
 
-Then you can install and run the project:
+You can now run the project:
 
 ```bash
-npm install
 npm run dev
 ```
 
