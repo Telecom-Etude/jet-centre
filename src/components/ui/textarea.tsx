@@ -12,10 +12,10 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             props = {
                 ...props,
                 onInput: (e) => {
-                    let target = e.target as HTMLElement;
+                    const target = e.target as HTMLElement;
                     target.style.height = 'inherit';
                     target.style.height = `${target.scrollHeight}px`;
-                }
+                },
             };
         }
 

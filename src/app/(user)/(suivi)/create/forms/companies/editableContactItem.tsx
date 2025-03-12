@@ -10,7 +10,7 @@ import {
     BoxDragHandle,
     BoxCollapser,
     BoxContent,
-    BoxButtonTrash
+    BoxButtonTrash,
 } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { DragHandle } from '@/components/meta-components/sortableList';

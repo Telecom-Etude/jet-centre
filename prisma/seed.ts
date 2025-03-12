@@ -8,8 +8,8 @@ async function main() {
         where: { name: ROLE_NAME_CDP },
         update: {},
         create: {
-            name: ROLE_NAME_CDP
-        }
+            name: ROLE_NAME_CDP,
+        },
     });
 
     console.log('Role created :', cdp);

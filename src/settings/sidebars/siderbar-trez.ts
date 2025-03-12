@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { FaHouse } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
 
@@ -21,8 +19,8 @@ export const sidebar_trez: SideBarGroup[] = [
             {
                 title: 'disponibilités',
                 icon: FaHouse,
-                href: '/'
-            }
-        ]
-    }
+                href: '/',
+            },
+        ],
+    },
 ];

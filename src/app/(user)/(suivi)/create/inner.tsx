@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Company } from './forms/companies/companiesSchema';
 import { useEffect } from 'react';
 import { Admin } from './forms/settings/settingsSchema';
-import { onSubmit } from './actions';
+import { createNewStudy } from './actions';
 import { useRouter } from 'next/navigation';
 
 export const STUDY_FORM_ID = 'study-form-id';
@@ -24,7 +24,7 @@ export default function Inner({ companies, admins }: CreateStudyProps) {
 
     const formStudy = useForm<StudyCreationSchema>({
         resolver: zodResolver(studyCreationSchema),
-        defaultValues: emptyStudyCreationSchema
+        defaultValues: emptyStudyCreationSchema,
     });
 
     useEffect(() => {
@@ -36,9 +36,8 @@ export default function Inner({ companies, admins }: CreateStudyProps) {
             <form
                 onSubmit={formStudy.handleSubmit(async (d) => {
                     console.log('// Study submit //', d);
-                    await onSubmit(JSON.stringify(d));
-                    router.push(`/${d.settings.name}/settings`);
-                    // formStudy.reset();
+                    await createNewStudy(d);
+                    router.push(`/${d.settings.code}/dashboard`);
                 })}
                 id={STUDY_FORM_ID}
             />

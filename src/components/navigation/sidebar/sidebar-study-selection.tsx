@@ -5,13 +5,13 @@ import {
     PaginationContent,
     PaginationItem,
     PaginationNext,
-    PaginationPrevious
+    PaginationPrevious,
 } from '@/components/ui/pagination';
 
 export function StudySelection({
     missions,
     selectedMission,
-    setSelectedMission
+    setSelectedMission,
 }: {
     missions: string[];
     selectedMission: number;

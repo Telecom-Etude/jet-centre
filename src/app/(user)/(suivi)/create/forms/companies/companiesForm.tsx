@@ -8,7 +8,7 @@ import {
     BoxDragHandle,
     BoxHeader,
     BoxHeaderBlock,
-    BoxTitle
+    BoxTitle,
 } from '@/components/boxes/boxes';
 import { FormProvider, FormRule } from '@/components/ui/form';
 import { InputFormElement } from '@/components/meta-components/form/input';
@@ -17,7 +17,7 @@ import { DropdownManyFormElement } from '@/components/meta-components/form/dropd
 import {
     DragHandle,
     SortableList,
-    useSortableList
+    useSortableList,
 } from '@/components/meta-components/sortableList';
 import { ANIMATION_DURATION_MS, DOMAINS } from '@/settings/vars';
 
@@ -29,7 +29,7 @@ import {
     COMPANY_SIZES,
     CompanyFormValue,
     emptyCompany,
-    emptyContactCreationSchema
+    emptyContactCreationSchema,
 } from './companiesSchema';
 import { SimpleContactItem } from './simpleContactItem';
 import { cn } from '@/lib/utils';
@@ -97,7 +97,7 @@ export function CompaniesForm({ companies, formStudy, formStudyId }: CompaniesPr
                             id: 'tmp-id-' + Math.random().toString(),
                             idx: getNextIdx(),
                             isNew: true,
-                            ...emptyCompany
+                            ...emptyCompany,
                         })
                     }
                 />
@@ -119,7 +119,7 @@ function CompanyForm({
     formStudyId,
     dragHandleProps,
     deleteCompany: deleteCompany_,
-    defaultValues
+    defaultValues,
 }: CompanyFormProps) {
     // ~~~~~~~~~~~~~~~ Company ~~~~~~~~~~~~~~~ //
     const field = useCallback(
@@ -309,7 +309,7 @@ function CompanyForm({
                                                 setTimeout(() => {
                                                     contactList.addItem({
                                                         id: 'tmp-id-' + Math.random().toString(),
-                                                        ...contact
+                                                        ...contact,
                                                     });
                                                 }, ANIMATION_DURATION_MS / 2);
                                             }}

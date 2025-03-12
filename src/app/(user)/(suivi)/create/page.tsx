@@ -10,14 +10,12 @@ export default async function CreateStudy() {
             companyInfos: true,
             members: {
                 include: {
-                    person: true
-                }
-            }
-        }
+                    person: true,
+                },
+            },
+        },
     });
 
-    // TODO: fix this ts-ignore
-    // @ts-ignore (I don't see what ts don't like here, so I'll ignore it)
     const companies: Company[] = rawCompanies.map((c) => ({
         id: c.id,
         name: c.name,
@@ -29,7 +27,7 @@ export default async function CreateStudy() {
             street: c.address.street,
             city: c.address.city,
             zip: c.address.zipCode,
-            country: c.address.country
+            country: c.address.country,
         },
         members: c.members.map((m) => ({
             id: m.id,
@@ -37,8 +35,8 @@ export default async function CreateStudy() {
             lastName: m.person.lastName,
             email: m.person.email,
             job: m.job,
-            excluded: false
-        }))
+            excluded: false,
+        })),
     }));
 
     // ----- Administrator ---- //
@@ -51,23 +49,19 @@ export default async function CreateStudy() {
                         select: {
                             firstName: true,
                             lastName: true,
-                            email: true
-                        }
-                    }
-                }
-            }
-        }
+                            email: true,
+                        },
+                    },
+                },
+            },
+        },
     });
     const admins = rawAdmin.map((a) => ({
         id: a.id,
         firstName: a.user.person.firstName,
         lastName: a.user.person.lastName,
-        email: a.user.person.email
+        email: a.user.person.email,
     }));
 
-    return (
-        <>
-            <Inner companies={companies} admins={admins} />
-        </>
-    );
+    return <Inner companies={companies} admins={admins} />;
 }

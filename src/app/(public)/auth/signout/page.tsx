@@ -2,7 +2,7 @@ import Image from 'next/image';
 import BirdLogo from '@/../public/bird_color.svg';
 import { GoogleButton } from '@/app/(public)/auth/google';
 import { AuthLayout } from '../auth_layout';
-import { googleId, signIn } from '@/actions/auth';
+import { signOut } from '@/actions/auth';
 
 export default async function SignInPage() {
     return (
@@ -18,7 +18,7 @@ export default async function SignInPage() {
                     <GoogleButton
                         action={async () => {
                             'use server';
-                            await signIn(googleId);
+                            await signOut();
                         }}
                         text="Déconnexion"
                     />

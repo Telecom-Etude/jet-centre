@@ -7,7 +7,7 @@ import {
     FormField,
     FormItem,
     FormLabel,
-    FormMessage
+    FormMessage,
 } from '../../ui/form';
 import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
@@ -22,6 +22,7 @@ interface CheckboxFormElementProps<T extends FieldValues> extends FormElementPro
 export const CheckboxFormElement = <T extends FieldValues>({
     formId,
     onChange,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     type,
     className,
     ...props
@@ -63,7 +64,7 @@ const CheckboxFormElementWrapper = <T extends FieldValues>({
     name,
     son,
     description,
-    className
+    className,
 }: FormElementWrapperProps<T>) => (
     <FormField
         control={form.control}

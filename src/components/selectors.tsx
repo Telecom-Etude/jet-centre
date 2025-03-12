@@ -16,7 +16,7 @@ export const DeletableItem = ({ deleteItem, item }: { item: string; deleteItem: 
 
 export const DeletableItemList = ({
     items,
-    deleteItem
+    deleteItem,
 }: {
     items: string[];
     deleteItem: (item: string) => void;

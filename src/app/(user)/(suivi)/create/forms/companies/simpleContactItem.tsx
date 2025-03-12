@@ -37,7 +37,7 @@ export function SimpleContactItem({
                                         onClick={() => {
                                             updateContact({
                                                 ...contact,
-                                                excluded: !contact.excluded
+                                                excluded: !contact.excluded,
                                             });
                                         }}
                                     />

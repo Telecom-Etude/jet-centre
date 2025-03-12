@@ -10,14 +10,14 @@ import {
     DraggableAttributes,
     DragEndEvent,
     DragStartEvent,
-    UniqueIdentifier
+    UniqueIdentifier,
 } from '@dnd-kit/core';
 
 import {
     SortableContext,
     sortableKeyboardCoordinates,
     useSortable,
-    verticalListSortingStrategy
+    verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
@@ -54,12 +54,12 @@ export function SortableList<T extends WithId = WithId>({
     moveItem,
     updateItem,
     render,
-    className
+    className,
 }: SortableProps<T>) {
     const sensors = useSensors(
         useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
-            coordinateGetter: sortableKeyboardCoordinates
+            coordinateGetter: sortableKeyboardCoordinates,
         })
     );
 
@@ -112,7 +112,7 @@ function SortableItem<T extends WithId = WithId>({
     item,
     active,
     updateItem,
-    render
+    render,
 }: {
     item: T;
     active: boolean;
@@ -120,12 +120,12 @@ function SortableItem<T extends WithId = WithId>({
     render: RenderFn<T>;
 }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-        id: item.id
+        id: item.id,
     });
 
     const style = {
         transform: transformToCSS(transform),
-        transition
+        transition,
     };
 
     return (
@@ -167,14 +167,14 @@ export function useSortableList<T extends WithId = WithId>(initialItems?: T[]): 
         updateItem,
         deleteItem,
         addItem,
-        reset
+        reset,
     };
 }
 
 // Code from: https://github.com/clauderic/dnd-kit/blob/master/packages/utilities/src/css.ts
 // Licence: MIT
 function transformToCSS(transform: any) {
-    const { x, y, scaleX, scaleY } = transform ?? { x: 0, y: 0, scaleX: 1, scaleY: 1 };
+    const { x, y } = transform ?? { x: 0, y: 0, scaleX: 1, scaleY: 1 };
 
-    return `translate3d(${x ? Math.round(x) : 0}px, ${y ? Math.round(y) : 0}px, 0)`; //  scaleX(${scaleX}) scaleY(${scaleY})
+    return `translate3d(${x ? Math.round(x) : 0}px, ${y ? Math.round(y) : 0}px, 0)`;
 }

@@ -5,9 +5,9 @@ import {
     FormField,
     FormItem,
     FormLabel,
-    FormMessage
+    FormMessage,
 } from '../../ui/form';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { cva } from 'class-variance-authority';
 
@@ -16,9 +16,9 @@ const labelVariants = cva('', {
         labelStat: {
             unwritten: 'text-input',
             'in-focus': 'text-foreground left-2 -top-2 py-0',
-            written: 'text-input left-2 -top-2 py-0'
-        }
-    }
+            written: 'text-input left-2 -top-2 py-0',
+        },
+    },
 });
 
 export type LabelStat = 'unwritten' | 'in-focus' | 'written';
@@ -49,7 +49,7 @@ export function FormElementWrapper<T extends FieldValues>({
     disabled = false,
     unwritable = false,
     'ping-once': pingOnce,
-    className
+    className,
 }: FormElementWrapperProps<T>) {
     return (
         <FormField
@@ -74,7 +74,7 @@ export function FormElementWrapper<T extends FieldValues>({
                             (field.value ?? '').toString() !== '' &&
                                 'text-input left-2 -top-2 py-0',
                             labelVariants({
-                                labelStat: labelStat
+                                labelStat: labelStat,
                             }),
                             'group-focus-within:text-inherit group-focus-within:left-2 group-focus-within:-top-2 group-focus-within:max-w-none group-focus-within:py-0'
                         )}
@@ -103,13 +103,13 @@ interface LightFormElementProps<T extends FieldValues> {
 export function LightFormElement<T extends FieldValues>({
     form,
     name,
-    description
+    description,
 }: LightFormElementProps<T>) {
     return (
         <FormField
             control={form.control}
             name={name}
-            render={({ field }) => (
+            render={() => (
                 <FormItem>
                     {description && <FormDescription>{description}</FormDescription>}
                     <FormMessage />

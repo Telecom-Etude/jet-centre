@@ -20,7 +20,7 @@ export const zDOMAINS = z.enum([
     'Computer Graphics',
     '3D',
     'Étude de marché',
-    "État de l'art"
+    "État de l'art",
 ]);
 
 export type Domain = z.infer<typeof zDOMAINS>;
@@ -33,7 +33,7 @@ export const zCompanySize = z.enum([
     'Micro-entreprise',
     'Petite entreprise',
     'Moyenne entreprise',
-    'Grande entreprise'
+    'Grande entreprise',
 ]);
 export type CompanySize = z.infer<typeof zCompanySize>;
 

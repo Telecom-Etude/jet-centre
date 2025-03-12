@@ -3,7 +3,6 @@
 import * as React from 'react';
 import { type DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
-import { Search } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -23,9 +22,7 @@ const Command = React.forwardRef<
 ));
 Command.displayName = CommandPrimitive.displayName;
 
-interface CommandDialogProps extends DialogProps {}
-
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+const CommandDialog = ({ children, ...props }: DialogProps) => {
     return (
         <Dialog {...props}>
             <DialogContent className="overflow-hidden p-0 shadow-lg">
@@ -59,6 +56,7 @@ CommandInput.displayName = CommandPrimitive.Input.displayName;
 export const HiddenCommandInput = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Input>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 >(({ className, ...props }, ref) => (
     <CommandPrimitive.Input ref={ref} className="hidden" {...props} />
 ));
@@ -152,5 +150,5 @@ export {
     CommandGroup,
     CommandItem,
     CommandShortcut,
-    CommandSeparator
+    CommandSeparator,
 };

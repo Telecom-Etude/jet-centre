@@ -5,10 +5,12 @@ import Link from 'next/link';
 
 import AnimateHeight from 'react-animate-height';
 import { FaGripLines, FaPlus, FaTrash } from 'react-icons/fa6';
+import { HiRefresh } from 'react-icons/hi';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
+import { IconType } from 'react-icons/lib';
 
 export const Box = forwardRef<
     HTMLDivElement,
@@ -61,7 +63,7 @@ export const BoxHeader = forwardRef<
 
 export const BoxHeaderBlock = ({
     children,
-    className
+    className,
 }: {
     children?: ReactNode;
     className?: string;
@@ -72,7 +74,7 @@ export type Height = 'auto' | 'limited';
 export const BoxContent = ({
     children,
     height = 'auto',
-    noPadding = false
+    noPadding = false,
 }: {
     children: ReactNode;
     height?: Height;
@@ -92,7 +94,7 @@ export const BoxContent = ({
 
 export const BoxCollapser = ({
     children,
-    collapse = false
+    collapse = false,
 }: {
     children: ReactNode;
     collapse: boolean;
@@ -110,7 +112,7 @@ export const BoxLink = ({ children, href }: { children: string | string[]; href:
 
 export const BoxTitle = ({
     children,
-    className
+    className,
 }: {
     children: string | string[];
     className?: string;
@@ -123,7 +125,7 @@ export const BoxTitle = ({
 export const BoxButtonPlus = ({
     onClick,
     label,
-    className
+    className,
 }: {
     onClick: () => void;
     label?: string;
@@ -139,13 +141,18 @@ export const BoxButtonPlus = ({
     </Button>
 );
 
-export const BoxButtonTrash = ({ onClick }: { onClick: () => void }) => (
+export const BoxButtonTrash = ({ onClick }: { onClick: () => void }) =>
+    BoxButtonIcon({ onClick, Icon: FaTrash });
+export const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
+    BoxButtonIcon({ onClick, Icon: HiRefresh });
+
+export const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: IconType }) => (
     <Button
         onClick={onClick}
         variant="title"
         className="p-[3.5px] h-6 w-6 bg-transparent hover:bg-transparent"
     >
-        <FaTrash className="w-full h-full" />
+        <Icon className="w-full h-full" />
     </Button>
 );
 
@@ -158,14 +165,16 @@ export const BoxDragHandle = forwardRef<HTMLDivElement>((props, ref) => (
 export const BoxCollapseButton = ({
     collapse,
     setCollapse,
-    onClick
+    onClick,
 }: {
     collapse: boolean;
     setCollapse: (c: boolean) => void;
     onClick?: () => void;
 }) => {
     function toggleCollapse() {
-        onClick && onClick();
+        if (onClick) {
+            onClick();
+        }
         setCollapse(!collapse);
     }
 

@@ -1,7 +1,6 @@
 'use client';
 
-import { FieldValues, useForm, UseFormReturn } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { UseFormReturn } from 'react-hook-form';
 
 import {
     Box,
@@ -9,22 +8,12 @@ import {
     BoxCollapser,
     BoxContent,
     BoxHeader,
-    BoxTitle
+    BoxTitle,
 } from '@/components/boxes/boxes';
-import { Button } from '@/components/ui/button';
-import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
+import { FormProvider, FormRule } from '@/components/ui/form';
 import { InputFormElement } from '@/components/meta-components/form/input';
-import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 
-import {
-    Admin,
-    AdminCreationSchema,
-    adminCreationSchema,
-    AdminFormValue,
-    emptyAdminCreationSchema,
-    NewAdmin
-} from './settingsSchema';
-import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
+import { Admin, AdminFormValue, emptyAdminCreationSchema } from './settingsSchema';
 import { CheckboxFormElement } from '@/components/meta-components/form/checkbox';
 import { StudyCreationSchema } from '../schema';
 import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
@@ -52,7 +41,6 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
     const [collapseAdminForm, setCollapseAdminForm] = useState(true);
 
     // ~~~~~~~~~~~~~~ SearchBar ~~~~~~~~~~~~~~ //
-
     const select = (admin: Admin) => {
         if (!adminList.items.find((a) => a.id === admin.id)) {
             adminList.addItem(admin);
@@ -67,6 +55,12 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
             <BoxContent>
                 <div className="flex flex-col gap-2">
                     <FormProvider {...formStudy}>
+                        <InputFormElement
+                            label="Code de l'étude"
+                            name="settings.code"
+                            form={formStudy}
+                            formId={formStudyId}
+                        />
                         <InputFormElement
                             label="Nom de l'étude"
                             name="settings.name"
@@ -135,7 +129,7 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
                                         <AdminForm
                                             defaultValues={{
                                                 id: 'tmp-id-' + Math.random().toString(),
-                                                ...emptyAdminCreationSchema
+                                                ...emptyAdminCreationSchema,
                                             }}
                                             onSubmit={(admin) => {
                                                 setCollapseAdminForm(true);

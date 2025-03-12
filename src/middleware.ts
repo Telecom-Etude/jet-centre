@@ -16,6 +16,7 @@ import { auth } from './actions/auth';
 
 import type { Session } from 'next-auth';
 import type { NextRequest } from 'next/server';
+import { DEFAULT_LOGIN_REDIRECT } from './routes';
 
 /**
  * Extends the internal NextAuth type to add `auth` session.
@@ -32,8 +33,22 @@ interface NextAuthRequest extends NextRequest {
  */
 export default auth((request: NextAuthRequest) => {
     const session = request.auth;
-    if (!process.env.DEV_MODE && (!session || !session.user || !session.user.email)) {
-        return NextResponse.redirect(new URL('/auth/signin', request.nextUrl));
+    const isLoggedIn = !!session;
+
+    if (process.env.DEV_MODE) {
+        return;
+    }
+
+    const { pathname } = request.nextUrl;
+
+    if (isLoggedIn) {
+        if (pathname === '/auth/signin') {
+            return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.nextUrl));
+        }
+    } else {
+        if (pathname !== '/auth/signin') {
+            return NextResponse.redirect(new URL('/auth/signin', request.nextUrl));
+        }
     }
 });
 
@@ -50,6 +65,6 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        '/((?!api|auth|_next/static|_next/image|favicon.ico|public).*)'
-    ]
+        '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
+    ],
 };

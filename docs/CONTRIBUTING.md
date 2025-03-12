@@ -52,10 +52,10 @@ If you find a bug or have a question:
 
 ### Style Guidelines
 
--   Code Style: Follow Next.js best practices and use ESLint and Prettier.
--   Formatting: Ensure code is formatted using the project's Prettier configuration.
-    -   If you use _vscode_, some extensions will be recommended when you install the project: please install them.
-    -   Otherwise, personally make sure your code is formatted and is correct relatively to the [.prettierrc] and [.eslintrc.json] files.
+- Code Style: Follow Next.js best practices and use ESLint and Prettier.
+- Formatting: Ensure code is formatted using the project's Prettier configuration.
+    - If you use _vscode_, some extensions will be recommended when you install the project: please install them.
+    - Otherwise, personally make sure your code is formatted and is correct relatively to the [.prettierrc] and [.eslintrc.json] files.
 
 ### Commit Messages
 

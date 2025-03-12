@@ -1,20 +1,17 @@
 'use server';
 
 import prisma from '@/db';
-import { studyCreationSchema, StudyCreationSchema } from './forms/schema';
-import { NotifLvl, StudyProgressStep } from '@prisma/client';
+import { StudyCreationSchema } from './forms/schema';
+import { NotifLvl } from '@prisma/client';
 import { ROLE_NAME_CDP } from '@/settings/roles';
 import { NewAdmin } from './forms/settings/settingsSchema';
 import { CompanySize, Domain, toPgCompanySize, toPgDomain } from '@/settings/vars';
 
-export async function onSubmit(jsonData: string) {
-    const data_ = JSON.parse(jsonData);
-    const data: StudyCreationSchema = studyCreationSchema.parse(data_);
-
+export async function createNewStudy(data: StudyCreationSchema) {
     const cdpRole = await prisma.roles.findUnique({
         where: {
-            name: ROLE_NAME_CDP
-        }
+            name: ROLE_NAME_CDP,
+        },
     });
 
     if (!cdpRole) {
@@ -27,11 +24,11 @@ export async function onSubmit(jsonData: string) {
         data.settings.cdps.map(async (cdp) => {
             const person = await prisma.people.findUnique({
                 where: {
-                    email: cdp.email
+                    email: cdp.email,
                 },
                 select: {
-                    User: true
-                }
+                    User: true,
+                },
             });
             return { userId: person?.User?.id ?? falseId, ...cdp };
         })
@@ -45,8 +42,8 @@ export async function onSubmit(jsonData: string) {
                 company.members.map(async (member) => {
                     const person = await prisma.people.findUnique({
                         where: {
-                            email: member.email
-                        }
+                            email: member.email,
+                        },
                     });
                     return { peopleId: person?.id ?? falseId, ...member };
                 })
@@ -62,13 +59,13 @@ export async function onSubmit(jsonData: string) {
             cdps: {
                 connectOrCreate: cdps.map((cdp) => ({
                     where: {
-                        userId: cdp.userId
+                        userId: cdp.userId,
                     },
                     create: {
                         role: {
                             connect: {
-                                id: cdpRole.id
-                            }
+                                id: cdpRole.id,
+                            },
                         },
                         user: {
                             create: {
@@ -77,21 +74,21 @@ export async function onSubmit(jsonData: string) {
                                         email: cdp.email,
                                         firstName: cdp.firstName,
                                         lastName: cdp.lastName,
-                                        // If we don't connect, that mean we have a new user
-                                        number: orUndefine((cdp as NewAdmin).tel)
-                                    }
+                                        // If we don't connect, that means we have a new user
+                                        number: orUndefined((cdp as NewAdmin).tel),
+                                    },
                                 },
                                 settings: {
                                     create: {
                                         theme: 'dark',
                                         notificationLvl: NotifLvl.HIGH,
-                                        gui: true
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }))
+                                        gui: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                })),
             },
             clients: {
                 create: companies
@@ -102,7 +99,7 @@ export async function onSubmit(jsonData: string) {
                                 client: {
                                     connectOrCreate: {
                                         where: {
-                                            peopleId: member.peopleId
+                                            peopleId: member.peopleId,
                                         },
                                         create: {
                                             job: member.job,
@@ -111,13 +108,13 @@ export async function onSubmit(jsonData: string) {
                                                     email: member.email,
                                                     firstName: member.firstName,
                                                     lastName: member.lastName,
-                                                    number: ''
-                                                }
+                                                    number: '',
+                                                },
                                             },
                                             company: {
                                                 connectOrCreate: {
                                                     where: {
-                                                        name: company.name
+                                                        name: company.name,
                                                     },
                                                     create: {
                                                         name: company.name,
@@ -127,62 +124,56 @@ export async function onSubmit(jsonData: string) {
                                                                 street: company.address.street,
                                                                 city: company.address.city,
                                                                 zipCode: company.address.zip,
-                                                                country: company.address.country
-                                                            }
+                                                                country: company.address.country,
+                                                            },
                                                         },
                                                         companyInfos: {
                                                             create: {
                                                                 nvEmployees: 0,
-                                                                ca: orUndefine(company.ca),
+                                                                ca: orUndefined(company.ca),
                                                                 size: map(
-                                                                    orUndefine(
+                                                                    orUndefined(
                                                                         company.size
                                                                     ) as CompanySize,
                                                                     toPgCompanySize
                                                                 ),
-                                                                domains: !isEmtpyString(
+                                                                domains: !isEmptyString(
                                                                     company.domains
                                                                 )
                                                                     ? (
                                                                           company.domains as Domain[]
                                                                       ).map(toPgDomain)
-                                                                    : []
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                                                                    : [],
+                                                            },
+                                                        },
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
                             }));
                     })
-                    .flat()
+                    .flat(),
             },
             information: {
                 create: {
+                    code: data.settings.code,
                     title: data.settings.name,
-                    // applicationFee: 0,
-                    duration: orUndefine(data.settings.duration),
-                    // deadlinePreStudy: new Date(data.settings.deadline),
-                    deadlinePreStudy: map(orUndefine(data.settings.deadline), (x) => new Date(x)),
-                    cc: data.settings.cc
-                }
+                    duration: orUndefined(data.settings.duration),
+                    deadlinePreStudy: map(orUndefined(data.settings.deadline), (x) => new Date(x)),
+                    cc: data.settings.cc,
+                },
             },
-            progress: {
-                create: {
-                    step: StudyProgressStep.PRELIMINARY_STUDY
-                }
-            }
-        }
+        },
     });
 }
 
-function isEmtpyString<T>(value: T): boolean {
+function isEmptyString<T>(value: T): boolean {
     return typeof value === 'string' && value === '';
 }
 
-function orUndefine<T>(value: T | string | null | undefined): T | undefined {
+function orUndefined<T>(value: T | string | null | undefined): T | undefined {
     return value === null || value === undefined || (typeof value === 'string' && value === '')
         ? undefined
         : (value as T);

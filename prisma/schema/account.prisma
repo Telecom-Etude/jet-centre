@@ -25,8 +25,8 @@ model Admins {
     id             String    @id @default(cuid())
     user           User      @relation(fields: [userId], references: [id])
     userId         String    @unique
-    role           Roles     @relation(fields: [roleId], references: [id])
-    roleId         String
+    position       String?
+    role           Roles[]
     studies        Studies[] @relation("cdp")
     auditedStudies Studies[] @relation("auditor")
 }

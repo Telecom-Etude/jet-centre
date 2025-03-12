@@ -6,7 +6,7 @@ import {
     CommandGroup,
     CommandInput,
     CommandItem,
-    CommandList
+    CommandList,
 } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -42,7 +42,7 @@ export function DropdownManyFormElement<V, T extends FieldValues>({
     disabled = false,
     unwritable = false,
     'ping-once': pingOnce,
-    className
+    className,
 }: DropdownFormElementProps<V, T>) {
     const [inFocus, setInFocus] = useState(false);
     const [selected, setSelected] = useState<V[]>([]);
@@ -51,7 +51,7 @@ export function DropdownManyFormElement<V, T extends FieldValues>({
 
     const updateHeight = () => {
         if (buttonRef.current) {
-            let target = buttonRef.current;
+            const target = buttonRef.current;
             target.style.height = 'inherit';
             target.style.height = `${target.scrollHeight}px`;
         }
@@ -95,7 +95,7 @@ export function DropdownManyFormElement<V, T extends FieldValues>({
                 labelStat={inFocus ? 'in-focus' : undefined}
                 disabled={disabled}
                 unwritable={unwritable}
-                son={(field) => (
+                son={() => (
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button

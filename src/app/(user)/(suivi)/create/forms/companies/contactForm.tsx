@@ -3,17 +3,11 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, BoxCollapser, BoxContent } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { FormProvider, FormRow } from '@/components/ui/form';
 import { InputFormElement } from '@/components/meta-components/form/input';
 
-import {
-    contactCreationSchema,
-    ContactCreationSchema,
-    emptyContactCreationSchema,
-    NewContact
-} from './companiesSchema';
+import { contactCreationSchema, ContactCreationSchema, NewContact } from './companiesSchema';
 
 export interface ContactFormProps {
     defaultValues: ContactCreationSchema;
@@ -24,7 +18,7 @@ export interface ContactFormProps {
 export function ContactForm({ defaultValues, onSubmit: onSubmit_, onCancel }: ContactFormProps) {
     const form = useForm<ContactCreationSchema>({
         resolver: zodResolver(contactCreationSchema),
-        defaultValues: defaultValues
+        defaultValues: defaultValues,
     });
 
     const onSubmit = (data: ContactCreationSchema) => {

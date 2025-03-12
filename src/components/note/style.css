@@ -1,15 +1,4 @@
-
 .je-theme {
-    /* --accentBase: #f00 !important;         Utile pour ? */
-    /* --accentBgSubtle: #0f0 !important;     Utile pour ? */
-    /* --accentBg: #00f !important;           Utile pour ? */
-    /* --accentBgHover: #f0f !important;      Utile pour ? */
-    /* --accentBgActive: #0ff !important;     Utile pour ? */
-    /* --accentLine: #ff0 !important;         Utile pour ? */
-    /* --accentBorderHover: #0f0 !important;  Utile pour ? */
-    /* --baseBgHover: #0ff !important;        Utile pour ? */
-    /* --baseLine: #ff0 !important;           Utile pour CodeMirror */
-    /* --baseSolid: #00f !important;          Utile pour les images et les tables */
     --accentBorder: hsl(var(--border)) !important;
     --accentSolid: hsl(var(--border)) !important;
     --accentSolidHover: hsl(var(--link)) !important;

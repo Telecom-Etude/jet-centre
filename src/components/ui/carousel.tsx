@@ -47,7 +47,7 @@ const Carousel = React.forwardRef<
     const [carouselRef, api] = useEmblaCarousel(
         {
             ...opts,
-            axis: orientation === 'horizontal' ? 'x' : 'y'
+            axis: orientation === 'horizontal' ? 'x' : 'y',
         },
         plugins
     );
@@ -116,7 +116,7 @@ const Carousel = React.forwardRef<
                 scrollPrev,
                 scrollNext,
                 canScrollPrev,
-                canScrollNext
+                canScrollNext,
             }}
         >
             <div
@@ -238,5 +238,5 @@ export {
     CarouselContent,
     CarouselItem,
     CarouselPrevious,
-    CarouselNext
+    CarouselNext,
 };

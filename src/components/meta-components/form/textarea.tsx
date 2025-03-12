@@ -26,7 +26,6 @@ export const TextAreaFormElement = <T extends FieldValues>({
                     if (onChange) {
                         onChange(e.target.value);
                     }
-                    // console.log(form.getValues()[name]);
                 }}
                 className="p-4"
             />

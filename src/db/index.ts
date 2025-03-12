@@ -26,7 +26,7 @@ function prismaClientSingleton() {
                             case 'GrandeEntreprise':
                                 return 'Grande entreprise';
                         }
-                    }
+                    },
                 },
                 domains: {
                     needs: { domains: true },
@@ -71,10 +71,10 @@ function prismaClientSingleton() {
                                     return "État de l'art";
                             }
                         });
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        },
     });
 }
 

@@ -6,7 +6,7 @@ import {
     CommandGroup,
     CommandInput,
     CommandItem,
-    CommandList
+    CommandList,
 } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -40,7 +40,7 @@ export function DropdownSingleFormElement<V, T extends FieldValues>({
     'ping-once': pingOnce,
     disabled = false,
     unwritable = false,
-    className
+    className,
 }: DropdownFormElementProps<V, T>) {
     const [inFocus, setInFocus] = useState(false);
     const [open, setOpen] = useState(false);
@@ -98,41 +98,39 @@ export function DropdownSingleFormElement<V, T extends FieldValues>({
                                 <CommandList>
                                     <CommandEmpty>Entrée invalide.</CommandEmpty>
                                     <CommandGroup>
-                                        {values.map((value, i) => {
-                                            return (
-                                                <CommandItem
-                                                    key={getKeyOfValue(value)}
-                                                    value={getKeyOfValue(value)}
-                                                    onSelect={(newKey) => {
-                                                        const newValue = values.find(
-                                                            (v) => getKeyOfValue(v) === newKey
-                                                        )!;
+                                        {values.map((value, i) => (
+                                            <CommandItem
+                                                key={i}
+                                                value={getKeyOfValue(value)}
+                                                onSelect={(newKey) => {
+                                                    const newValue = values.find(
+                                                        (v) => getKeyOfValue(v) === newKey
+                                                    )!;
 
-                                                        if (onChange) {
-                                                            onChange(newValue);
-                                                        }
-                                                        setInputRef(newKey);
-                                                        form.setValue(
-                                                            name,
-                                                            newValue as PathValue<T, Path<T>>
-                                                        );
-                                                        setOpen(false);
-                                                    }}
-                                                >
-                                                    <Check
-                                                        className={cn(
-                                                            'mr-2 h-4 w-4',
-                                                            getKeyOfValue(
-                                                                (field.value as any) ?? ''
-                                                            ) === getKeyOfValue(value)
-                                                                ? 'opacity-100'
-                                                                : 'opacity-0'
-                                                        )}
-                                                    />
-                                                    {displayValue(value)}
-                                                </CommandItem>
-                                            );
-                                        })}
+                                                    if (onChange) {
+                                                        onChange(newValue);
+                                                    }
+                                                    setInputRef(newKey);
+                                                    form.setValue(
+                                                        name,
+                                                        newValue as PathValue<T, Path<T>>
+                                                    );
+                                                    setOpen(false);
+                                                }}
+                                            >
+                                                <Check
+                                                    className={cn(
+                                                        'mr-2 h-4 w-4',
+                                                        getKeyOfValue(
+                                                            (field.value as any) ?? ''
+                                                        ) === getKeyOfValue(value)
+                                                            ? 'opacity-100'
+                                                            : 'opacity-0'
+                                                    )}
+                                                />
+                                                {displayValue(value)}
+                                            </CommandItem>
+                                        ))}
                                     </CommandGroup>
                                 </CommandList>
                             </Command>

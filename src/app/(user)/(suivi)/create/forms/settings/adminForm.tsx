@@ -18,7 +18,7 @@ export interface AdminFormProps {
 export function AdminForm({ defaultValues, onSubmit: onSubmit_, onCancel }: AdminFormProps) {
     const form = useForm<AdminCreationSchema>({
         resolver: zodResolver(adminCreationSchema),
-        defaultValues: defaultValues
+        defaultValues: defaultValues,
     });
 
     const onSubmit = (data: AdminCreationSchema) => {

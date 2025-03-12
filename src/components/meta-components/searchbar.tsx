@@ -6,7 +6,7 @@ import {
     CommandGroup,
     HiddenCommandInput,
     CommandItem,
-    CommandList
+    CommandList,
 } from '@/components/ui/command';
 
 import { Input } from '@/components/ui/input';
@@ -30,7 +30,7 @@ export function SearchBar<T>({
     placeholder,
     items,
     displayValue = (item) => (item as any).toString(),
-    onSelect: onSelect_
+    onSelect: onSelect_,
 }: SearchBarProps<T>) {
     const id = useId();
 
@@ -87,7 +87,6 @@ export function SearchBar<T>({
 
             <div
                 onFocus={() => setInFocus(true)}
-                // onBlur={() => setInFocus(false)}
                 className={cn('absolute w-[calc(100%+4px)] -left-[2px] z-50', !inFocus && 'hidden')}
             >
                 <Command value={value} onValueChange={setValue} className="rounded-b-md">
@@ -100,7 +99,9 @@ export function SearchBar<T>({
                                     onSelect={() => {
                                         setInFocus(false);
                                         setSearch('');
-                                        onSelect_ && onSelect_(item);
+                                        if (onSelect_) {
+                                            onSelect_(item);
+                                        }
                                     }}
                                     value={displayValue(item)}
                                 >

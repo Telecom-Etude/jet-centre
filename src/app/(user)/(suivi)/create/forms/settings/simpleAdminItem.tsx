@@ -4,7 +4,7 @@ import {
     BoxHeaderBlock,
     BoxTitle,
     BoxDragHandle,
-    BoxButtonTrash
+    BoxButtonTrash,
 } from '@/components/boxes/boxes';
 import { DragHandle } from '@/components/meta-components/sortableList';
 import { NBSP } from '@/lib/utils';

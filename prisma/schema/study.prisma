@@ -1,19 +1,22 @@
 model Studies {
-    id             String           @id @default(cuid())
-    cdps           Admins[]         @relation("cdp")
-    auditors       Admins[]         @relation("auditor")
-    information    StudyInfos       @relation(fields: [informationId], references: [id])
-    informationId  String           @unique
-    progress       StudyProgress?
-    clients        StudyClients[]
-    MRIs           MRIs?
-    studyAssignees StudyAssignees[]
-    satisfactions  Satisfactions?
+    id              String           @id @default(cuid())
+    cdps            Admins[]         @relation("cdp")
+    auditors        Admins[]         @relation("auditor")
+    information     StudyInfos       @relation(fields: [informationId], references: [id])
+    informationId   String           @unique
+    progress        StudyProgress?   @relation(fields: [studyProgressId], references: [id])
+    clients         StudyClients[]
+    MRIs            MRIs?
+    studyAssignees  StudyAssignees[]
+    satisfactions   Satisfactions?
+    studyProgressId String?
 }
 
 model StudyInfos {
     id               String        @id @default(cuid())
-    title            String        @unique
+    code             String        @unique
+    googleFolder     String?       @unique
+    title            String?
     applicationFee   Float?
     duration         Int?
     deadlinePreStudy DateTime?
@@ -27,10 +30,10 @@ model StudyInfos {
 
 model StudyProgress {
     id      String            @id @default(cuid())
-    study   Studies           @relation(fields: [studyId], references: [id], onDelete: Cascade)
     studyId String            @unique
     phases  Phases[]
     step    StudyProgressStep
+    Studies Studies[]
 }
 
 enum StudyProgressStep {
@@ -53,11 +56,10 @@ model Phases {
     studyProgressId String?
 }
 
-//? pk `deliverable` est un String et pas un Deliverables ?
 model JEHs {
     id          String  @id @default(cuid())
     JEHnb       Int
-    deliverable String
+    deliverable Boolean
     Phases      Phases? @relation(fields: [phasesId], references: [id])
     phasesId    String?
 }

@@ -10,13 +10,7 @@ export interface Task {
     checked: boolean;
 }
 
-export function TaskBulletList({
-    initialList,
-    saveTasks
-}: {
-    initialList: Task[];
-    saveTasks: (tasks: Task[]) => void;
-}) {
+export function TaskBulletList({ initialList }: { initialList: Task[] }) {
     const [tasks, setTasks] = useState(initialList);
 
     const checkTask = (id: string) => {

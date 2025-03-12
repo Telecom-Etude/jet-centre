@@ -1,6 +1,6 @@
 'use client';
 
-import { FaMoneyBill, FaUser } from 'react-icons/fa6';
+import { FaUser, FaBug, FaQuestion } from 'react-icons/fa6';
 import SidebarCdp from './sidebar-cdp';
 import SidebarRole from './sidebar-role';
 import { useState } from 'react';
@@ -9,21 +9,45 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-export function SidebarSwitch({ isOpen }: { isOpen: boolean }) {
-    const tabs = [
-        {
+export function SidebarSwitch({
+    isOpen,
+    missions,
+    position,
+}: {
+    isOpen: boolean;
+    missions?: string[];
+    position?: string;
+}) {
+    const tabs = [];
+    if (missions && missions.length !== 0) {
+        tabs.push({
             id: 'cdp',
             title: 'CDP',
             icon: FaUser,
-            content: <SidebarCdp />
-        },
-        {
-            id: 'role',
-            title: 'Trésorier',
-            icon: FaMoneyBill,
-            content: <SidebarRole />
+            content: <SidebarCdp missions={missions} />,
+        });
+    }
+    let positionIcon;
+    switch (position) {
+        case 'Trésorier': {
+            positionIcon = FaQuestion;
+            break;
         }
-    ];
+        case 'Informatique': {
+            positionIcon = FaBug;
+            break;
+        }
+        default: {
+            positionIcon = FaQuestion;
+            break;
+        }
+    }
+    tabs.push({
+        id: 'role',
+        title: position,
+        icon: positionIcon,
+        content: <SidebarRole />,
+    });
 
     const [tab, setTab] = useState(0);
     const [api, setApi] = React.useState<CarouselApi>();

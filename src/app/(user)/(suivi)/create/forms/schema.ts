@@ -4,12 +4,12 @@ import { emptySettingsCreationSchema, settingsCreationSchema } from './settings/
 
 export const studyCreationSchema = z.object({
     settings: settingsCreationSchema,
-    companies: companiesCreationSchema
+    companies: companiesCreationSchema,
 });
 
 export type StudyCreationSchema = z.infer<typeof studyCreationSchema>;
 
 export const emptyStudyCreationSchema: StudyCreationSchema = {
     settings: emptySettingsCreationSchema,
-    companies: emptyCompaniesCreationSchema
+    companies: emptyCompaniesCreationSchema,
 };

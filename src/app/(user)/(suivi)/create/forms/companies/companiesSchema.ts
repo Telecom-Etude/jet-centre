@@ -2,11 +2,11 @@ import { z, EMPTY_STRING, required, nonemptyexcluded } from '@/lib/zod';
 import { zCompanySize, zDOMAINS } from '@/settings/vars';
 
 const zIdx = z.object({
-    idx: z.number().int()
+    idx: z.number().int(),
 });
 
 const zIsNew = z.object({
-    isNew: z.boolean()
+    isNew: z.boolean(),
 });
 
 // ====================================================== //
@@ -19,7 +19,7 @@ export const zContact = z.object({
     email: z.string().email(),
     job: z.string(),
     excluded: z.boolean().default(false),
-    id: z.string()
+    id: z.string(),
 });
 
 // ~~~~~~~~~~~ Contact Creation ~~~~~~~~~~ //
@@ -30,7 +30,7 @@ export const contactCreationSchema = z.object({
     tel: z.string().or(EMPTY_STRING),
     job: z.string(),
     description: z.string(),
-    excluded: z.boolean().default(false)
+    excluded: z.boolean().default(false),
 });
 
 export type ContactCreationSchema = z.infer<typeof contactCreationSchema>;
@@ -41,7 +41,7 @@ export const emptyContactCreationSchema: ContactCreationSchema = {
     tel: '',
     description: '',
     job: '',
-    excluded: false
+    excluded: false,
 };
 
 // ~~~~~~~~~~ Contact Form Value ~~~~~~~~~ //
@@ -70,9 +70,9 @@ export const zCompany = z.object({
         street: z.string(),
         city: z.string(),
         zip: z.string(),
-        country: z.string()
+        country: z.string(),
     }),
-    members: zContactFormValue.array().superRefine(nonemptyexcluded)
+    members: zContactFormValue.array().superRefine(nonemptyexcluded),
 });
 export type Company = z.infer<typeof zCompany>;
 
@@ -92,14 +92,14 @@ export const emptyCompany = {
         street: '',
         city: '',
         zip: '',
-        country: ''
+        country: '',
     },
-    members: []
+    members: [],
 };
 
 // ~~~~~~~~~~~~~~ Companies ~~~~~~~~~~~~~~ //
 export const companiesCreationSchema = z.object({
-    companies: z.array(zCompanyFormValue.nullable())
+    companies: z.array(zCompanyFormValue.nullable()),
 });
 export type CompaniesCreationSchema = z.infer<typeof companiesCreationSchema>;
 

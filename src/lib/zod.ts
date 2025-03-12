@@ -7,8 +7,8 @@ import translation from 'zod-i18n-map/locales/fr/zod.json';
 i18next.init({
     lng: 'fr',
     resources: {
-        es: { zod: translation }
-    }
+        es: { zod: translation },
+    },
 });
 z.setErrorMap(zodI18nMap);
 
@@ -21,7 +21,7 @@ export function required(val: any, ctx: RefinementCtx) {
     if (val === undefined || (typeof val === 'string' && val.length === 0)) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: 'Requis'
+            message: 'Requis',
         });
     }
 }
@@ -33,7 +33,7 @@ export function stringDate(val: any, ctx: RefinementCtx) {
         if (!dateRegex.test(val)) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: 'Invalid date format, expected dd/mm/yyyy'
+                message: 'Invalid date format, expected dd/mm/yyyy',
             });
         }
     } else {
@@ -42,7 +42,7 @@ export function stringDate(val: any, ctx: RefinementCtx) {
             expected: z.ZodParsedType.string,
             received:
                 z.ZodParsedType[typeof val as keyof typeof z.ZodParsedType] ||
-                z.ZodParsedType.unknown
+                z.ZodParsedType.unknown,
         });
     }
 }
@@ -54,7 +54,7 @@ export function nonemptyexcluded<T>(val: T[], ctx: RefinementCtx) {
             message: 'Array must contain at least 1 non excluded element',
             minimum: 1,
             inclusive: true,
-            type: 'array'
+            type: 'array',
         });
     }
 }

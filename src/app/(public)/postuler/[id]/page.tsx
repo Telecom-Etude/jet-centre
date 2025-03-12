@@ -1,6 +1,7 @@
 import { DragAndDrop } from './cv-upload/form';
 
-export default function Postuler({ params: { id } }: { params: { id: string } }) {
+export default async function Postuler({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const missionName = 'Mission name';
     const src =
         'https://docs.google.com/forms/d/e/1FAIpQLSeFdbqAPj3xpAHyHyiSnfFXiqb2pVH29L2s6hqfhA-Tj6Zrlw/viewform?embedded=true';

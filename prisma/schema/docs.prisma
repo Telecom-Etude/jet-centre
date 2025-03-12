@@ -1,9 +1,8 @@
 model Docs {
     id                     String        @id @default(cuid())
     title                  String
-    googlePath             String
-    extension              String
-    editable               Boolean
+    googleId               String        @unique
+    type                   String
     status                 Status?
     assigneeCni            AssigneeDocs? @relation("cni")
     assigneeSocialSecurity AssigneeDocs? @relation("socialSecurity")

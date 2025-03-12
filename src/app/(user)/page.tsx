@@ -1,24 +1,18 @@
 import { Metadata } from 'next';
 
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { auth } from '@/actions/auth';
+import FilesBrowser from '@/components/gdrive/FilesBrowser';
 
 export const metadata = {
-    title: 'Dashboard'
+    title: 'Dashboard',
 } satisfies Metadata;
 
-const HomePage = async () => {
-    const email = (await auth())?.user?.email;
+async function HomePage() {
     return (
         <div className="space-y-4">
             <div className="mb-4">Bienvenue sur le site de Telecom Etude</div>
-            <div>U R {email || 'NO 1'}</div>
-            <Link href="/create">
-                <Button>Nouvelle étude</Button>
-            </Link>
+            <FilesBrowser />
         </div>
     );
-};
+}
 
 export default HomePage;

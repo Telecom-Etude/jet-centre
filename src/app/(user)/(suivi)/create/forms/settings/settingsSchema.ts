@@ -1,7 +1,7 @@
 import { z, EMPTY_STRING, required, stringDate } from '@/lib/zod';
 
 const zIsNew = z.object({
-    isNew: z.boolean()
+    isNew: z.boolean(),
 });
 
 // ====================================================== //
@@ -13,7 +13,7 @@ export const zAdmin = z.object({
     firstName: z.string(),
     lastName: z.string(),
     email: z.string().email(),
-    id: z.string()
+    id: z.string(),
 });
 export type Admin = z.infer<typeof zAdmin>;
 
@@ -23,7 +23,7 @@ export const adminCreationSchema = z.object({
     lastName: z.string().superRefine(required),
     email: z.string().email(),
     tel: z.string(),
-    id: z.string()
+    id: z.string(),
 });
 
 export type AdminCreationSchema = z.infer<typeof adminCreationSchema>;
@@ -31,7 +31,7 @@ export const emptyAdminCreationSchema = {
     firstName: '',
     lastName: '',
     email: '',
-    tel: ''
+    tel: '',
 };
 
 // ~~~~~~~~~~~ Admin Form Value ~~~~~~~~~~ //
@@ -46,19 +46,24 @@ export type AdminFormValue = z.infer<typeof zAdminFormValue>;
 // ====================================================== //
 
 export const settingsCreationSchema = z.object({
-    name: z.string().superRefine(required),
+    code: z
+        .string()
+        .superRefine(required)
+        .refine((v) => /^22/.test(v), { message: "Code de l'étude doit commencer par 22!" }),
+    name: z.string().optional(),
     duration: z.number().or(EMPTY_STRING),
     deadline: z.string().superRefine(stringDate).or(EMPTY_STRING),
     cc: z.boolean(),
-    cdps: zAdminFormValue.array()
+    cdps: zAdminFormValue.array(),
 });
 
 export type SettingsCreationSchema = z.infer<typeof settingsCreationSchema>;
 
 export const emptySettingsCreationSchema: SettingsCreationSchema = {
+    code: '',
     name: '',
     duration: '',
     deadline: '',
     cc: false,
-    cdps: []
+    cdps: [],
 };
