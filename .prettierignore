@@ -1,0 +1,14 @@
+# Default
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+# Ignore all files by default
+**/*
+
+# Allow accepted file extensions
+!**/*.{md,ts,tsx,js,jsx,json,mjs,mts,svg,html,css,cjs,txt,yml,xml}
+
+# Ensure directories are not ignored (Prettier needs access)
+!*/
