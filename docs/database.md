@@ -4,32 +4,26 @@
 
 We use [PostgreSQL](https://www.postgresql.org/) as our [BDMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and [Prisma](https://www.prisma.io/) to write schema, migration and access to the data in typescript.
 
-## Setup
+## Setup (installation)
 
-To set up the database, first install postgresql.
+To set up the database, first install postgresql and connect the server.
 
 ### Linux
 ```bash
-apt install postgresql
+apt install postgresql          # Install PostgreSQL
+sudo -u postgres psql           # Connect the server using the `psql` command as the `postgres` user
+# sudo sudo -u postgres psql    # If the first version fails, try this one
 ```
 ### Windows
-> Check the [PostgreSQL downloads page](https://www.postgresql.org/download/windows/)  
+> Download the installer from [this page](https://www.postgresql.org/download/windows/)  
 > Make sure you install PostgreSQL on port 5432  
 > After the installation, make sure to add `C:\Program Files\PostgreSQL\<version>\bin` to your PATH.
 
-Then connect to the postgresql server using the `psql` command as the `postgres` user.
-
-### Linux
 ```bash
-sudo -u postgres psql
+psql -U postgres    # Connect the server using the `psql` command as the `postgres` user
 ```
 
-If you have an error, try `sudo sudo -u postgres psql`.
-
-### Windows
-```bash
-psql -U postgres 
-```
+## Setup (database creation)
 
 Here, create a new role (user in postgresql) who can create a database, login and have a password.
 
