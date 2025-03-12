@@ -4,11 +4,20 @@
 **/.hg
 **/node_modules
 
-# Ignore all files by default
-**/*
+# Ignored folders
+**/.next
+**/prisma/migrations
+**/prisma/schema
+**/public
+**src/fonts
 
-# Allow accepted file extensions
-!**/*.{md,ts,tsx,js,jsx,json,mjs,mts,svg,html,css,cjs,txt,yml,xml}
+# Ignored files
+.gitattributes
+.gitignore
+.prettierignore
+Dockerfile
+LICENSE
 
-# Ensure directories are not ignored (Prettier needs access)
-!*/
+# Ignored file extentions
+**/*.png
+**/*.ico
