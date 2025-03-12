@@ -17,7 +17,7 @@ Thank you for your interest in contributing to **Jet Centre**🚀! We're excited
 
 ## Getting started
 
-Please refer to the [Getting Started Guide](./docs/GETTING_STARTED.md) to know how to install and launch the project!
+Please refer to the [Getting Started Guide](/docs/GETTING_STARTED.md) to know how to install and launch the project!
 
 ## How to Contribute
 
