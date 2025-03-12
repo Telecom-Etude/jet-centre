@@ -9,12 +9,15 @@ We use [PostgreSQL](https://www.postgresql.org/) as our [BDMS](https://en.wikipe
 To set up the database, first install postgresql and connect the server.
 
 ### Linux
+
 ```bash
 apt install postgresql          # Install PostgreSQL
 sudo -u postgres psql           # Connect the server using the `psql` command as the `postgres` user
 # sudo sudo -u postgres psql    # If the first version fails, try this one
 ```
+
 ### Windows
+
 > Download the installer from [this page](https://www.postgresql.org/download/windows/)  
 > Make sure you install PostgreSQL on port 5432  
 > After the installation, make sure to add `C:\Program Files\PostgreSQL\<version>\bin` to your PATH.

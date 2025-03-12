@@ -36,17 +36,21 @@ If you find a bug or have a question:
 
 1. [Fork](#fork) the project.
 2. Create a clone of your forked git repo and add a remote pointing to this repo  
-    The remote ensures that your can easily pull more recent changes to your forked repo
+   The remote ensures that your can easily pull more recent changes to your forked repo
+
 ```bash
 git clone https://github.com/<your_username>/jet-centre.git
 git remote upstream add https://github.com/Telecom-Etude/jet-centre.git
 ```
+
 3. **Read the [Getting Started Guide](/docs/GETTING_STARTED.md)** to set up the project locally.
 4. Make your changes, ensuring you follow the [Style Guidelines](#style-guidelines).
 5. Once finished with all your code on your fork, make sure you are up-to-date with the `main` branch of `jet-centre`. You can use the following command to merge your changes with the original repo
+
 ```bash
 git pull upstream main
 ```
+
 6. Once finished, make a [Pull request](https://github.com/telecom-etude/jet-centre/pulls) with your fork.
     - Provide a clear description of the feature.
         - What the changes are.
@@ -66,6 +70,12 @@ git pull upstream main
     - If you use _vscode_, some extensions will be recommended when you install the project: please install them.
     - Otherwise, personally make sure your code is formatted and is correct relatively to the [.prettierrc] and [.eslintrc.json] files.
 
+To format your code using the Prettier configuration, run the following command:
+
+```bash
+npx prettier -cw .
+```
+
 ### Commit Messages
 
 Follow the Conventional Commits format:
@@ -73,6 +83,12 @@ Follow the Conventional Commits format:
 ```txt
 (scope) action: what the commit does
 ```
+
+Examples of _actions_ include:
+
+- **fix**: A functionnality that wasn't working before is now working
+- **add**: A functionnality that didn't exist before has been added
+- **ref** (short for [refactor](https://en.wikipedia.org/wiki/Code_refactoring)): Some code has been rewritten but functionnalities have not been modified
 
 For instance, if you fix the redirection callback on the signin page, a good commit name is
 
