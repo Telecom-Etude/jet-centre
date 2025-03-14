@@ -1,4 +1,3 @@
-import { auth } from '@/actions/auth';
 import { googleDrive } from './api';
 import { driveFileToDriveFile, FileType } from './types';
 import prisma from '@/db';
@@ -6,8 +5,7 @@ import { log } from '@/lib/utils';
 
 async function getMissionFolderIdFromDrive(code: string): Promise<string | undefined> {
     try {
-        const session = await auth();
-        const drive = googleDrive(session);
+        const drive = await googleDrive();
         const folderList = await drive.files.list({
             q: `'${process.env.DOSSIER_SUIVI}' in parents`,
         });

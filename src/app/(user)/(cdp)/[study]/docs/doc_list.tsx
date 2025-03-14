@@ -9,7 +9,7 @@ import {
     BoxTitle,
 } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
-import { getMissionFiles } from '@/drive/api';
+import { getMissionFiles } from '@/drive/files';
 import { DriveFile, googleUrl } from '@/drive/types';
 import { useEffect, useState, useCallback } from 'react';
 import { FaArrowRightFromBracket, FaArrowUpFromBracket } from 'react-icons/fa6';
@@ -26,7 +26,7 @@ export function DocumentList({ study }: { study: string }) {
         setLoading(true);
         getMissionFiles(study).then((serverMissions) => {
             if (serverMissions !== undefined) {
-                setFiles(serverMissions);
+                setFiles(serverMissions || []);
             }
             setLoading(false);
         });

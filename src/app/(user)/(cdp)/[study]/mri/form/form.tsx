@@ -1,11 +1,12 @@
 import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
-import { DIFFICULTIES, PAYS } from './schema';
+import { DIFFICULTIES, FormType, PAYS } from './schema';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
 import { DOMAINS } from '@/settings/vars';
+import { UseFormReturn } from 'react-hook-form';
 
-export default function MRICreationForm({ form }: { form: any }) {
+export default function MRICreationForm({ form }: { form: UseFormReturn<FormType> }) {
     return (
         <FormProvider {...form}>
             <form>

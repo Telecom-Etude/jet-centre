@@ -173,7 +173,7 @@ export function useSortableList<T extends WithId = WithId>(initialItems?: T[]): 
 
 // Code from: https://github.com/clauderic/dnd-kit/blob/master/packages/utilities/src/css.ts
 // Licence: MIT
-function transformToCSS(transform: any) {
+function transformToCSS(transform: { x: number; y: number } | null) {
     const { x, y } = transform ?? { x: 0, y: 0, scaleX: 1, scaleY: 1 };
 
     return `translate3d(${x ? Math.round(x) : 0}px, ${y ? Math.round(y) : 0}px, 0)`;

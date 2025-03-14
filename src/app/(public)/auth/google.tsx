@@ -10,7 +10,7 @@ import LogoGoogle from '@/../public/google.svg';
  *      - text: text of the button
  *      - action: action executed when the button is clicked.
  */
-export function GoogleButton({ text, action }: { text: string; action: any }) {
+export function GoogleButton({ text, action }: { text: string; action: () => Promise<void> }) {
     return (
         <form action={action}>
             <Button
