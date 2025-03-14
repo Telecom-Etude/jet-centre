@@ -28,15 +28,20 @@ interface DropdownFormElementProps<V, T extends FieldValues> extends FormElement
     className?: string;
 }
 
-export function DropdownSingleFormElement<V, T extends FieldValues>({
+export function DropdownSingleFormElement<
+    V extends {
+        toString(): string;
+    },
+    T extends FieldValues,
+>({
     form,
     formId,
     label,
     name,
     values,
     onChange,
-    displayValue = (value: V) => (value as any).toString(),
-    getKeyOfValue = (value: V) => (value as any).toString(),
+    displayValue = (value: V) => value.toString(),
+    getKeyOfValue = (value: V) => value.toString(),
     'ping-once': pingOnce,
     disabled = false,
     unwritable = false,
@@ -121,9 +126,8 @@ export function DropdownSingleFormElement<V, T extends FieldValues>({
                                                 <Check
                                                     className={cn(
                                                         'mr-2 h-4 w-4',
-                                                        getKeyOfValue(
-                                                            (field.value as any) ?? ''
-                                                        ) === getKeyOfValue(value)
+                                                        getKeyOfValue(field.value) ===
+                                                            getKeyOfValue(value)
                                                             ? 'opacity-100'
                                                             : 'opacity-0'
                                                     )}

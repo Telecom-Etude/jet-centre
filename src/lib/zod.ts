@@ -17,7 +17,7 @@ export { z };
 
 export const EMPTY_STRING = z.string().max(0);
 
-export function required(val: any, ctx: RefinementCtx) {
+export function required<T>(val: T, ctx: RefinementCtx) {
     if (val === undefined || (typeof val === 'string' && val.length === 0)) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
@@ -26,7 +26,7 @@ export function required(val: any, ctx: RefinementCtx) {
     }
 }
 
-export function stringDate(val: any, ctx: RefinementCtx) {
+export function stringDate<T>(val: T, ctx: RefinementCtx) {
     const dateRegex = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
     if (typeof val === 'string') {
@@ -47,8 +47,8 @@ export function stringDate(val: any, ctx: RefinementCtx) {
     }
 }
 
-export function nonemptyexcluded<T>(val: T[], ctx: RefinementCtx) {
-    if (val.every((v) => (v as any).excluded ?? false)) {
+export function nonEmptyExcluded<T>(val: T[], ctx: RefinementCtx) {
+    if (val.every((v) => (v as { excluded: boolean }).excluded ?? false)) {
         ctx.addIssue({
             code: z.ZodIssueCode.too_small,
             message: 'Array must contain at least 1 non excluded element',

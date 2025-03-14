@@ -1,9 +1,10 @@
 'use server';
 
-import { Session } from 'next-auth';
 import { drive_v3, google } from 'googleapis';
+import { auth } from '@/actions/auth';
 
-export function googleDrive(session: Session | null): drive_v3.Drive {
+export async function googleDrive(): Promise<drive_v3.Drive> {
+    const session = await auth();
     const googleAuth = new google.auth.OAuth2({
         clientId: process.env.AUTH_GOOGLE_ID,
         clientSecret: process.env.AUTH_GOOGLE_SECRET,

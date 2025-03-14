@@ -1,6 +1,6 @@
 'use client';
 
-import { getFileIds, getFiles } from '@/drive/api';
+import { getFileIds, getFiles } from '@/drive/files';
 import { use, useState } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';

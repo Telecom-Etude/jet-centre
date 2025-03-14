@@ -1,15 +1,13 @@
-import { auth } from '@/actions/auth';
 import { googleDrive } from './api';
 import { DriveFile, driveFileToDriveFile, FileType } from './types';
-import { Session } from 'next-auth';
 import { getMissionFolderId } from './folders';
 import { drive_v3 } from 'googleapis';
 
 export async function getFileIds(): Promise<string[]> {
-    const session = await auth();
+    const drive = await googleDrive();
 
-    return googleDrive(session)
-        .files.list({
+    return drive.files
+        .list({
             pageSize: 10,
         })
         .then(
@@ -19,19 +17,17 @@ export async function getFileIds(): Promise<string[]> {
 }
 
 export async function getFiles(fileIds: string[]): Promise<Promise<DriveFile>[]> {
-    return auth().then((session: Session | null) => {
-        return fileIds.map(async (fileId) => {
-            return googleDrive(session)
-                .files.get({ fileId, fields: 'iconLink,thumbnailLink,name,webViewLink,mimeType' })
-                .then((req) => driveFileToDriveFile(req.data));
-        });
+    const drive = await googleDrive();
+
+    return fileIds.map(async (fileId) => {
+        return drive.files
+            .get({ fileId, fields: 'iconLink,thumbnailLink,name,webViewLink,mimeType' })
+            .then((req) => driveFileToDriveFile(req.data));
     });
 }
 
 export async function getFileModifiedDate(fileId: string): Promise<string> {
-    const session = await auth();
-
-    const file = await googleDrive(session).files.get({ fileId, fields: 'modifiedTime' }, {});
+    const file = await (await googleDrive()).files.get({ fileId, fields: 'modifiedTime' }, {});
 
     return file?.data?.modifiedTime || '';
 }
@@ -39,8 +35,7 @@ export async function getFileModifiedDate(fileId: string): Promise<string> {
 export async function copyTemplate(templateId: string, code: string): Promise<DriveFile | null> {
     try {
         const folderId = await getMissionFolderId(code);
-        const session = await auth();
-        const drive = googleDrive(session);
+        const drive = await googleDrive();
         if (!folderId) {
             throw new Error('Failed to access google drive study folder.');
         }
@@ -58,8 +53,7 @@ export async function copyTemplate(templateId: string, code: string): Promise<Dr
 export async function getMissionFiles(code: string): Promise<DriveFile[] | null> {
     try {
         const folderId = await getMissionFolderId(code);
-        const session = await auth();
-        const drive = googleDrive(session);
+        const drive = await googleDrive();
         if (folderId) {
             return recursiveSearch(drive, folderId);
         } else {
