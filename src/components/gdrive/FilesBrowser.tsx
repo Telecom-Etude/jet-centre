@@ -5,7 +5,7 @@ import { use, useState } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { Skeleton } from '../ui/skeleton';
-import { DriveFile } from '@/drive/interface';
+import { DriveFile } from '@/drive/types';
 
 function FileComponent({ pFile }: { pFile: Promise<DriveFile> | null }) {
     const file = pFile === null ? null : use(pFile);

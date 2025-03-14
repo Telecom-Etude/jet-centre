@@ -10,7 +10,7 @@ import {
 } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { getMissionFiles } from '@/drive/api';
-import { DriveFile, googleUrl } from '@/drive/interface';
+import { DriveFile, googleUrl } from '@/drive/types';
 import { useEffect, useState, useCallback } from 'react';
 import { FaArrowRightFromBracket, FaArrowUpFromBracket } from 'react-icons/fa6';
 import Link from 'next/link';
