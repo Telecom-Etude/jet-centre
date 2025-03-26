@@ -33,7 +33,7 @@ interface NextAuthRequest extends NextRequest {
  */
 export default auth((request: NextAuthRequest) => {
     const session = request.auth;
-    const isLoggedIn = !!session;
+    const isLoggedIn = !!session?.user.email;
 
     if (process.env.DEV_MODE) {
         return;
@@ -42,10 +42,12 @@ export default auth((request: NextAuthRequest) => {
     const { pathname } = request.nextUrl;
 
     if (isLoggedIn) {
+        console.log('>>> Logged in');
         if (pathname === '/auth/signin') {
             return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.nextUrl));
         }
     } else {
+        console.log('>>> Logged out');
         if (pathname !== '/auth/signin') {
             return NextResponse.redirect(new URL('/auth/signin', request.nextUrl));
         }

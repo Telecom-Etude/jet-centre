@@ -5,7 +5,7 @@ declare namespace NodeJS {
         AUTH_GOOGLE_SECRET: string;
         DB_URL: string;
         DOSSIER_SUIVI: string;
-        DEV_MODE?: bool;
+        DEV_MODE?: '';
         TEMPLATE_EXCEL_CE: string;
         TEMPLATE_EXCEL_RM: string;
         TEMPLATE_ACC: string;
