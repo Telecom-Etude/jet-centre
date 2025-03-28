@@ -22,6 +22,8 @@ import { DriveFile, googleUrl } from '@/drive/types';
 import { useState } from 'react';
 import { FaArrowRightFromBracket, FaArrowUpFromBracket } from 'react-icons/fa6';
 import Link from 'next/link';
+import { copyTemplateWithExcel } from '@/drive/files';
+import { useRouter } from 'next/navigation';
 
 interface FileExplorerProps {
     missions: DriveFile[] | null;
@@ -39,6 +41,7 @@ export function FileExplorerBox({
     study,
 }: FileExplorerProps) {
     const [open, setOpen] = useState(false);
+    const router = useRouter();
 
     return (
         <>
@@ -77,7 +80,9 @@ export function FileExplorerBox({
                                     variant="outline"
                                     key={i}
                                     onClick={() => {
-                                        window.alert(`${fileId}, ${name}, ${study}, ${excelId}`);
+                                        copyTemplateWithExcel(fileId, study, excelId).then(() => {
+                                            router.refresh();
+                                        });
                                     }}
                                 >
                                     {name}
