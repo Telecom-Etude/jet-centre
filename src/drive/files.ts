@@ -60,11 +60,11 @@ async function copyTemplate(file: NameIdFile, code: string): Promise<DriveFile |
     }
 }
 
-export async function renameFile(id: string, name: string): Promise<DriveFile | null> {
+export async function renameFile(fileId: string, name: string): Promise<DriveFile | null> {
     try {
         const drive = await googleDrive();
         const file = await drive.files.update({
-            fileId: id,
+            fileId,
             requestBody: {
                 name,
             },
@@ -73,6 +73,20 @@ export async function renameFile(id: string, name: string): Promise<DriveFile | 
     } catch (e) {
         console.error(`[renameFile] ${e}`);
         return null;
+    }
+}
+
+export async function trashFile(fileId: string, trashed: boolean): Promise<boolean> {
+    try {
+        const drive = await googleDrive();
+        const res = await drive.files.update({
+            fileId,
+            requestBody: { trashed },
+        });
+        return res.status <= 300;
+    } catch (e) {
+        console.error(`[deleteFile] ${e}`);
+        return false;
     }
 }
 
@@ -93,12 +107,12 @@ export async function copyTemplateWithExcel(
     }
 }
 
-export async function getMissionFiles(code: string): Promise<DriveFile[] | null> {
+export async function getMissionFiles(code: string, trash?: boolean): Promise<DriveFile[] | null> {
     try {
         const folderId = await getMissionFolderId(code);
         const drive = await googleDrive();
         if (folderId) {
-            return recursiveSearch(drive, folderId);
+            return recursiveSearch(drive, folderId, !!trash);
         }
         throw new Error('Failed to access google drive study folder.');
     } catch (e) {
@@ -109,11 +123,12 @@ export async function getMissionFiles(code: string): Promise<DriveFile[] | null>
 
 async function recursiveSearch(
     drive: drive_v3.Drive,
-    folderId: string
+    folderId: string,
+    trash: boolean
 ): Promise<DriveFile[] | null> {
     try {
         const folderContent = await drive.files.list({
-            q: `'${folderId}' in parents`,
+            q: `'${folderId}' in parents and trashed=${trash}`,
         });
         const items = folderContent?.data.files;
         if (items) {
@@ -121,7 +136,7 @@ async function recursiveSearch(
             for (const item of items) {
                 if (item.mimeType === FileType.Folder) {
                     if (item.id) {
-                        const children = await recursiveSearch(drive, item.id);
+                        const children = await recursiveSearch(drive, item.id, trash);
                         if (children) {
                             files.push(...children);
                         }

@@ -4,27 +4,25 @@ import {
     Box,
     BoxButtonPlus,
     BoxButtonReload,
+    BoxButtonTrash,
     BoxContent,
     BoxHeader,
     BoxHeaderBlock,
     BoxTitle,
 } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
-import { TEMPLATES } from '@/drive/template';
 import { DriveFile, googleUrl } from '@/drive/types';
 import { useState } from 'react';
-import { FaArrowRightFromBracket, FaArrowUpFromBracket, FaPencil } from 'react-icons/fa6';
+import { FaArrowRightFromBracket, FaArrowUpFromBracket, FaPencil, FaTrash } from 'react-icons/fa6';
 import Link from 'next/link';
-import { copyTemplateWithExcel, renameFile } from '@/drive/files';
+import { trashFile, renameFile } from '@/drive/files';
 import { Input } from '@/components/ui/input';
+import { TemplateCloningDialog } from './templates';
+import { DustbinDialog } from './dustbin';
 
+export function reloadWindow() {
+    if (typeof window != 'undefined') location.reload();
+}
 interface FileExplorerProps {
     missions: DriveFile[] | null;
     selectFile: (file: DriveFile) => void;
@@ -42,7 +40,8 @@ export function FileExplorerBox({
     loading,
     study,
 }: FileExplorerProps) {
-    const [open, setOpen] = useState(false);
+    const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
+    const [dustbinOpen, setDustbinOpen] = useState(false);
 
     return (
         <>
@@ -50,8 +49,9 @@ export function FileExplorerBox({
                 <BoxHeader>
                     <BoxTitle>Documents de l&apos;étude</BoxTitle>
                     <BoxHeaderBlock>
+                        <BoxButtonTrash onClick={() => setDustbinOpen(true)} />
                         <BoxButtonReload onClick={() => loadFiles()} />
-                        <BoxButtonPlus onClick={() => setOpen(true)} />
+                        <BoxButtonPlus onClick={() => setTemplateDialogOpen(true)} />
                     </BoxHeaderBlock>
                 </BoxHeader>
                 <BoxContent>
@@ -69,33 +69,13 @@ export function FileExplorerBox({
                     )}
                 </BoxContent>
             </Box>
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Cloner un template</DialogTitle>
-                    </DialogHeader>
-                    <div className="flex flex-col gap-4">
-                        {TEMPLATES.map(({ file, excel }, i) => {
-                            return (
-                                <Button
-                                    variant="outline"
-                                    key={i}
-                                    onClick={() => {
-                                        setOpen(false);
-                                        setLoading(true);
-                                        copyTemplateWithExcel(file, study, excel).then(() => {
-                                            if (typeof window != 'undefined') location.reload();
-                                        });
-                                    }}
-                                >
-                                    {file.name}
-                                </Button>
-                            );
-                        })}
-                    </div>
-                    <DialogClose>Cancel</DialogClose>
-                </DialogContent>
-            </Dialog>
+            <TemplateCloningDialog
+                open={templateDialogOpen}
+                setOpen={setTemplateDialogOpen}
+                study={study}
+                setLoading={setLoading}
+            />
+            <DustbinDialog open={dustbinOpen} setOpen={setDustbinOpen} study={study} />
         </>
     );
 }
@@ -116,7 +96,7 @@ function FileExplorer({
     );
 }
 
-export function FileItem({
+function FileItem({
     file,
     selectFile,
 }: {
@@ -124,12 +104,12 @@ export function FileItem({
     selectFile: (file: DriveFile) => void;
 }) {
     const [isRenaming, setRenaming] = useState(false);
-    const rename = () => setRenaming(true);
+    const enterRenameMode = () => setRenaming(true);
     const [reloading, setReloading] = useState(false);
 
     return (
         <div
-            className="bg-accent text-start p-2 rounded flex justify-between items-center space-x-main"
+            className="bg-accent p-2 rounded flex justify-between items-center space-x-main"
             key={file.id}
         >
             {reloading ? (
@@ -141,9 +121,7 @@ export function FileItem({
                     placeholder={file.name}
                     onBlur={(e) => {
                         setReloading(true);
-                        renameFile(file.id, e.target.value).then(() => {
-                            if (typeof window != 'undefined') location.reload();
-                        });
+                        renameFile(file.id, e.target.value).then(() => reloadWindow());
                     }}
                 />
             ) : (
@@ -152,7 +130,7 @@ export function FileItem({
             <FileButtons
                 url={googleUrl(file.id, file.mimeType)}
                 selectFile={selectFile}
-                rename={rename}
+                enterRenameMode={enterRenameMode}
                 file={file}
             />
         </div>
@@ -163,13 +141,26 @@ interface FileButtonsProps {
     url?: string;
     file: DriveFile;
     selectFile: (file: DriveFile) => void;
-    rename: () => void;
+    enterRenameMode: () => void;
 }
 
-function FileButtons({ url, file, selectFile, rename }: FileButtonsProps) {
+function FileButtons({ url, file, selectFile, enterRenameMode }: FileButtonsProps) {
     return (
         <div className="flex items-center space-x-main">
-            <Button variant="ghost" onClick={() => rename()} className="w-full h-full no-padding">
+            <Button
+                variant="ghost"
+                onClick={() => {
+                    trashFile(file.id, true).then(() => reloadWindow());
+                }}
+                className="w-full h-full no-padding"
+            >
+                <FaTrash className="w-full h-full" />
+            </Button>
+            <Button
+                variant="ghost"
+                onClick={() => enterRenameMode()}
+                className="w-full h-full no-padding"
+            >
                 <FaPencil className="w-full h-full" />
             </Button>
             {url && (
