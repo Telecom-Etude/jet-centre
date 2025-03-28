@@ -20,10 +20,10 @@ import {
 import { TEMPLATES } from '@/drive/template';
 import { DriveFile, googleUrl } from '@/drive/types';
 import { useState } from 'react';
-import { FaArrowRightFromBracket, FaArrowUpFromBracket } from 'react-icons/fa6';
+import { FaArrowRightFromBracket, FaArrowUpFromBracket, FaPencil } from 'react-icons/fa6';
 import Link from 'next/link';
-import { copyTemplateWithExcel } from '@/drive/files';
-import { useRouter } from 'next/navigation';
+import { copyTemplateWithExcel, renameFile } from '@/drive/files';
+import { Input } from '@/components/ui/input';
 
 interface FileExplorerProps {
     missions: DriveFile[] | null;
@@ -43,7 +43,6 @@ export function FileExplorerBox({
     study,
 }: FileExplorerProps) {
     const [open, setOpen] = useState(false);
-    const router = useRouter();
 
     return (
         <>
@@ -85,8 +84,7 @@ export function FileExplorerBox({
                                         setOpen(false);
                                         setLoading(true);
                                         copyTemplateWithExcel(file, study, excel).then(() => {
-                                            loadFiles();
-                                            router.refresh();
+                                            if (typeof window != 'undefined') location.reload();
                                         });
                                     }}
                                 >
@@ -111,36 +109,69 @@ function FileExplorer({
 }) {
     return (
         <div className="flex flex-col space-y-main">
-            {missions.map((file) => {
-                return (
-                    <div
-                        className="bg-accent text-start p-2 rounded flex justify-between items-center"
-                        key={file.id}
-                    >
-                        <p className="w-full">{file.name}</p>
-                        <FileButtons
-                            url={googleUrl(file.id, file.mimeType)}
-                            selectFile={selectFile}
-                            file={file}
-                        />
-                    </div>
-                );
-            })}
+            {missions.map((file, i) => (
+                <FileItem key={i} file={file} selectFile={selectFile} />
+            ))}
         </div>
     );
 }
 
-function FileButtons({
-    url,
+export function FileItem({
     file,
     selectFile,
 }: {
-    url?: string;
     file: DriveFile;
     selectFile: (file: DriveFile) => void;
 }) {
+    const [isRenaming, setRenaming] = useState(false);
+    const rename = () => setRenaming(true);
+    const [reloading, setReloading] = useState(false);
+
+    return (
+        <div
+            className="bg-accent text-start p-2 rounded flex justify-between items-center space-x-main"
+            key={file.id}
+        >
+            {reloading ? (
+                <p className="w-full">Updating name...</p>
+            ) : isRenaming ? (
+                <Input
+                    className="h-fit"
+                    defaultValue={file.name}
+                    placeholder={file.name}
+                    onBlur={(e) => {
+                        setReloading(true);
+                        renameFile(file.id, e.target.value).then(() => {
+                            if (typeof window != 'undefined') location.reload();
+                        });
+                    }}
+                />
+            ) : (
+                <p className="w-full">{file.name}</p>
+            )}
+            <FileButtons
+                url={googleUrl(file.id, file.mimeType)}
+                selectFile={selectFile}
+                rename={rename}
+                file={file}
+            />
+        </div>
+    );
+}
+
+interface FileButtonsProps {
+    url?: string;
+    file: DriveFile;
+    selectFile: (file: DriveFile) => void;
+    rename: () => void;
+}
+
+function FileButtons({ url, file, selectFile, rename }: FileButtonsProps) {
     return (
         <div className="flex items-center space-x-main">
+            <Button variant="ghost" onClick={() => rename()} className="w-full h-full no-padding">
+                <FaPencil className="w-full h-full" />
+            </Button>
             {url && (
                 <Button variant="ghost" asChild className="w-full h-full">
                     <Link

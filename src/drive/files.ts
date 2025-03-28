@@ -60,6 +60,22 @@ async function copyTemplate(file: NameIdFile, code: string): Promise<DriveFile |
     }
 }
 
+export async function renameFile(id: string, name: string): Promise<DriveFile | null> {
+    try {
+        const drive = await googleDrive();
+        const file = await drive.files.update({
+            fileId: id,
+            requestBody: {
+                name,
+            },
+        });
+        return driveFileToDriveFile(file.data);
+    } catch (e) {
+        console.error(`[renameFile] ${e}`);
+        return null;
+    }
+}
+
 export async function copyTemplateWithExcel(
     file: NameIdFile,
     code: string,
