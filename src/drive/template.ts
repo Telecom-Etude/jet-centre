@@ -1,25 +1,27 @@
-import { dbg } from '@/lib/utils';
-
 const EXCEL_CE = process.env.TEMPLATE_EXCEL_CE;
 const EXCEL_RM = process.env.TEMPLATE_EXCEL_RM;
 
 export interface Template {
     name: string;
-    id: string;
-    excel?: string;
+    fileId: string;
+    excelId?: string;
 }
 
 export const TEMPLATES: Template[] = [
-    { name: 'ACC', id: dbg(process.env.TEMPLATE_ACC) },
-    { name: 'ACE', id: process.env.TEMPLATE_ACE, excel: EXCEL_CE },
-    { name: 'ARM', id: process.env.TEMPLATE_ARM, excel: EXCEL_RM },
-    { name: 'BC', id: process.env.TEMPLATE_BC, excel: EXCEL_CE },
-    { name: 'BCR', id: process.env.TEMPLATE_BCR, excel: EXCEL_CE },
-    { name: 'BA', id: process.env.TEMPLATE_BC },
-    { name: 'CC', id: process.env.TEMPLATE_CE },
-    { name: 'ACC', id: process.env.TEMPLATE_ACE },
-    { name: 'CE', id: process.env.TEMPLATE_CE, excel: EXCEL_CE },
-    { name: 'PVRF', id: process.env.TEMPLATE_PVRI },
-    { name: 'PVRI', id: process.env.TEMPLATE_PVRF },
-    { name: 'RM', id: process.env.TEMPLATE_RM, excel: EXCEL_RM },
+    { name: 'ACC', fileId: process.env.TEMPLATE_ACC },
+    { name: 'ACE', fileId: process.env.TEMPLATE_ACE, excelId: EXCEL_CE },
+    { name: 'ARM', fileId: process.env.TEMPLATE_ARM, excelId: EXCEL_RM },
+    { name: 'BC', fileId: process.env.TEMPLATE_BC, excelId: EXCEL_CE },
+    { name: 'BCR', fileId: process.env.TEMPLATE_BCR, excelId: EXCEL_CE },
+    { name: 'BA', fileId: process.env.TEMPLATE_BC },
+    { name: 'CC', fileId: process.env.TEMPLATE_CC },
+    { name: 'ACC', fileId: process.env.TEMPLATE_ACE },
+    {
+        name: 'CE',
+        fileId: process.env.TEMPLATE_CE,
+        excelId: EXCEL_CE,
+    },
+    { name: 'PVRF', fileId: process.env.TEMPLATE_PVRI },
+    { name: 'PVRI', fileId: process.env.TEMPLATE_PVRF },
+    { name: 'RM', fileId: process.env.TEMPLATE_RM, excelId: EXCEL_RM },
 ];
