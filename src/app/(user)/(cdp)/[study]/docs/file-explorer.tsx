@@ -1,3 +1,5 @@
+'use client';
+
 import {
     Box,
     BoxButtonPlus,
@@ -37,7 +39,6 @@ export function FileExplorerBox({
     study,
 }: FileExplorerProps) {
     const [open, setOpen] = useState(false);
-    // const router = useRouter();
 
     return (
         <>
@@ -71,19 +72,11 @@ export function FileExplorerBox({
                     </DialogHeader>
                     <div className="flex flex-col gap-4">
                         {TEMPLATES.map(({ fileId, excelId, name }, i) => {
-                            if (name === 'CE') {
-                                // this prints the correct ids
-                                // dbg(fileId, 'ui fileId');
-                                // dbg(excelId, 'ui exceId');
-                            }
                             return (
                                 <Button
                                     variant="outline"
                                     key={i}
                                     onClick={() => {
-                                        // this prints undefined
-                                        // dbg(fileId, 'click fileId');
-                                        // dbg(excelId, 'click exceId');
                                         window.alert(`${fileId}, ${name}, ${study}, ${excelId}`);
                                     }}
                                 >
