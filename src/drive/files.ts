@@ -4,6 +4,7 @@ import { googleDrive } from './api';
 import { DriveFile, driveFileToDriveFile, FileType } from './types';
 import { getMissionFolderId } from './folders';
 import { drive_v3 } from 'googleapis';
+import { NameIdFile } from './template';
 
 export async function getFileIds(): Promise<string[]> {
     const drive = await googleDrive();
@@ -34,7 +35,7 @@ export async function getFileModifiedDate(fileId: string): Promise<string> {
     return file?.data?.modifiedTime || '';
 }
 
-export async function copyTemplate(templateId: string, code: string): Promise<DriveFile | null> {
+async function copyTemplate(file: NameIdFile, code: string): Promise<DriveFile | null> {
     try {
         const folderId = await getMissionFolderId(code);
         const drive = await googleDrive();
@@ -42,24 +43,37 @@ export async function copyTemplate(templateId: string, code: string): Promise<Dr
             throw new Error('Failed to access google drive study folder.');
         }
         const res = await drive.files.copy({
-            fileId: templateId,
+            fileId: file.id,
             requestBody: { parents: [folderId] },
         });
-        return driveFileToDriveFile(res.data);
+        const driveFile = driveFileToDriveFile(res.data);
+        await drive.files.update({
+            fileId: driveFile.id,
+            requestBody: {
+                name: file.name,
+            },
+        });
+        return driveFile;
     } catch (e) {
         console.error(`[copyTemplate] ${e}`);
         return null;
     }
 }
 
-export async function copyTemplateWithExcel(templateId: string, code: string, excelId?: string) {
+export async function copyTemplateWithExcel(
+    file: NameIdFile,
+    code: string,
+    excel?: NameIdFile
+): Promise<boolean> {
     try {
-        await copyTemplate(templateId, code);
-        if (excelId) {
-            await copyTemplate(excelId, code);
+        await copyTemplate(file, code);
+        if (excel) {
+            await copyTemplate(excel, code);
         }
+        return true;
     } catch (e) {
         console.error(`[copyTemplateWithExcel] ${e}`);
+        return false;
     }
 }
 
@@ -71,8 +85,8 @@ export async function getMissionFiles(code: string): Promise<DriveFile[] | null>
             return recursiveSearch(drive, folderId);
         }
         throw new Error('Failed to access google drive study folder.');
-    } catch {
-        // console.error(`[getMissionFiles] ${e}`);
+    } catch (e) {
+        console.error(`[getMissionFiles] ${e}`);
         return null;
     }
 }

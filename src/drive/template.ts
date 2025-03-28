@@ -1,26 +1,26 @@
-const EXCEL_CE = process.env.TEMPLATE_EXCEL_CE;
-const EXCEL_RM = process.env.TEMPLATE_EXCEL_RM;
-
-export interface Template {
+export interface NameIdFile {
+    id: string;
     name: string;
-    fileId: string;
-    excelId?: string;
 }
 
+export interface Template {
+    file: NameIdFile;
+    excel?: NameIdFile;
+}
+
+const EXCEL_CE: NameIdFile = { id: process.env.TEMPLATE_EXCEL_CE, name: 'Excel CE/ACE/BC/BCR' };
+const EXCEL_RM: NameIdFile = { id: process.env.TEMPLATE_EXCEL_RM, name: 'Excel RM/ARM' };
+
 export const TEMPLATES: Template[] = [
-    { name: 'ACC', fileId: process.env.TEMPLATE_ACC },
-    { name: 'ACE', fileId: process.env.TEMPLATE_ACE, excelId: EXCEL_CE },
-    { name: 'ARM', fileId: process.env.TEMPLATE_ARM, excelId: EXCEL_RM },
-    { name: 'BC', fileId: process.env.TEMPLATE_BC, excelId: EXCEL_CE },
-    { name: 'BCR', fileId: process.env.TEMPLATE_BCR, excelId: EXCEL_CE },
-    { name: 'BA', fileId: process.env.TEMPLATE_BA },
-    { name: 'CC', fileId: process.env.TEMPLATE_CC },
-    {
-        name: 'CE',
-        fileId: process.env.TEMPLATE_CE,
-        excelId: EXCEL_CE,
-    },
-    { name: 'PVRF', fileId: process.env.TEMPLATE_PVRF },
-    { name: 'PVRI', fileId: process.env.TEMPLATE_PVRI },
-    { name: 'RM', fileId: process.env.TEMPLATE_RM, excelId: EXCEL_RM },
+    { file: { name: 'ACC', id: process.env.TEMPLATE_ACC } },
+    { file: { name: 'ACE', id: process.env.TEMPLATE_ACE }, excel: EXCEL_CE },
+    { file: { name: 'ARM', id: process.env.TEMPLATE_ARM }, excel: EXCEL_RM },
+    { file: { name: 'BC', id: process.env.TEMPLATE_BC }, excel: EXCEL_CE },
+    { file: { name: 'BCR', id: process.env.TEMPLATE_BCR }, excel: EXCEL_CE },
+    { file: { name: 'BA', id: process.env.TEMPLATE_BA } },
+    { file: { name: 'CC', id: process.env.TEMPLATE_CC } },
+    { file: { name: 'CE', id: process.env.TEMPLATE_CE }, excel: EXCEL_CE },
+    { file: { name: 'PVRF', id: process.env.TEMPLATE_PVRF } },
+    { file: { name: 'PVRI', id: process.env.TEMPLATE_PVRI } },
+    { file: { name: 'RM', id: process.env.TEMPLATE_RM }, excel: EXCEL_RM },
 ];
