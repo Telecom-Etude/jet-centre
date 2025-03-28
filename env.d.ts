@@ -15,7 +15,6 @@ declare namespace NodeJS {
         TEMPLATE_BCR: string;
         TEMPLATE_BA: string;
         TEMPLATE_CC: string;
-        TEMPLATE_ACC: string;
         TEMPLATE_CE: string;
         TEMPLATE_PVRF: string;
         TEMPLATE_PVRI: string;
