@@ -1,4 +1,4 @@
-import { z, EMPTY_STRING, required, nonemptyexcluded } from '@/lib/zod';
+import { z, EMPTY_STRING, required, nonEmptyExcluded } from '@/lib/zod';
 import { zCompanySize, zDOMAINS } from '@/settings/vars';
 
 const zIdx = z.object({
@@ -72,7 +72,7 @@ export const zCompany = z.object({
         zip: z.string(),
         country: z.string(),
     }),
-    members: zContactFormValue.array().superRefine(nonemptyexcluded),
+    members: zContactFormValue.array().superRefine(nonEmptyExcluded),
 });
 export type Company = z.infer<typeof zCompany>;
 

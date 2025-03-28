@@ -24,12 +24,12 @@ export interface SearchBarProps<T> {
     onSelect?: (item: T) => void;
 }
 
-export function SearchBar<T>({
+export function SearchBar<T extends { toString(): string }>({
     className,
     label,
     placeholder,
     items,
-    displayValue = (item) => (item as any).toString(),
+    displayValue = (item) => item.toString(),
     onSelect: onSelect_,
 }: SearchBarProps<T>) {
     const id = useId();
