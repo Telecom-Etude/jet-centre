@@ -30,7 +30,9 @@ export function DocumentList({
             {selectedFile ? (
                 <FrameFile file={selectedFile} closeFrame={() => selectFile(undefined)} />
             ) : (
-                <FileExplorerBox {...{ selectFile, missions, loadFiles, loading, study }} />
+                <FileExplorerBox
+                    {...{ selectFile, missions, loadFiles, loading, study, setLoading }}
+                />
             )}
         </div>
     );

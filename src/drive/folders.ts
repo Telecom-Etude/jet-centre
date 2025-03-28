@@ -3,7 +3,7 @@
 import prisma from '@/db';
 import { googleDrive } from './api';
 import { driveFileToDriveFile, FileType } from './types';
-// import { dbg, log } from '@/lib/utils';
+import { log } from '@/lib/utils';
 
 async function getMissionFolderIdFromDrive(code: string): Promise<string | null> {
     try {
@@ -42,10 +42,7 @@ export async function getMissionFolderId(code: string): Promise<string | null> {
         });
         const folderId = study?.googleFolder;
         if (folderId) {
-            // dbg(folderId, 'found in bdd');
             return folderId;
-        } else {
-            // log('WHAT THE FUCK');
         }
         const googleFolder = await getMissionFolderIdFromDrive(code);
         await prisma.studyInfos.update({ where: { code }, data: { googleFolder } });

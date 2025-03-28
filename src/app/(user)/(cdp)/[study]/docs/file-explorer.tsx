@@ -29,6 +29,7 @@ interface FileExplorerProps {
     missions: DriveFile[] | null;
     selectFile: (file: DriveFile) => void;
     loadFiles: () => void;
+    setLoading: (loading: boolean) => void;
     loading: boolean;
     study: string;
 }
@@ -37,6 +38,7 @@ export function FileExplorerBox({
     selectFile,
     missions,
     loadFiles,
+    setLoading,
     loading,
     study,
 }: FileExplorerProps) {
@@ -74,18 +76,21 @@ export function FileExplorerBox({
                         <DialogTitle>Cloner un template</DialogTitle>
                     </DialogHeader>
                     <div className="flex flex-col gap-4">
-                        {TEMPLATES.map(({ fileId, excelId, name }, i) => {
+                        {TEMPLATES.map(({ file, excel }, i) => {
                             return (
                                 <Button
                                     variant="outline"
                                     key={i}
                                     onClick={() => {
-                                        copyTemplateWithExcel(fileId, study, excelId).then(() => {
+                                        setOpen(false);
+                                        setLoading(true);
+                                        copyTemplateWithExcel(file, study, excel).then(() => {
+                                            loadFiles();
                                             router.refresh();
                                         });
                                     }}
                                 >
-                                    {name}
+                                    {file.name}
                                 </Button>
                             );
                         })}
