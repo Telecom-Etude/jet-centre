@@ -148,7 +148,7 @@ export const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
 
 export const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: IconType }) => (
     <Button
-        onClick={onClick}
+        onClick={() => onClick()}
         variant="title"
         className="p-[3.5px] h-6 w-6 bg-transparent hover:bg-transparent"
     >

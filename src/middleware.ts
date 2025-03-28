@@ -42,12 +42,10 @@ export default auth((request: NextAuthRequest) => {
     const { pathname } = request.nextUrl;
 
     if (isLoggedIn) {
-        console.log('>>> Logged in');
         if (pathname === '/auth/signin') {
             return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.nextUrl));
         }
     } else {
-        console.log('>>> Logged out');
         if (pathname !== '/auth/signin') {
             return NextResponse.redirect(new URL('/auth/signin', request.nextUrl));
         }
