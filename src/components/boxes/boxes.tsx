@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
 import { IconType } from 'react-icons/lib';
 
-export const Box = forwardRef<
+const Box = forwardRef<
     HTMLDivElement,
     { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>
 >(({ children, className, ...props }, ref) => (
@@ -34,7 +34,7 @@ export const Box = forwardRef<
     </div>
 ));
 
-export const InnerBox = forwardRef<
+const InnerBox = forwardRef<
     HTMLDivElement,
     { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>
 >(({ children, className, ...props }, ref) => (
@@ -43,7 +43,7 @@ export const InnerBox = forwardRef<
     </div>
 ));
 
-export const BoxHeader = forwardRef<
+const BoxHeader = forwardRef<
     HTMLDivElement,
     { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>
 >(({ children, className, ...props }, ref) => (
@@ -61,17 +61,13 @@ export const BoxHeader = forwardRef<
     </div>
 ));
 
-export const BoxHeaderBlock = ({
-    children,
-    className,
-}: {
-    children?: ReactNode;
-    className?: string;
-}) => <div className={cn('flex justify-between items-center gap-2', className)}>{children}</div>;
+const BoxHeaderBlock = ({ children, className }: { children?: ReactNode; className?: string }) => (
+    <div className={cn('flex justify-between items-center gap-2', className)}>{children}</div>
+);
 
-export type Height = 'auto' | 'limited';
+type Height = 'auto' | 'limited';
 
-export const BoxContent = ({
+const BoxContent = ({
     children,
     height = 'auto',
     noPadding = false,
@@ -92,7 +88,7 @@ export const BoxContent = ({
     </div>
 );
 
-export const BoxCollapser = ({
+const BoxCollapser = ({
     children,
     collapse = false,
 }: {
@@ -104,25 +100,19 @@ export const BoxCollapser = ({
     </AnimateHeight>
 );
 
-export const BoxLink = ({ children, href }: { children: string | string[]; href: string }) => (
+const BoxLink = ({ children, href }: { children: string | string[]; href: string }) => (
     <Button variant="link" className="px-0 py-0 h-fit text-link">
         <Link href={href}>{children}</Link>
     </Button>
 );
 
-export const BoxTitle = ({
-    children,
-    className,
-}: {
-    children: string | string[];
-    className?: string;
-}) => (
+const BoxTitle = ({ children, className }: { children: string | string[]; className?: string }) => (
     <h2 className={cn('font-semibold text-lg overflow-hidden text-ellipsis', className)}>
         {children}
     </h2>
 );
 
-export const BoxButtonPlus = ({
+const BoxButtonPlus = ({
     onClick,
     label,
     className,
@@ -141,12 +131,12 @@ export const BoxButtonPlus = ({
     </Button>
 );
 
-export const BoxButtonTrash = ({ onClick }: { onClick: () => void }) =>
+const BoxButtonTrash = ({ onClick }: { onClick: () => void }) =>
     BoxButtonIcon({ onClick, Icon: FaTrash });
-export const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
+const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
     BoxButtonIcon({ onClick, Icon: HiRefresh });
 
-export const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: IconType }) => (
+const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: IconType }) => (
     <Button
         onClick={() => onClick()}
         variant="title"
@@ -156,13 +146,13 @@ export const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: Ic
     </Button>
 );
 
-export const BoxDragHandle = forwardRef<HTMLDivElement>((props, ref) => (
+const BoxDragHandle = forwardRef<HTMLDivElement>((props, ref) => (
     <div className="h-6 w-6 content-center" ref={ref} {...props}>
         <FaGripLines />
     </div>
 ));
 
-export const BoxCollapseButton = ({
+const BoxCollapseButton = ({
     collapse,
     setCollapse,
     onClick,
@@ -227,4 +217,21 @@ export const BoxCollapseButton = ({
             </svg>
         </Button>
     );
+};
+
+export {
+    Box,
+    BoxButtonIcon,
+    BoxButtonPlus,
+    BoxButtonTrash,
+    BoxButtonReload,
+    BoxCollapseButton,
+    BoxCollapser,
+    BoxContent,
+    BoxDragHandle,
+    BoxHeader,
+    BoxHeaderBlock,
+    BoxLink,
+    BoxTitle,
+    InnerBox,
 };
