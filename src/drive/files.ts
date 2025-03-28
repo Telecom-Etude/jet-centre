@@ -1,3 +1,5 @@
+'use server';
+
 import { googleDrive } from './api';
 import { DriveFile, driveFileToDriveFile, FileType } from './types';
 import { getMissionFolderId } from './folders';
@@ -50,17 +52,27 @@ export async function copyTemplate(templateId: string, code: string): Promise<Dr
     }
 }
 
+export async function copyTemplateWithExcel(templateId: string, code: string, excelId?: string) {
+    try {
+        await copyTemplate(templateId, code);
+        if (excelId) {
+            await copyTemplate(excelId, code);
+        }
+    } catch (e) {
+        console.error(`[copyTemplateWithExcel] ${e}`);
+    }
+}
+
 export async function getMissionFiles(code: string): Promise<DriveFile[] | null> {
     try {
         const folderId = await getMissionFolderId(code);
         const drive = await googleDrive();
         if (folderId) {
             return recursiveSearch(drive, folderId);
-        } else {
-            throw new Error('Failed to access google drive study folder.');
         }
-    } catch (e) {
-        console.error(`[getMissionFiles] ${e}`);
+        throw new Error('Failed to access google drive study folder.');
+    } catch {
+        // console.error(`[getMissionFiles] ${e}`);
         return null;
     }
 }
@@ -69,9 +81,8 @@ async function recursiveSearch(
     drive: drive_v3.Drive,
     folderId: string
 ): Promise<DriveFile[] | null> {
-    let folderContent;
     try {
-        folderContent = await drive.files.list({
+        const folderContent = await drive.files.list({
             q: `'${folderId}' in parents`,
         });
         const items = folderContent?.data.files;
@@ -93,7 +104,7 @@ async function recursiveSearch(
         }
         throw new Error('Failed to load content from drive request.');
     } catch (e) {
-        console.log(`[recursiveSearch] ${e}`);
+        console.error(`[recursiveSearch] ${e}`);
         return null;
     }
 }

@@ -12,39 +12,42 @@ import {
 import { Button } from '@/components/ui/button';
 import { getMissionFiles } from '@/drive/files';
 import { DriveFile, googleUrl } from '@/drive/types';
-import { useEffect, useState, useCallback } from 'react';
+import { useState } from 'react';
 import { FaArrowRightFromBracket, FaArrowUpFromBracket } from 'react-icons/fa6';
 import Link from 'next/link';
 import { dbg } from '@/lib/utils';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { DialogClose } from '@radix-ui/react-dialog';
+import { TEMPLATES } from '@/drive/template';
+import { useRouter } from 'next/navigation';
 
-export function DocumentList({ study }: { study: string }) {
+export function DocumentList({
+    study,
+    initialMissions,
+}: {
+    study: string;
+    initialMissions: DriveFile[];
+}) {
     const [selectedFile, selectFile] = useState<undefined | DriveFile>();
+    const [missions, setMissions] = useState<null | DriveFile[]>(initialMissions);
+    const [loading, setLoading] = useState(false);
 
-    const [files, setFiles] = useState<undefined | DriveFile[]>();
-    const [loading, setLoading] = useState(true);
-
-    const loadFiles = useCallback(() => {
+    const loadFiles = () => {
+        window.alert('Ready to load?');
         setLoading(true);
         getMissionFiles(study).then((serverMissions) => {
-            if (serverMissions !== undefined) {
-                setFiles(serverMissions || []);
-            }
+            setMissions(serverMissions);
             setLoading(false);
+            window.alert('Loaded!');
         });
-    }, [study]);
-
-    useEffect(() => {
-        loadFiles();
-    }, [loadFiles]);
+    };
 
     return (
         <div className="flex h-full">
             {selectedFile ? (
                 <FrameFile file={selectedFile} closeFrame={() => selectFile(undefined)} />
             ) : (
-                <FileExplorer {...{ selectFile, files, loadFiles, loading }} />
+                <FileExplorer {...{ selectFile, missions, loadFiles, loading, study }} />
             )}
         </div>
     );
@@ -61,7 +64,7 @@ function FrameFile({ file, closeFrame }: { file: DriveFile; closeFrame: () => vo
             </iframe>
             <Button
                 className="absolute bottom-4 right-4 z-10 font-bold rounded"
-                onClick={closeFrame}
+                onClick={() => closeFrame()}
             >
                 Close this file!
             </Button>
@@ -70,14 +73,16 @@ function FrameFile({ file, closeFrame }: { file: DriveFile; closeFrame: () => vo
 }
 
 interface FileExplorerProps {
-    files?: DriveFile[];
+    missions: DriveFile[] | null;
     selectFile: (id: DriveFile) => void;
     loadFiles: () => void;
     loading: boolean;
+    study: string;
 }
 
-function FileExplorer({ selectFile, files, loadFiles, loading }: FileExplorerProps) {
+function FileExplorer({ selectFile, missions, loadFiles, loading, study }: FileExplorerProps) {
     const [open, setOpen] = useState(false);
+    const router = useRouter();
 
     return (
         <>
@@ -85,21 +90,21 @@ function FileExplorer({ selectFile, files, loadFiles, loading }: FileExplorerPro
                 <BoxHeader>
                     <BoxTitle>Documents de l&apos;étude</BoxTitle>
                     <BoxHeaderBlock>
-                        <BoxButtonReload onClick={loadFiles} />
+                        <BoxButtonReload onClick={() => loadFiles()} />
                         <BoxButtonPlus onClick={() => setOpen(true)} />
                     </BoxHeaderBlock>
                 </BoxHeader>
                 <BoxContent>
                     {loading ? (
                         <p>Loading...</p>
-                    ) : files === undefined ? (
+                    ) : missions === null ? (
                         <p>
                             Erreur lors de la mise à jour des documents.. Merci de faire un ticket
                             SOS (en haut à droite).
                         </p>
-                    ) : files.length !== 0 ? (
+                    ) : missions.length !== 0 ? (
                         <div className="flex flex-col space-y-main">
-                            {dbg(files, 'files').map((file) => {
+                            {dbg(missions, 'files').map((file) => {
                                 const url = googleUrl(file.id, file.mimeType);
                                 return (
                                     <div
@@ -146,8 +151,21 @@ function FileExplorer({ selectFile, files, loadFiles, loading }: FileExplorerPro
                     <DialogHeader>
                         <DialogTitle>Cloner un template</DialogTitle>
                     </DialogHeader>
-                    <div>
-                        <div></div>
+                    <div className="flex flex-col gap-4">
+                        {TEMPLATES.map(({ id, excel, name }, i) => (
+                            <Button
+                                variant="outline"
+                                key={i}
+                                onClick={() => {
+                                    window.alert(`${id}, ${name}, ${study}, ${excel}`);
+                                    // copyTemplateWithExcel(id, study, excel).then(() =>
+                                    router.refresh();
+                                    // );
+                                }}
+                            >
+                                {name}
+                            </Button>
+                        ))}
                     </div>
                     <DialogClose>Cancel</DialogClose>
                 </DialogContent>

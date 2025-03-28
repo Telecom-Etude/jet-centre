@@ -1,9 +1,11 @@
+'use server';
+
+import prisma from '@/db';
 import { googleDrive } from './api';
 import { driveFileToDriveFile, FileType } from './types';
-import prisma from '@/db';
-import { log } from '@/lib/utils';
+import { dbg, log } from '@/lib/utils';
 
-async function getMissionFolderIdFromDrive(code: string): Promise<string | undefined> {
+async function getMissionFolderIdFromDrive(code: string): Promise<string | null> {
     try {
         const drive = await googleDrive();
         const folderList = await drive.files.list({
@@ -26,25 +28,30 @@ async function getMissionFolderIdFromDrive(code: string): Promise<string | undef
             requestBody: fileMetadata,
             fields: 'id',
         });
-        return creationResponse.data.id || undefined;
+        return creationResponse.data.id ?? null;
     } catch (e) {
         console.error(`[getMissionFolder] ${e}`);
+        return null;
     }
 }
 
-export async function getMissionFolderId(code: string): Promise<string | undefined> {
+export async function getMissionFolderId(code: string): Promise<string | null> {
     try {
         const study = await prisma.studyInfos.findUnique({
             where: { code },
         });
         const folderId = study?.googleFolder;
         if (folderId) {
+            dbg(folderId, 'found in bdd');
             return folderId;
+        } else {
+            log('WHAT THE FUCK');
         }
         const googleFolder = await getMissionFolderIdFromDrive(code);
         await prisma.studyInfos.update({ where: { code }, data: { googleFolder } });
         return googleFolder;
     } catch (e) {
         console.error(`[getMissionFiles] ${e}`);
+        return null;
     }
 }
