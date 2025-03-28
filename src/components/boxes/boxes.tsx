@@ -4,7 +4,7 @@ import { ReactNode, forwardRef } from 'react';
 import Link from 'next/link';
 
 import AnimateHeight from 'react-animate-height';
-import { FaGripLines, FaPlus, FaTrash } from 'react-icons/fa6';
+import { FaGripLines, FaPen, FaPlus, FaTrash } from 'react-icons/fa6';
 import { HiRefresh } from 'react-icons/hi';
 
 import { Button } from '@/components/ui/button';
@@ -135,6 +135,8 @@ const BoxButtonTrash = ({ onClick }: { onClick: () => void }) =>
     BoxButtonIcon({ onClick, Icon: FaTrash });
 const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
     BoxButtonIcon({ onClick, Icon: HiRefresh });
+const BoxButtonEdit = ({ onClick }: { onClick: () => void }) =>
+    BoxButtonIcon({ onClick, Icon: FaPen });
 
 const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: IconType }) => (
     <Button
@@ -221,9 +223,9 @@ const BoxCollapseButton = ({
 
 export {
     Box,
-    BoxButtonIcon,
     BoxButtonPlus,
     BoxButtonTrash,
+    BoxButtonEdit,
     BoxButtonReload,
     BoxCollapseButton,
     BoxCollapser,
