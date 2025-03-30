@@ -74,7 +74,7 @@ enum Domain {
     Internet
     Image
     ComputerGraphics
-    // Prefixé par d_ car un variant doit commencer par une lettre
+    // Préfixé par d_ car un variant doit commencer par une lettre
     d_3D
     EtudeDeMarche
     EtatDeLArt

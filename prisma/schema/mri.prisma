@@ -1,15 +1,23 @@
+enum Level {
+    Low
+    Medium
+    High
+}
+
 model MRIs {
-    id             String     @id @default(cuid())
-    paycheck_under Int
-    paycheck_over  Int
-    difficulty     Int
-    introduction   String
-    contact        String
-    schedule       String
-    skills         String
-    study          Studies    @relation(fields: [studyId], references: [id], onDelete: Cascade)
-    studyId        String     @unique
-    formMRIs       FormMRIs[]
+    id                 String     @id @default(cuid())
+    wageLowerBound     Int?
+    wageUpperBound     Int?
+    wageLevel          Level?
+    difficulty         Level?
+    mainDomain         Domain?
+    introductionText   String?
+    descriptionText    String?
+    timeLapsText       String?
+    requiredSkillsText String?
+    study              Studies    @relation(fields: [studyId], references: [id], onDelete: Cascade)
+    studyId            String     @unique
+    formMRIs           FormMRIs[]
 }
 
 model Assignees {

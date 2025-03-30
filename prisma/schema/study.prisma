@@ -22,7 +22,7 @@ model StudyInfos {
     duration         Int?
     deadlinePreStudy DateTime?
     cc               Boolean
-    domain           Domains[]
+    domain           Domain[]
     deliverable      Deliverables? @relation(fields: [deliverablesId], references: [id])
     deliverablesId   String?
     docs             StudyDocs[]
@@ -63,12 +63,6 @@ model JEHs {
     deliverable Boolean
     Phases      Phases? @relation(fields: [phasesId], references: [id])
     phasesId    String?
-}
-
-model Domains {
-    id         String       @id @default(cuid())
-    name       String       @unique
-    studyInfos StudyInfos[]
 }
 
 model Deliverables {
