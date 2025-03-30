@@ -6,8 +6,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { copyTemplateWithExcel } from '@/drive/files';
-import { TEMPLATES } from '@/drive/template';
+import { copyTemplate } from '@/drive/files';
+import { TEMPLATE_NAMES } from '@/drive/template';
 import { FileExplorerDialogProps, reloadWindow } from './utils';
 
 interface TemplateCopyDialog extends FileExplorerDialogProps {
@@ -23,20 +23,20 @@ export function TemplateCopyDialog({ open, setOpen, setLoading, study }: Templat
                 </DialogHeader>
 
                 <div className="flex flex-col gap-4">
-                    {TEMPLATES.map(({ file, excel }, i) => (
+                    {TEMPLATE_NAMES.map((template, i) => (
                         <Button
                             variant="outline"
                             key={i}
                             onClick={() => {
                                 setOpen(false);
                                 setLoading(true);
-                                copyTemplateWithExcel(file, study, excel).then(() => {
+                                copyTemplate(study, template).then(() => {
                                     setOpen(false);
                                     reloadWindow();
                                 });
                             }}
                         >
-                            {file.name}
+                            {template}
                         </Button>
                     ))}
                 </div>

@@ -4,7 +4,7 @@ import { googleDrive } from './api';
 import { DriveFile, driveFileToDriveFile, FileType } from './types';
 import { getMissionFolderId } from './folders';
 import { drive_v3 } from 'googleapis';
-import { NameIdFile } from './template';
+import { NameIdFile, TemplateName, TEMPLATES } from './template';
 
 export async function getFileIds(): Promise<string[]> {
     const drive = await googleDrive();
@@ -35,7 +35,7 @@ export async function getFileModifiedDate(fileId: string): Promise<string> {
     return file?.data?.modifiedTime || '';
 }
 
-async function copyTemplate(file: NameIdFile, code: string): Promise<DriveFile | null> {
+async function copyFile(file: NameIdFile, code: string): Promise<DriveFile | null> {
     try {
         const folderId = await getMissionFolderId(code);
         const drive = await googleDrive();
@@ -90,15 +90,12 @@ export async function trashFile(fileId: string, trashed: boolean): Promise<boole
     }
 }
 
-export async function copyTemplateWithExcel(
-    file: NameIdFile,
-    code: string,
-    excel?: NameIdFile
-): Promise<boolean> {
+export async function copyTemplate(code: string, templateName: TemplateName): Promise<boolean> {
     try {
-        await copyTemplate(file, code);
-        if (excel) {
-            await copyTemplate(excel, code);
+        const template = TEMPLATES[templateName];
+        await copyFile({ name: templateName, id: template.id }, code);
+        if (template.excel) {
+            await copyFile(template.excel, code);
         }
         return true;
     } catch (e) {

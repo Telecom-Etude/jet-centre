@@ -14,19 +14,8 @@ const nextConfig = {
         ],
     },
     env: {
-        TEMPLATE_EXCEL_CE: process.env.TEMPLATE_EXCEL_CE,
-        TEMPLATE_EXCEL_RM: process.env.TEMPLATE_EXCEL_RM,
-        TEMPLATE_ACC: process.env.TEMPLATE_ACC,
-        TEMPLATE_ACE: process.env.TEMPLATE_ACE,
-        TEMPLATE_ARM: process.env.TEMPLATE_ARM,
-        TEMPLATE_BC: process.env.TEMPLATE_BC,
-        TEMPLATE_BCR: process.env.TEMPLATE_BCR,
-        TEMPLATE_BA: process.env.TEMPLATE_BA,
-        TEMPLATE_CC: process.env.TEMPLATE_CC,
-        TEMPLATE_CE: process.env.TEMPLATE_CE,
-        TEMPLATE_PVRF: process.env.TEMPLATE_PVRF,
-        TEMPLATE_PVRI: process.env.TEMPLATE_PVRI,
-        TEMPLATE_RM: process.env.TEMPLATE_RM,
+        // ⚠️ Make sure data put here isn't sensitive ⚠️
+        // Everything below is accessible on the internet without requiring authentication.
         WEBSITE_URL: process.env.WEBSITE_URL,
     },
 };
