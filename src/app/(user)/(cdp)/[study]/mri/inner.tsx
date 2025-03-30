@@ -6,7 +6,7 @@ import { defaultMriCreationSchema, FormType, mriCreationSchema } from './form/sc
 import { RenderMRI } from './render';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormReturn } from 'react-hook-form';
 import { ServerMriData } from '@/actions/study';
 
 export default function Inner({
@@ -27,7 +27,8 @@ export default function Inner({
         defaultValues.domain = serverMriData.domain;
     }
 
-    const form = useForm<FormType>({
+    // @ts-ignore - data in db may be invalid domain
+    const form: UseFormReturn<FormType> = useForm<FormType>({
         resolver: zodResolver(mriCreationSchema),
         // @ts-ignore - react-hook-form use empty string ("") as default value even for non-string fields
         defaultValues: defaultMriCreationSchema,

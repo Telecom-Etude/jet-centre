@@ -4,7 +4,6 @@ import {
     FaLinkedin,
     FaFacebook,
     FaXTwitter,
-    FaLink,
     FaEnvelope,
     FaGlobe,
 } from 'react-icons/fa6';
