@@ -1,13 +1,23 @@
 'use client';
 
-import { FaUser, FaBug, FaQuestion } from 'react-icons/fa6';
+import { FaQuestion, FaUser } from 'react-icons/fa6';
 import SidebarCdp from './sidebar-cdp';
-import SidebarRole from './sidebar-role';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { SidebarList } from './sidebar-list';
+import { ROLES_SIDEBARS } from '@/settings/sidebars/sidebars';
+import { RoleSideBar } from '@/settings/sidebars/types';
+import { IconType } from 'react-icons/lib';
+
+interface Tab {
+    id: string;
+    title: string;
+    icon: IconType;
+    content: ReactNode;
+}
 
 export function SidebarSwitch({
     isOpen,
@@ -18,7 +28,7 @@ export function SidebarSwitch({
     missions?: string[];
     position?: string;
 }) {
-    const tabs = [];
+    const tabs: Tab[] = [];
     if (missions && missions.length !== 0) {
         tabs.push({
             id: 'cdp',
@@ -27,26 +37,14 @@ export function SidebarSwitch({
             content: <SidebarCdp missions={missions} />,
         });
     }
-    let positionIcon;
-    switch (position) {
-        case 'Trésorier': {
-            positionIcon = FaQuestion;
-            break;
-        }
-        case 'Informatique': {
-            positionIcon = FaBug;
-            break;
-        }
-        default: {
-            positionIcon = FaQuestion;
-            break;
-        }
-    }
+
+    const positionStr = (position ?? 'Non défini') as keyof typeof ROLES_SIDEBARS;
+    const roleSidebar: RoleSideBar | undefined = ROLES_SIDEBARS[positionStr];
     tabs.push({
         id: 'role',
-        title: position,
-        icon: positionIcon,
-        content: <SidebarRole />,
+        title: positionStr,
+        icon: roleSidebar?.icon || FaQuestion,
+        content: <SidebarList sidebar_groups={roleSidebar?.sidebar ?? []} />,
     });
 
     const [tab, setTab] = useState(0);

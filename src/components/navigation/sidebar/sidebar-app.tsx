@@ -18,7 +18,7 @@ import { UserDropdownMenu } from '../user-dropdown-menu';
 import { SidebarSwitch } from './sidebar-switch';
 
 interface Props {
-    userInfo?: { missions: string[]; position: string };
+    userInfo?: { missions: string[]; position?: string };
 }
 
 export function SidebarApp({ ...props }: Props) {
