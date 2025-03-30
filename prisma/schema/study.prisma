@@ -17,6 +17,7 @@ model StudyInfos {
     code             String        @unique
     googleFolder     String?       @unique
     title            String?
+    description      String?
     applicationFee   Float?
     duration         Int?
     deadlinePreStudy DateTime?
