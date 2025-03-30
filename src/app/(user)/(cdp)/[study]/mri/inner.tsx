@@ -2,36 +2,25 @@
 
 import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 import MRICreationForm from './form/form';
-import { defaultMriCreationSchema, FormType, mriCreationSchema } from './form/schema';
+import { FormType, mriCreationSchema } from './form/schema';
 import { RenderMRI } from './render';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
-import { ServerMriData } from '@/actions/study';
+import { MriServerData } from './form/mri';
 
 export default function Inner({
     study,
     serverMriData,
 }: {
     study: string;
-    serverMriData?: ServerMriData;
+    serverMriData: MriServerData;
 }) {
-    const defaultValues = defaultMriCreationSchema;
-    if (serverMriData?.title) {
-        defaultValues.title = serverMriData.title;
-    }
-    if (serverMriData?.description) {
-        defaultValues.intro = serverMriData.description;
-    }
-    if (serverMriData?.domain) {
-        defaultValues.domain = serverMriData.domain;
-    }
-
     // @ts-ignore - data in db may be invalid domain
     const form: UseFormReturn<FormType> = useForm<FormType>({
         resolver: zodResolver(mriCreationSchema),
         // @ts-ignore - react-hook-form use empty string ("") as default value even for non-string fields
-        defaultValues: defaultMriCreationSchema,
+        defaultValues: serverMriData.data,
     });
 
     const mri = form.watch();
@@ -51,7 +40,7 @@ export default function Inner({
                     <BoxTitle>Prévisualisation du MRI</BoxTitle>
                 </BoxHeader>
                 <BoxContent height="limited" noPadding>
-                    <RenderMRI mri={mri} study={study} admins={serverMriData?.admins || []} />
+                    <RenderMRI mri={mri} study={study} admins={serverMriData.admins || []} />
                 </BoxContent>
             </Box>
         </div>

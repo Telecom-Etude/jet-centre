@@ -19,7 +19,7 @@ import {
     SortableList,
     useSortableList,
 } from '@/components/meta-components/sortableList';
-import { ANIMATION_DURATION_MS, DOMAINS } from '@/settings/vars';
+import { ANIMATION_DURATION_MS } from '@/settings/vars';
 
 import { Path, UseFormReturn } from 'react-hook-form';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -38,6 +38,7 @@ import { SearchBar } from '@/components/meta-components/searchbar';
 import { EditableContactItem } from './editableContactItem';
 import { StudyCreationSchema } from '../schema';
 import { LightFormElement } from '@/components/meta-components/form/wrapper';
+import { DOMAINS } from '@/db/types';
 
 export interface CompaniesProps {
     companies: Company[];

@@ -14,7 +14,7 @@ import { FormType } from './form/schema';
 
 import { NBSP } from '@/lib/utils';
 import BirdLogo from '@/../public/mri/bird.png';
-import { ServerMriData } from '@/actions/study';
+import { MriServerData } from '@/app/(user)/(cdp)/[study]/mri/form/mri';
 import { Button } from '@/components/ui/button';
 
 export function RenderMRI({
@@ -24,7 +24,7 @@ export function RenderMRI({
 }: {
     study: string;
     mri: FormType;
-    admins: ServerMriData['admins'];
+    admins: MriServerData['admins'];
 }) {
     const h4cn = 'text-2xl font-bold my-1 text-mri-headers';
 
@@ -46,24 +46,26 @@ export function RenderMRI({
             </div>
             <div className="bg-mri-body-bg flex flex-row justify-center">
                 <div className="flex flex-col justify-center max-w-[600px] px-6 @sm:px-0">
-                    <p className="py-6">{mri.intro}</p>
+                    <p className="py-6">{mri.introductionText}</p>
                     <div className="flex flex-col @sm:flex-row">
-                        <ImageElt {...getDomain(mri.domain)} />
-                        <ImageElt {...getPay(mri.pay_under, mri.pay_over, mri.pay_level)} />
+                        <ImageElt {...getDomain(mri.mainDomain)} />
+                        <ImageElt
+                            {...getPay(mri.wageLowerBound, mri.wageUpperBound, mri.wageLevel)}
+                        />
                         <ImageElt {...getDifficulty(mri.difficulty)} />
                     </div>
                     <hr className="my-6 border-mri-separator" />
                     <section className="mb-5">
                         <h4 className={h4cn}>Compétences</h4>
-                        <p>{mri.skills}</p>
+                        <p>{mri.requiredSkillsText}</p>
                     </section>
                     <section className="mb-5">
                         <h4 className={h4cn}>Échéances</h4>
-                        <p>{mri.due_date}</p>
+                        <p>{mri.timeLapsText}</p>
                     </section>
                     <section className="mb-5">
                         <h4 className={h4cn}>Description</h4>
-                        <p>{mri.description}</p>
+                        <p>{mri.descriptionText}</p>
                     </section>
                     <hr className="my-6 border-mri-separator" />
                     <div className="flex flex-col items-center">

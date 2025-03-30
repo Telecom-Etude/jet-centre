@@ -1,58 +1,73 @@
 import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
-import { DIFFICULTIES, FormType, PAYS } from './schema';
+import { FormType } from './schema';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
-import { DOMAINS } from '@/settings/vars';
 import { UseFormReturn } from 'react-hook-form';
+import { LEVELS, DOMAINS, DOMAIN_NAMES } from '@/db/types';
 
 export default function MRICreationForm({ form }: { form: UseFormReturn<FormType> }) {
     return (
         <FormProvider {...form}>
             <form>
                 <InputFormElement label="Titre" name="title" form={form} />
-                <TextAreaFormElement label="Introduction" name="intro" form={form} resizable />
+                <TextAreaFormElement
+                    label="Introduction"
+                    name="introductionText"
+                    form={form}
+                    resizable
+                />
                 <FormRule />
                 <DropdownSingleFormElement
                     label="Domaine"
-                    name="domain"
-                    values={DOMAINS}
+                    name="mainDomain"
+                    values={DOMAIN_NAMES}
+                    displayValue={(domain) => DOMAINS[domain].display}
                     form={form}
                 />
                 <FormRow>
                     <InputFormElement
                         className="w-1/3"
                         label="Rétribution basse"
-                        name="pay_under"
+                        name="wageLowerBound"
                         type="number"
                         form={form}
                     />
                     <InputFormElement
                         className="w-1/3"
                         label="Rétribution haute"
-                        name="pay_over"
+                        name="wageUpperBound"
                         type="number"
                         form={form}
                     />
                     <DropdownSingleFormElement
                         className="w-1/3"
                         label="Rétribution"
-                        name="pay_level"
-                        values={PAYS}
+                        name="wageLevel"
+                        values={LEVELS}
                         form={form}
                     />
                 </FormRow>
                 <DropdownSingleFormElement
                     label="Difficulté"
                     name="difficulty"
-                    values={DIFFICULTIES}
+                    values={LEVELS}
                     form={form}
                 />
                 <FormRule />
-                <TextAreaFormElement label="Compétences" name="skills" form={form} resizable />
-                <TextAreaFormElement label="Échéances" name="due_date" form={form} resizable />
-                <TextAreaFormElement label="Description" name="description" form={form} resizable />
-                {/* TODO: Les gens à la fin du form laaaaaaaa, faut être dynamique */}
+                <TextAreaFormElement
+                    label="Compétences"
+                    name="requiredSkillsText"
+                    form={form}
+                    resizable
+                />
+                <TextAreaFormElement label="Échéances" name="timeLapsText" form={form} resizable />
+                <TextAreaFormElement
+                    label="Description"
+                    name="descriptionText"
+                    form={form}
+                    resizable
+                />
             </form>
         </FormProvider>
     );
