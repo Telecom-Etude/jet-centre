@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { StudySelection } from './sidebar-study-selection';
 import { FaGears, FaHouse, FaNoteSticky } from 'react-icons/fa6';
-import { SideBarGroup } from '@/settings/sidebars/siderbar-trez';
 import { SidebarList } from './sidebar-list';
 import { SidebarSeparator } from '@/components/ui/sidebar';
+import { SideBarGroup } from '@/settings/sidebars/types';
 
 export default function SidebarCdp({ missions }: { missions: string[] }) {
     const [selectedMission, setSelectedMission] = useState(0);

@@ -1,4 +1,4 @@
-/* 
+/*
  * Default styles applied to the website and variables to load tailwind.
  * These variables are used in `tailwind.config.ts`
  */
@@ -70,8 +70,8 @@
         --secondary: 235 16% 16%;
         --secondary-foreground: 0 0% 98%;
 
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
+        --muted: var(--accent);
+        --muted-foreground: var(--accent-foreground);
 
         --accent: 235 16% 16%;
         --accent-foreground: 235 12% 29%;

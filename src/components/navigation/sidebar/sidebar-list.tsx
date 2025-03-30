@@ -5,7 +5,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { SideBarGroup } from '@/settings/sidebars/siderbar-trez';
+import { SideBarGroup } from '@/settings/sidebars/types';
 import Link from 'next/link';
 
 type Props = {
@@ -21,9 +21,13 @@ export function SidebarList({ sidebar_groups }: Props) {
                     <SidebarMenu>
                         {sidebar_group.items.map((item) => (
                             <SidebarMenuItem key={item.title}>
-                                <SidebarMenuButton tooltip={item.title} asChild>
+                                <SidebarMenuButton
+                                    className="hover:bg-accent"
+                                    tooltip={item.title}
+                                    asChild
+                                >
                                     <Link href={item.href}>
-                                        {item.icon && <item.icon />}
+                                        <item.icon />
                                         <span>{item.title}</span>
                                     </Link>
                                 </SidebarMenuButton>
