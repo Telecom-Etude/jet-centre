@@ -31,6 +31,13 @@ export enum FileType {
     Pdf = 'application/pdf',
 }
 
+export const FILE_POSSIBLE_CREATION = [
+    { name: 'Document', type: FileType.Document },
+    { name: 'Spreadsheet', type: FileType.Spreadsheet },
+    { name: 'Presentation', type: FileType.Presentation },
+    { name: 'Forms', type: FileType.Forms },
+];
+
 export function googleUrl(id: string, fileType: FileType | null): string | undefined {
     switch (fileType) {
         case FileType.Folder:

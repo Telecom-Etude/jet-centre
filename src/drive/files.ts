@@ -153,3 +153,22 @@ async function recursiveSearch(
         return null;
     }
 }
+
+export async function newFileInMissionFolder(code: string, mimeType: FileType, name: string) {
+    try {
+        const drive = await googleDrive();
+        const missionFolder = await getMissionFolderId(code);
+        if (!missionFolder) {
+            throw new Error('Failed to get mission folder Id');
+        }
+        await drive.files.create({
+            requestBody: {
+                name,
+                mimeType,
+                parents: [missionFolder],
+            },
+        });
+    } catch (e) {
+        console.error(`[newFile] ${e}`);
+    }
+}

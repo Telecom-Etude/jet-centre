@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
 import { IconType } from 'react-icons/lib';
+import { GoProjectTemplate } from 'react-icons/go';
 
 const Box = forwardRef<
     HTMLDivElement,
@@ -112,7 +113,7 @@ const BoxTitle = ({ children, className }: { children: string | string[]; classN
     </h2>
 );
 
-const BoxButtonPlus = ({
+const BoxButtonLabelPlus = ({
     onClick,
     label,
     className,
@@ -131,6 +132,10 @@ const BoxButtonPlus = ({
     </Button>
 );
 
+const BoxButtonPlus = ({ onClick }: { onClick: () => void }) =>
+    BoxButtonIcon({ onClick, Icon: FaPlus });
+const BoxButtonTemplate = ({ onClick }: { onClick: () => void }) =>
+    BoxButtonIcon({ onClick, Icon: GoProjectTemplate });
 const BoxButtonTrash = ({ onClick }: { onClick: () => void }) =>
     BoxButtonIcon({ onClick, Icon: FaTrash });
 const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
@@ -223,6 +228,8 @@ const BoxCollapseButton = ({
 
 export {
     Box,
+    BoxButtonLabelPlus,
+    BoxButtonTemplate,
     BoxButtonPlus,
     BoxButtonTrash,
     BoxButtonEdit,

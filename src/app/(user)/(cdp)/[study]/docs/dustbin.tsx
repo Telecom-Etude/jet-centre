@@ -7,19 +7,11 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { getMissionFiles, trashFile } from '@/drive/files';
-import { reloadWindow } from './file-explorer';
+import { reloadWindow, FileExplorerDialogProps } from './utils';
 import { useEffect, useState } from 'react';
 import { DriveFile } from '@/drive/types';
 
-export function DustbinDialog({
-    open,
-    setOpen,
-    study,
-}: {
-    study: string;
-    open: boolean;
-    setOpen: (open: boolean) => void;
-}) {
+export function DustbinDialog({ open, setOpen, study }: FileExplorerDialogProps) {
     const [files, setFiles] = useState<DriveFile[] | undefined | null>(undefined);
 
     useEffect(() => {

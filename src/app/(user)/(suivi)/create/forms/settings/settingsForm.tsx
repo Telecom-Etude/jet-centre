@@ -4,7 +4,7 @@ import { UseFormReturn } from 'react-hook-form';
 
 import {
     Box,
-    BoxButtonPlus,
+    BoxButtonLabelPlus,
     BoxCollapser,
     BoxContent,
     BoxHeader,
@@ -154,7 +154,7 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
                                 </BoxCollapser>
                                 {hideCreateNewAdminButton ? null : (
                                     <div>
-                                        <BoxButtonPlus
+                                        <BoxButtonLabelPlus
                                             className="mt-main mx-auto"
                                             label="Définir un·e admin"
                                             onClick={() => {

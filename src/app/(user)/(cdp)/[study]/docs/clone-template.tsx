@@ -8,25 +8,20 @@ import {
 } from '@/components/ui/dialog';
 import { copyTemplateWithExcel } from '@/drive/files';
 import { TEMPLATES } from '@/drive/template';
-import { reloadWindow } from './file-explorer';
+import { FileExplorerDialogProps, reloadWindow } from './utils';
 
-export function TemplateCloningDialog({
-    open,
-    setOpen,
-    setLoading,
-    study,
-}: {
-    study: string;
-    open: boolean;
-    setOpen: (open: boolean) => void;
+interface TemplateCopyDialog extends FileExplorerDialogProps {
     setLoading: (loading: boolean) => void;
-}) {
+}
+
+export function TemplateCopyDialog({ open, setOpen, setLoading, study }: TemplateCopyDialog) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Cloner un template</DialogTitle>
+                    <DialogTitle>Nouveau fichier</DialogTitle>
                 </DialogHeader>
+
                 <div className="flex flex-col gap-4">
                     {TEMPLATES.map(({ file, excel }, i) => (
                         <Button

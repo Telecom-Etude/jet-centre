@@ -1,6 +1,6 @@
 import {
     Box,
-    BoxButtonPlus,
+    BoxButtonLabelPlus,
     BoxButtonTrash,
     BoxCollapseButton,
     BoxCollapser,
@@ -89,10 +89,9 @@ export function CompaniesForm({ companies, formStudy, formStudyId }: CompaniesPr
                 />
             )}
             <div className="flex flex-row justify-center">
-                <BoxButtonPlus
+                <BoxButtonLabelPlus
                     label="Définir une entreprise"
                     onClick={() =>
-                        //@ts-ignore (members is empty, but it's not a problem here)
                         companiesList.addItem({
                             id: 'tmp-id-' + Math.random().toString(),
                             idx: getNextIdx(),
@@ -325,7 +324,7 @@ function CompanyForm({
                                 </BoxCollapser>
                                 {hideCreateNewContactButton ? null : (
                                     <div>
-                                        <BoxButtonPlus
+                                        <BoxButtonLabelPlus
                                             className="mt-main mx-auto"
                                             label="Définir un contact"
                                             onClick={() => {

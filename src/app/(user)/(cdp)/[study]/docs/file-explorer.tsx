@@ -1,9 +1,8 @@
-'use client';
-
 import {
     Box,
     BoxButtonPlus,
     BoxButtonReload,
+    BoxButtonTemplate,
     BoxButtonTrash,
     BoxContent,
     BoxHeader,
@@ -17,12 +16,11 @@ import { FaArrowRightFromBracket, FaArrowUpFromBracket, FaPencil, FaTrash } from
 import Link from 'next/link';
 import { trashFile, renameFile } from '@/drive/files';
 import { Input } from '@/components/ui/input';
-import { TemplateCloningDialog } from './templates';
+import { TemplateCopyDialog } from './clone-template';
 import { DustbinDialog } from './dustbin';
+import { NewFileDialog } from './new-file';
+import { reloadWindow } from './utils';
 
-export function reloadWindow() {
-    if (typeof window != 'undefined') location.reload();
-}
 interface FileExplorerProps {
     missions: DriveFile[] | null;
     selectFile: (file: DriveFile) => void;
@@ -40,6 +38,7 @@ export function FileExplorerBox({
     loading,
     study,
 }: FileExplorerProps) {
+    const [newFileOpen, setNewFileOpen] = useState(false);
     const [templateDialogOpen, setTemplateDialogOpen] = useState(false);
     const [dustbinOpen, setDustbinOpen] = useState(false);
 
@@ -51,7 +50,8 @@ export function FileExplorerBox({
                     <BoxHeaderBlock>
                         <BoxButtonTrash onClick={() => setDustbinOpen(true)} />
                         <BoxButtonReload onClick={() => loadFiles()} />
-                        <BoxButtonPlus onClick={() => setTemplateDialogOpen(true)} />
+                        <BoxButtonTemplate onClick={() => setTemplateDialogOpen(true)} />
+                        <BoxButtonPlus onClick={() => setNewFileOpen(true)} />
                     </BoxHeaderBlock>
                 </BoxHeader>
                 <BoxContent>
@@ -69,12 +69,13 @@ export function FileExplorerBox({
                     )}
                 </BoxContent>
             </Box>
-            <TemplateCloningDialog
+            <TemplateCopyDialog
                 open={templateDialogOpen}
                 setOpen={setTemplateDialogOpen}
                 study={study}
                 setLoading={setLoading}
             />
+            <NewFileDialog open={newFileOpen} setOpen={setNewFileOpen} study={study} />
             <DustbinDialog open={dustbinOpen} setOpen={setDustbinOpen} study={study} />
         </>
     );
