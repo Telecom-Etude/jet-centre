@@ -125,7 +125,7 @@ export function DropdownManyFormElement<V, T extends FieldValues>({
                             onCloseAutoFocus={() => setInFocus(false)}
                         >
                             <Command>
-                                <CommandInput placeholder={`Sélectionner ${label}...`} />
+                                <CommandInput />
                                 <CommandList>
                                     <CommandEmpty>Entrée invalide.</CommandEmpty>
                                     <CommandGroup>

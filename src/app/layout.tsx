@@ -65,7 +65,7 @@ export default async function RootLayout({
 
     return (
         <html lang="fr">
-            <body className={cn(avenir.className, 'dark h-dvh')}>
+            <body className={cn(avenir.className, 'h-dvh')}>
                 {session ? <AdminSideBar session={session}>{children}</AdminSideBar> : children}
             </body>
         </html>

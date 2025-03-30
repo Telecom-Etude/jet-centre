@@ -7,7 +7,7 @@ export const COMMERCIAL_DIRECTOR_SIDEBAR: RoleSideBar = {
     sidebar: [
         {
             title: 'Nouvelles études',
-            items: [MRI_VALIDATION, CREATE_STUDY],
+            items: [CREATE_STUDY, MRI_VALIDATION],
         },
     ],
 };

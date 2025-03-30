@@ -1,13 +1,8 @@
 import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 import { Task } from '@/components/meta-components/task-bullet-list';
-import { Metadata } from 'next';
 import { FollowMissionTaskList } from './client';
 import logoBird from '@/../public/bird.svg';
 import Image from 'next/image';
-
-export const metadata: Metadata = {
-    title: 'Suivi',
-};
 
 export default function Page() {
     return (

@@ -1,10 +1,4 @@
-import { Metadata } from 'next';
-
 import FilesBrowser from '@/components/gdrive/FilesBrowser';
-
-export const metadata = {
-    title: 'Dashboard',
-} satisfies Metadata;
 
 async function HomePage() {
     return (

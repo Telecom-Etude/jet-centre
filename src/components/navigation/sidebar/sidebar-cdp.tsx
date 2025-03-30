@@ -16,7 +16,7 @@ export default function SidebarCdp({ missions }: { missions: string[] }) {
             <div className="flex flex-col items-center gap-1">
                 <div className="flex flex-col items-center gap-1">
                     <div>{missionCode}</div>
-                    <SidebarSeparator className="h-1 w-[calc(100%+1rem)] rounded-full bg-secondary"></SidebarSeparator>
+                    <SidebarSeparator className="h-1 w-[calc(100%+1rem)] rounded-full bg-secondary" />
                 </div>
                 <StudySelection
                     missions={missions}

@@ -9,60 +9,17 @@
 
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 0, 0%, 0%;
-
-        --link: 266 66% 55%;
-
-        --card: 0 0% 100%;
-        --card-foreground: 0, 0%, 0%;
-
-        --popover: 0 0% 100%;
-        --popover-foreground: 0, 0%, 0%;
-
-        --primary: 24 98% 60%;
-        --primary-foreground: 0 0% 100%;
-
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-
         --radius: 10px;
+        --link: var(--primary);
 
-        --box-background: 0 0% 0%;
-        --box-title: 0 0% 0%;
-        --box-hover: 0 0% 0%;
-        --sidebar-background: 0 0% 98%;
-        --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 240 5.9% 10%;
-        --sidebar-primary-foreground: 0 0% 98%;
-        --sidebar-accent: 240 4.8% 95.9%;
-        --sidebar-accent-foreground: 240 5.9% 10%;
-        --sidebar-border: 220 13% 91%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
-    }
-
-    .dark {
         --background: 234 23% 9%;
         --foreground: 0 0% 90%;
 
         --card: 235 20% 12%;
         --card-foreground: 0 0% 98%;
 
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
+        --popover: var(--background);
+        --popover-foreground: var(--foreground);
 
         --primary: 24 98% 60%;
         --primary-foreground: 0 0% 100%;

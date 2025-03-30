@@ -29,7 +29,7 @@ export default function MRICreationForm({ form }: { form: UseFormReturn<FormType
                     />
                     <InputFormElement
                         className="w-1/3"
-                        label="Rétribution haut"
+                        label="Rétribution haute"
                         name="pay_over"
                         type="number"
                         form={form}
