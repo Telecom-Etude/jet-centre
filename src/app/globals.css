@@ -27,11 +27,11 @@
         --secondary: 235 16% 16%;
         --secondary-foreground: 0 0% 98%;
 
-        --muted: var(--accent);
-        --muted-foreground: var(--accent-foreground);
+        --muted: var(--secondary);
+        --muted-foreground: var(--secondary-foreground);
 
-        --accent: 235 16% 16%;
-        --accent-foreground: 235 12% 29%;
+        --accent: var(--secondary);
+        --accent-foreground: var(--secondary-foreground);
 
         --destructive: 0 62.8% 30.6%;
         --destructive-foreground: 0 0% 98%;
@@ -61,6 +61,8 @@
 
         --sidebar-border: 240 3.7% 15.9%;
         --sidebar-ring: 217.2 91.2% 59.8%;
+
+        --select-navbar: #414252;
     }
 }
 

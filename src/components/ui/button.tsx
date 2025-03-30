@@ -19,7 +19,7 @@ const buttonVariants = cva(
                 none: '',
                 link: 'text-primary underline-offset-4 hover:underline',
                 title: 'bg-box-title text-primary-foreground hover:bg-box-title/80',
-                'selected-navbar': 'bg-[#414252]',
+                'selected-navbar': 'bg-select-navbar',
             },
             size: {
                 default: 'h-10 px-4 py-2',

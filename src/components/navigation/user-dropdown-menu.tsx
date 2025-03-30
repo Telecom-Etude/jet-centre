@@ -31,7 +31,9 @@ export const UserDropdownMenu = ({ isMobile, isOpen }: UserDropdownMenuProps) =>
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuButton
                             size="lg"
-                            className="hover:bg-accent hover:text-muted-foreground data-[state=open]:bg-accent data-[state=open]:text-muted-foreground w-full justify-between"
+                            variant="secondary"
+                            className="w-full items-center flex justify-between"
+                            // className="border-accent border-2 p-2 hover:bg-accent hover:text-muted-foreground data-[state=open]:bg-accent data-[state=open]:text-muted-foreground w-full justify-between"
                         >
                             {isOpen && <span className="font-medium">{username}</span>}
                             <UserAvatar round={isOpen} avatarUrl={avatarUrl} />

@@ -47,6 +47,9 @@ const colors: CustomThemeConfig['colors'] = {
         DEFAULT: 'hsl(var(--card))',
         foreground: 'hsl(var(--card-foreground))',
     },
+    select: {
+        navbar: 'var(--select-navbar)',
+    },
     disabled: {
         DEFAULT: 'hsl(var(--disabled))',
         foreground: 'hsl(var(--disabled-foreground))',

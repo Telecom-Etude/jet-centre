@@ -141,7 +141,7 @@ function DropdownSingleElement<T extends FieldValues, V>({
                 </Button>
             </PopoverTrigger>
             <PopoverContent
-                className="p-0 bg-blue-500 "
+                className="p-0"
                 onFocus={() => setInFocus(true)}
                 onCloseAutoFocus={() => setInFocus(false)}
             >
