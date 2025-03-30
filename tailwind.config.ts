@@ -54,18 +54,6 @@ const colors: CustomThemeConfig['colors'] = {
         DEFAULT: 'hsl(var(--disabled))',
         foreground: 'hsl(var(--disabled-foreground))',
     },
-    mri: {
-        'header-bg': '#F7F7F7',
-        'body-bg': '#FFFFFF',
-        title: '#222222',
-        headers: '#444444',
-        separator: '#EAEAEA',
-        p: '#757575',
-        a: '#0070f3',
-        emphasis: '#444444',
-        'button-bg': '#E54540',
-        'button-fg': '#FFFFFF',
-    },
     sidebar: {
         DEFAULT: 'hsl(var(--sidebar-background))',
         foreground: 'hsl(var(--sidebar-foreground))',

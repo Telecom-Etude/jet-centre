@@ -21,7 +21,7 @@ export default function Inner({
         defaultValues.title = serverMriData.title;
     }
     if (serverMriData?.description) {
-        defaultValues.description = serverMriData.description;
+        defaultValues.intro = serverMriData.description;
     }
     if (serverMriData?.domain) {
         defaultValues.domain = serverMriData.domain;
@@ -50,7 +50,7 @@ export default function Inner({
                     <BoxTitle>Prévisualisation du MRI</BoxTitle>
                 </BoxHeader>
                 <BoxContent height="limited" noPadding>
-                    <RenderMRI mri={mri} />
+                    <RenderMRI mri={mri} admins={serverMriData?.admins || []} />
                 </BoxContent>
             </Box>
         </div>

@@ -6,19 +6,31 @@ import {
     FaXTwitter,
     FaLink,
     FaEnvelope,
+    FaGlobe,
 } from 'react-icons/fa6';
 
+import Link from 'next/link';
 import { getDifficulty, getDomain, getPay, ImageElt } from './figures';
 import { FormType } from './form/schema';
 
 import { NBSP } from '@/lib/utils';
 import BirdLogo from '@/../public/mri/bird.png';
+import { ServerMriData } from '@/actions/study';
+import { Button } from '@/components/ui/button';
 
-export function RenderMRI({ mri }: { mri: FormType }) {
+export function RenderMRI({
+    mri,
+    admins,
+    study,
+}: {
+    study: string;
+    mri: FormType;
+    admins: ServerMriData['admins'];
+}) {
     const h4cn = 'text-2xl font-bold my-1 text-mri-headers';
 
     return (
-        <div className="@container text-mri-p font-mri bg-mri-body-bg">
+        <div className="@container bg-white text-black">
             <div className="bg-mri-header-bg flex flex-row justify-center">
                 <div className="flex flex-col justify-center items-center max-w-[600px] px-6 @sm:px-0">
                     <Image
@@ -41,95 +53,67 @@ export function RenderMRI({ mri }: { mri: FormType }) {
                         <ImageElt {...getPay(mri.pay_under, mri.pay_over, mri.pay_level)} />
                         <ImageElt {...getDifficulty(mri.difficulty)} />
                     </div>
-
                     <hr className="my-6 border-mri-separator" />
-
                     <section className="mb-5">
                         <h4 className={h4cn}>Compétences</h4>
                         <p>{mri.skills}</p>
                     </section>
-
                     <section className="mb-5">
                         <h4 className={h4cn}>Échéances</h4>
                         <p>{mri.due_date}</p>
                     </section>
-
                     <section className="mb-5">
                         <h4 className={h4cn}>Description</h4>
                         <p>{mri.description}</p>
                     </section>
-
                     <hr className="my-6 border-mri-separator" />
+                    <div className="flex flex-col items-center">
+                        <Button asChild className="w-fit mb-6 bg-je-red font-semibold">
+                            <Link href={`/postuler/${study}`} className="p-4 rounded">
+                                Je postule !
+                            </Link>
+                        </Button>
 
-                    <p>
-                        Si vous souhaitez postuler,{' '}
-                        <span className="font-semibold">remplissez ce formulaire</span> et
-                        <span className="font-semibold">envoyez nous votre CV par mail</span> en
-                        cliquant sur les boutons ci-dessous.
-                    </p>
-
-                    <div className="flex flex-col justify-center items-center gap-4 my-8">
-                        <button className="p-4 bg-mri-button-bg text-mri-button-fg rounded-md font-bold">
-                            Je réponds au formulaire
-                        </button>
-
-                        <button className="p-4 bg-mri-button-bg text-mri-button-fg rounded-md font-bold">
-                            J&apos;envoie mon CV
-                        </button>
+                        <p>N&apos;hésitez pas à nous contacter pour plus d'information:</p>
+                        <div className="flex">
+                            {admins.map((admin, i) => (
+                                <Link
+                                    href={'mailto' + admin.email}
+                                    className="text-sm p-2 flex underline flex-col items-center"
+                                    key={i}
+                                >
+                                    <p>{admin.firstName + ' ' + admin.lastName}</p>
+                                    <p>{admin.email}</p>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
 
-                    <p>
-                        N&apos;hésitez pas à demander plus d&apos;informations ou de détails à
-                        Lauren (
-                        <a
-                            href="mailto:lauren.calvosa@telecom-etude.fr"
-                            className="text-mri-a hover:underline"
-                        >
-                            lauren.calvosa@telecom-etude.fr
-                        </a>
-                        ), et Sarah (
-                        <a
-                            href="mailto:sarah.dossantos@telecom-etude.fr"
-                            className="text-mri-a hover:underline"
-                        >
-                            sarah.dossantos@telecom-etude.fr
-                        </a>
-                        ).
-                    </p>
-
-                    <p>
-                        <br />
-                        À bientôt,
-                        <br />
-                        L&apos;équipe Telecom Etude !
-                        <br />
-                        <br />
-                    </p>
-
+                    <p>À bientôt,</p>
+                    <p>L&apos;équipe Telecom Etude !</p>
                     <div className="flex flex-row gap-4 justify-center">
-                        <a
+                        <Link
                             href="https://www.linkedin.com/company/telecom-etude"
                             className="h-4 w-4"
                         >
                             <FaLinkedin />
-                        </a>
-                        <a href="https://www.facebook.com/TelecomEtude" className="h-4 w-4">
+                        </Link>
+                        <Link href="https://www.facebook.com/TelecomEtude" className="h-4 w-4">
                             <FaFacebook />
-                        </a>
-                        <a href="https://www.instagram.com/telecometude" className="h-4 w-4">
+                        </Link>
+                        <Link href="https://www.instagram.com/telecometude" className="h-4 w-4">
                             <FaInstagram />
-                        </a>
-                        <a href="https://x.com/TelecomEtude" className="h-4 w-4">
+                        </Link>
+                        <Link href="https://x.com/TelecomEtude" className="h-4 w-4">
                             <FaXTwitter />
-                        </a>
-                        <a href="https://telecom-etude.fr" className="h-4 w-4">
-                            <FaLink />
-                        </a>
-                        <a href="mailto:contact@telecom-etude.fr" className="h-4 w-4">
+                        </Link>
+                        <Link href="https://telecom-etude.fr" className="h-4 w-4">
+                            <FaGlobe />
+                        </Link>
+                        <Link href="mailto:contact@telecom-etude.fr" className="h-4 w-4">
                             <FaEnvelope />
-                        </a>
+                        </Link>
                     </div>
-
                     <p className="mb-16"></p>
                 </div>
             </div>
@@ -137,21 +121,21 @@ export function RenderMRI({ mri }: { mri: FormType }) {
 
             <p className="text-center">
                 This email was send to{' '}
-                <a href="mailto:exemple@telecom-etude.fr" className="text-mri-emphasis">
+                <Link href="mailto:exemple@telecom-etude.fr" className="text-mri-emphasis">
                     exemple@telecom-etude.fr
-                </a>
+                </Link>
             </p>
 
             <div className="flex flex-col justify-center items-center gap-4 my-4 @sm:flex-row @sm:my-0">
-                <a href="" className="text-mri-emphasis italic">
+                <Link href="" className="text-mri-emphasis italic">
                     why did I get this?
-                </a>
-                <a href="" className="text-mri-emphasis">
+                </Link>
+                <Link href="" className="text-mri-emphasis">
                     unsubscribe from this list
-                </a>
-                <a href="" className="text-mri-emphasis">
+                </Link>
+                <Link href="" className="text-mri-emphasis">
                     update subscription preferences
-                </a>
+                </Link>
             </div>
 
             <p className="text-center">
