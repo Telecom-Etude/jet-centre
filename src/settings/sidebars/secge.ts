@@ -6,7 +6,7 @@ export const SECRETARY_GENERAL_SIDEBAR: RoleSideBar = {
     icon: VscOrganization,
     sidebar: [
         {
-            title: 'default',
+            title: 'Nouvelles études',
             items: [MRI_VALIDATION],
         },
     ],

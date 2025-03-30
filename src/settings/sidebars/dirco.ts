@@ -6,7 +6,7 @@ export const COMMERCIAL_DIRECTOR_SIDEBAR: RoleSideBar = {
     icon: FaPhone,
     sidebar: [
         {
-            title: 'default',
+            title: 'Nouvelles études',
             items: [MRI_VALIDATION, CREATE_STUDY],
         },
     ],

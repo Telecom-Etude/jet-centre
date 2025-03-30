@@ -1,8 +1,9 @@
-import { FaHouse, FaMoneyBill } from 'react-icons/fa6';
+import { FaHouse } from 'react-icons/fa6';
 import { RoleSideBar } from './types';
+import { TRESO_ICON } from './tabs';
 
 export const TREASURER_SIDEBAR: RoleSideBar = {
-    icon: FaMoneyBill,
+    icon: TRESO_ICON,
     sidebar: [
         {
             title: 'default',

@@ -10,9 +10,10 @@ import Link from 'next/link';
 
 type Props = {
     sidebar_groups: SideBarGroup[];
+    missionCode?: string;
 };
 
-export function SidebarList({ sidebar_groups }: Props) {
+export function SidebarList({ sidebar_groups, missionCode }: Props) {
     return (
         <div className="flex-grow">
             {sidebar_groups.map((sidebar_group, i) => (
@@ -26,7 +27,11 @@ export function SidebarList({ sidebar_groups }: Props) {
                                     tooltip={item.title}
                                     asChild
                                 >
-                                    <Link href={item.href}>
+                                    <Link
+                                        href={
+                                            missionCode ? '/' + missionCode + item.href : item.href
+                                        }
+                                    >
                                         <item.icon />
                                         <span>{item.title}</span>
                                     </Link>

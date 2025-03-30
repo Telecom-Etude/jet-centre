@@ -6,7 +6,7 @@ export const VPO_SIDEBAR: RoleSideBar = {
     icon: GoOrganization,
     sidebar: [
         {
-            title: 'default',
+            title: 'Nouvelles études',
             items: [CREATE_STUDY],
         },
     ],
