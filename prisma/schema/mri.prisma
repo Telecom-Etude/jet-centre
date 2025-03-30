@@ -4,8 +4,8 @@ enum Level {
     High
 }
 
-model MRIs {
-    id                 String     @id @default(cuid())
+model MRI {
+    id                 String    @id @default(cuid())
     wageLowerBound     Int?
     wageUpperBound     Int?
     wageLevel          Level?
@@ -15,25 +15,25 @@ model MRIs {
     descriptionText    String?
     timeLapsText       String?
     requiredSkillsText String?
-    study              Studies    @relation(fields: [studyId], references: [id], onDelete: Cascade)
-    studyId            String     @unique
-    formMRIs           FormMRIs[]
+    study              Study     @relation(fields: [studyId], references: [id], onDelete: Cascade)
+    studyId            String    @unique
+    formMRIs           FormMRI[]
 }
 
-model Assignees {
-    id             String           @id @default(cuid())
+model Assignee {
+    id             String          @id @default(cuid())
     nbApplications Int
     docs           AssigneeDocs[]
     information    AssigneeInfos?
-    person         People           @relation(fields: [peopleId], references: [id], onDelete: Cascade)
-    peopleId       String           @unique
-    studyAssign    StudyAssignees[]
+    person         Person          @relation(fields: [peopleId], references: [id], onDelete: Cascade)
+    peopleId       String          @unique
+    studyAssign    StudyAssignee[]
 }
 
 model AssigneeInfos {
-    id            String    @id @default(cuid())
-    assignee      Assignees @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
-    assigneeId    String    @unique
+    id            String   @id @default(cuid())
+    assignee      Assignee @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
+    assigneeId    String   @unique
     age           Int
     promotion     Int
     asScholarship Boolean
@@ -41,36 +41,36 @@ model AssigneeInfos {
 }
 
 model AssigneeDocs {
-    id               String    @id @default(cuid())
-    assignee         Assignees @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
+    id               String   @id @default(cuid())
+    assignee         Assignee @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
     assigneeId       String
-    cni              Docs      @relation("cni", fields: [cniId], references: [id])
-    cniId            String    @unique
-    socialSecurity   Docs      @relation("socialSecurity", fields: [socialSecurityId], references: [id])
-    socialSecurityId String    @unique
-    studentCard      Docs      @relation("studentCard", fields: [studentCardId], references: [id])
-    studentCardId    String    @unique
+    cni              Document @relation("cni", fields: [cniId], references: [id])
+    cniId            String   @unique
+    socialSecurity   Document @relation("socialSecurity", fields: [socialSecurityId], references: [id])
+    socialSecurityId String   @unique
+    studentCard      Document @relation("studentCard", fields: [studentCardId], references: [id])
+    studentCardId    String   @unique
 }
 
-model StudyAssignees {
+model StudyAssignee {
     id              String         @id @default(cuid())
-    study           Studies        @relation(fields: [studyId], references: [id], onDelete: Cascade)
+    study           Study          @relation(fields: [studyId], references: [id], onDelete: Cascade)
     studyId         String
-    assignee        Assignees      @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
+    assignee        Assignee       @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
     assigneeId      String
     formInterview   FormInterviews @relation(fields: [formInterviewId], references: [id], onDelete: Cascade)
     formInterviewId String         @unique
-    formMRI         FormMRIs       @relation(fields: [formMRIId], references: [id], onDelete: Cascade)
+    formMRI         FormMRI        @relation(fields: [formMRIId], references: [id], onDelete: Cascade)
     formMRIId       String         @unique
     selection       String
     taken           Boolean
 }
 
-model FormMRIs {
-    id             String          @id @default(cuid())
-    mri            MRIs            @relation(fields: [mriId], references: [id], onDelete: Cascade)
-    mriId          String          @unique
-    studyAssignees StudyAssignees?
+model FormMRI {
+    id             String         @id @default(cuid())
+    mri            MRI            @relation(fields: [mriId], references: [id], onDelete: Cascade)
+    mriId          String         @unique
+    studyAssignees StudyAssignee?
     experience     String
     knowledge      String
     ideas          String
@@ -78,8 +78,8 @@ model FormMRIs {
 }
 
 model FormInterviews {
-    id              String          @id @default(cuid())
-    studyAssignees  StudyAssignees?
+    id              String         @id @default(cuid())
+    studyAssignees  StudyAssignee?
     available       Boolean
     approach        String
     courses         String

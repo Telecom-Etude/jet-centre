@@ -1,28 +1,28 @@
-model Clients {
-    id           String         @id @default(cuid())
-    company      Companies      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+model Client {
+    id           String        @id @default(cuid())
+    company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
     companyId    String
-    person       People         @relation(fields: [peopleId], references: [id], onDelete: Cascade)
-    peopleId     String         @unique
+    person       Person        @relation(fields: [personId], references: [id], onDelete: Cascade)
+    personId     String        @unique
     job          String
-    StudyClients StudyClients[]
+    StudyClients StudyClient[]
 }
 
-model StudyClients {
-    id           String         @id @default(cuid())
-    study        Studies        @relation(fields: [studyId], references: [id], onDelete: Cascade)
+model StudyClient {
+    id           String        @id @default(cuid())
+    study        Study         @relation(fields: [studyId], references: [id], onDelete: Cascade)
     studyId      String
-    client       Clients        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+    client       Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
     clientId     String
-    satisfaction Satisfactions?
+    satisfaction Satisfaction?
 }
 
-model Satisfactions {
-    id                     String       @id @default(cuid())
-    studyClient            StudyClients @relation(fields: [studyClientId], references: [id], onDelete: Cascade)
-    studyClientId          String       @unique
-    study                  Studies      @relation(fields: [studyId], references: [id], onDelete: Cascade)
-    studyId                String       @unique
+model Satisfaction {
+    id                     String      @id @default(cuid())
+    studyClient            StudyClient @relation(fields: [studyClientId], references: [id], onDelete: Cascade)
+    studyClientId          String      @unique
+    study                  Study       @relation(fields: [studyId], references: [id], onDelete: Cascade)
+    studyId                String      @unique
     publish                Boolean
     howKnowUs              String
     whyUs                  String
@@ -32,14 +32,14 @@ model Satisfactions {
     recommendUs            Int
 }
 
-model Companies {
+model Company {
     id             String       @id @default(cuid())
     name           String       @unique
     address        Address      @relation(fields: [addressId], references: [id], onDelete: Cascade)
     addressId      String       @unique
-    companyInfos   CompanyInfos @relation(fields: [companyInfosId], references: [id], onDelete: Cascade)
-    companyInfosId String       @unique
-    members        Clients[]
+    companyInfos   CompanyInfos @relation(fields: [companyInfosId], references: [id])
+    members        Client[]
+    companyInfosId String
 }
 
 enum CompanySize {
@@ -50,12 +50,11 @@ enum CompanySize {
 }
 
 model CompanyInfos {
-    id          String       @id @default(cuid())
-    nvEmployees Int
-    domains     Domain[]
-    ca          Int?
-    size        CompanySize?
-    Companies   Companies?
+    id      String       @id @default(cuid())
+    domains Domain[]
+    ca      Int?
+    size    CompanySize?
+    Company Company[]
 }
 
 enum Domain {

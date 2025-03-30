@@ -1,73 +1,55 @@
-model People {
-    id        String     @id @default(cuid())
-    email     String     @unique
+model Person {
+    id        String    @id @default(cuid())
+    email     String    @unique
     firstName String
     lastName  String
     number    String?
-    address   Address?   @relation(fields: [addressId], references: [id])
+    address   Address?  @relation(fields: [addressId], references: [id])
     addressId String?
-    User      User?
-    Assignees Assignees?
-    Clients   Clients?
+    user      User?
+    assignee  Assignee?
+    clients   Client?
 }
 
 model User {
     id             String       @id @default(cuid())
-    person         People       @relation(fields: [peopleId], references: [id])
-    peopleId       String       @unique
+    person         Person       @relation(fields: [personId], references: [id])
+    personId       String       @unique
     settings       UserSettings @relation(fields: [userSettingsId], references: [id])
     userSettingsId String       @unique
-    Admins         Admins?
-    // msgBox         MsgBoxes
+    admin          Admin?
 }
 
-model Admins {
-    id             String    @id @default(cuid())
-    user           User      @relation(fields: [userId], references: [id])
-    userId         String    @unique
+model Admin {
+    id             String  @id @default(cuid())
+    user           User    @relation(fields: [userId], references: [id])
+    userId         String  @unique
     position       String?
-    role           Roles[]
-    studies        Studies[] @relation("cdp")
-    auditedStudies Studies[] @relation("auditor")
-}
-
-model Roles {
-    id     String   @id @default(cuid())
-    name   String   @unique
-    pages  Pages[]
-    Admins Admins[]
-}
-
-model Pages {
-    id        String  @id @default(cuid())
-    url       String
-    name      String
-    navigable Boolean
-    Role      Roles   @relation(fields: [roleId], references: [id])
-    roleId    String
+    studies        Study[] @relation("cdp")
+    auditedStudies Study[] @relation("auditor")
 }
 
 model UserSettings {
-    id              String   @id @default(cuid())
-    theme           String
-    notificationLvl NotifLvl
-    gui             Boolean
-    User            User?
+    id                String            @id @default(cuid())
+    theme             String
+    notificationLevel NotificationLevel
+    gui               Boolean
+    user              User?
 }
 
-enum NotifLvl {
+enum NotificationLevel {
     LOW
     MEDIUM
     HIGH
 }
 
 model Address {
-    id      String     @id @default(cuid())
+    id      String   @id @default(cuid())
     number  String
     street  String
     city    String
     zipCode String
     country String
-    People  People[]
-    Company Companies?
+    People  Person[]
+    Company Company?
 }

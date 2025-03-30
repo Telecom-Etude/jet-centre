@@ -1,38 +1,27 @@
-model Docs {
+model Document {
     id                     String        @id @default(cuid())
     title                  String
     googleId               String        @unique
     type                   String
-    status                 Status?
+    status                 Status?       @relation(fields: [statusId], references: [id])
     assigneeCni            AssigneeDocs? @relation("cni")
     assigneeSocialSecurity AssigneeDocs? @relation("socialSecurity")
     assigneeStudentCard    AssigneeDocs? @relation("studentCard")
-    studyCE                StudyDocs?    @relation("ce")
-    studyCC                StudyDocs?    @relation("cc")
-    studyBR                StudyDocs?    @relation("br")
-    studyRM                StudyDocs?    @relation("rm")
-    studyACE               StudyDocs?    @relation("ace")
-    studyARM               StudyDocs?    @relation("arm")
-    studyACC               StudyDocs?    @relation("acc")
-    studyBCR               StudyDocs?    @relation("bcr")
-    studyPVRI              StudyDocs?    @relation("pvri")
-    studyPVRF              StudyDocs?    @relation("pvrf")
-    studyBV                StudyDocs?    @relation("bv")
-    studyCCONF             StudyDocs?    @relation("cconf")
-    StudyDocs              StudyDocs?    @relation(fields: [studyDocsId], references: [id])
     studyDocsId            String?
+    statusId               String?
 }
 
 model Status {
-    id       String   @id @default(cuid())
-    docs     Docs     @relation(fields: [docsId], references: [id], onDelete: Cascade)
-    docsId   String   @unique
-    created  DateTime
-    wrote    DateTime
-    audited  DateTime
-    sent     DateTime
-    signed   DateTime
-    approved DateTime
-    bypasses DateTime
-    deadline DateTime
+    id         String     @id @default(cuid())
+    docsId     String     @unique
+    created    DateTime
+    wrote      DateTime
+    audited    DateTime
+    sent       DateTime
+    signed     DateTime
+    approved   DateTime
+    bypasses   DateTime
+    deadline   DateTime
+    Document   Document[]
+    documentId String     @unique
 }

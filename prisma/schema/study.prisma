@@ -1,21 +1,21 @@
-model Studies {
-    id              String           @id @default(cuid())
-    cdps            Admins[]         @relation("cdp")
-    auditors        Admins[]         @relation("auditor")
-    information     StudyInfos       @relation(fields: [informationId], references: [id])
-    informationId   String           @unique
-    progress        StudyProgress?   @relation(fields: [studyProgressId], references: [id])
-    clients         StudyClients[]
-    MRIs            MRIs?
-    studyAssignees  StudyAssignees[]
-    satisfactions   Satisfactions?
+model Study {
+    id              String          @id @default(cuid())
+    cdps            Admin[]         @relation("cdp")
+    auditors        Admin[]         @relation("auditor")
+    information     StudyInfos      @relation(fields: [informationId], references: [id])
+    informationId   String          @unique
+    progress        StudyProgress?
+    clients         StudyClient[]
+    MRIs            MRI?
+    studyAssignees  StudyAssignee[]
+    satisfaction    Satisfaction?
     studyProgressId String?
 }
 
 model StudyInfos {
-    id               String        @id @default(cuid())
-    code             String        @unique
-    googleFolder     String?       @unique
+    id               String     @id @default(cuid())
+    code             String     @unique
+    googleFolder     String?    @unique
     title            String?
     description      String?
     applicationFee   Float?
@@ -23,33 +23,32 @@ model StudyInfos {
     deadlinePreStudy DateTime?
     cc               Boolean
     domain           Domain[]
-    deliverable      Deliverables? @relation(fields: [deliverablesId], references: [id])
-    deliverablesId   String?
-    docs             StudyDocs[]
-    Studies          Studies?
+    study            Study?
 }
 
 model StudyProgress {
     id      String            @id @default(cuid())
     studyId String            @unique
-    phases  Phases[]
+    phases  Phase[]
     step    StudyProgressStep
-    Studies Studies[]
+    study   Study             @relation(fields: [studyId], references: [id])
 }
 
 enum StudyProgressStep {
-    PRELIMINARY_STUDY
-    TRIPARTITE_MEETING
-    ASSIGNEE_PAPERS
-    IN_STUDY
-    ENDED
-    ASSIGNEE_PAID
-    COMPANY_FACTORED
+    Recruiting
+    TripartiteMeeting
+    WritingDocuments
+    InStudy
+    Ended
+    CompanyFactored
+    AssigneePaid
+    SatisfactionForm
 }
 
-model Phases {
+model Phase {
     id              String         @id @default(cuid())
-    jeh             JEHs[]
+    jehs            Int
+    deliverable     Deliverable?
     unitPrice       Float
     startDate       DateTime
     endDate         DateTime
@@ -57,49 +56,11 @@ model Phases {
     studyProgressId String?
 }
 
-model JEHs {
-    id          String  @id @default(cuid())
-    JEHnb       Int
-    deliverable Boolean
-    Phases      Phases? @relation(fields: [phasesId], references: [id])
-    phasesId    String?
-}
-
-model Deliverables {
-    id        String       @id @default(cuid())
-    content   String
-    given     Boolean
-    done      Boolean
-    studyInfo StudyInfos[]
-}
-
-model StudyDocs {
-    id          String      @id @default(cuid())
-    ce          Docs        @relation("ce", fields: [ceId], references: [id], onDelete: Cascade)
-    ceId        String      @unique
-    cc          Docs        @relation("cc", fields: [ccId], references: [id], onDelete: Cascade)
-    ccId        String      @unique
-    br          Docs        @relation("br", fields: [brId], references: [id], onDelete: Cascade)
-    brId        String      @unique
-    rm          Docs        @relation("rm", fields: [rmId], references: [id], onDelete: Cascade)
-    rmId        String      @unique
-    ace         Docs        @relation("ace", fields: [aceId], references: [id], onDelete: Cascade)
-    aceId       String      @unique
-    arm         Docs        @relation("arm", fields: [armId], references: [id], onDelete: Cascade)
-    armId       String      @unique
-    acc         Docs        @relation("acc", fields: [accId], references: [id], onDelete: Cascade)
-    accId       String      @unique
-    bcr         Docs        @relation("bcr", fields: [bcrId], references: [id], onDelete: Cascade)
-    bcrId       String      @unique
-    pvri        Docs        @relation("pvri", fields: [pvriId], references: [id], onDelete: Cascade)
-    pvriId      String      @unique
-    pvrf        Docs        @relation("pvrf", fields: [pvrfId], references: [id], onDelete: Cascade)
-    pvrfId      String      @unique
-    bv          Docs        @relation("bv", fields: [bvId], references: [id], onDelete: Cascade)
-    bvId        String      @unique
-    cconf       Docs        @relation("cconf", fields: [cconfId], references: [id], onDelete: Cascade)
-    cconfId     String      @unique
-    studyInfo   StudyInfos? @relation(fields: [studyInfoId], references: [id])
-    studyInfoId String?
-    Docs        Docs[]
+model Deliverable {
+    id      String  @id @default(cuid())
+    content String
+    given   Boolean
+    done    Boolean
+    phase   Phase   @relation(fields: [phaseId], references: [id])
+    phaseId String  @unique
 }

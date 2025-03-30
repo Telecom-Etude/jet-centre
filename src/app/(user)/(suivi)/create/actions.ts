@@ -2,10 +2,10 @@
 
 import prisma from '@/db';
 import { StudyCreationSchema } from './forms/schema';
-import { NotifLvl } from '@prisma/client';
+import { Domain, NotifLvl } from '@prisma/client';
 import { ROLE_NAME_CDP } from '@/settings/roles';
 import { NewAdmin } from './forms/settings/settingsSchema';
-import { CompanySize, Domain, toPgCompanySize, toPgDomain } from '@/settings/vars';
+import { CompanySize, toPgCompanySize } from '@/settings/vars';
 
 export async function createNewStudy(data: StudyCreationSchema) {
     const cdpRole = await prisma.roles.findUnique({
@@ -140,9 +140,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                                                 domains: !isEmptyString(
                                                                     company.domains
                                                                 )
-                                                                    ? (
-                                                                          company.domains as Domain[]
-                                                                      ).map(toPgDomain)
+                                                                    ? (company.domains as Domain[])
                                                                     : [],
                                                             },
                                                         },
