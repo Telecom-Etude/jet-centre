@@ -50,7 +50,7 @@ export default function Inner({
                     <BoxTitle>Prévisualisation du MRI</BoxTitle>
                 </BoxHeader>
                 <BoxContent height="limited" noPadding>
-                    <RenderMRI mri={mri} admins={serverMriData?.admins || []} />
+                    <RenderMRI mri={mri} study={study} admins={serverMriData?.admins || []} />
                 </BoxContent>
             </Box>
         </div>

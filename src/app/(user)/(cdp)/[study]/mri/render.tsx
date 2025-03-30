@@ -69,7 +69,10 @@ export function RenderMRI({
                     <hr className="my-6 border-mri-separator" />
                     <div className="flex flex-col items-center">
                         <Button asChild className="w-fit mb-6 bg-je-red font-semibold">
-                            <Link href={`/postuler/${study}`} className="p-4 rounded">
+                            <Link
+                                href={`${process.env.WEBSITE_URL}/postuler/${study}`}
+                                className="p-4 rounded"
+                            >
                                 Je postule !
                             </Link>
                         </Button>

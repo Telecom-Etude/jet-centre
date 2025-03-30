@@ -19,5 +19,6 @@ declare namespace NodeJS {
         TEMPLATE_PVRF: string;
         TEMPLATE_PVRI: string;
         TEMPLATE_RM: string;
+        WEBSITE_URL: string;
     }
 }

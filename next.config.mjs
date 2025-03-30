@@ -27,6 +27,7 @@ const nextConfig = {
         TEMPLATE_PVRF: process.env.TEMPLATE_PVRF,
         TEMPLATE_PVRI: process.env.TEMPLATE_PVRI,
         TEMPLATE_RM: process.env.TEMPLATE_RM,
+        WEBSITE_URL: process.env.WEBSITE_URL,
     },
 };
 
