@@ -59,23 +59,30 @@ model CompanyInfos {
 }
 
 enum Domain {
+    /// IA
+    Chatbot
     DataScience
     MachineLearning
     IntelligenceArtificielle
-    DeveloppementWeb
-    DeveloppementMobile
-    DeveloppementLogiciel
-    CyberSecurite
-    Cryptographie
-    SystemesEmbarques
-    InternetDesObjets
-    Reseaux
+    /// Dev
+    WebDev
+    MobileDev
+    AppDev
+    /// Networks
+    Cybersecurity
+    Cryptography
+    Networks
     Telecommunications
     Internet
+    /// Systems
+    IoT
+    EmbeddedSystems
+    /// Image
     Image
+    ComputerVision
     ComputerGraphics
-    // Préfixé par d_ car un variant doit commencer par une lettre
-    d_3D
-    EtudeDeMarche
-    EtatDeLArt
+    d_3D // Préfixé par d_ car un variant doit commencer par une lettre
+    /// SES
+    MarketAnalysis
+    StateOfTheArt
 }
