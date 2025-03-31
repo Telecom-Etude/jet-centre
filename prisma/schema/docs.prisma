@@ -22,6 +22,6 @@ model Status {
     approved   DateTime
     bypasses   DateTime
     deadline   DateTime
-    Document   Document[]
+    document   Document[]
     documentId String     @unique
 }

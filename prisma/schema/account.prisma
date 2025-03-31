@@ -38,9 +38,9 @@ model UserSettings {
 }
 
 enum NotificationLevel {
-    LOW
-    MEDIUM
-    HIGH
+    Low
+    Medium
+    High
 }
 
 model Address {
@@ -50,6 +50,6 @@ model Address {
     city    String
     zipCode String
     country String
-    People  Person[]
-    Company Company?
+    people  Person[]
+    company Company?
 }

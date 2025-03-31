@@ -5,7 +5,7 @@ model Client {
     person       Person        @relation(fields: [personId], references: [id], onDelete: Cascade)
     personId     String        @unique
     job          String
-    StudyClients StudyClient[]
+    studyClients StudyClient[]
 }
 
 model StudyClient {
@@ -54,7 +54,7 @@ model CompanyInfos {
     domains Domain[]
     ca      Int?
     size    CompanySize?
-    Company Company[]
+    company Company[]
 }
 
 enum Domain {

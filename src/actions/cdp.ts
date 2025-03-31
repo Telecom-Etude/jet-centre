@@ -20,12 +20,12 @@ export async function get_user_sidebar_info(
         return;
     }
     try {
-        const person = await prisma.people.findUnique({
+        const person = await prisma.person.findUnique({
             where: { email },
             include: {
-                User: {
+                user: {
                     include: {
-                        Admins: {
+                        admin: {
                             include: {
                                 studies: {
                                     include: {
@@ -38,7 +38,7 @@ export async function get_user_sidebar_info(
                 },
             },
         });
-        const admin = person?.User?.Admins;
+        const admin = person?.user?.admin;
         if (!admin) {
             return;
         }

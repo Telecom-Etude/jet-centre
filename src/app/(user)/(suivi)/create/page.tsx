@@ -4,7 +4,7 @@ import prisma from '@/db';
 
 export default async function CreateStudy() {
     // -------- Companies ------- //
-    const rawCompanies = await prisma.companies.findMany({
+    const rawCompanies = await prisma.company.findMany({
         include: {
             address: true,
             companyInfos: true,
@@ -16,31 +16,31 @@ export default async function CreateStudy() {
         },
     });
 
-    const companies: Company[] = rawCompanies.map((c) => ({
-        id: c.id,
-        name: c.name,
-        size: c.companyInfos.size,
-        domains: c.companyInfos.domains,
-        ca: c.companyInfos.ca,
+    const companies: Company[] = rawCompanies.map((company) => ({
+        id: company.id,
+        name: company.name,
+        size: company.companyInfos.size,
+        domains: company.companyInfos.domains,
+        ca: company.companyInfos.ca,
         address: {
-            number: c.address.number,
-            street: c.address.street,
-            city: c.address.city,
-            zip: c.address.zipCode,
-            country: c.address.country,
+            number: company.address.number,
+            street: company.address.street,
+            city: company.address.city,
+            zip: company.address.zipCode,
+            country: company.address.country,
         },
-        members: c.members.map((m) => ({
-            id: m.id,
-            firstName: m.person.firstName,
-            lastName: m.person.lastName,
-            email: m.person.email,
-            job: m.job,
+        members: company.members.map((member) => ({
+            id: member.id,
+            firstName: member.person.firstName,
+            lastName: member.person.lastName,
+            email: member.person.email,
+            job: member.job,
             excluded: false,
         })),
     }));
 
     // ----- Administrator ---- //
-    const rawAdmin = await prisma.admins.findMany({
+    const rawAdmin = await prisma.admin.findMany({
         select: {
             id: true,
             user: {
@@ -56,11 +56,11 @@ export default async function CreateStudy() {
             },
         },
     });
-    const admins = rawAdmin.map((a) => ({
-        id: a.id,
-        firstName: a.user.person.firstName,
-        lastName: a.user.person.lastName,
-        email: a.user.person.email,
+    const admins = rawAdmin.map((admin) => ({
+        id: admin.id,
+        firstName: admin.user.person.firstName,
+        lastName: admin.user.person.lastName,
+        email: admin.user.person.email,
     }));
 
     return <Inner companies={companies} admins={admins} />;

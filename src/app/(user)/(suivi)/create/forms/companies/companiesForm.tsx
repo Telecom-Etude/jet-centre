@@ -26,7 +26,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
     Company,
-    COMPANY_SIZES,
     CompanyFormValue,
     emptyCompany,
     emptyContactCreationSchema,
@@ -38,7 +37,7 @@ import { SearchBar } from '@/components/meta-components/searchbar';
 import { EditableContactItem } from './editableContactItem';
 import { StudyCreationSchema } from '../schema';
 import { LightFormElement } from '@/components/meta-components/form/wrapper';
-import { DOMAINS } from '@/db/types';
+import { COMPANY_SIZES, DOMAIN_NAMES } from '@/db/types';
 
 export interface CompaniesProps {
     companies: Company[];
@@ -205,7 +204,7 @@ function CompanyForm({
                             <DropdownManyFormElement
                                 label="Domaines d'activité"
                                 name={field('domains')}
-                                values={DOMAINS}
+                                values={DOMAIN_NAMES}
                                 form={formStudy}
                                 formId={formStudyId}
                                 unwritable={!isNew}
@@ -220,7 +219,6 @@ function CompanyForm({
                             />
 
                             <FormRule />
-                            {/* <Separator/> */}
 
                             <h4>Adresse</h4>
                             <div className="grid-cols-4 grid gap-2">

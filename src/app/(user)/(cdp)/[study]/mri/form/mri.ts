@@ -20,9 +20,9 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
         const infos = await prisma.studyInfos.findUnique({
             where: { code },
             include: {
-                Studies: {
+                study: {
                     include: {
-                        MRIs: true,
+                        mri: true,
                         cdps: {
                             include: {
                                 user: {
@@ -37,11 +37,11 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
         if (!infos) {
             throw new Error('Failed to fetch mission in database.');
         }
-        const study = infos.Studies;
+        const study = infos.study;
         if (!study) {
             throw new Error('studyInfo exists without study.');
         }
-        const mri = study.MRIs;
+        const mri = study.mri;
         const data: FormType = {
             title: infos.title ?? '',
             wageLowerBound: mri?.wageLowerBound ?? 0,

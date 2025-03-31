@@ -83,10 +83,10 @@ model FormInterviews {
     available       Boolean
     approach        String
     courses         String
-    STAR_S          String
-    STAR_T          String
-    STAR_A          String
-    STAR_R          String
+    starS           String
+    starT           String
+    starA           String
+    starR           String
     motivation      String
     cdpRequirements String
     questions       String

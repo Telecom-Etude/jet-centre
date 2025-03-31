@@ -6,16 +6,16 @@ model Study {
     informationId   String          @unique
     progress        StudyProgress?
     clients         StudyClient[]
-    MRIs            MRI?
+    mri             MRI?
     studyAssignees  StudyAssignee[]
     satisfaction    Satisfaction?
     studyProgressId String?
 }
 
 model StudyInfos {
-    id               String     @id @default(cuid())
-    code             String     @unique
-    googleFolder     String?    @unique
+    id               String    @id @default(cuid())
+    code             String    @unique
+    googleFolder     String?   @unique
     title            String?
     description      String?
     applicationFee   Float?

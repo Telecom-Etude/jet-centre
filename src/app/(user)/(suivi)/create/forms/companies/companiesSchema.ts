@@ -1,5 +1,6 @@
 import { z, EMPTY_STRING, required, nonEmptyExcluded } from '@/lib/zod';
-import { zCompanySize, zDOMAINS } from '@/settings/vars';
+import { CompanySize, Domain } from '@prisma/client';
+// import { zCompanySize, zDOMAINS } from '@/settings/vars';
 
 const zIdx = z.object({
     idx: z.number().int(),
@@ -55,15 +56,11 @@ export type ContactFormValue = z.infer<typeof zContactFormValue>;
 // ======================= Company ====================== //
 // ====================================================== //
 
-// ~~~~~~~~~~~~~~~ Company ~~~~~~~~~~~~~~~ //
-export type CompanySize = z.infer<typeof zCompanySize>;
-export const COMPANY_SIZES: CompanySize[] = zCompanySize.options;
-
 export const zCompany = z.object({
     id: z.string(),
     name: z.string().superRefine(required),
-    size: zCompanySize.or(EMPTY_STRING).nullish(),
-    domains: z.array(zDOMAINS).or(EMPTY_STRING),
+    size: z.nativeEnum(CompanySize).or(EMPTY_STRING).nullish(),
+    domains: z.array(z.nativeEnum(Domain)).or(EMPTY_STRING),
     ca: z.number().or(EMPTY_STRING).nullable(),
     address: z.object({
         number: z.string(),
@@ -85,7 +82,7 @@ export type CompanyFormValue = z.infer<typeof zCompanyFormValue>;
 export const emptyCompany = {
     name: '',
     size: '',
-    domains: [],
+    domains: [] as Domain[],
     ca: '',
     address: {
         number: '',

@@ -2,35 +2,24 @@
 
 import prisma from '@/db';
 import { StudyCreationSchema } from './forms/schema';
-import { Domain, NotifLvl } from '@prisma/client';
-import { ROLE_NAME_CDP } from '@/settings/roles';
+import { Domain, NotificationLevel } from '@prisma/client';
 import { NewAdmin } from './forms/settings/settingsSchema';
 import { CompanySize, toPgCompanySize } from '@/settings/vars';
 
 export async function createNewStudy(data: StudyCreationSchema) {
-    const cdpRole = await prisma.roles.findUnique({
-        where: {
-            name: ROLE_NAME_CDP,
-        },
-    });
-
-    if (!cdpRole) {
-        throw new Error("'cdp' role not found");
-    }
-
     const falseId = Math.random().toString().repeat(5);
 
     const cdps = await Promise.all(
         data.settings.cdps.map(async (cdp) => {
-            const person = await prisma.people.findUnique({
+            const person = await prisma.person.findUnique({
                 where: {
                     email: cdp.email,
                 },
                 select: {
-                    User: true,
+                    user: true,
                 },
             });
-            return { userId: person?.User?.id ?? falseId, ...cdp };
+            return { userId: person?.user?.id ?? falseId, ...cdp };
         })
     );
 
@@ -40,12 +29,12 @@ export async function createNewStudy(data: StudyCreationSchema) {
 
             const members = await Promise.all(
                 company.members.map(async (member) => {
-                    const person = await prisma.people.findUnique({
+                    const person = await prisma.person.findUnique({
                         where: {
                             email: member.email,
                         },
                     });
-                    return { peopleId: person?.id ?? falseId, ...member };
+                    return { personId: person?.id ?? falseId, ...member };
                 })
             );
 
@@ -54,7 +43,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
     );
     const companies = companies_.filter((c) => c !== null);
 
-    await prisma.studies.create({
+    await prisma.study.create({
         data: {
             cdps: {
                 connectOrCreate: cdps.map((cdp) => ({
@@ -62,11 +51,6 @@ export async function createNewStudy(data: StudyCreationSchema) {
                         userId: cdp.userId,
                     },
                     create: {
-                        role: {
-                            connect: {
-                                id: cdpRole.id,
-                            },
-                        },
                         user: {
                             create: {
                                 person: {
@@ -81,7 +65,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                 settings: {
                                     create: {
                                         theme: 'dark',
-                                        notificationLvl: NotifLvl.HIGH,
+                                        notificationLevel: NotificationLevel.High,
                                         gui: true,
                                     },
                                 },
@@ -99,7 +83,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                 client: {
                                     connectOrCreate: {
                                         where: {
-                                            peopleId: member.peopleId,
+                                            personId: member.personId,
                                         },
                                         create: {
                                             job: member.job,
@@ -140,7 +124,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                                                 domains: !isEmptyString(
                                                                     company.domains
                                                                 )
-                                                                    ? (company.domains as Domain[])
+                                                                    ? (company.domains as unknown as Domain[])
                                                                     : [],
                                                             },
                                                         },

@@ -1,4 +1,4 @@
-import { Domain, Level } from '@prisma/client';
+import { CompanySize, Domain, Level } from '@prisma/client';
 import { StaticImageData } from 'next/image';
 
 import Data from '@/../public/mri/domains/data.png';
@@ -47,3 +47,10 @@ export const DOMAINS: Record<Domain, DomainInfo> = {
 };
 
 export const DOMAIN_NAMES: Domain[] = Object.keys(DOMAINS) as Domain[];
+
+export const COMPANY_SIZES: CompanySize[] = [
+    'MicroEntreprise',
+    'PetiteEntreprise',
+    'MoyenneEntreprise',
+    'GrandeEntreprise',
+];
