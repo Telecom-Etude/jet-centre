@@ -7,9 +7,11 @@
  * @file auth.ts
  */
 
-import type { NextAuthConfig } from 'next-auth';
+import prisma from '@/db';
+import { dbg } from '@/lib/utils';
+import type { Account, NextAuthConfig, Profile, User } from 'next-auth';
 import NextAuth from 'next-auth';
-import Google from 'next-auth/providers/google';
+import Google, { GoogleProfile } from 'next-auth/providers/google';
 
 const config = {
     providers: [
@@ -51,6 +53,46 @@ const config = {
             }
 
             return session;
+        },
+        async signIn({ profile }: { profile?: Profile }) {
+            dbg(profile, 'profile');
+            if (!profile) return false;
+            const { email, given_name, family_name, picture } = profile as GoogleProfile;
+            const firstName = given_name ?? '<no given_name>';
+            const lastName = family_name ?? '<no family_name>';
+            const image = picture;
+            if (!email) return false;
+            await prisma.person.upsert({
+                where: { email },
+                create: {
+                    email,
+                    firstName,
+                    lastName,
+                    user: {
+                        create: {
+                            admin: {
+                                create: {
+                                    image,
+                                },
+                            },
+                        },
+                    },
+                },
+                update: {
+                    firstName,
+                    lastName,
+                    user: {
+                        update: {
+                            admin: {
+                                update: {
+                                    image,
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+            return true;
         },
     },
 } satisfies NextAuthConfig;

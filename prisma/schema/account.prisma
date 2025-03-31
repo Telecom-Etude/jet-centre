@@ -25,6 +25,7 @@ model Admin {
     user           User    @relation(fields: [userId], references: [id])
     userId         String  @unique
     position       String?
+    image          String?
     studies        Study[] @relation("cdp")
     auditedStudies Study[] @relation("auditor")
 }
