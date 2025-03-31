@@ -1,4 +1,4 @@
-name: Next.js CI
+name: Prettier formatting
 
 on:
     push:
