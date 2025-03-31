@@ -132,24 +132,29 @@ const BoxButtonLabelPlus = ({
     </Button>
 );
 
-const BoxButtonPlus = ({ onClick }: { onClick: () => void }) =>
-    BoxButtonIcon({ onClick, Icon: FaPlus });
-const BoxButtonTemplate = ({ onClick }: { onClick: () => void }) =>
-    BoxButtonIcon({ onClick, Icon: GoProjectTemplate });
-const BoxButtonTrash = ({ onClick }: { onClick: () => void }) =>
-    BoxButtonIcon({ onClick, Icon: FaTrash });
-const BoxButtonReload = ({ onClick }: { onClick: () => void }) =>
-    BoxButtonIcon({ onClick, Icon: HiRefresh });
-const BoxButtonEdit = ({ onClick }: { onClick: () => void }) =>
-    BoxButtonIcon({ onClick, Icon: FaPen });
+const BoxButtonPlus = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: FaPlus });
+const BoxButtonTemplate = (props: BoxButtonProps) =>
+    BoxButtonIcon({ ...props, Icon: GoProjectTemplate });
+const BoxButtonTrash = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: FaTrash });
+const BoxButtonReload = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: HiRefresh });
+const BoxButtonEdit = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: FaPen });
 
-const BoxButtonIcon = ({ onClick, Icon }: { onClick: () => void; Icon: IconType }) => (
+interface BoxButtonProps {
+    onClick: () => void;
+    className?: string;
+}
+
+interface BoxButtonIconProps extends BoxButtonProps {
+    Icon: IconType;
+}
+
+const BoxButtonIcon = ({ onClick, Icon, className }: BoxButtonIconProps) => (
     <Button
         onClick={() => onClick()}
         variant="title"
         className="p-[3.5px] h-6 w-6 bg-transparent hover:bg-transparent"
     >
-        <Icon className="w-full h-full" />
+        <Icon className={cn('w-full h-full', className)} />
     </Button>
 );
 
@@ -232,6 +237,7 @@ export {
     BoxButtonTemplate,
     BoxButtonPlus,
     BoxButtonTrash,
+    BoxButtonIcon,
     BoxButtonEdit,
     BoxButtonReload,
     BoxCollapseButton,
