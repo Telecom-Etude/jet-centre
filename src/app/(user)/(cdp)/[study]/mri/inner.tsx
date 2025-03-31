@@ -22,6 +22,7 @@ import { reloadWindow } from '../docs/utils';
 import { Button } from '@/components/ui/button';
 import { MriStatus } from '@prisma/client';
 import { dbg, log } from '@/lib/utils';
+import { LoadingFullStops } from '@/components/loading';
 
 enum Status {
     Ok,
@@ -135,22 +136,28 @@ function MriEditorContent({
         case MriStatus.Finished:
         case MriStatus.Validated:
             return (
-                <div className="flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
                     {loading ? (
-                        <LoadingPrimary />
+                        <LoadingFullStops />
                     ) : (
-                        <Button
-                            onClick={() => {
-                                if (serverMriId) {
-                                    setLoading(true);
-                                    setMriStatus(serverMriId, MriStatus.InProgress).then(() =>
-                                        reloadWindow()
-                                    );
-                                }
-                            }}
-                        >
-                            Invalider pour modifier
-                        </Button>
+                        <>
+                            <p className="p-10 text-center">
+                                Ce MRI a été soumis pour validation. Vous devez annuler cette étape
+                                pour éditer votre MRI.
+                            </p>
+                            <Button
+                                onClick={() => {
+                                    if (serverMriId) {
+                                        setLoading(true);
+                                        setMriStatus(serverMriId, MriStatus.InProgress).then(() =>
+                                            reloadWindow()
+                                        );
+                                    }
+                                }}
+                            >
+                                Invalider pour modifier
+                            </Button>
+                        </>
                     )}
                 </div>
             );
@@ -159,7 +166,7 @@ function MriEditorContent({
                 <div className="flex flex-col items-center ">
                     <MRICreationForm form={form} updateServer={updateServer} />
                     {loading ? (
-                        <LoadingPrimary />
+                        <LoadingFullStops />
                     ) : (
                         <Button
                             onClick={() => {
@@ -183,7 +190,7 @@ function MriEditorContent({
                                             setLoading(false);
                                             return;
                                         }
-                                        setMriStatus(mriId, MriStatus.Validated).then(() => {
+                                        setMriStatus(mriId, MriStatus.Finished).then(() => {
                                             dbg('', 'reloading window');
                                             reloadWindow();
                                         });
@@ -197,15 +204,4 @@ function MriEditorContent({
                 </div>
             );
     }
-}
-
-function LoadingPrimary() {
-    return (
-        <div className="flex gap-2 justify-center rounded items-center p-main w-fit">
-            <span className="sr-only">Loading...</span>
-            <div className="h-2 w-2 size-8 bg-primary rounded-full animate-bounce [animation-delay:-0.4s]"></div>
-            <div className="h-2 w-2 size-8 bg-primary rounded-full animate-bounce [animation-delay:-0.2s]"></div>
-            <div className="h-2 w-2 size-8 bg-primary rounded-full animate-bounce"></div>
-        </div>
-    );
 }

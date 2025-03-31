@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 import { ReactNode } from 'react';
-import { Button } from '@/components/ui/button';
 import { listMriToValidate } from './action';
-import { MriStatus } from '@prisma/client';
+import { ValidationButton } from './validation-button';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     const mris = (await listMriToValidate()) ?? [];
@@ -21,26 +20,16 @@ export default async function Layout({ children }: { children: ReactNode }) {
                     ) : (
                         <div className="flex flex-col">
                             {mris.map((mri, i) => (
-                                <div className="p-2 w-full flex" key={i}>
+                                <div className="p-2 w-full flex items-center" key={i}>
                                     <Link
-                                        className="hover:underline w-full"
+                                        className="hover:underline w-full h-full"
                                         href={'/mri-validation/' + mri.study.information.code}
                                     >
                                         {mri.study.information.code +
                                             ' - ' +
                                             mri.study.information.title}
                                     </Link>
-                                    <form
-                                        action={async () => {
-                                            'use server';
-                                        }}
-                                    >
-                                        <Button type="submit" variant="outline">
-                                            {mri.status == MriStatus.Validated
-                                                ? 'Envoyer'
-                                                : 'Valider'}
-                                        </Button>
-                                    </form>
+                                    <ValidationButton status={mri.status} mriId={mri.id} />
                                 </div>
                             ))}
                         </div>

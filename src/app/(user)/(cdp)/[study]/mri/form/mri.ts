@@ -104,7 +104,7 @@ export async function storeMriData(code: string, data: MriFormType): Promise<str
 
 export async function setMriStatus(mriId: string, status: MriStatus) {
     try {
-        await prisma.mri.update({
+        return await prisma.mri.update({
             where: { id: mriId },
             data: { status },
         });
