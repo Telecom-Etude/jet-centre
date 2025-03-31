@@ -10,11 +10,9 @@ import {
 
 import Link from 'next/link';
 import { getDifficulty, getDomain, getPay, ImageElt } from './figures';
-import { MriFormType } from './form/schema';
-
+import { AdminDisplay, MriFormType } from './form/schema';
 import { NBSP } from '@/lib/utils';
 import BirdLogo from '@/../public/mri/bird.png';
-import { AdminDisplay } from '@/app/(user)/(cdp)/[study]/mri/form/mri';
 import { Button } from '@/components/ui/button';
 import {
     applyUrl,

@@ -1,6 +1,23 @@
 import { z } from '@/lib/zod';
 import { Domain, Level } from '@prisma/client';
 
+export interface AdminDisplay {
+    email: string;
+    firstName: string;
+    lastName: string;
+}
+
+export interface MriServerData {
+    data: MriFormType;
+    admins: AdminDisplay[];
+}
+
+export function adminDisplay(cdp: {
+    user: { person: { email: string; firstName: string; lastName: string } };
+}): AdminDisplay {
+    return cdp.user.person;
+}
+
 export const mriCreationSchema = z.object({
     title: z.string(),
     wageLowerBound: z.number(),
