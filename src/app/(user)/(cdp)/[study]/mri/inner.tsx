@@ -17,10 +17,8 @@ export default function Inner({
     study: string;
     serverMriData: MriServerData;
 }) {
-    // @ts-ignore - data in db may be invalid domain
     const form: UseFormReturn<FormType> = useForm<FormType>({
         resolver: zodResolver(mriCreationSchema),
-        // @ts-ignore - react-hook-form use empty string ("") as default value even for non-string fields
         defaultValues: serverMriData.data,
     });
 

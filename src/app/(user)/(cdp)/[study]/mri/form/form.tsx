@@ -5,12 +5,22 @@ import { DropdownSingleFormElement } from '@/components/meta-components/form/dro
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
 import { UseFormReturn } from 'react-hook-form';
 import { LEVELS, DOMAINS, DOMAIN_NAMES } from '@/db/types';
+import { useState } from 'react';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 export default function MRICreationForm({ form }: { form: UseFormReturn<FormType> }) {
     return (
         <FormProvider {...form}>
             <form>
-                <InputFormElement label="Titre" name="title" form={form} />
+                <TitleEditor form={form} />
                 <TextAreaFormElement
                     label="Introduction"
                     name="introductionText"
@@ -70,5 +80,40 @@ export default function MRICreationForm({ form }: { form: UseFormReturn<FormType
                 />
             </form>
         </FormProvider>
+    );
+}
+
+function TitleEditor({ form }: { form: UseFormReturn<FormType> }) {
+    const [titleWarning, setTitleWarning] = useState(false);
+    const [displayed, setDisplayed] = useState(false);
+
+    return (
+        <>
+            <InputFormElement
+                label="Titre"
+                name="title"
+                form={form}
+                onChange={() => {
+                    if (!displayed) {
+                        setTitleWarning(true);
+                        setDisplayed(true);
+                    }
+                }}
+            />
+            <Dialog open={titleWarning} onOpenChange={setTitleWarning}>
+                <DialogContent>
+                    <DialogHeader className="gap-y-6">
+                        <DialogTitle>Synchronisation</DialogTitle>
+                        <DialogDescription>
+                            Le titre sera synchronisé avec l'ensemble de l'étude. Ce sera notamment
+                            le même sur l'ensemble des documents.
+                        </DialogDescription>
+                        <DialogClose asChild>
+                            <Button variant="outline">Ok</Button>
+                        </DialogClose>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+        </>
     );
 }

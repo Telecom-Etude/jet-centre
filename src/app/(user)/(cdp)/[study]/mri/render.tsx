@@ -14,7 +14,7 @@ import { FormType } from './form/schema';
 
 import { NBSP } from '@/lib/utils';
 import BirdLogo from '@/../public/mri/bird.png';
-import { MriServerData } from '@/app/(user)/(cdp)/[study]/mri/form/mri';
+import { AdminDisplay } from '@/app/(user)/(cdp)/[study]/mri/form/mri';
 import { Button } from '@/components/ui/button';
 import {
     applyUrl,
@@ -26,15 +26,13 @@ import {
     TWITTER_URL,
 } from '@/settings/links';
 
-export function RenderMRI({
-    mri,
-    admins,
-    study,
-}: {
+interface RenderMRIProps {
     study: string;
     mri: FormType;
-    admins: MriServerData['admins'];
-}) {
+    admins: AdminDisplay[];
+}
+
+export function RenderMRI({ mri, admins, study }: RenderMRIProps) {
     const h4cn = 'text-2xl font-bold my-1 text-mri-headers';
 
     return (

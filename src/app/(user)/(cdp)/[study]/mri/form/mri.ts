@@ -4,7 +4,7 @@ import prisma from '@/db';
 import { DEFAULT_MRI_VALUES, FormType } from './schema';
 import { Domain, Level } from '@prisma/client';
 
-interface Admin {
+export interface AdminDisplay {
     email: string;
     firstName: string;
     lastName: string;
@@ -12,7 +12,7 @@ interface Admin {
 
 export interface MriServerData {
     data: FormType;
-    admins: Admin[];
+    admins: AdminDisplay[];
 }
 
 export async function loadMriData(code: string): Promise<MriServerData | undefined> {
