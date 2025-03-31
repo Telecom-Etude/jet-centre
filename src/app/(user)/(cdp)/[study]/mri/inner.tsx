@@ -8,6 +8,7 @@ import { RenderMRI } from './render';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { MriServerData } from './form/mri';
+import { useEffect } from 'react';
 
 export default function Inner({
     study,
@@ -24,6 +25,10 @@ export default function Inner({
     });
 
     const mri = form.watch();
+
+    useEffect(() => {
+        console.log('Changed');
+    }, [mri]);
 
     return (
         <div className="flex space-x-main h-full">

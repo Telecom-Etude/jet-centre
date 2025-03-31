@@ -66,3 +66,31 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
         console.error(`[loadMriData] ${e}`);
     }
 }
+
+export async function storeMriData(code: string, data: FormType) {
+    try {
+        await prisma.studyInfos.update({
+            where: { code },
+            include: {
+                study: {
+                    include: {
+                        mri: true,
+                    },
+                },
+            },
+            data: {
+                study: {
+                    update: {
+                        mri: {
+                            update: {
+                                data,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+    } catch (e) {
+        console.error(`[storeMriData] ${e}`);
+    }
+}
