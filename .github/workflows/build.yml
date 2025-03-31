@@ -58,13 +58,10 @@ jobs:
                     sleep 1
                   done
 
-            - name: Generate prisma
-              run: npx prisma generate
-
-            - name: Migrate prisma
+            - name: Deploy prisma
               env:
                   DB_URL: postgres://test_user:test_password@localhost:5432/test_db
-              run: npx prisma migrate dev
+              run: npx prisma migrate deploy
 
             - name: Next build
               env:
