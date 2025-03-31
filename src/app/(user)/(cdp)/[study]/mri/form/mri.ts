@@ -49,7 +49,8 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
             wageLevel: mri?.wageLevel ?? Level.Low,
             difficulty: mri?.difficulty ?? Level.Low,
             mainDomain: mri?.mainDomain || infos.domain[0] || Domain.EmbeddedSystems,
-            introductionText: mri?.introductionText ?? DEFAULT_MRI_VALUES.introductionText,
+            introductionText:
+                mri?.introductionText ?? infos.description ?? DEFAULT_MRI_VALUES.introductionText,
             descriptionText: mri?.descriptionText ?? DEFAULT_MRI_VALUES.descriptionText,
             timeLapsText: mri?.timeLapsText ?? DEFAULT_MRI_VALUES.timeLapsText,
             requiredSkillsText: mri?.requiredSkillsText ?? DEFAULT_MRI_VALUES.requiredSkillsText,
@@ -83,14 +84,26 @@ export async function storeMriData(code: string, data: FormType) {
                     update: {
                         mri: {
                             update: {
-                                data,
+                                data: {
+                                    wageLowerBound: data.wageLowerBound,
+                                    wageUpperBound: data.wageUpperBound,
+                                    wageLevel: data.wageLevel,
+                                    difficulty: data.difficulty,
+                                    mainDomain: data.mainDomain,
+                                    introductionText: data.introductionText,
+                                    descriptionText: data.descriptionText,
+                                    timeLapsText: data.timeLapsText,
+                                    requiredSkillsText: data.requiredSkillsText,
+                                },
                             },
                         },
                     },
                 },
             },
         });
+        return true;
     } catch (e) {
         console.error(`[storeMriData] ${e}`);
+        return false;
     }
 }

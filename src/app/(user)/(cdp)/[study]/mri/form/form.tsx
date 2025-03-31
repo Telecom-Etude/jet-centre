@@ -16,7 +16,12 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
-export default function MRICreationForm({ form }: { form: UseFormReturn<FormType> }) {
+interface MRICreationProps {
+    updateServer: () => void;
+    form: UseFormReturn<FormType>;
+}
+
+export default function MRICreationForm({ form, updateServer }: MRICreationProps) {
     return (
         <FormProvider {...form}>
             <form>
@@ -32,6 +37,7 @@ export default function MRICreationForm({ form }: { form: UseFormReturn<FormType
                     label="Domaine"
                     name="mainDomain"
                     values={DOMAIN_NAMES}
+                    onChange={() => updateServer()}
                     displayValue={(domain) => DOMAINS[domain].display}
                     form={form}
                 />
@@ -55,6 +61,7 @@ export default function MRICreationForm({ form }: { form: UseFormReturn<FormType
                         label="Rétribution"
                         name="wageLevel"
                         values={LEVEL_NAMES}
+                        onChange={() => updateServer()}
                         displayValue={(level) => LEVELS[level].display}
                         form={form}
                     />
@@ -63,6 +70,7 @@ export default function MRICreationForm({ form }: { form: UseFormReturn<FormType
                     label="Difficulté"
                     name="difficulty"
                     values={LEVEL_NAMES}
+                    onChange={() => updateServer()}
                     displayValue={(level) => LEVELS[level].display}
                     form={form}
                 />
