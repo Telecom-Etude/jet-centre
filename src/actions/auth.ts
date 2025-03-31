@@ -9,7 +9,7 @@
 
 import prisma from '@/db';
 import { dbg } from '@/lib/utils';
-import type { Account, NextAuthConfig, Profile, User } from 'next-auth';
+import type { NextAuthConfig, Profile } from 'next-auth';
 import NextAuth from 'next-auth';
 import Google, { GoogleProfile } from 'next-auth/providers/google';
 
