@@ -154,12 +154,6 @@ export function DropdownManyFormElement<V, T extends FieldValues>({
                                                         name,
                                                         newSelected as PathValue<T, Path<T>>
                                                     );
-                                                    // console.log(
-                                                    //     name,
-                                                    //     newValue,
-                                                    //     newSelected,
-                                                    //     form.getValues()
-                                                    // );
                                                 }}
                                             >
                                                 <Checkbox

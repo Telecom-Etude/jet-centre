@@ -16,6 +16,15 @@ import { NBSP } from '@/lib/utils';
 import BirdLogo from '@/../public/mri/bird.png';
 import { MriServerData } from '@/app/(user)/(cdp)/[study]/mri/form/mri';
 import { Button } from '@/components/ui/button';
+import {
+    applyUrl,
+    CONTACT_EMAIL,
+    FACEBOOK_URL,
+    INSTAGRAM_URL,
+    LINKEDIN_URL,
+    SHOWCASE_WEBSITE_URL,
+    TWITTER_URL,
+} from '@/settings/links';
 
 export function RenderMRI({
     mri,
@@ -70,10 +79,7 @@ export function RenderMRI({
                     <hr className="my-6 border-mri-separator" />
                     <div className="flex flex-col items-center">
                         <Button asChild className="w-fit mb-6 bg-je-red font-semibold">
-                            <Link
-                                href={`${process.env.WEBSITE_URL}/postuler/${study}`}
-                                className="p-4 rounded"
-                            >
+                            <Link href={applyUrl(study)} className="p-4 rounded">
                                 Je postule !
                             </Link>
                         </Button>
@@ -96,25 +102,22 @@ export function RenderMRI({
                     <p>À bientôt,</p>
                     <p>L&apos;équipe Telecom Etude !</p>
                     <div className="flex flex-row gap-4 justify-center">
-                        <Link
-                            href="https://www.linkedin.com/company/telecom-etude"
-                            className="h-4 w-4"
-                        >
+                        <Link href={LINKEDIN_URL} className="h-4 w-4">
                             <FaLinkedin />
                         </Link>
-                        <Link href="https://www.facebook.com/TelecomEtude" className="h-4 w-4">
+                        <Link href={FACEBOOK_URL} className="h-4 w-4">
                             <FaFacebook />
                         </Link>
-                        <Link href="https://www.instagram.com/telecometude" className="h-4 w-4">
+                        <Link href={INSTAGRAM_URL} className="h-4 w-4">
                             <FaInstagram />
                         </Link>
-                        <Link href="https://x.com/TelecomEtude" className="h-4 w-4">
+                        <Link href={TWITTER_URL} className="h-4 w-4">
                             <FaXTwitter />
                         </Link>
-                        <Link href="https://telecom-etude.fr" className="h-4 w-4">
+                        <Link href={SHOWCASE_WEBSITE_URL} className="h-4 w-4">
                             <FaGlobe />
                         </Link>
-                        <Link href="mailto:contact@telecom-etude.fr" className="h-4 w-4">
+                        <Link href={'mailto:' + CONTACT_EMAIL} className="h-4 w-4">
                             <FaEnvelope />
                         </Link>
                     </div>
