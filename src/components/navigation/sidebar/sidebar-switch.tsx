@@ -66,7 +66,7 @@ export function SidebarSwitch({
                             }}
                         >
                             <div className="flex place-items-center space-x-2">
-                                {tab_it.icon && <tab_it.icon />}
+                                <tab_it.icon />
                                 <p>{tab_it.title}</p>
                             </div>
                         </Button>
