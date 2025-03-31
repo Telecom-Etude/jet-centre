@@ -26,6 +26,7 @@ interface DropdownFormElementProps<V, T extends FieldValues> extends FormElement
     formId?: string;
     values: V[];
     onChange?: (newValue: V) => void;
+    onBlur?: () => void;
     displayValue?: (value: V) => string;
     getKeyOfValue?: (value: V) => string;
     disabled?: boolean;
@@ -41,6 +42,7 @@ export function DropdownSingleFormElement<V extends { toString(): string }, T ex
     name,
     values,
     onChange,
+    onBlur,
     displayValue = (value: V) => value.toString(),
     getKeyOfValue = (value: V) => value.toString(),
     'ping-once': pingOnce,
@@ -78,6 +80,7 @@ export function DropdownSingleFormElement<V extends { toString(): string }, T ex
                         form={form}
                         field={field}
                         values={values}
+                        onBlur={onBlur}
                         onChange={onChange}
                         displayValue={displayValue}
                         getKeyOfValue={getKeyOfValue}
@@ -101,6 +104,7 @@ interface DropdownSingleElementProps<T extends FieldValues, V> {
     setInFocus: (inFocus: boolean) => void;
     field: ControllerRenderProps<T>;
     onChange?: (newValue: V) => void;
+    onBlur?: () => void;
     displayValue: (value: V) => string;
     getKeyOfValue: (value: V) => string;
     handleInputRef: (value: string) => void;
@@ -116,6 +120,7 @@ function DropdownSingleElement<T extends FieldValues, V>({
     field,
     setInFocus,
     onChange,
+    onBlur,
     handleInputRef,
     form,
     values,
@@ -148,6 +153,7 @@ function DropdownSingleElement<T extends FieldValues, V>({
                 <DropdownCommandList
                     values={values}
                     onChange={onChange}
+                    onBlur={onBlur}
                     setInputRef={handleInputRef}
                     form={form}
                     field={field}
@@ -163,6 +169,7 @@ function DropdownSingleElement<T extends FieldValues, V>({
 interface DropdownCommandListProps<T extends FieldValues, V> {
     values: V[];
     onChange?: (newValue: V) => void;
+    onBlur?: () => void;
     setInputRef: (value: string) => void;
     form: UseFormReturn<T>;
     field: ControllerRenderProps<T>;
@@ -174,6 +181,7 @@ interface DropdownCommandListProps<T extends FieldValues, V> {
 function DropdownCommandList<T extends FieldValues, V>({
     values,
     onChange,
+    onBlur,
     setInputRef,
     form,
     field,
@@ -184,14 +192,15 @@ function DropdownCommandList<T extends FieldValues, V>({
     const handleSelect = (newKey: string) => {
         const newValue = values.find((v) => getKeyOfValue(v) === newKey)!;
 
-        if (onChange) onChange(newValue);
         setInputRef(newKey);
         form.setValue(field.name, newValue as PathValue<T, Path<T>>);
         setOpen(false);
+        if (onChange) onChange(newValue);
+        if (onBlur) onBlur();
     };
 
     return (
-        <Command>
+        <Command onBlur={onBlur}>
             <CommandInput />
             <CommandList>
                 <CommandEmpty>Entrée invalide.</CommandEmpty>

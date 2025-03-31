@@ -15,6 +15,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { dbg } from '@/lib/utils';
 
 interface MRICreationProps {
     updateServer: () => void;
@@ -25,10 +26,11 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
     return (
         <FormProvider {...form}>
             <form>
-                <TitleEditor form={form} />
+                <TitleEditor form={form} updateServer={updateServer} />
                 <TextAreaFormElement
                     label="Introduction"
                     name="introductionText"
+                    onBlur={() => updateServer()}
                     form={form}
                     resizable
                 />
@@ -46,6 +48,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                         className="w-1/3"
                         label="Rétribution basse"
                         name="wageLowerBound"
+                        onBlur={() => updateServer()}
                         type="number"
                         form={form}
                     />
@@ -53,6 +56,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                         className="w-1/3"
                         label="Rétribution haute"
                         name="wageUpperBound"
+                        onBlur={() => updateServer()}
                         type="number"
                         form={form}
                     />
@@ -70,7 +74,11 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                     label="Difficulté"
                     name="difficulty"
                     values={LEVEL_NAMES}
-                    onChange={() => updateServer()}
+                    onChange={(selected) => {
+                        dbg(selected, 'onchange-selected');
+                        dbg(form.watch().difficulty, 'onchange-updated');
+                        updateServer();
+                    }}
                     displayValue={(level) => LEVELS[level].display}
                     form={form}
                 />
@@ -79,6 +87,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                     label="Compétences"
                     name="requiredSkillsText"
                     form={form}
+                    onBlur={() => updateServer()}
                     resizable
                 />
                 <TextAreaFormElement label="Échéances" name="timeLapsText" form={form} resizable />
@@ -86,6 +95,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                     label="Description"
                     name="descriptionText"
                     form={form}
+                    onBlur={() => updateServer()}
                     resizable
                 />
             </form>
@@ -93,7 +103,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
     );
 }
 
-function TitleEditor({ form }: { form: UseFormReturn<FormType> }) {
+function TitleEditor({ form, updateServer }: MRICreationProps) {
     const [titleWarning, setTitleWarning] = useState(false);
     const [displayed, setDisplayed] = useState(false);
 
@@ -109,6 +119,7 @@ function TitleEditor({ form }: { form: UseFormReturn<FormType> }) {
                         setDisplayed(true);
                     }
                 }}
+                onBlur={() => updateServer()}
             />
             <Dialog open={titleWarning} onOpenChange={setTitleWarning}>
                 <DialogContent>

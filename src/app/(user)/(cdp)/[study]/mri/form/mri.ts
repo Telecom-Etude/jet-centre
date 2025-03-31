@@ -70,7 +70,19 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
 
 export async function storeMriData(code: string, data: FormType) {
     try {
-        await prisma.studyInfos.update({
+        const mriData = {
+            wageLowerBound: data.wageLowerBound,
+            wageUpperBound: data.wageUpperBound,
+            wageLevel: data.wageLevel,
+            difficulty: data.difficulty,
+            mainDomain: data.mainDomain,
+            introductionText: data.introductionText,
+            descriptionText: data.descriptionText,
+            timeLapsText: data.timeLapsText,
+            requiredSkillsText: data.requiredSkillsText,
+        };
+
+        const result = await prisma.studyInfos.update({
             where: { code },
             include: {
                 study: {
@@ -83,18 +95,9 @@ export async function storeMriData(code: string, data: FormType) {
                 study: {
                     update: {
                         mri: {
-                            update: {
-                                data: {
-                                    wageLowerBound: data.wageLowerBound,
-                                    wageUpperBound: data.wageUpperBound,
-                                    wageLevel: data.wageLevel,
-                                    difficulty: data.difficulty,
-                                    mainDomain: data.mainDomain,
-                                    introductionText: data.introductionText,
-                                    descriptionText: data.descriptionText,
-                                    timeLapsText: data.timeLapsText,
-                                    requiredSkillsText: data.requiredSkillsText,
-                                },
+                            upsert: {
+                                create: { ...mriData },
+                                update: { ...mriData },
                             },
                         },
                     },

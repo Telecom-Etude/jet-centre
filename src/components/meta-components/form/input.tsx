@@ -6,6 +6,7 @@ import React from 'react';
 interface InputFormElementProps<T extends FieldValues> extends FormElementProps<T> {
     formId?: string;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: () => void;
     placeholder?: Partial<T>;
     type?: string;
     className?: string;
@@ -17,6 +18,7 @@ interface InputFormElementProps<T extends FieldValues> extends FormElementProps<
 export const InputFormElement = <T extends FieldValues>({
     formId,
     onChange,
+    onBlur,
     placeholder,
     type,
     className,
@@ -45,6 +47,7 @@ export const InputFormElement = <T extends FieldValues>({
                         onChange(e);
                     }
                 }}
+                onBlur={onBlur}
                 className="px-4 h-12"
                 placeholder={placeholder?.[field.name] || ''}
                 form={formId}
