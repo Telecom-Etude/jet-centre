@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from '@/db';
+import { MriStatus } from '@prisma/client';
 
 export async function getStudyInfosWithMRI(code: string) {
     try {
@@ -20,7 +21,7 @@ export async function getStudyInfosWithMRI(code: string) {
     }
 }
 
-export async function listMri() {
+export async function listMriToValidate() {
     try {
         return await prisma.mri.findMany({
             include: {
@@ -29,6 +30,9 @@ export async function listMri() {
                         information: true,
                     },
                 },
+            },
+            where: {
+                OR: [{ status: MriStatus.Finished }, { status: MriStatus.Validated }],
             },
         });
     } catch (e) {

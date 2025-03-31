@@ -14,12 +14,14 @@ import { RenderMRI } from './render';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
-import { loadMriData, storeMriData, validateMri } from './form/mri';
+import { loadMriData, setMriStatus, storeMriData } from './form/mri';
 import { FaBug, FaCheck, FaQuestion } from 'react-icons/fa6';
 import { useState } from 'react';
 import { IoWarning } from 'react-icons/io5';
 import { reloadWindow } from '../docs/utils';
 import { Button } from '@/components/ui/button';
+import { MriStatus } from '@prisma/client';
+import { dbg, log } from '@/lib/utils';
 
 enum Status {
     Ok,
@@ -61,12 +63,14 @@ export default function Inner({ study, serverMriData }: InnerProps) {
 
     const updateServer = () => {
         setStatus(Status.Loading);
+        log('##### Storing #####');
         storeMriData(study, form.watch()).then((success) => {
             if (!success) {
                 setStatus(Status.Error);
             }
-            console.log('switching to check');
+            log('##### Checking #####');
             loadMriData(study).then((data) => {
+                log('##### Finished #####');
                 setStatus(
                     data && equalMri(data?.data, form.watch()) ? Status.Ok : Status.NotSynced
                 );
@@ -84,19 +88,13 @@ export default function Inner({ study, serverMriData }: InnerProps) {
                     </BoxHeaderBlock>
                 </BoxHeader>
                 <BoxContent height="limited">
-                    <MRICreationForm form={form} updateServer={updateServer} />
-                    <Button
-                        onClick={() => {
-                            const mriId = serverMriData.mriId;
-                            if (mriId) {
-                                validateMri(mriId).then(() => reloadWindow());
-                            } else {
-                                window.alert('??');
-                            }
-                        }}
-                    >
-                        Valider le MRI
-                    </Button>
+                    <MriEditorContent
+                        form={form}
+                        updateServer={updateServer}
+                        serverMriId={serverMriData.mriId}
+                        status={serverMriData.status}
+                        study={study}
+                    />
                 </BoxContent>
             </Box>
             <Box className="w-full">
@@ -107,6 +105,107 @@ export default function Inner({ study, serverMriData }: InnerProps) {
                     <RenderMRI mri={mri} study={study} admins={serverMriData.admins || []} />
                 </BoxContent>
             </Box>
+        </div>
+    );
+}
+
+interface MriEditorContentProps {
+    form: UseFormReturn<MriFormType>;
+    serverMriId?: string;
+    updateServer: () => void;
+    status: MriStatus;
+    study: string;
+}
+
+function MriEditorContent({
+    form,
+    updateServer,
+    serverMriId,
+    status,
+    study,
+}: MriEditorContentProps) {
+    const [loading, setLoading] = useState(false);
+
+    dbg(study, 'study');
+    dbg(serverMriId, 'mriId');
+
+    switch (status) {
+        case MriStatus.Sent:
+            return <p>Trop tard... Il est parti...</p>;
+        case MriStatus.Finished:
+        case MriStatus.Validated:
+            return (
+                <div className="flex items-center justify-center">
+                    {loading ? (
+                        <LoadingPrimary />
+                    ) : (
+                        <Button
+                            onClick={() => {
+                                if (serverMriId) {
+                                    setLoading(true);
+                                    setMriStatus(serverMriId, MriStatus.InProgress).then(() =>
+                                        reloadWindow()
+                                    );
+                                }
+                            }}
+                        >
+                            Invalider pour modifier
+                        </Button>
+                    )}
+                </div>
+            );
+        case MriStatus.InProgress:
+            return (
+                <div className="flex flex-col items-center ">
+                    <MRICreationForm form={form} updateServer={updateServer} />
+                    {loading ? (
+                        <LoadingPrimary />
+                    ) : (
+                        <Button
+                            onClick={() => {
+                                setLoading(true);
+                                storeMriData(study, form.watch()).then((mriId) => {
+                                    if (mriId === undefined) {
+                                        setLoading(false);
+                                        dbg('', 'storing failed');
+                                        return;
+                                    }
+                                    loadMriData(study).then((data) => {
+                                        if (!data?.data) {
+                                            dbg('', 'loading failed on data');
+                                            setLoading(false);
+                                            return;
+                                        }
+                                        if (!equalMri(data?.data, form.watch())) {
+                                            dbg('', 'loading returned wrong data');
+                                            dbg(form.watch(), 'form data');
+                                            dbg(data?.data, 'response data');
+                                            setLoading(false);
+                                            return;
+                                        }
+                                        setMriStatus(mriId, MriStatus.Validated).then(() => {
+                                            dbg('', 'reloading window');
+                                            reloadWindow();
+                                        });
+                                    });
+                                });
+                            }}
+                        >
+                            Valider le MRI
+                        </Button>
+                    )}
+                </div>
+            );
+    }
+}
+
+function LoadingPrimary() {
+    return (
+        <div className="flex gap-2 justify-center rounded items-center p-main w-fit">
+            <span className="sr-only">Loading...</span>
+            <div className="h-2 w-2 size-8 bg-primary rounded-full animate-bounce [animation-delay:-0.4s]"></div>
+            <div className="h-2 w-2 size-8 bg-primary rounded-full animate-bounce [animation-delay:-0.2s]"></div>
+            <div className="h-2 w-2 size-8 bg-primary rounded-full animate-bounce"></div>
         </div>
     );
 }

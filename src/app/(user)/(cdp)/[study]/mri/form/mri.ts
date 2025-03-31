@@ -3,6 +3,7 @@
 import prisma from '@/db';
 import { adminDisplay, DEFAULT_MRI_VALUES, MriFormType, MriServerData } from './schema';
 import { Domain, Level, MriStatus } from '@prisma/client';
+import { dbg } from '@/lib/utils';
 
 export async function loadMriData(code: string): Promise<MriServerData | undefined> {
     try {
@@ -48,13 +49,14 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
             mriId: mri?.id,
             admins: study.cdps.map(adminDisplay),
             data,
+            status: mri?.status || MriStatus.InProgress,
         };
     } catch (e) {
         console.error(`[loadMriData] ${e}`);
     }
 }
 
-export async function storeMriData(code: string, data: MriFormType) {
+export async function storeMriData(code: string, data: MriFormType): Promise<string | undefined> {
     try {
         const mriData = {
             wageLowerBound: data.wageLowerBound,
@@ -69,7 +71,9 @@ export async function storeMriData(code: string, data: MriFormType) {
             status: MriStatus.InProgress,
         };
 
-        await prisma.studyInfos.update({
+        dbg(mriData, 'storing');
+
+        const studyInfos = await prisma.studyInfos.update({
             where: { code },
             include: {
                 study: {
@@ -79,6 +83,7 @@ export async function storeMriData(code: string, data: MriFormType) {
                 },
             },
             data: {
+                title: data.title,
                 study: {
                     update: {
                         mri: {
@@ -91,18 +96,17 @@ export async function storeMriData(code: string, data: MriFormType) {
                 },
             },
         });
-        return true;
+        return studyInfos.study?.mri?.id;
     } catch (e) {
         console.error(`[storeMriData] ${e}`);
-        return false;
     }
 }
 
-export async function validateMri(mriId: string) {
+export async function setMriStatus(mriId: string, status: MriStatus) {
     try {
         await prisma.mri.update({
             where: { id: mriId },
-            data: { status: MriStatus.Finished },
+            data: { status },
         });
     } catch (e) {
         console.error(`[validateMri] ${e}`);

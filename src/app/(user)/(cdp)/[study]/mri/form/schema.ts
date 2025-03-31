@@ -1,5 +1,5 @@
 import { z } from '@/lib/zod';
-import { Domain, Level } from '@prisma/client';
+import { Domain, Level, MriStatus } from '@prisma/client';
 
 export interface AdminDisplay {
     email: string;
@@ -11,6 +11,7 @@ export interface MriServerData {
     data: MriFormType;
     admins: AdminDisplay[];
     mriId?: string;
+    status: MriStatus;
 }
 
 export function adminDisplay(cdp: {
