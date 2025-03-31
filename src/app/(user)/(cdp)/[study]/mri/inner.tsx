@@ -3,14 +3,13 @@
 import {
     Box,
     BoxButtonIcon,
-    BoxButtonPlus,
     BoxContent,
     BoxHeader,
     BoxHeaderBlock,
     BoxTitle,
 } from '@/components/boxes/boxes';
 import MRICreationForm from './form/form';
-import { FormType, mriCreationSchema } from './form/schema';
+import { MriFormType, equalMri, mriCreationSchema } from './form/schema';
 import { RenderMRI } from './render';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -49,7 +48,7 @@ interface InnerProps {
 }
 
 export default function Inner({ study, serverMriData }: InnerProps) {
-    const form: UseFormReturn<FormType> = useForm<FormType>({
+    const form: UseFormReturn<MriFormType> = useForm<MriFormType>({
         resolver: zodResolver(mriCreationSchema),
         defaultValues: serverMriData.data,
     });
@@ -64,8 +63,9 @@ export default function Inner({ study, serverMriData }: InnerProps) {
             if (!success) {
                 setStatus(Status.Error);
             }
+            console.log('switching to check');
             loadMriData(study).then((data) => {
-                setStatus(data?.data === mri ? Status.Ok : Status.NotSynced);
+                setStatus(equalMri(data?.data, form.watch()) ? Status.Ok : Status.NotSynced);
             });
         });
     };

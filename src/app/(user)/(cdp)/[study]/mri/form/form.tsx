@@ -1,5 +1,5 @@
 import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
-import { FormType } from './schema';
+import { MriFormType } from './schema';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
@@ -15,11 +15,10 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { dbg } from '@/lib/utils';
 
 interface MRICreationProps {
     updateServer: () => void;
-    form: UseFormReturn<FormType>;
+    form: UseFormReturn<MriFormType>;
 }
 
 export default function MRICreationForm({ form, updateServer }: MRICreationProps) {

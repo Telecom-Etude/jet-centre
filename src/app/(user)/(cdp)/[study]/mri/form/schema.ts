@@ -14,7 +14,7 @@ export const mriCreationSchema = z.object({
     requiredSkillsText: z.string(),
 });
 
-export type FormType = z.infer<typeof mriCreationSchema>;
+export type MriFormType = z.infer<typeof mriCreationSchema>;
 
 export const DEFAULT_MRI_VALUES = {
     introductionText: 'Nous vous proposons une étude...',
@@ -22,3 +22,23 @@ export const DEFAULT_MRI_VALUES = {
     timeLapsText: 'Le client désire commencer le plus tôt possible.',
     descriptionText: 'Le but de cette étude est de...',
 };
+
+export function equalEltDebug(name: string, left: any, right: any) {
+    if (left != right) {
+        throw new Error(`name mismatch: ${left} != ${right}`);
+    }
+}
+
+export function equalMri(left: MriFormType, right: MriFormType): boolean {
+    equalEltDebug('wageLowerBound', left.wageLowerBound, right.wageUpperBound);
+    equalEltDebug('wageLowerBound', left.wageLowerBound, right.wageLowerBound);
+    equalEltDebug('wageUpperBound', left.wageUpperBound, right.wageUpperBound);
+    equalEltDebug('wageLevel', left.wageLevel, right.wageLevel);
+    equalEltDebug('difficulty', left.difficulty, right.difficulty);
+    equalEltDebug('mainDomain', left.mainDomain, right.mainDomain);
+    equalEltDebug('introductionText', left.introductionText, right.introductionText);
+    equalEltDebug('descriptionText', left.descriptionText, right.descriptionText);
+    equalEltDebug('timeLapsText', left.timeLapsText, right.timeLapsText);
+    equalEltDebug('requiredSkillsText', left.requiredSkillsText, right.requiredSkillsText);
+    return false;
+}
