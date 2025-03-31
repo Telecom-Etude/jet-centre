@@ -3,7 +3,22 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-    console.log('Seed ran');
+    await prisma.admin.create({
+        data: {
+            position: 'Admin',
+            user: {
+                create: {
+                    person: {
+                        create: {
+                            email: process.env.ADMIN_EMAIL!,
+                            firstName: '',
+                            lastName: '',
+                        },
+                    },
+                },
+            },
+        },
+    });
 }
 
 main()
@@ -11,7 +26,7 @@ main()
         await prisma.$disconnect();
     })
     .catch(async (e) => {
-        console.error(e);
+        console.error(`#####\n${e}\n#####`);
         await prisma.$disconnect();
         process.exit(1);
     });

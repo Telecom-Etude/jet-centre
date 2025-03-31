@@ -12,11 +12,11 @@ model Person {
 }
 
 model User {
-    id             String       @id @default(cuid())
-    person         Person       @relation(fields: [personId], references: [id])
-    personId       String       @unique
-    settings       UserSettings @relation(fields: [userSettingsId], references: [id])
-    userSettingsId String       @unique
+    id             String        @id @default(cuid())
+    person         Person        @relation(fields: [personId], references: [id])
+    personId       String        @unique
+    settings       UserSettings? @relation(fields: [userSettingsId], references: [id])
+    userSettingsId String        @unique
     admin          Admin?
 }
 

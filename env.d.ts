@@ -1,11 +1,11 @@
 declare namespace NodeJS {
     interface ProcessEnv {
+        /// Auth
         AUTH_SECRET: string;
         AUTH_GOOGLE_ID: string;
         AUTH_GOOGLE_SECRET: string;
-        DB_URL: string;
+        /// Google Ids
         DOSSIER_SUIVI: string;
-        DEV_MODE?: '';
         TEMPLATE_EXCEL_CE: string;
         TEMPLATE_EXCEL_RM: string;
         TEMPLATE_ACC: string;
@@ -19,6 +19,10 @@ declare namespace NodeJS {
         TEMPLATE_PVRF: string;
         TEMPLATE_PVRI: string;
         TEMPLATE_RM: string;
+        /// Others
+        ADMIN_EMAIL: string;
         WEBSITE_URL: string;
+        DB_URL: string;
+        DEV_MODE?: '';
     }
 }
