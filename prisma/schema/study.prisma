@@ -6,7 +6,7 @@ model Study {
     informationId   String          @unique
     progress        StudyProgress?
     clients         StudyClient[]
-    mri             MRI?
+    mri             Mri?
     studyAssignees  StudyAssignee[]
     satisfaction    Satisfaction?
     studyProgressId String?

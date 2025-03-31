@@ -9,15 +9,17 @@ import {
     BoxTitle,
 } from '@/components/boxes/boxes';
 import MRICreationForm from './form/form';
-import { MriFormType, equalMri, mriCreationSchema } from './form/schema';
+import { MriFormType, MriServerData, equalMri, mriCreationSchema } from './form/schema';
 import { RenderMRI } from './render';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
-import { loadMriData, MriServerData, storeMriData } from './form/mri';
+import { loadMriData, storeMriData, validateMri } from './form/mri';
 import { FaBug, FaCheck, FaQuestion } from 'react-icons/fa6';
 import { useState } from 'react';
 import { IoWarning } from 'react-icons/io5';
+import { reloadWindow } from '../docs/utils';
+import { Button } from '@/components/ui/button';
 
 enum Status {
     Ok,
@@ -83,6 +85,18 @@ export default function Inner({ study, serverMriData }: InnerProps) {
                 </BoxHeader>
                 <BoxContent height="limited">
                     <MRICreationForm form={form} updateServer={updateServer} />
+                    <Button
+                        onClick={() => {
+                            const mriId = serverMriData.mriId;
+                            if (mriId) {
+                                validateMri(mriId).then(() => reloadWindow());
+                            } else {
+                                window.alert('??');
+                            }
+                        }}
+                    >
+                        Valider le MRI
+                    </Button>
                 </BoxContent>
             </Box>
             <Box className="w-full">

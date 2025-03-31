@@ -4,7 +4,14 @@ enum Level {
     High
 }
 
-model MRI {
+enum MriStatus {
+    InProgress
+    Finished
+    Validated
+    Sent
+}
+
+model Mri {
     id                 String    @id @default(cuid())
     wageLowerBound     Int?
     wageUpperBound     Int?
@@ -15,9 +22,10 @@ model MRI {
     descriptionText    String?
     timeLapsText       String?
     requiredSkillsText String?
+    status             MriStatus
     study              Study     @relation(fields: [studyId], references: [id], onDelete: Cascade)
     studyId            String    @unique
-    formMRIs           FormMRI[]
+    formMRIs           MriForm[]
 }
 
 model Assignee {
@@ -60,15 +68,15 @@ model StudyAssignee {
     assigneeId      String
     formInterview   FormInterviews @relation(fields: [formInterviewId], references: [id], onDelete: Cascade)
     formInterviewId String         @unique
-    formMRI         FormMRI        @relation(fields: [formMRIId], references: [id], onDelete: Cascade)
-    formMRIId       String         @unique
+    mriForm         MriForm        @relation(fields: [mriFormId], references: [id], onDelete: Cascade)
+    mriFormId       String         @unique
     selection       String
     taken           Boolean
 }
 
-model FormMRI {
+model MriForm {
     id             String         @id @default(cuid())
-    mri            MRI            @relation(fields: [mriId], references: [id], onDelete: Cascade)
+    mri            Mri            @relation(fields: [mriId], references: [id], onDelete: Cascade)
     mriId          String         @unique
     studyAssignees StudyAssignee?
     experience     String

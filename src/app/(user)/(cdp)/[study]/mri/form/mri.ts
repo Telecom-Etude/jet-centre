@@ -2,7 +2,7 @@
 
 import prisma from '@/db';
 import { adminDisplay, DEFAULT_MRI_VALUES, MriFormType, MriServerData } from './schema';
-import { Domain, Level } from '@prisma/client';
+import { Domain, Level, MriStatus } from '@prisma/client';
 
 export async function loadMriData(code: string): Promise<MriServerData | undefined> {
     try {
@@ -45,6 +45,7 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
             requiredSkillsText: mri?.requiredSkillsText ?? DEFAULT_MRI_VALUES.requiredSkillsText,
         };
         return {
+            mriId: mri?.id,
             admins: study.cdps.map(adminDisplay),
             data,
         };
@@ -65,6 +66,7 @@ export async function storeMriData(code: string, data: MriFormType) {
             descriptionText: data.descriptionText,
             timeLapsText: data.timeLapsText,
             requiredSkillsText: data.requiredSkillsText,
+            status: MriStatus.InProgress,
         };
 
         await prisma.studyInfos.update({
@@ -93,5 +95,16 @@ export async function storeMriData(code: string, data: MriFormType) {
     } catch (e) {
         console.error(`[storeMriData] ${e}`);
         return false;
+    }
+}
+
+export async function validateMri(mriId: string) {
+    try {
+        await prisma.mri.update({
+            where: { id: mriId },
+            data: { status: MriStatus.Finished },
+        });
+    } catch (e) {
+        console.error(`[validateMri] ${e}`);
     }
 }

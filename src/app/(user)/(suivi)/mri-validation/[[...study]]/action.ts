@@ -22,7 +22,7 @@ export async function getStudyInfosWithMRI(code: string) {
 
 export async function listMri() {
     try {
-        return await prisma.mRI.findMany({
+        return await prisma.mri.findMany({
             include: {
                 study: {
                     include: {

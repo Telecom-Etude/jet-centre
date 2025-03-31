@@ -10,6 +10,7 @@ export interface AdminDisplay {
 export interface MriServerData {
     data: MriFormType;
     admins: AdminDisplay[];
+    mriId?: string;
 }
 
 export function adminDisplay(cdp: {
