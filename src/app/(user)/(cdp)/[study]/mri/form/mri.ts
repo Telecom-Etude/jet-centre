@@ -1,7 +1,7 @@
 'use server';
 
 import prisma from '@/db';
-import { DEFAULT_MRI_VALUES, FormType } from './schema';
+import { DEFAULT_MRI_VALUES, MriFormType } from './schema';
 import { Domain, Level } from '@prisma/client';
 
 export interface AdminDisplay {
@@ -11,7 +11,7 @@ export interface AdminDisplay {
 }
 
 export interface MriServerData {
-    data: FormType;
+    data: MriFormType;
     admins: AdminDisplay[];
 }
 
@@ -42,7 +42,7 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
             throw new Error('studyInfo exists without study.');
         }
         const mri = study.mri;
-        const data: FormType = {
+        const data: MriFormType = {
             title: infos.title ?? '',
             wageLowerBound: mri?.wageLowerBound ?? 0,
             wageUpperBound: mri?.wageUpperBound ?? 0,
@@ -68,7 +68,7 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
     }
 }
 
-export async function storeMriData(code: string, data: FormType) {
+export async function storeMriData(code: string, data: MriFormType) {
     try {
         const mriData = {
             wageLowerBound: data.wageLowerBound,
@@ -82,7 +82,7 @@ export async function storeMriData(code: string, data: FormType) {
             requiredSkillsText: data.requiredSkillsText,
         };
 
-        const result = await prisma.studyInfos.update({
+        await prisma.studyInfos.update({
             where: { code },
             include: {
                 study: {

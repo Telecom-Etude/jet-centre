@@ -23,22 +23,17 @@ export const DEFAULT_MRI_VALUES = {
     descriptionText: 'Le but de cette étude est de...',
 };
 
-export function equalEltDebug(name: string, left: any, right: any) {
-    if (left != right) {
-        throw new Error(`name mismatch: ${left} != ${right}`);
-    }
-}
-
 export function equalMri(left: MriFormType, right: MriFormType): boolean {
-    equalEltDebug('wageLowerBound', left.wageLowerBound, right.wageUpperBound);
-    equalEltDebug('wageLowerBound', left.wageLowerBound, right.wageLowerBound);
-    equalEltDebug('wageUpperBound', left.wageUpperBound, right.wageUpperBound);
-    equalEltDebug('wageLevel', left.wageLevel, right.wageLevel);
-    equalEltDebug('difficulty', left.difficulty, right.difficulty);
-    equalEltDebug('mainDomain', left.mainDomain, right.mainDomain);
-    equalEltDebug('introductionText', left.introductionText, right.introductionText);
-    equalEltDebug('descriptionText', left.descriptionText, right.descriptionText);
-    equalEltDebug('timeLapsText', left.timeLapsText, right.timeLapsText);
-    equalEltDebug('requiredSkillsText', left.requiredSkillsText, right.requiredSkillsText);
-    return false;
+    return (
+        left.wageLowerBound == right.wageUpperBound &&
+        left.wageLowerBound == right.wageLowerBound &&
+        left.wageUpperBound == right.wageUpperBound &&
+        left.wageLevel == right.wageLevel &&
+        left.difficulty == right.difficulty &&
+        left.mainDomain == right.mainDomain &&
+        left.introductionText == right.introductionText &&
+        left.descriptionText == right.descriptionText &&
+        left.timeLapsText == right.timeLapsText &&
+        left.requiredSkillsText == right.requiredSkillsText
+    );
 }

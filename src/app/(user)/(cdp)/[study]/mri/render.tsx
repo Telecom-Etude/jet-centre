@@ -10,7 +10,7 @@ import {
 
 import Link from 'next/link';
 import { getDifficulty, getDomain, getPay, ImageElt } from './figures';
-import { FormType } from './form/schema';
+import { MriFormType } from './form/schema';
 
 import { NBSP } from '@/lib/utils';
 import BirdLogo from '@/../public/mri/bird.png';
@@ -28,7 +28,7 @@ import {
 
 interface RenderMRIProps {
     study: string;
-    mri: FormType;
+    mri: MriFormType;
     admins: AdminDisplay[];
 }
 

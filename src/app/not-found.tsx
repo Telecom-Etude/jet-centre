@@ -4,13 +4,8 @@
  * @file not-found.tsx
  */
 
-import { LogoBird } from '@/components/logo/logo';
+import { ErrorPage } from '@/components/error';
 
 export default function NotFound() {
-    return (
-        <div className="h-full w-full flex flex-col items-center justify-center gap-main">
-            <LogoBird />
-            <h1 className="text-3xl">404 - Page Not Found</h1>
-        </div>
-    );
+    return ErrorPage({ title: '404 - Page Not Found' });
 }

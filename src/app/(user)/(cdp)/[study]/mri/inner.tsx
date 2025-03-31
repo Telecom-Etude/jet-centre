@@ -65,7 +65,9 @@ export default function Inner({ study, serverMriData }: InnerProps) {
             }
             console.log('switching to check');
             loadMriData(study).then((data) => {
-                setStatus(equalMri(data?.data, form.watch()) ? Status.Ok : Status.NotSynced);
+                setStatus(
+                    data && equalMri(data?.data, form.watch()) ? Status.Ok : Status.NotSynced
+                );
             });
         });
     };
