@@ -16,8 +16,8 @@ model User {
     person         Person        @relation(fields: [personId], references: [id])
     personId       String        @unique
     settings       UserSettings? @relation(fields: [userSettingsId], references: [id])
-    userSettingsId String        @unique
     admin          Admin?
+    userSettingsId String?
 }
 
 model Admin {
@@ -34,7 +34,7 @@ model UserSettings {
     theme             String
     notificationLevel NotificationLevel
     gui               Boolean
-    user              User?
+    User              User[]
 }
 
 enum NotificationLevel {
