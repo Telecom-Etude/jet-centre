@@ -31,6 +31,17 @@ jobs:
             - name: Checkout Code
               uses: actions/checkout@v3
 
+            - name: Setting up cache for dependencies and Next.js cache
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ~/.npm
+                      node_modules
+                      .next/cache
+                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+                  restore-keys: |
+                      ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
             - name: Install Node.js
               uses: actions/setup-node@v3
               with:
@@ -54,19 +65,6 @@ jobs:
               env:
                   DB_URL: postgres://test_user:test_password@localhost:5432/test_db
               run: npx prisma migrate dev
-
-            - name: Setting up cache
-              uses: actions/cache@v4
-              with:
-                  # See here for caching with `yarn` https://github.com/actions/cache/blob/main/examples.md#node---yarn or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
-                  path: |
-                      ~/.npm
-                      ${{ github.workspace }}/.next/cache
-                  # Generate a new cache whenever packages or source files change.
-                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-                  # If source files changed but packages didn't, rebuild from a prior cache.
-                  restore-keys: |
-                      ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
             - name: Next build
               env:
