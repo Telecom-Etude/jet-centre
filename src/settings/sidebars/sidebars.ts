@@ -14,6 +14,7 @@ export const ROLES_SIDEBARS = {
     VPO: VPO_SIDEBAR,
     SecGe: SECRETARY_GENERAL_SIDEBAR,
     DirCo: COMMERCIAL_DIRECTOR_SIDEBAR,
+    Info: ADMIN_SIDEBAR,
     Admin: ADMIN_SIDEBAR,
 } as const;
 
