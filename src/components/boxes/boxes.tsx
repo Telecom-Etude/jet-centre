@@ -4,7 +4,7 @@ import { ReactNode, forwardRef } from 'react';
 import Link from 'next/link';
 
 import AnimateHeight from 'react-animate-height';
-import { FaGripLines, FaPen, FaPlus, FaTrash } from 'react-icons/fa6';
+import { FaEye, FaGripLines, FaPen, FaPlus, FaTrash } from 'react-icons/fa6';
 import { HiRefresh } from 'react-icons/hi';
 
 import { Button } from '@/components/ui/button';
