@@ -74,9 +74,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                     label="Difficulté"
                     name="difficulty"
                     values={LEVEL_NAMES}
-                    onChange={(selected) => {
-                        dbg(selected, 'onchange-selected');
-                        dbg(form.watch().difficulty, 'onchange-updated');
+                    onChange={() => {
                         updateServer();
                     }}
                     displayValue={(level) => LEVELS[level].display}

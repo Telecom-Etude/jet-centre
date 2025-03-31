@@ -1,31 +1,45 @@
 'use client';
 
-import { Box, BoxContent, BoxHeader, BoxHeaderBlock, BoxTitle } from '@/components/boxes/boxes';
+import {
+    Box,
+    BoxButtonIcon,
+    BoxButtonPlus,
+    BoxContent,
+    BoxHeader,
+    BoxHeaderBlock,
+    BoxTitle,
+} from '@/components/boxes/boxes';
 import MRICreationForm from './form/form';
 import { FormType, mriCreationSchema } from './form/schema';
 import { RenderMRI } from './render';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
-import { MriServerData, storeMriData } from './form/mri';
-import { FaCheck, FaCross, FaX } from 'react-icons/fa6';
+import { loadMriData, MriServerData, storeMriData } from './form/mri';
+import { FaBug, FaCheck, FaQuestion } from 'react-icons/fa6';
 import { useState } from 'react';
 import { IoWarning } from 'react-icons/io5';
 
 enum Status {
     Ok,
     Error,
+    NotSynced,
     Loading,
+    NotFound,
 }
 
 function getIcon(status: Status) {
     switch (status) {
         case Status.Ok:
-            return <FaCheck />;
-        case Status.Error:
-            return <IoWarning />;
+            return { Icon: FaCheck };
         case Status.Loading:
-            return <AiOutlineLoading3Quarters className="animate-spin" />;
+            return { Icon: AiOutlineLoading3Quarters, className: 'animate-spin' };
+        case Status.Error:
+            return { Icon: IoWarning, className: 'text-destructive' };
+        case Status.NotSynced:
+            return { Icon: FaBug, className: 'text-destructive' };
+        case Status.NotFound:
+            return { Icon: FaQuestion, className: 'text-destructive' };
     }
 }
 
@@ -46,9 +60,14 @@ export default function Inner({ study, serverMriData }: InnerProps) {
 
     const updateServer = () => {
         setStatus(Status.Loading);
-        storeMriData(study, form.getValues()).then((success) =>
-            setStatus(success ? Status.Ok : Status.Error)
-        );
+        storeMriData(study, form.watch()).then((success) => {
+            if (!success) {
+                setStatus(Status.Error);
+            }
+            loadMriData(study).then((data) => {
+                setStatus(data?.data === mri ? Status.Ok : Status.NotSynced);
+            });
+        });
     };
 
     return (
@@ -56,7 +75,9 @@ export default function Inner({ study, serverMriData }: InnerProps) {
             <Box className="w-full">
                 <BoxHeader>
                     <BoxTitle>MRI - {study}</BoxTitle>
-                    <BoxHeaderBlock>{getIcon(status)}</BoxHeaderBlock>
+                    <BoxHeaderBlock>
+                        <BoxButtonIcon {...getIcon(status)} onClick={() => updateServer()} />
+                    </BoxHeaderBlock>
                 </BoxHeader>
                 <BoxContent height="limited">
                     <MRICreationForm form={form} updateServer={updateServer} />
