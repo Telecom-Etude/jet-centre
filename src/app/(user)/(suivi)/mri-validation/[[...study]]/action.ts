@@ -19,3 +19,19 @@ export async function getStudyInfosWithMRI(code: string) {
         console.error(`[getStudyInfosWithMRI] ${e}`);
     }
 }
+
+export async function listMri() {
+    try {
+        return await prisma.mRI.findMany({
+            include: {
+                study: {
+                    include: {
+                        information: true,
+                    },
+                },
+            },
+        });
+    } catch (e) {
+        console.error(`[listMri] ${e}`);
+    }
+}

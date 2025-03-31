@@ -35,33 +35,37 @@ function assertAllFieldsFull(
     };
 }
 
-export default async function Page({ params }: { params: Promise<{ study?: string }> }) {
-    const { study } = await params;
-    const studyInfos = study ? await getStudyInfosWithMRI(study) : undefined;
+async function LoadMRI({ study }: { study: string }) {
+    const studyInfos = await getStudyInfosWithMRI(study);
     if (!studyInfos || !studyInfos.study) {
         throw new Error('Failed to fetch study.');
     }
     const mri = assertAllFieldsFull(studyInfos.study.mri, studyInfos.title);
-    return study ? (
+    return mri === null ? (
+        <p>Le MRI n'a pas encore été fini.</p>
+    ) : mri === undefined ? (
+        <p>La rédaction du MRI n'a pas encore commencé</p>
+    ) : (
+        <RenderMRI mri={mri} study={study} admins={studyInfos.study.cdps.map(adminDisplay)} />
+    );
+}
+
+export default async function Page({ params }: { params: Promise<{ study?: string[] }> }) {
+    const { study } = await params;
+    return (
         <Box>
             <BoxHeader>
                 <BoxTitle>MRI à valider</BoxTitle>
             </BoxHeader>
             <BoxContent>
-                {mri === null ? (
-                    <p>Le MRI n'a pas encore été fini.</p>
-                ) : mri === undefined ? (
-                    <p>La rédaction du MRI n'a pas encore commencé</p>
+                {study && study[0] ? (
+                    <LoadMRI study={study[0]} />
                 ) : (
-                    <RenderMRI
-                        mri={mri}
-                        study={study}
-                        admins={studyInfos.study.cdps.map(adminDisplay)}
-                    />
+                    <div className="h-full flex items-center justify-center">
+                        <p>Sélectionnez un MRI pour le visualiser.</p>
+                    </div>
                 )}
             </BoxContent>
         </Box>
-    ) : (
-        <></>
     );
 }
