@@ -9,10 +9,18 @@ import Reseaux from '@/../public/mri/domains/reseaux.png';
 import Ima from '@/../public/mri/domains/ima.png';
 import Market from '@/../public/mri/domains/market.png';
 
-export const LEVELS: Level[] = ['Low', 'Medium', 'High'];
-
-export interface DomainInfo {
+interface EnumInfo {
     display: string;
+}
+
+export const LEVELS: Record<Level, EnumInfo> = {
+    Low: { display: 'Faible' },
+    Medium: { display: 'Moyenne' },
+    High: { display: 'Haute' },
+};
+export const LEVEL_NAMES: Level[] = Object.keys(LEVELS) as Level[];
+
+export interface DomainInfo extends EnumInfo {
     image: StaticImageData;
 }
 

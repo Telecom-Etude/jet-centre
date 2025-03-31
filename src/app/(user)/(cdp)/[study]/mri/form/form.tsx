@@ -4,7 +4,7 @@ import { InputFormElement } from '@/components/meta-components/form/input';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
 import { UseFormReturn } from 'react-hook-form';
-import { LEVELS, DOMAINS, DOMAIN_NAMES } from '@/db/types';
+import { LEVELS, DOMAINS, DOMAIN_NAMES, LEVEL_NAMES } from '@/db/types';
 import { useState } from 'react';
 import {
     Dialog,
@@ -54,14 +54,16 @@ export default function MRICreationForm({ form }: { form: UseFormReturn<FormType
                         className="w-1/3"
                         label="Rétribution"
                         name="wageLevel"
-                        values={LEVELS}
+                        values={LEVEL_NAMES}
+                        displayValue={(level) => LEVELS[level].display}
                         form={form}
                     />
                 </FormRow>
                 <DropdownSingleFormElement
                     label="Difficulté"
                     name="difficulty"
-                    values={LEVELS}
+                    values={LEVEL_NAMES}
+                    displayValue={(level) => LEVELS[level].display}
                     form={form}
                 />
                 <FormRule />
