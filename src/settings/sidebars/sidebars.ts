@@ -25,7 +25,7 @@ export const CDP_SIDEBAR: SideBarGroup[] = [
             {
                 title: "Paramètres de l'étude",
                 icon: FaGears,
-                href: '/params',
+                href: '/settings',
             },
             {
                 title: 'Écriture MRI',
