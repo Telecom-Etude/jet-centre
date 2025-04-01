@@ -94,7 +94,11 @@ function MriEditorContent({
 
     switch (status) {
         case MriStatus.Sent:
-            return <p>Trop tard... Il est parti...</p>;
+            return (
+                <div className="flex flex-col items-center justify-center">
+                    <p>Trop tard... Il est parti...</p>
+                </div>
+            );
         case MriStatus.Finished:
         case MriStatus.Validated:
             return (

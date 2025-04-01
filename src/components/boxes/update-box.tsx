@@ -44,7 +44,7 @@ interface UpdateBoxProps {
 export function UpdateBox({ title, children, status, update }: UpdateBoxProps) {
     'use client';
     return (
-        <Box>
+        <Box className="w-full">
             <BoxHeader>
                 <BoxTitle>{title}</BoxTitle>
                 <BoxHeaderBlock>

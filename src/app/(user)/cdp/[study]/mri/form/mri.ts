@@ -38,9 +38,8 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
             wageUpperBound: mri?.wageUpperBound ?? 0,
             wageLevel: mri?.wageLevel ?? Level.Low,
             difficulty: mri?.difficulty ?? Level.Low,
-            mainDomain: mri?.mainDomain || infos.domain[0] || Domain.EmbeddedSystems,
-            introductionText:
-                mri?.introductionText ?? infos.description ?? DEFAULT_MRI_VALUES.introductionText,
+            mainDomain: mri?.mainDomain || infos.domains[0] || Domain.EmbeddedSystems,
+            introductionText: mri?.introductionText ?? DEFAULT_MRI_VALUES.introductionText,
             descriptionText: mri?.descriptionText ?? DEFAULT_MRI_VALUES.descriptionText,
             timeLapsText: mri?.timeLapsText ?? DEFAULT_MRI_VALUES.timeLapsText,
             requiredSkillsText: mri?.requiredSkillsText ?? DEFAULT_MRI_VALUES.requiredSkillsText,

@@ -19,7 +19,7 @@ model StudyInfos {
     title          String?
     applicationFee Float    @default(5)
     cc             Boolean
-    domain         Domain[]
+    domains        Domain[]
     study          Study?
 }
 
