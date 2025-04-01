@@ -43,3 +43,8 @@ export function getProperty(obj: any, path: string) {
 export function log(msg: string) {
     console.log(`\x1b[33m 📢 ${msg}\x1b[0m`);
 }
+
+export function unwrap<T>(x: T | undefined | null): T {
+    if (x === undefined || x === null) throw new Error('Option unwrap on a None value');
+    return x;
+}
