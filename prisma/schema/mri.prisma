@@ -22,7 +22,7 @@ model Mri {
     descriptionText    String?
     timeLapsText       String?
     requiredSkillsText String?
-    status             MriStatus
+    status             MriStatus @default(InProgress)
     study              Study     @relation(fields: [studyId], references: [id], onDelete: Cascade)
     studyId            String    @unique
     formMRIs           MriForm[]

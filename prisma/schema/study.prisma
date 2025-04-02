@@ -27,7 +27,7 @@ model StudyProceedings {
     id      String            @id @default(cuid())
     studyId String            @unique
     phases  Phase[]
-    process StudyProgressStep
+    process StudyProgressStep @default(StudyCreation)
     study   Study             @relation(fields: [studyId], references: [id])
 }
 
@@ -50,7 +50,7 @@ model Phase {
     unitPrice          Float
     startDate          DateTime
     endDate            DateTime
-    phaseStatus        PhaseStatus
+    phaseStatus        PhaseStatus       @default(NotStarted)
     studyProceedings   StudyProceedings? @relation(fields: [studyProceedingsId], references: [id])
     studyProceedingsId String?
 }
