@@ -46,29 +46,27 @@ enum StudyProgressStep {
 }
 
 model Phase {
-    id                 String            @id @default(cuid())
+    id                 String           @id @default(cuid())
     jehs               Int
     deliverable        Deliverable?
     unitPrice          Float
     startDate          DateTime
     endDate            DateTime
-    phaseStatus        PhaseStatus       @default(NotStarted)
-    studyProceedings   StudyProceedings? @relation(fields: [studyProceedingsId], references: [id])
-    studyProceedingsId String?
+    studyProceedings   StudyProceedings @relation(fields: [studyProceedingsId], references: [id])
+    studyProceedingsId String
 }
 
 model Deliverable {
-    id      String  @id @default(cuid())
+    id      String            @id @default(cuid())
     content String
-    given   Boolean
-    done    Boolean
-    phase   Phase   @relation(fields: [phaseId], references: [id])
-    phaseId String  @unique
+    status  DeliverableStatus @default(NotStarted)
+    phase   Phase             @relation(fields: [phaseId], references: [id])
+    phaseId String            @unique
 }
 
-enum PhaseStatus {
+enum DeliverableStatus {
     NotStarted
     InProgress
-    NeedsDeliverable
     Finished
+    Given
 }
