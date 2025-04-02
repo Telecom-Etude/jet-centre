@@ -2,7 +2,6 @@
 
 import prisma from '@/db';
 import { StudyPhaseFormType, StudyProceedingsParamsEditorFormType } from './schema';
-import { dbg } from '@/lib/utils';
 
 interface ServerStudyProceedings {
     studyProceedingsData: StudyProceedingsParamsEditorFormType;
@@ -63,5 +62,35 @@ export async function getStudyProceedings(
         };
     } catch (e) {
         console.error(`[getStudyInfos] ${e}`);
+    }
+}
+
+export async function addPhase(studyProceedingsId: string, phase: StudyPhaseFormType) {
+    try {
+        let deliverable = undefined;
+        if (phase.deliverable) {
+            deliverable = {
+                create: {
+                    description: phase.deliverable?.description,
+                    status: phase.deliverable?.status,
+                },
+            };
+        }
+        await prisma.studyProceedings.update({
+            where: { id: studyProceedingsId },
+            data: {
+                phases: {
+                    create: {
+                        jehs: phase.jehs,
+                        deliverable: deliverable,
+                        unitPrice: phase.unitPrice,
+                        startDate: phase.startDate,
+                        endDate: phase.endDate,
+                    },
+                },
+            },
+        });
+    } catch (e) {
+        console.error(`[addPhase] ${e}`);
     }
 }
