@@ -84,7 +84,6 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
                         <CheckboxFormElement
                             label="CC ?"
                             name="settings.cc"
-                            type="checkbox"
                             form={formStudy}
                             formId={formStudyId}
                         />
