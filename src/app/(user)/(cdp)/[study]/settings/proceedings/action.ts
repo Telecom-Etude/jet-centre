@@ -51,13 +51,12 @@ export async function getStudyProceedings(
             studyProceedingsData: {
                 studyProcessStep: studyProceedings.studyProcessStep,
                 phases: studyProceedings.phases.map(
-                    ({ jehs, deliverable, unitPrice, startDate, endDate, phaseStatus }) => ({
+                    ({ jehs, deliverable, unitPrice, startDate, endDate }) => ({
                         jehs,
-                        deliverable: !!deliverable,
+                        deliverable: deliverable ?? undefined,
                         unitPrice,
                         startDate,
                         endDate,
-                        phaseStatus,
                     })
                 ),
             },
