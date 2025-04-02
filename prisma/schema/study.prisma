@@ -13,14 +13,15 @@ model Study {
 }
 
 model StudyInfos {
-    id                String   @id @default(cuid())
-    code              String   @unique
-    googleFolder      String?  @unique
+    id                String    @id @default(cuid())
+    code              String    @unique
+    googleFolder      String?   @unique
     title             String?
-    applicationFee    Float    @default(5)
+    applicationFee    Float     @default(5)
     cc                Boolean
     domains           Domain[]
     estimatedDuration Int?
+    deadlinePreStudy  DateTime?
     study             Study?
 }
 
