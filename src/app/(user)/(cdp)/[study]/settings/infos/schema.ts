@@ -14,3 +14,20 @@ export const studyInfosParamsEditorFormSchema = z.object({
 });
 
 export type StudyInfosParamsEditorFormType = z.infer<typeof studyInfosParamsEditorFormSchema>;
+
+export function checkEqual(
+    lhs: StudyInfosParamsEditorFormType,
+    rhs: StudyInfosParamsEditorFormType
+) {
+    if (
+        lhs.title !== rhs.title &&
+        lhs.applicationFee !== rhs.applicationFee &&
+        lhs.cc !== rhs.cc &&
+        lhs.domains.length === rhs.domains.length
+    )
+        return false;
+    for (let i = 0; i < lhs.domains.length; ++i) {
+        if (lhs.domains[i] !== rhs.domains[i]) return false;
+    }
+    return true;
+}
