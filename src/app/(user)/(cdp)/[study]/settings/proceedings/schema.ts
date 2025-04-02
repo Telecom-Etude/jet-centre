@@ -2,18 +2,20 @@ import { arrayEqual } from '@/lib/utils';
 import { PhaseStatus, StudyProgressStep } from '@prisma/client';
 import { z } from 'zod';
 
+export const studyPhaseFormSchema = z.object({
+    jehs: z.number(),
+    deliverable: z.boolean(),
+    unitPrice: z.number(),
+    startDate: z.date(),
+    endDate: z.date(),
+    phaseStatus: z.nativeEnum(PhaseStatus),
+});
+
+export type StudyPhaseFormType = z.infer<typeof studyPhaseFormSchema>;
+
 export const studyProceedingsParamsEditorFormSchema = z.object({
     studyProcessStep: z.nativeEnum(StudyProgressStep),
-    phases: z.array(
-        z.object({
-            jehs: z.number(),
-            deliverable: z.boolean(),
-            unitPrice: z.number(),
-            startDate: z.date(),
-            endDate: z.date(),
-            phaseStatus: z.nativeEnum(PhaseStatus),
-        })
-    ),
+    phases: z.array(studyPhaseFormSchema),
 });
 
 export type StudyProceedingsParamsEditorFormType = z.infer<
