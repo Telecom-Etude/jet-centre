@@ -2,6 +2,7 @@
 
 import prisma from '@/db';
 import { StudyInfosParamsEditorFormType } from './schema';
+import { dbg } from '@/lib/utils';
 
 interface ServerStudyInfos {
     serverStudyInfo: StudyInfosParamsEditorFormType;
@@ -17,9 +18,10 @@ export async function getStudyInfos(code: string): Promise<ServerStudyInfos | un
         return {
             studyInfoId: studyInfos?.id,
             serverStudyInfo: {
-                cc: studyInfos?.cc,
+                cc: studyInfos.cc,
                 applicationFee: studyInfos.applicationFee,
                 domains: studyInfos.domains,
+                title: studyInfos.title ?? undefined,
             },
         };
     } catch (e) {
@@ -27,11 +29,15 @@ export async function getStudyInfos(code: string): Promise<ServerStudyInfos | un
     }
 }
 
-export async function updateStudyInfos(studyInfoId: string, data: StudyInfosParamsEditorFormType) {
+export async function updateStudyInfos(
+    studyInfoId: string,
+    data: StudyInfosParamsEditorFormType
+): Promise<StudyInfosParamsEditorFormType | undefined> {
     try {
+        dbg(data, 'storing data');
         const studyInfos = await prisma.studyInfos.update({ where: { id: studyInfoId }, data });
         return {
-            title: studyInfos.title,
+            title: studyInfos.title ?? undefined,
             applicationFee: studyInfos.applicationFee,
             cc: studyInfos.cc,
             domains: studyInfos.domains,

@@ -10,11 +10,11 @@ import {
     FormMessage,
 } from '../../ui/form';
 import { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { cn, dbg } from '@/lib/utils';
 
 interface CheckboxFormElementProps<T extends FieldValues> extends FormElementProps<T> {
     formId?: string;
-    onChange?: (newValue: string) => void;
+    onChange?: (checked: boolean) => void;
     className?: string;
 }
 
@@ -30,13 +30,13 @@ export const CheckboxFormElement = <T extends FieldValues>({
         son={(field) => (
             <Checkbox
                 {...field}
-                onChange={(e) => {
-                    console.log(e.target);
+                onCheckedChange={(e) => {
                     field.onChange(e);
                     if (onChange) {
-                        onChange(e.currentTarget.value);
+                        onChange(e.valueOf() as boolean);
                     }
                 }}
+                defaultChecked={props.form.getValues()[props.name]}
                 form={formId}
             />
         )}
