@@ -142,7 +142,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                 create: {
                     code: data.settings.code,
                     title: data.settings.name,
-                    duration: orUndefined(data.settings.duration),
+                    estimatedDuration: orUndefined(data.settings.duration),
                     deadlinePreStudy: map(orUndefined(data.settings.deadline), (x) => new Date(x)),
                     cc: data.settings.cc,
                 },

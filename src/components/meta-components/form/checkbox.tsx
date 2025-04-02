@@ -10,7 +10,7 @@ import {
     FormMessage,
 } from '../../ui/form';
 import { ReactNode } from 'react';
-import { cn, dbg } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 interface CheckboxFormElementProps<T extends FieldValues> extends FormElementProps<T> {
     formId?: string;

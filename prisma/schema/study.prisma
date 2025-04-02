@@ -4,7 +4,7 @@ model Study {
     auditors           Admin[]           @relation("auditor")
     information        StudyInfos        @relation(fields: [informationId], references: [id])
     informationId      String            @unique
-    progress           StudyProceedings?
+    studyProceedings   StudyProceedings?
     clients            StudyClient[]
     mri                Mri?
     studyAssignees     StudyAssignee[]
@@ -13,14 +13,15 @@ model Study {
 }
 
 model StudyInfos {
-    id             String   @id @default(cuid())
-    code           String   @unique
-    googleFolder   String?  @unique
-    title          String?
-    applicationFee Float    @default(5)
-    cc             Boolean
-    domains        Domain[]
-    study          Study?
+    id                String   @id @default(cuid())
+    code              String   @unique
+    googleFolder      String?  @unique
+    title             String?
+    applicationFee    Float    @default(5)
+    cc                Boolean
+    domains           Domain[]
+    estimatedDuration Int?
+    study             Study?
 }
 
 model StudyProceedings {
