@@ -48,3 +48,17 @@ export function unwrap<T>(x: T | undefined | null): T {
     if (x === undefined || x === null) throw new Error('Option unwrap on a None value');
     return x;
 }
+
+export function arrayEqual<T>(
+    lhs: T[],
+    rhs: T[],
+    equal: (lhs: T, rhs: T) => boolean = (lhs, rhs) => lhs === rhs
+): boolean {
+    if ((!lhs && rhs) || (lhs && !rhs)) return false;
+    if (!lhs && !rhs) return true;
+    if (lhs.length !== rhs.length) return false;
+    for (let i = 0; i < lhs.length; ++i) {
+        if (!equal(lhs[i], rhs[i])) return false;
+    }
+    return true;
+}
