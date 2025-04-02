@@ -1,15 +1,15 @@
 model Study {
-    id              String          @id @default(cuid())
-    cdps            Admin[]         @relation("cdp")
-    auditors        Admin[]         @relation("auditor")
-    information     StudyInfos      @relation(fields: [informationId], references: [id])
-    informationId   String          @unique
-    progress        StudyProgress?
-    clients         StudyClient[]
-    mri             Mri?
-    studyAssignees  StudyAssignee[]
-    satisfaction    Satisfaction?
-    studyProgressId String?
+    id                 String            @id @default(cuid())
+    cdps               Admin[]           @relation("cdp")
+    auditors           Admin[]           @relation("auditor")
+    information        StudyInfos        @relation(fields: [informationId], references: [id])
+    informationId      String            @unique
+    progress           StudyProceedings?
+    clients            StudyClient[]
+    mri                Mri?
+    studyAssignees     StudyAssignee[]
+    satisfaction       Satisfaction?
+    studyProceedingsId String?
 }
 
 model StudyInfos {
@@ -23,15 +23,16 @@ model StudyInfos {
     study          Study?
 }
 
-model StudyProgress {
+model StudyProceedings {
     id      String            @id @default(cuid())
     studyId String            @unique
     phases  Phase[]
-    step    StudyProgressStep
+    process StudyProgressStep
     study   Study             @relation(fields: [studyId], references: [id])
 }
 
 enum StudyProgressStep {
+    StudyCreation
     Recruiting
     TripartiteMeeting
     WritingDocuments
@@ -43,14 +44,15 @@ enum StudyProgressStep {
 }
 
 model Phase {
-    id              String         @id @default(cuid())
-    jehs            Int
-    deliverable     Deliverable?
-    unitPrice       Float
-    startDate       DateTime
-    endDate         DateTime
-    studyProgress   StudyProgress? @relation(fields: [studyProgressId], references: [id])
-    studyProgressId String?
+    id                 String            @id @default(cuid())
+    jehs               Int
+    deliverable        Deliverable?
+    unitPrice          Float
+    startDate          DateTime
+    endDate            DateTime
+    phaseStatus        PhaseStatus
+    studyProceedings   StudyProceedings? @relation(fields: [studyProceedingsId], references: [id])
+    studyProceedingsId String?
 }
 
 model Deliverable {
@@ -60,4 +62,11 @@ model Deliverable {
     done    Boolean
     phase   Phase   @relation(fields: [phaseId], references: [id])
     phaseId String  @unique
+}
+
+enum PhaseStatus {
+    NotStarted
+    InProgress
+    NeedsDeliverable
+    Finished
 }
