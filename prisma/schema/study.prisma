@@ -57,11 +57,11 @@ model Phase {
 }
 
 model Deliverable {
-    id      String            @id @default(cuid())
-    content String
-    status  DeliverableStatus @default(NotStarted)
-    phase   Phase             @relation(fields: [phaseId], references: [id])
-    phaseId String            @unique
+    id          String            @id @default(cuid())
+    description String
+    status      DeliverableStatus @default(NotStarted)
+    phase       Phase             @relation(fields: [phaseId], references: [id])
+    phaseId     String            @unique
 }
 
 enum DeliverableStatus {
