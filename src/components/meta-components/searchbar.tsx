@@ -63,9 +63,9 @@ export function SearchBar<T extends { toString(): string }>({
             <div className={cn('group relative flex flex-row', className)}>
                 <Label
                     className={cn(
-                        'absolute left-2 top-4 bg-box-background w-fit px-1 text-lg line-h leading-4 rounded-md whitespace-nowrap pointer-events-none transition-all overflow-ellipsis overflow-hidden z-10',
+                        'absolute left-2 top-2 bg-box-background w-fit px-1 text-lg line-h leading-5 rounded-md whitespace-nowrap pointer-events-none transition-all overflow-ellipsis overflow-hidden z-10',
                         (search ?? '').toString() !== '' && 'left-2 -top-2',
-                        'group-focus-within:left-2 group-focus-within:-top-2 group-focus-within:max-w-none'
+                        'group-focus-within:left-2 group-focus-within:-top-3 group-focus-within:max-w-none'
                     )}
                     htmlFor={id}
                 >
