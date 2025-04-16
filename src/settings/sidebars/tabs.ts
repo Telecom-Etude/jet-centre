@@ -1,6 +1,6 @@
 import { FaMailBulk } from 'react-icons/fa';
 import { SideBarItem } from './types';
-import { FaMoneyBill, FaBriefcase } from 'react-icons/fa6';
+import { FaMoneyBill, FaBriefcase, FaWrench } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
 
 export const MRI_ICON: IconType = FaMailBulk;
@@ -16,4 +16,10 @@ export const CREATE_STUDY: SideBarItem = {
     title: 'Nouvelle étude',
     icon: FaBriefcase,
     href: '/create',
+};
+
+export const MANAGE_STUDIES: SideBarItem = {
+    title: 'Suivi des études',
+    icon: FaWrench,
+    href: '/manage',
 };
