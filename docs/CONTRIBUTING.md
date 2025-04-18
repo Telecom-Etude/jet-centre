@@ -73,7 +73,7 @@ git pull upstream main
 To format your code using the Prettier configuration, run the following command:
 
 ```bash
-npx prettier -cw .
+npm run fmt
 ```
 
 ### Commit Messages

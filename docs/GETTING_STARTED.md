@@ -34,17 +34,18 @@ postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?
 
 > At the end of this step, you can check you have all the variables by looking at `env.d.ts`.
 
-Add the `DB_URL` variable in your `.env.local` file containing the url mentioned above.
+Add the `DB_URL` variable in your `.env` file containing the url mentioned above.
 
 > If you just want to test it locally with access to all pages, you can just set `DEV_MODE=true` and enter rubbish in the 3 `AUTH_` variables.
 
-Generate a random `AUTH_SECRET` (e.g. by using `openssl rand -base64 255`), and set up the following environment variables in a `.env.local` file at the root of the project.
+Generate a random `AUTH_SECRET` (e.g. by using `openssl rand -base64 255`), and set up the following environment variables in a `.env` file at the root of the project.
 
 You must also generate a Google Secret and ID. To set those up, refer to this [tutorial](https://www.youtube.com/watch?v=Rs8018RO5YQ&t=252).
+The redirection URI should br `http://localhost:5005/api/auth/callback/google`
 
 Finally, to make tests on your drive, you will need to specify what folder is used by Jet Centre. For that, create a folder in your drive and copy the ID (in the url, after `folders/`) and add it `DOSSIER_SUIVI`.
 
-Here's what your `.env.local` file must look like at this stage:
+Here's what your `.env` file must look like at this stage:
 
 ```bash
 AUTH_SECRET="your_auth_secret"

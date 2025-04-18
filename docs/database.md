@@ -34,7 +34,7 @@ Here, create a new role (user in postgresql) who can create a database, login an
 CREATE ROLE your_pg_user CREATEDB LOGIN PASSWORD 'your_pg_password';
 ```
 
-Finally, create a file named `.env.local` at the root of your project (if it doesn't already exist), and add the following variable. You can put whatever name you want for _your_pg_database_name_.
+Finally, create a file named `.env` at the root of your project (if it doesn't already exist), and add the following variable. You can put whatever name you want for _your_pg_database_name_.
 
 ```bash
 DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
