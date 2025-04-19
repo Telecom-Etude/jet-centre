@@ -2,6 +2,7 @@
 
 import prisma from '@/db';
 import { StudyPhaseFormType, StudyProceedingsParamsEditorFormType } from './schema';
+import { StudyProgressStep } from '@prisma/client';
 
 export interface ServerStudyProceedings {
     serverStudyProceeding: StudyProceedingsParamsEditorFormType;
@@ -92,5 +93,21 @@ export async function addPhase(studyProceedingsId: string, phase: StudyPhaseForm
         });
     } catch (e) {
         console.error(`[addPhase] ${e}`);
+    }
+}
+
+export async function updateStudyStep(
+    studyProcessStep: StudyProgressStep,
+    serverStudyProceedingId: string
+) {
+    try {
+        await prisma.studyProceedings.update({
+            where: { id: serverStudyProceedingId },
+            data: {
+                studyProcessStep,
+            },
+        });
+    } catch (e) {
+        console.log(`[updateStudyStep] ${e}`);
     }
 }
