@@ -26,6 +26,8 @@ export const STUDY_STEPS: Record<StudyProgressStep, EnumInfo> = {
     WarrantyExpired: { display: 'Période de garantie finie' },
 };
 
+export const STUDY_STEPS_NAMES = Object.keys(STUDY_STEPS) as StudyProgressStep[];
+
 export const LEVELS: Record<Level, EnumInfo> = {
     Low: { display: 'Faible' },
     Medium: { display: 'Moyenne' },
