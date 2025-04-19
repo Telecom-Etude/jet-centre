@@ -15,6 +15,7 @@ import { getStudyProceedings, ServerStudyProceedings, updateStudyStep } from './
 import { InnerBox } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { FaPlus } from 'react-icons/fa6';
+import { StudyPhaseEditor } from './phase';
 
 interface StudyProceedingsParamsEditorParams extends ServerStudyProceedings {
     study: string;
@@ -46,7 +47,7 @@ export function StudyProceedingsParamsEditor({
             getStudyProceedings(study).then((serverProceeding) => {
                 if (
                     serverProceeding &&
-                    serverProceeding?.serverStudyProceeding.studyProcessStep == newStep
+                    serverProceeding.serverStudyProceeding.studyProcessStep == newStep
                 ) {
                     setStatus(UpdateBoxStatus.Ok);
                 } else {
@@ -57,6 +58,8 @@ export function StudyProceedingsParamsEditor({
     };
 
     const values = form.watch();
+
+    const [studyPhaseEditorOpen, setStudyPhaseEditorOpen] = useState(false);
 
     return (
         <UpdateBox title="Paramètres de l'étude" update={updateServer} status={status}>
@@ -73,12 +76,17 @@ export function StudyProceedingsParamsEditor({
                     {values.phases.map((study, i) => (
                         <InnerBox key={i}>{study.title}</InnerBox>
                     ))}
-                    <Button variant="outline" className="m-auto flex items-center gap-main">
-                        <p>Nouvelle phase</p>
-                        <FaPlus />
-                    </Button>
                 </form>
             </FormProvider>
+            <Button
+                variant="outline"
+                className="m-auto flex items-center gap-main"
+                onClick={() => setStudyPhaseEditorOpen(true)}
+            >
+                <p>Nouvelle phase</p>
+                <FaPlus />
+            </Button>
+            <StudyPhaseEditor open={studyPhaseEditorOpen} setOpen={setStudyPhaseEditorOpen} />
             {JSON.stringify(form.watch())}
         </UpdateBox>
     );

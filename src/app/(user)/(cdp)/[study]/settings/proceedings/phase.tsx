@@ -9,6 +9,10 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { DELIVERABLE_STEPS, DELIVERABLE_STEPS_NAMES } from '@/db/types';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { dbg } from '@/lib/utils';
 
 interface StudyPhaseEditorParams {
     open: boolean;
@@ -25,8 +29,9 @@ export function StudyPhaseEditor({ open, setOpen }: StudyPhaseEditorParams) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
+                <DialogTitle className="text-center">Paramètres de phase</DialogTitle>
                 <FormProvider {...form}>
-                    <form className="space-y-main">
+                    <form className="gap-y-main flex flex-col">
                         <InputFormElement form={form} label="Titre" name="title" />
                         <InputFormElement
                             form={form}
@@ -52,9 +57,12 @@ export function StudyPhaseEditor({ open, setOpen }: StudyPhaseEditorParams) {
                             name="endDate"
                             type="date"
                         />
-                        <Checkbox onCheckedChange={(value) => setDeliverable(!!value.valueOf)}>
-                            Livrable ?
-                        </Checkbox>
+                        <div className="w-full flex items-center gap-main">
+                            <Label>Livrable ?</Label>
+                            <Checkbox
+                                onCheckedChange={(value) => setDeliverable(!!value.valueOf)}
+                            />
+                        </div>
                         {deliverable && (
                             <>
                                 <TextAreaFormElement
@@ -66,14 +74,14 @@ export function StudyPhaseEditor({ open, setOpen }: StudyPhaseEditorParams) {
                                     form={form}
                                     label="status"
                                     values={DELIVERABLE_STEPS_NAMES}
-                                    displayValue={(step) => DELIVERABLE_STEPS[step].display}
+                                    displayValue={(step) => DELIVERABLE_STEPS[dbg(step)].display}
                                     name="deliverable"
                                 />
                             </>
                         )}
+                        <Button type="submit">Valider</Button>
                     </form>
                 </FormProvider>
-                <DialogClose>Valider</DialogClose>
             </DialogContent>
         </Dialog>
     );
