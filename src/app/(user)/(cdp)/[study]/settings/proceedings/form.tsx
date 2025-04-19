@@ -11,17 +11,18 @@ import { useState } from 'react';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
+import { ServerStudyProceedings } from './action';
 
-interface StudyInfosParamsEditorParams {
+interface StudyProceedingsParamsEditorParams extends ServerStudyProceedings {
     study: string;
-    serverStudyInfo: StudyProceedingsParamsEditorFormType;
-    studyInfoId: string;
 }
 
-export function StudyInfosParamsEditor({ serverStudyInfo }: StudyInfosParamsEditorParams) {
+export function StudyProceedingsParamsEditor({
+    serverStudyProceeding,
+}: StudyProceedingsParamsEditorParams) {
     const form = useForm<StudyProceedingsParamsEditorFormType>({
         resolver: zodResolver(studyProceedingsParamsEditorFormSchema),
-        defaultValues: serverStudyInfo,
+        defaultValues: serverStudyProceeding,
     });
 
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
