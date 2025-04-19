@@ -29,20 +29,21 @@ model StudyProceedings {
     id               String            @id @default(cuid())
     studyId          String            @unique
     phases           Phase[]
-    studyProcessStep StudyProgressStep @default(StudyCreation)
+    studyProcessStep StudyProgressStep @default(Created)
     study            Study             @relation(fields: [studyId], references: [id])
 }
 
 enum StudyProgressStep {
-    StudyCreation
-    Recruiting
+    Created
+    Recruited
     TripartiteMeeting
-    WritingDocuments
+    DocumentsWrote
     InStudy
     Ended
     CompanyFactored
     AssigneePaid
-    SatisfactionForm
+    SatisfactionFormSent
+    WarrantyExpired
 }
 
 model Phase {
