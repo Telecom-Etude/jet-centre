@@ -1,4 +1,4 @@
-import { CompanySize, Domain, Level } from '@prisma/client';
+import { CompanySize, Domain, Level, StudyProgressStep } from '@prisma/client';
 import { StaticImageData } from 'next/image';
 
 import Data from '@/../public/mri/domains/data.png';
@@ -13,11 +13,25 @@ interface EnumInfo {
     display: string;
 }
 
+export const STUDY_STEPS: Record<StudyProgressStep, EnumInfo> = {
+    Created: { display: 'En cours de création' },
+    Recruited: { display: 'En cours de recrutement' },
+    TripartiteMeeting: { display: 'TripartiteMeeting' },
+    DocumentsWrote: { display: 'WritingDocuments' },
+    InStudy: { display: 'InStudy' },
+    Ended: { display: 'Ended' },
+    CompanyFactored: { display: 'CompanyFactored' },
+    AssigneePaid: { display: 'AssigneePaid' },
+    SatisfactionFormSent: { display: 'QS envoyé' },
+    WarrantyExpired: { display: 'Période de garantie finie' },
+};
+
 export const LEVELS: Record<Level, EnumInfo> = {
     Low: { display: 'Faible' },
     Medium: { display: 'Moyenne' },
     High: { display: 'Haute' },
 };
+
 export const LEVEL_NAMES: Level[] = Object.keys(LEVELS) as Level[];
 
 export interface DomainInfo extends EnumInfo {

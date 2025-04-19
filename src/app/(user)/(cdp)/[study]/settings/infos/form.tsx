@@ -41,10 +41,10 @@ export function StudyInfosParamsEditor({
             dbg(data, 'response data from server');
             if (data && checkEqual(data, mri)) {
                 setStatus(UpdateBoxStatus.Ok);
-                dbg('', 'synched');
+                dbg('', 'synced');
             } else {
                 setStatus(UpdateBoxStatus.NotSynced);
-                dbg('', 'not synched');
+                dbg('', 'not synced');
             }
         });
     };
