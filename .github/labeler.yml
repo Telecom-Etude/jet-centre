@@ -1,0 +1,15 @@
+- label: waiting-on-review
+  conditions:
+    - draft: false
+    - base: main
+    - body: '.*r\?.*'
+
+- label: waiting-on-author
+  conditions:
+    - author_association: 'CONTRIBUTOR'
+    - body: '.*changes requested.*'
+
+- label: waiting-on-checks
+  conditions:
+    - head: 'feature/.*'
+

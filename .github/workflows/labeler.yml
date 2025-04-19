@@ -1,0 +1,16 @@
+name: Labeler
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+  issues:
+    types: [opened, edited, reopened]
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: srvaroa/labeler@v1.3
+        with:
+          config_path: .github/labeler.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
