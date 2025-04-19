@@ -42,7 +42,7 @@ export function StudyProceedingsParamsEditor({
     return (
         <UpdateBox title="Paramètres de l'étude" update={updateServer} status={status}>
             <FormProvider {...form}>
-                <form className="space-y-5 p-5">
+                <form className="space-y-main">
                     <DropdownSingleFormElement
                         form={form}
                         label="Avancée de l'étude"
