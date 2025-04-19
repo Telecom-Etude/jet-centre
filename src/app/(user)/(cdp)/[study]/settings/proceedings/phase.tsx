@@ -6,6 +6,9 @@ import { FormProvider } from '@/components/ui/form';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
+import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
+import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
+import { DELIVERABLE_STEPS, DELIVERABLE_STEPS_NAMES } from '@/db/types';
 
 interface StudyPhaseEditorParams {
     open: boolean;
@@ -17,7 +20,7 @@ export function StudyPhaseEditor({ open, setOpen }: StudyPhaseEditorParams) {
         resolver: zodResolver(studyPhaseFormSchema),
     });
 
-    const [_, setDeliverable] = useState(false);
+    const [deliverable, setDeliverable] = useState(false);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -52,6 +55,22 @@ export function StudyPhaseEditor({ open, setOpen }: StudyPhaseEditorParams) {
                         <Checkbox onCheckedChange={(value) => setDeliverable(!!value.valueOf)}>
                             Livrable ?
                         </Checkbox>
+                        {deliverable && (
+                            <>
+                                <TextAreaFormElement
+                                    form={form}
+                                    label="description"
+                                    name="deliverable"
+                                />
+                                <DropdownSingleFormElement
+                                    form={form}
+                                    label="status"
+                                    values={DELIVERABLE_STEPS_NAMES}
+                                    displayValue={(step) => DELIVERABLE_STEPS[step].display}
+                                    name="deliverable"
+                                />
+                            </>
+                        )}
                     </form>
                 </FormProvider>
                 <DialogClose>Valider</DialogClose>
