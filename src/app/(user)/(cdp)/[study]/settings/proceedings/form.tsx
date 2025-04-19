@@ -11,13 +11,15 @@ import { useState } from 'react';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
-import { ServerStudyProceedings } from './action';
+import { getStudyProceedings, ServerStudyProceedings, updateStudyStep } from './action';
 
 interface StudyProceedingsParamsEditorParams extends ServerStudyProceedings {
     study: string;
 }
 
 export function StudyProceedingsParamsEditor({
+    study,
+    serverStudyProceedingId,
     serverStudyProceeding,
 }: StudyProceedingsParamsEditorParams) {
     const form = useForm<StudyProceedingsParamsEditorFormType>({
@@ -34,9 +36,21 @@ export function StudyProceedingsParamsEditor({
     };
 
     const updateStep = () => {
-        const step = form.watch().studyProcessStep;
-        dbg(step, 'saving step');
+        const newStep = form.watch().studyProcessStep;
+        dbg(newStep, 'saving step');
         setStatus(UpdateBoxStatus.Loading);
+        updateStudyStep(newStep, serverStudyProceedingId).then(() => {
+            getStudyProceedings(study).then((serverProceeding) => {
+                if (
+                    serverProceeding &&
+                    serverProceeding?.serverStudyProceeding.studyProcessStep == newStep
+                ) {
+                    setStatus(UpdateBoxStatus.Ok);
+                } else {
+                    setStatus(UpdateBoxStatus.NotSynced);
+                }
+            });
+        });
     };
 
     return (
