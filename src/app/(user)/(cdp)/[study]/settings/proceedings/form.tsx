@@ -12,6 +12,9 @@ import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { getStudyProceedings, ServerStudyProceedings, updateStudyStep } from './action';
+import { InnerBox } from '@/components/boxes/boxes';
+import { Button } from '@/components/ui/button';
+import { FaPlus } from 'react-icons/fa6';
 
 interface StudyProceedingsParamsEditorParams extends ServerStudyProceedings {
     study: string;
@@ -53,6 +56,8 @@ export function StudyProceedingsParamsEditor({
         });
     };
 
+    const values = form.watch();
+
     return (
         <UpdateBox title="Paramètres de l'étude" update={updateServer} status={status}>
             <FormProvider {...form}>
@@ -65,6 +70,13 @@ export function StudyProceedingsParamsEditor({
                         values={STUDY_STEPS_NAMES}
                         displayValue={(step) => STUDY_STEPS[step].display}
                     />
+                    {values.phases.map((study, i) => (
+                        <InnerBox key={i}>{study.title}</InnerBox>
+                    ))}
+                    <Button variant="outline" className="m-auto flex items-center gap-main">
+                        <p>Nouvelle phase</p>
+                        <FaPlus />
+                    </Button>
                 </form>
             </FormProvider>
             {JSON.stringify(form.watch())}

@@ -49,6 +49,7 @@ enum StudyProgressStep {
 model Phase {
     id                 String           @id @default(cuid())
     jehs               Int
+    title              String
     deliverable        Deliverable?
     unitPrice          Float
     startDate          DateTime
