@@ -1,4 +1,4 @@
-import { CompanySize, Domain, Level, StudyProgressStep } from '@prisma/client';
+import { CompanySize, DeliverableStatus, Domain, Level, StudyProgressStep } from '@prisma/client';
 import { StaticImageData } from 'next/image';
 
 import Data from '@/../public/mri/domains/data.png';
@@ -12,6 +12,15 @@ import Market from '@/../public/mri/domains/market.png';
 interface EnumInfo {
     display: string;
 }
+
+export const DELIVERABLE_STEPS: Record<DeliverableStatus, EnumInfo> = {
+    NotStarted: { display: 'Non commencé' },
+    InProgress: { display: 'En cours' },
+    Finished: { display: 'Fini' },
+    Given: { display: 'Rendu' },
+};
+
+export const DELIVERABLE_STEPS_NAMES = Object.keys(DELIVERABLE_STEPS) as DeliverableStatus[];
 
 export const STUDY_STEPS: Record<StudyProgressStep, EnumInfo> = {
     Created: { display: 'En cours de création' },
