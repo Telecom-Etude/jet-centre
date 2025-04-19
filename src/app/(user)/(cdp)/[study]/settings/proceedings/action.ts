@@ -3,9 +3,9 @@
 import prisma from '@/db';
 import { StudyPhaseFormType, StudyProceedingsParamsEditorFormType } from './schema';
 
-interface ServerStudyProceedings {
-    studyProceedingsData: StudyProceedingsParamsEditorFormType;
-    studyProceedingsId: string;
+export interface ServerStudyProceedings {
+    serverStudyProceeding: StudyProceedingsParamsEditorFormType;
+    serverStudyProceedingId: string;
 }
 
 export async function getStudyProceedings(
@@ -46,8 +46,8 @@ export async function getStudyProceedings(
             throw new Error('Failed to get created study proceedings');
         }
         return {
-            studyProceedingsId: studyProceedings.id,
-            studyProceedingsData: {
+            serverStudyProceedingId: studyProceedings.id,
+            serverStudyProceeding: {
                 studyProcessStep: studyProceedings.studyProcessStep,
                 phases: studyProceedings.phases.map(
                     ({ jehs, deliverable, unitPrice, startDate, endDate }) => ({

@@ -1,16 +1,23 @@
 import { StudyParams } from '@/routes';
 import { StudyInfosParamsEditor } from './infos/form';
-import { dbg, unwrap } from '@/lib/utils';
 import { getStudyInfos } from './infos/action';
+import { ErrorPage } from '@/components/error';
+import { getStudyProceedings } from './proceedings/action';
+import { StudyProceedingsParamsEditor } from './proceedings/form';
 
 export default async function StudySettingsPage({ params }: StudyParams) {
     const { study } = await params;
-    return (
-        <div>
-            <StudyInfosParamsEditor
-                study={study}
-                {...unwrap(dbg(await getStudyInfos(study), 'initial data'))}
-            />
-        </div>
+    const studyInfos = await getStudyInfos(study);
+    const studyProceedings = await getStudyProceedings(study);
+    return studyInfos && studyProceedings ? (
+        <>
+            <StudyInfosParamsEditor study={study} {...studyInfos} />
+            <StudyProceedingsParamsEditor study={study} {...studyProceedings} />
+        </>
+    ) : (
+        <ErrorPage title="Étude inexistante">
+            <p>Vous avez essayé d'acceder à une étude qui n'existe pas.</p>
+            <p>Merci de rafraichir la page ou de faire un ticket SOS.</p>
+        </ErrorPage>
     );
 }

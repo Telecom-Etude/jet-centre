@@ -11,15 +11,13 @@ import { InputFormElement } from '@/components/meta-components/form/input';
 import { CheckboxFormElement } from '@/components/meta-components/form/checkbox';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { useState } from 'react';
-import { updateStudyInfos } from './action';
+import { ServerStudyInfos, updateStudyInfos } from './action';
 import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
 import { DOMAIN_NAMES, DOMAINS } from '@/db/types';
 import { dbg } from '@/lib/utils';
 
-interface StudyInfosParamsEditorParams {
+interface StudyInfosParamsEditorParams extends ServerStudyInfos {
     study: string;
-    serverStudyInfo: StudyInfosParamsEditorFormType;
-    studyInfoId: string;
 }
 
 export function StudyInfosParamsEditor({

@@ -4,7 +4,7 @@ import prisma from '@/db';
 import { StudyInfosParamsEditorFormType } from './schema';
 import { dbg } from '@/lib/utils';
 
-interface ServerStudyInfos {
+export interface ServerStudyInfos {
     serverStudyInfo: StudyInfosParamsEditorFormType;
     studyInfoId: string;
 }
