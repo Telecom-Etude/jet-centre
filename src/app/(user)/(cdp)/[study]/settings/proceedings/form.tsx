@@ -86,7 +86,11 @@ export function StudyProceedingsParamsEditor({
                 <p>Nouvelle phase</p>
                 <FaPlus />
             </Button>
-            <StudyPhaseEditor open={studyPhaseEditorOpen} setOpen={setStudyPhaseEditorOpen} />
+            <StudyPhaseEditor
+                open={studyPhaseEditorOpen}
+                setOpen={setStudyPhaseEditorOpen}
+                onSubmit={(values) => dbg(values, 'form values')}
+            />
             {JSON.stringify(form.watch())}
         </UpdateBox>
     );
