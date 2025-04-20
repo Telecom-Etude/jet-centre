@@ -97,6 +97,30 @@ export async function addPhase(studyProceedingsId: string, phase: StudyPhaseForm
         console.error(`[addPhase] ${e}`);
     }
 }
+export async function updatePhase(phase: StudyPhaseFormType) {
+    try {
+        await prisma.phase.update({
+            where: { id: phase.id },
+            data: {
+                title: phase.title,
+                jehs: phase.jehs,
+                deliverable: {
+                    update: {
+                        data: {
+                            description: phase.deliverable?.description,
+                            status: phase.deliverable?.status,
+                        },
+                    },
+                },
+                unitPrice: phase.unitPrice,
+                startDate: phase.startDate,
+                endDate: phase.endDate,
+            },
+        });
+    } catch (e) {
+        console.error(`[updatePhase] ${e}`);
+    }
+}
 
 export async function deletePhase(phaseId: string) {
     try {

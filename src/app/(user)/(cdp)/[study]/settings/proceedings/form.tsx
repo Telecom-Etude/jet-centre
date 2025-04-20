@@ -1,6 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { FormProvider } from '@/components/ui/form';
 import {
     checkEqual,
@@ -18,6 +18,7 @@ import {
     deletePhase,
     getStudyProceedings,
     ServerStudyProceedings,
+    updatePhase,
     updateStudyStep,
 } from './action';
 import { InnerBox } from '@/components/boxes/boxes';
@@ -97,6 +98,22 @@ export function StudyProceedingsParamsEditor({
 
     const values = form.watch();
 
+    const checkServerValues = () => {
+        setStatus(UpdateBoxStatus.Loading);
+        getStudyProceedings(code).then((data) => {
+            if (!data) {
+                setStatus(UpdateBoxStatus.Error);
+            } else if (checkEqual(data.serverStudyProceeding, form.getValues())) {
+                setStatus(UpdateBoxStatus.Ok);
+            } else {
+                setStatus(UpdateBoxStatus.NotSynced);
+            }
+            setNewPhaseOpen(false);
+        });
+    };
+
+    const { append } = useFieldArray({ control: form.control, name: 'phases' });
+
     const [newPhaseOpen, setNewPhaseOpen] = useState(false);
     const [currentPhaseEditor, setCurrentPhaseEditor] = useState<StudyPhaseFormType | undefined>();
 
@@ -132,28 +149,19 @@ export function StudyProceedingsParamsEditor({
             <StudyPhaseEditor
                 open={newPhaseOpen}
                 close={() => setNewPhaseOpen(false)}
-                onSubmit={(values) =>
-                    addPhase(serverStudyProceedingId, values).then(() => {
-                        getStudyProceedings(code).then((data) => {
-                            if (!data) {
-                                setStatus(UpdateBoxStatus.Error);
-                            } else if (checkEqual(data.serverStudyProceeding, form.getValues())) {
-                                setStatus(UpdateBoxStatus.Ok);
-                                reloadWindow();
-                            } else {
-                                setStatus(UpdateBoxStatus.NotSynced);
-                            }
-                            setNewPhaseOpen(false);
-                        });
-                    })
-                }
+                onSubmit={(values) => {
+                    append(values);
+                    addPhase(serverStudyProceedingId, values).then(() => checkServerValues());
+                }}
             />
             {currentPhaseEditor && (
+                // Need this otherwise the form within the dialog will load with the wrong default values
+                // It will also cause loading and rendering problems.
                 <StudyPhaseEditor
                     open={!!currentPhaseEditor}
                     defaultValues={currentPhaseEditor}
                     close={() => setCurrentPhaseEditor(undefined)}
-                    onSubmit={(values) => dbg(values, 'form values')}
+                    onSubmit={(values) => updatePhase(values).then(() => checkServerValues())}
                 />
             )}
             {JSON.stringify(form.watch())}
