@@ -56,13 +56,15 @@ model Phase {
     endDate            DateTime?
     studyProceedings   StudyProceedings @relation(fields: [studyProceedingsId], references: [id])
     studyProceedingsId String
+
+    @@unique([title, studyProceedingsId])
 }
 
 model Deliverable {
     id          String            @id @default(cuid())
     description String
     status      DeliverableStatus @default(NotStarted)
-    phase       Phase             @relation(fields: [phaseId], references: [id])
+    phase       Phase             @relation(fields: [phaseId], references: [id], onDelete: Cascade)
     phaseId     String            @unique
 }
 

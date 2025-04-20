@@ -100,6 +100,23 @@ export async function addPhase(studyProceedingsId: string, phase: StudyPhaseForm
     }
 }
 
+export async function deletePhase(serverStudyProceedingId: string, phaseTitle: string) {
+    try {
+        dbg(phaseTitle, 'deleting phase');
+        const phase = await prisma.phase.delete({
+            where: {
+                title_studyProceedingsId: {
+                    title: phaseTitle,
+                    studyProceedingsId: serverStudyProceedingId,
+                },
+            },
+        });
+        dbg(phase, 'phase deleted');
+    } catch (e) {
+        console.error(`[deletePhase] ${e}`);
+    }
+}
+
 export async function updateStudyStep(
     studyProcessStep: StudyProgressStep,
     serverStudyProceedingId: string

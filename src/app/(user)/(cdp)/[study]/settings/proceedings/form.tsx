@@ -13,12 +13,59 @@ import { useState } from 'react';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
-import { addPhase, getStudyProceedings, ServerStudyProceedings, updateStudyStep } from './action';
+import {
+    addPhase,
+    deletePhase,
+    getStudyProceedings,
+    ServerStudyProceedings,
+    updateStudyStep,
+} from './action';
 import { InnerBox } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
-import { FaPencil, FaPlus, FaRecycle, FaTrash } from 'react-icons/fa6';
+import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { StudyPhaseEditor } from './phase';
 import { useRouter } from 'next/navigation';
+import { reloadWindow } from '../../docs/utils';
+
+interface SinglePhaseInnerBoxParams {
+    serverStudyProceedingId: string;
+    study: StudyPhaseFormType;
+    setCurrentPhaseEditor: (study: StudyPhaseFormType) => void;
+}
+
+function SinglePhaseInnerBox({
+    study,
+    setCurrentPhaseEditor,
+    serverStudyProceedingId,
+}: SinglePhaseInnerBoxParams) {
+    return (
+        <InnerBox>
+            <div className="border border-input rounded-md flex items-center justify-between p-2 pl-4">
+                <p>{study.title}</p>
+                <div>
+                    <Button
+                        variant="secondary"
+                        className="rounded-r-none"
+                        onClick={() => setCurrentPhaseEditor(study)}
+                    >
+                        <FaPencil />
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        className="rounded-l-none"
+                        onClick={() =>
+                            deletePhase(serverStudyProceedingId, study.title).then(() =>
+                                reloadWindow()
+                            )
+                        }
+                    >
+                        <FaTrash />
+                    </Button>
+                </div>
+            </div>
+        </InnerBox>
+    );
+}
 
 interface StudyProceedingsParamsEditorParams extends ServerStudyProceedings {
     code: string;
@@ -81,27 +128,12 @@ export function StudyProceedingsParamsEditor({
                         displayValue={(step) => STUDY_STEPS[step].display}
                     />
                     {values.phases.map((study, i) => (
-                        <InnerBox key={i}>
-                            <div className="border border-input rounded-md flex items-center justify-between p-2 pl-4">
-                                <p>{study.title}</p>
-                                <div>
-                                    <Button
-                                        variant="secondary"
-                                        className="rounded-r-none"
-                                        onClick={() => setCurrentPhaseEditor(study)}
-                                    >
-                                        <FaTrash />
-                                    </Button>
-                                    <Button
-                                        variant="secondary"
-                                        className="rounded-l-none"
-                                        onClick={() => setCurrentPhaseEditor(study)}
-                                    >
-                                        <FaPencil />
-                                    </Button>
-                                </div>
-                            </div>
-                        </InnerBox>
+                        <SinglePhaseInnerBox
+                            key={i}
+                            study={study}
+                            serverStudyProceedingId={serverStudyProceedingId}
+                            setCurrentPhaseEditor={setCurrentPhaseEditor}
+                        />
                     ))}
                 </form>
             </FormProvider>
