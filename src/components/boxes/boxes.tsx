@@ -13,6 +13,8 @@ import { ANIMATION_DURATION_MS } from '@/settings/vars';
 import { IconType } from 'react-icons/lib';
 import { GoProjectTemplate } from 'react-icons/go';
 
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+
 const Box = forwardRef<
     HTMLDivElement,
     { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>
@@ -141,22 +143,39 @@ const BoxButtonEdit = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon:
 
 interface BoxButtonProps {
     onClick: () => void;
-    className?: string;
 }
 
-interface BoxButtonIconProps extends BoxButtonProps {
-    Icon: IconType;
-}
-
-const BoxButtonIcon = ({ onClick, Icon, className }: BoxButtonIconProps) => (
+const BoxButton = ({ onClick, children }: BoxButtonProps & { children: ReactNode }) => (
     <Button
         onClick={() => onClick()}
         variant="title"
         className="p-[3.5px] h-6 w-6 bg-transparent hover:bg-transparent"
     >
-        <Icon className={cn('w-full h-full', className)} />
+        {children}
     </Button>
 );
+
+interface BoxButtonIconProps extends BoxButtonProps {
+    Icon: IconType;
+    iconClassName?: string;
+    hoverContent?: string;
+}
+
+const BoxButtonIcon = ({ onClick, Icon, iconClassName, hoverContent }: BoxButtonIconProps) => {
+    const button = (
+        <BoxButton onClick={onClick}>
+            <Icon className={cn('w-full h-full', iconClassName)} />
+        </BoxButton>
+    );
+    return hoverContent ? (
+        <HoverCard>
+            <HoverCardTrigger>{button}</HoverCardTrigger>
+            <HoverCardContent>{hoverContent}</HoverCardContent>
+        </HoverCard>
+    ) : (
+        button
+    );
+};
 
 const BoxDragHandle = forwardRef<HTMLDivElement>((props, ref) => (
     <div className="h-6 w-6 content-center" ref={ref} {...props}>

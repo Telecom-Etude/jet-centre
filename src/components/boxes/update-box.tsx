@@ -10,6 +10,7 @@ import { ReactNode } from 'react';
 import { IoWarning } from 'react-icons/io5';
 import { FaBug, FaCheck } from 'react-icons/fa6';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { IconType } from 'react-icons/lib';
 
 /**
  * @enum {number}
@@ -44,23 +45,51 @@ export enum UpdateBoxStatus {
     Loading,
 }
 
+/** An object containing information needed to display the status on the {@link UpdateBox}. */
+interface StatusInfos {
+    /** Icon displayed */
+    Icon: IconType;
+    /** Status-specific styles (e.g. red colour for errors) */
+    iconClassName?: string;
+    /** Description displayed when hovering the status icon. */
+    hoverContent: string;
+}
+
 /**
  * @function getIcon
  * @brief Returns an icon configuration based on the given update box status.
  *
  * @param {UpdateBoxStatus} status - The current status of the update box.
- * @returns {{ Icon: React.ComponentType, className?: string }} An object containing the icon component and optional className.
+ * @returns {StatusInfos} The data needed to display the status.
  */
-function getIcon(status: UpdateBoxStatus) {
+function getInfos(status: UpdateBoxStatus): StatusInfos {
     switch (status) {
         case UpdateBoxStatus.Ok:
-            return { Icon: FaCheck };
+            return {
+                Icon: FaCheck,
+                hoverContent: 'Le serveur a synchronisé vos données avec succès.',
+            };
         case UpdateBoxStatus.Loading:
-            return { Icon: AiOutlineLoading3Quarters, className: 'animate-spin' };
+            return {
+                Icon: AiOutlineLoading3Quarters,
+                iconClassName: 'animate-spin',
+                hoverContent:
+                    'Le serveur est en cours de synchronisation, merci de patentier avant de quitter la page.',
+            };
         case UpdateBoxStatus.Error:
-            return { Icon: IoWarning, className: 'text-destructive' };
+            return {
+                Icon: IoWarning,
+                iconClassName: 'text-destructive',
+                hoverContent:
+                    "Le serveur n'a pas pu sauvegarder vos données. Faites un Ticket SOS!",
+            };
         case UpdateBoxStatus.NotSynced:
-            return { Icon: FaBug, className: 'text-destructive' };
+            return {
+                Icon: FaBug,
+                iconClassName: 'text-destructive',
+                hoverContent:
+                    "Le serveur est toujours vivant, mais vos donnée n'ont pas été sauvegardées 🤔. Réessayez!",
+            };
     }
 }
 
@@ -85,7 +114,6 @@ interface UpdateBoxProps {
  * @brief A UI component that displays an update section with a title, content, and status icon.
  *
  * @param {UpdateBoxProps} props - The properties for the component.
- * @returns {JSX.Element} The rendered update box.
  */
 export function UpdateBox({ title, children, status, update }: UpdateBoxProps) {
     'use client';
@@ -94,7 +122,7 @@ export function UpdateBox({ title, children, status, update }: UpdateBoxProps) {
             <BoxHeader>
                 <BoxTitle>{title}</BoxTitle>
                 <BoxHeaderBlock>
-                    <BoxButtonIcon {...getIcon(status)} onClick={update} />
+                    <BoxButtonIcon {...getInfos(status)} onClick={update} />
                 </BoxHeaderBlock>
             </BoxHeader>
             <BoxContent>{children}</BoxContent>
