@@ -9,7 +9,7 @@ import {
     StudyProceedingsParamsEditorFormType,
 } from './schema';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
-import { RefObject, useRef, useState } from 'react';
+import { useState } from 'react';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg, reloadWindow } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
@@ -26,16 +26,11 @@ import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { StudyPhaseEditor } from './phase';
 
 interface SinglePhaseInnerBoxParams {
-    serverStudyProceedingId: string;
     study: StudyPhaseFormType;
     editPhase: () => void;
 }
 
-function SinglePhaseInnerBox({
-    study,
-    serverStudyProceedingId,
-    editPhase,
-}: SinglePhaseInnerBoxParams) {
+function SinglePhaseInnerBox({ study, editPhase }: SinglePhaseInnerBoxParams) {
     return (
         <InnerBox>
             <div className="border border-input rounded-md flex items-center justify-between p-2 pl-4">
@@ -49,11 +44,7 @@ function SinglePhaseInnerBox({
                     <Button
                         variant="secondary"
                         className="rounded-l-none"
-                        onClick={() =>
-                            deletePhase(serverStudyProceedingId, study.title).then(() =>
-                                reloadWindow()
-                            )
-                        }
+                        onClick={() => deletePhase(study.id).then(() => reloadWindow())}
                     >
                         <FaTrash />
                     </Button>
@@ -127,7 +118,6 @@ export function StudyProceedingsParamsEditor({
                 <SinglePhaseInnerBox
                     key={i}
                     study={study}
-                    serverStudyProceedingId={serverStudyProceedingId}
                     editPhase={() => setCurrentPhaseEditor(study)}
                 />
             ))}

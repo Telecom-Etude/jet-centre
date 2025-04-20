@@ -25,6 +25,7 @@ export function StudyPhaseEditor({ open, close, defaultValues, onSubmit }: Study
     let defaultValuesWithState = defaultValues;
     if (!defaultValuesWithState) {
         defaultValuesWithState = {
+            id: '',
             deliverable: { status: DeliverableStatus.NotStarted, description: '' },
             jehs: 0,
             title: '',

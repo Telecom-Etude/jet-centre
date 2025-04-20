@@ -56,8 +56,6 @@ model Phase {
     endDate            DateTime?
     studyProceedings   StudyProceedings @relation(fields: [studyProceedingsId], references: [id])
     studyProceedingsId String
-
-    @@unique([title, studyProceedingsId])
 }
 
 model Deliverable {

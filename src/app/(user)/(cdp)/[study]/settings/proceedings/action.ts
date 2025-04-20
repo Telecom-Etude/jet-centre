@@ -53,11 +53,9 @@ export async function getStudyProceedings(
             serverStudyProceeding: {
                 studyProcessStep: studyProceedings.studyProcessStep,
                 phases: studyProceedings.phases.map(
-                    ({ title, jehs, deliverable, unitPrice, startDate, endDate }) => ({
-                        title,
-                        jehs,
+                    ({ deliverable, startDate, endDate, ...phase }) => ({
+                        ...phase,
                         deliverable: deliverable ?? undefined,
-                        unitPrice,
                         startDate: startDate ?? undefined,
                         endDate: endDate ?? undefined,
                     })
@@ -100,18 +98,13 @@ export async function addPhase(studyProceedingsId: string, phase: StudyPhaseForm
     }
 }
 
-export async function deletePhase(serverStudyProceedingId: string, phaseTitle: string) {
+export async function deletePhase(phaseId: string) {
     try {
-        dbg(phaseTitle, 'deleting phase');
-        const phase = await prisma.phase.delete({
+        await prisma.phase.delete({
             where: {
-                title_studyProceedingsId: {
-                    title: phaseTitle,
-                    studyProceedingsId: serverStudyProceedingId,
-                },
+                id: phaseId,
             },
         });
-        dbg(phase, 'phase deleted');
     } catch (e) {
         console.error(`[deletePhase] ${e}`);
     }
@@ -119,11 +112,11 @@ export async function deletePhase(serverStudyProceedingId: string, phaseTitle: s
 
 export async function updateStudyStep(
     studyProcessStep: StudyProgressStep,
-    serverStudyProceedingId: string
+    studyProceedingId: string
 ) {
     try {
         await prisma.studyProceedings.update({
-            where: { id: serverStudyProceedingId },
+            where: { id: studyProceedingId },
             data: {
                 studyProcessStep,
             },

@@ -10,6 +10,7 @@ export const deliverableFormSchema = z.object({
 export type DeliverableFormType = z.infer<typeof deliverableFormSchema>;
 
 export const studyPhaseFormSchema = z.object({
+    id: z.string(),
     title: z.string(),
     jehs: z.number(),
     deliverable: deliverableFormSchema.optional(),
