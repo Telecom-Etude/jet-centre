@@ -12,12 +12,12 @@ export default async function StudySettingsPage({ params }: StudyParams) {
     return studyInfos && studyProceedings ? (
         <div className="flex flex-col gap-main">
             <StudyInfosParamsEditor study={study} {...studyInfos} />
-            <StudyProceedingsParamsEditor study={study} {...studyProceedings} />
+            <StudyProceedingsParamsEditor code={study} {...studyProceedings} />
         </div>
     ) : (
         <ErrorPage title="Étude inexistante">
-            <p>Vous avez essayé d'acceder à une étude qui n'existe pas.</p>
-            <p>Merci de rafraichir la page ou de faire un ticket SOS.</p>
+            <p>Vous avez essayé d'accéder à une étude qui n'existe pas.</p>
+            <p>Merci de rafraîchir la page ou de faire un ticket SOS.</p>
         </ErrorPage>
     );
 }

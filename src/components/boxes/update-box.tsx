@@ -74,7 +74,7 @@ function getInfos(status: UpdateBoxStatus): StatusInfos {
                 Icon: AiOutlineLoading3Quarters,
                 iconClassName: 'animate-spin',
                 hoverContent:
-                    'Le serveur est en cours de synchronisation, merci de patentier avant de quitter la page.',
+                    'Le serveur est en cours de synchronisation, merci de patienter avant de quitter la page.',
             };
         case UpdateBoxStatus.Error:
             return {

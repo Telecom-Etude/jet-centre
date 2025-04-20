@@ -17,13 +17,14 @@ import { InnerBox } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { FaPlus } from 'react-icons/fa6';
 import { StudyPhaseEditor } from './phase';
+import { useRouter } from 'next/navigation';
 
 interface StudyProceedingsParamsEditorParams extends ServerStudyProceedings {
-    study: string;
+    code: string;
 }
 
 export function StudyProceedingsParamsEditor({
-    study,
+    code,
     serverStudyProceedingId,
     serverStudyProceeding,
 }: StudyProceedingsParamsEditorParams) {
@@ -45,11 +46,12 @@ export function StudyProceedingsParamsEditor({
         dbg(newStep, 'saving step');
         setStatus(UpdateBoxStatus.Loading);
         updateStudyStep(newStep, serverStudyProceedingId).then(() => {
-            getStudyProceedings(study).then((serverProceeding) => {
+            getStudyProceedings(code).then((serverProceeding) => {
                 if (
                     serverProceeding &&
                     serverProceeding.serverStudyProceeding.studyProcessStep == newStep
                 ) {
+                    // TODO: check everything
                     setStatus(UpdateBoxStatus.Ok);
                 } else {
                     setStatus(UpdateBoxStatus.NotSynced);
@@ -59,6 +61,8 @@ export function StudyProceedingsParamsEditor({
     };
 
     const values = form.watch();
+
+    const router = useRouter();
 
     const [newPhaseOpen, setNewPhaseOpen] = useState(false);
     const [currentPhaseEditor, setCurrentPhaseEditor] = useState();
@@ -93,11 +97,12 @@ export function StudyProceedingsParamsEditor({
                 close={() => setNewPhaseOpen(false)}
                 onSubmit={(values) =>
                     addPhase(serverStudyProceedingId, values).then(() => {
-                        getStudyProceedings(serverStudyProceedingId).then((data) => {
+                        getStudyProceedings(code).then((data) => {
                             if (!data) {
                                 setStatus(UpdateBoxStatus.Error);
                             } else if (checkEqual(data.serverStudyProceeding, form.getValues())) {
                                 setStatus(UpdateBoxStatus.Ok);
+                                router.refresh();
                             } else {
                                 setStatus(UpdateBoxStatus.NotSynced);
                             }

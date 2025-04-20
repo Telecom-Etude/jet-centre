@@ -3,6 +3,7 @@
 import prisma from '@/db';
 import { StudyPhaseFormType, StudyProceedingsParamsEditorFormType } from './schema';
 import { StudyProgressStep } from '@prisma/client';
+import { dbg } from '@/lib/utils';
 
 export interface ServerStudyProceedings {
     serverStudyProceeding: StudyProceedingsParamsEditorFormType;
@@ -13,6 +14,7 @@ export async function getStudyProceedings(
     code: string
 ): Promise<ServerStudyProceedings | undefined> {
     try {
+        dbg(code, 'code');
         const studyInfos = await prisma.studyInfos.findUnique({
             where: { code },
             include: {
@@ -51,18 +53,19 @@ export async function getStudyProceedings(
             serverStudyProceeding: {
                 studyProcessStep: studyProceedings.studyProcessStep,
                 phases: studyProceedings.phases.map(
-                    ({ jehs, deliverable, unitPrice, startDate, endDate }) => ({
+                    ({ title, jehs, deliverable, unitPrice, startDate, endDate }) => ({
+                        title,
                         jehs,
                         deliverable: deliverable ?? undefined,
                         unitPrice,
-                        startDate,
-                        endDate,
+                        startDate: startDate ?? undefined,
+                        endDate: endDate ?? undefined,
                     })
                 ),
             },
         };
     } catch (e) {
-        console.error(`[getStudyInfos] ${e}`);
+        console.error(`[getStudyProceedings] ${e}`);
     }
 }
 
@@ -82,6 +85,7 @@ export async function addPhase(studyProceedingsId: string, phase: StudyPhaseForm
             data: {
                 phases: {
                     create: {
+                        title: phase.title,
                         jehs: phase.jehs,
                         deliverable: deliverable,
                         unitPrice: phase.unitPrice,

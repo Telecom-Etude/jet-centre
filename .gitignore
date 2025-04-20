@@ -41,3 +41,4 @@ test/
 .next/
 data/cv
 .config
+.cspell.json
