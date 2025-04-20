@@ -52,8 +52,8 @@ model Phase {
     title              String
     deliverable        Deliverable?
     unitPrice          Float
-    startDate          DateTime
-    endDate            DateTime
+    startDate          DateTime?
+    endDate            DateTime?
     studyProceedings   StudyProceedings @relation(fields: [studyProceedingsId], references: [id])
     studyProceedingsId String
 }

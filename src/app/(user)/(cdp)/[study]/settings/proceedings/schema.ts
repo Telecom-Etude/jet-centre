@@ -14,8 +14,8 @@ export const studyPhaseFormSchema = z.object({
     jehs: z.number(),
     deliverable: deliverableFormSchema.optional(),
     unitPrice: z.number(),
-    startDate: z.date(),
-    endDate: z.date(),
+    startDate: z.date().optional(),
+    endDate: z.date().optional(),
 });
 
 export type StudyPhaseFormType = z.infer<typeof studyPhaseFormSchema>;
