@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
-import { getStudyProceedings, ServerStudyProceedings, updateStudyStep } from './action';
+import { addPhase, getStudyProceedings, ServerStudyProceedings, updateStudyStep } from './action';
 import { InnerBox } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { FaPlus } from 'react-icons/fa6';
@@ -59,7 +59,8 @@ export function StudyProceedingsParamsEditor({
 
     const values = form.watch();
 
-    const [studyPhaseEditorOpen, setStudyPhaseEditorOpen] = useState(false);
+    const [newPhaseOpen, setNewPhaseOpen] = useState(false);
+    const [currentPhaseEditor, setCurrentPhaseEditor] = useState();
 
     return (
         <UpdateBox title="Paramètres de l'étude" update={updateServer} status={status}>
@@ -81,14 +82,28 @@ export function StudyProceedingsParamsEditor({
             <Button
                 variant="outline"
                 className="m-auto flex items-center gap-main"
-                onClick={() => setStudyPhaseEditorOpen(true)}
+                onClick={() => setNewPhaseOpen(true)}
             >
                 <p>Nouvelle phase</p>
                 <FaPlus />
             </Button>
             <StudyPhaseEditor
-                open={studyPhaseEditorOpen}
-                setOpen={setStudyPhaseEditorOpen}
+                open={newPhaseOpen}
+                close={() => setNewPhaseOpen(false)}
+                onSubmit={(values) =>
+                    addPhase(serverStudyProceedingId, values).then(() => {
+                        getStudyProceedings(serverStudyProceedingId).then((data) => {
+                            if (!data) {
+                                setStatus(UpdateBoxStatus.Error);
+                            } else {
+                            }
+                        });
+                    })
+                }
+            />
+            <StudyPhaseEditor
+                open={!!currentPhaseEditor}
+                close={() => setCurrentPhaseEditor(undefined)}
                 onSubmit={(values) => dbg(values, 'form values')}
             />
             {JSON.stringify(form.watch())}

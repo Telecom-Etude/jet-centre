@@ -16,17 +16,12 @@ import { DeliverableStatus } from '@prisma/client';
 
 interface StudyPhaseEditorParams {
     open: boolean;
-    setOpen: (open: boolean) => void;
+    close: () => void;
     defaultValues?: StudyPhaseFormType;
     onSubmit: (values: StudyPhaseFormType) => void;
 }
 
-export function StudyPhaseEditor({
-    open,
-    setOpen,
-    defaultValues,
-    onSubmit,
-}: StudyPhaseEditorParams) {
+export function StudyPhaseEditor({ open, close, defaultValues, onSubmit }: StudyPhaseEditorParams) {
     let defaultValuesWithState = defaultValues;
     if (!defaultValuesWithState) {
         defaultValuesWithState = {
@@ -49,7 +44,7 @@ export function StudyPhaseEditor({
     const [deliverable, setDeliverable] = useState(true);
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={() => close()}>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-center">Paramètres de phase</DialogTitle>
@@ -60,7 +55,7 @@ export function StudyPhaseEditor({
                             className="gap-y-main w-full flex flex-col"
                             onSubmit={() => {
                                 onSubmit(form.watch()); //TODO: handle deliverable toggle
-                                setOpen(false);
+                                close();
                             }}
                         >
                             <InputFormElement form={form} label="Titre" name="title" />
