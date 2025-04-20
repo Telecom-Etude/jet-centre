@@ -41,7 +41,7 @@ export function StudyPhaseEditor({ open, close, defaultValues, onSubmit }: Study
         defaultValues: defaultValuesWithState,
     });
 
-    const [deliverable, setDeliverable] = useState(true);
+    const [deliverable, setDeliverable] = useState(false);
 
     return (
         <Dialog open={open} onOpenChange={() => close()}>
@@ -51,13 +51,7 @@ export function StudyPhaseEditor({ open, close, defaultValues, onSubmit }: Study
                 </DialogHeader>
                 <DialogFooter>
                     <FormProvider {...form}>
-                        <form
-                            className="gap-y-main w-full flex flex-col"
-                            onSubmit={() => {
-                                onSubmit(form.watch()); //TODO: handle deliverable toggle
-                                close();
-                            }}
-                        >
+                        <form className="gap-y-main w-full flex flex-col">
                             <InputFormElement form={form} label="Titre" name="title" />
                             <InputFormElement
                                 form={form}
@@ -103,7 +97,14 @@ export function StudyPhaseEditor({ open, close, defaultValues, onSubmit }: Study
                                     />
                                 </>
                             )}
-                            <Button type="submit">Valider</Button>
+                            <Button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onSubmit(form.watch()); //TODO: handle deliverable toggle
+                                }}
+                            >
+                                Valider
+                            </Button>
                         </form>
                     </FormProvider>
                 </DialogFooter>

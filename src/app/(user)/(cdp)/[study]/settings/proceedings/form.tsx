@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { FormProvider } from '@/components/ui/form';
 import {
+    checkEqual,
     studyProceedingsParamsEditorFormSchema,
     StudyProceedingsParamsEditorFormType,
 } from './schema';
@@ -95,8 +96,12 @@ export function StudyProceedingsParamsEditor({
                         getStudyProceedings(serverStudyProceedingId).then((data) => {
                             if (!data) {
                                 setStatus(UpdateBoxStatus.Error);
+                            } else if (checkEqual(data.serverStudyProceeding, form.getValues())) {
+                                setStatus(UpdateBoxStatus.Ok);
                             } else {
+                                setStatus(UpdateBoxStatus.NotSynced);
                             }
+                            setNewPhaseOpen(false);
                         });
                     })
                 }
