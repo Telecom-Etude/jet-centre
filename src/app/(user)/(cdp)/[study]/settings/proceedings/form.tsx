@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { FormProvider } from '@/components/ui/form';
 import {
     checkEqual,
+    StudyPhaseFormType,
     studyProceedingsParamsEditorFormSchema,
     StudyProceedingsParamsEditorFormType,
 } from './schema';
@@ -15,7 +16,7 @@ import { DropdownSingleFormElement } from '@/components/meta-components/form/dro
 import { addPhase, getStudyProceedings, ServerStudyProceedings, updateStudyStep } from './action';
 import { InnerBox } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
-import { FaPlus } from 'react-icons/fa6';
+import { FaPencil, FaPlus, FaRecycle, FaTrash } from 'react-icons/fa6';
 import { StudyPhaseEditor } from './phase';
 import { useRouter } from 'next/navigation';
 
@@ -65,7 +66,7 @@ export function StudyProceedingsParamsEditor({
     const router = useRouter();
 
     const [newPhaseOpen, setNewPhaseOpen] = useState(false);
-    const [currentPhaseEditor, setCurrentPhaseEditor] = useState();
+    const [currentPhaseEditor, setCurrentPhaseEditor] = useState<StudyPhaseFormType | undefined>();
 
     return (
         <UpdateBox title="Paramètres de l'étude" update={updateServer} status={status}>
@@ -80,7 +81,27 @@ export function StudyProceedingsParamsEditor({
                         displayValue={(step) => STUDY_STEPS[step].display}
                     />
                     {values.phases.map((study, i) => (
-                        <InnerBox key={i}>{study.title}</InnerBox>
+                        <InnerBox key={i}>
+                            <div className="border border-input rounded-md flex items-center justify-between p-2 pl-4">
+                                <p>{study.title}</p>
+                                <div>
+                                    <Button
+                                        variant="secondary"
+                                        className="rounded-r-none"
+                                        onClick={() => setCurrentPhaseEditor(study)}
+                                    >
+                                        <FaTrash />
+                                    </Button>
+                                    <Button
+                                        variant="secondary"
+                                        className="rounded-l-none"
+                                        onClick={() => setCurrentPhaseEditor(study)}
+                                    >
+                                        <FaPencil />
+                                    </Button>
+                                </div>
+                            </div>
+                        </InnerBox>
                     ))}
                 </form>
             </FormProvider>
@@ -113,6 +134,7 @@ export function StudyProceedingsParamsEditor({
             />
             <StudyPhaseEditor
                 open={!!currentPhaseEditor}
+                defaultValues={currentPhaseEditor}
                 close={() => setCurrentPhaseEditor(undefined)}
                 onSubmit={(values) => dbg(values, 'form values')}
             />
