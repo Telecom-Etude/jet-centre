@@ -9,7 +9,7 @@ import {
     StudyProceedingsParamsEditorFormType,
 } from './schema';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
-import { useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg, reloadWindow } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
@@ -28,13 +28,13 @@ import { StudyPhaseEditor } from './phase';
 interface SinglePhaseInnerBoxParams {
     serverStudyProceedingId: string;
     study: StudyPhaseFormType;
-    setCurrentPhaseEditor: (study: StudyPhaseFormType) => void;
+    editPhase: () => void;
 }
 
 function SinglePhaseInnerBox({
     study,
-    setCurrentPhaseEditor,
     serverStudyProceedingId,
+    editPhase,
 }: SinglePhaseInnerBoxParams) {
     return (
         <InnerBox>
@@ -43,11 +43,7 @@ function SinglePhaseInnerBox({
                     {study.title} {study.jehs ? `(${study.jehs} JEH)` : ''}
                 </p>
                 <div>
-                    <Button
-                        variant="secondary"
-                        className="rounded-r-none"
-                        onClick={() => setCurrentPhaseEditor(study)}
-                    >
+                    <Button variant="secondary" className="rounded-r-none" onClick={editPhase}>
                         <FaPencil />
                     </Button>
                     <Button
@@ -114,7 +110,7 @@ export function StudyProceedingsParamsEditor({
     const [currentPhaseEditor, setCurrentPhaseEditor] = useState<StudyPhaseFormType | undefined>();
 
     return (
-        <UpdateBox title="Paramètres de l'étude" update={updateServer} status={status}>
+        <UpdateBox title="Phases de l'étude" update={updateServer} status={status}>
             <FormProvider {...form}>
                 <form className="space-y-main">
                     <DropdownSingleFormElement
@@ -125,16 +121,16 @@ export function StudyProceedingsParamsEditor({
                         values={STUDY_STEPS_NAMES}
                         displayValue={(step) => STUDY_STEPS[step].display}
                     />
-                    {values.phases.map((study, i) => (
-                        <SinglePhaseInnerBox
-                            key={i}
-                            study={study}
-                            serverStudyProceedingId={serverStudyProceedingId}
-                            setCurrentPhaseEditor={setCurrentPhaseEditor}
-                        />
-                    ))}
                 </form>
             </FormProvider>
+            {values.phases.map((study, i) => (
+                <SinglePhaseInnerBox
+                    key={i}
+                    study={study}
+                    serverStudyProceedingId={serverStudyProceedingId}
+                    editPhase={() => setCurrentPhaseEditor(study)}
+                />
+            ))}
             <Button
                 variant="outline"
                 className="m-auto flex items-center gap-main"
@@ -162,12 +158,14 @@ export function StudyProceedingsParamsEditor({
                     })
                 }
             />
-            <StudyPhaseEditor
-                open={!!currentPhaseEditor}
-                defaultValues={currentPhaseEditor}
-                close={() => setCurrentPhaseEditor(undefined)}
-                onSubmit={(values) => dbg(values, 'form values')}
-            />
+            {currentPhaseEditor && (
+                <StudyPhaseEditor
+                    open={!!currentPhaseEditor}
+                    defaultValues={currentPhaseEditor}
+                    close={() => setCurrentPhaseEditor(undefined)}
+                    onSubmit={(values) => dbg(values, 'form values')}
+                />
+            )}
             {JSON.stringify(form.watch())}
         </UpdateBox>
     );

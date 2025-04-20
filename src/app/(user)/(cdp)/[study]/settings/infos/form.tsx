@@ -48,7 +48,7 @@ export function StudyInfosParamsEditor({
     };
 
     return (
-        <UpdateBox title="Paramètres de l'étude" update={updateServer} status={status}>
+        <UpdateBox title="Informations générales" update={updateServer} status={status}>
             <FormProvider {...form}>
                 <form className="space-y-main">
                     <InputFormElement
