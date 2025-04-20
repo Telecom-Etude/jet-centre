@@ -19,7 +19,8 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { FileExplorerDialogProps, reloadWindow } from './utils';
+import { reloadWindow } from '@/lib/utils';
+import { FileExplorerDialogProps } from './utils';
 import { newFileInMissionFolder } from '@/drive/files';
 
 export function NewFileDialog({ open, setOpen, study }: FileExplorerDialogProps) {

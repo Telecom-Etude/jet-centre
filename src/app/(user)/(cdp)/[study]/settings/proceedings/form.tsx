@@ -11,7 +11,7 @@ import {
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { useState } from 'react';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
-import { dbg } from '@/lib/utils';
+import { dbg, reloadWindow } from '@/lib/utils';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import {
     addPhase,
@@ -24,8 +24,6 @@ import { InnerBox } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { StudyPhaseEditor } from './phase';
-import { useRouter } from 'next/navigation';
-import { reloadWindow } from '../../docs/utils';
 
 interface SinglePhaseInnerBoxParams {
     serverStudyProceedingId: string;
@@ -41,7 +39,9 @@ function SinglePhaseInnerBox({
     return (
         <InnerBox>
             <div className="border border-input rounded-md flex items-center justify-between p-2 pl-4">
-                <p>{study.title}</p>
+                <p>
+                    {study.title} {study.jehs ? `(${study.jehs} JEH)` : ''}
+                </p>
                 <div>
                     <Button
                         variant="secondary"
@@ -110,8 +110,6 @@ export function StudyProceedingsParamsEditor({
 
     const values = form.watch();
 
-    const router = useRouter();
-
     const [newPhaseOpen, setNewPhaseOpen] = useState(false);
     const [currentPhaseEditor, setCurrentPhaseEditor] = useState<StudyPhaseFormType | undefined>();
 
@@ -155,7 +153,7 @@ export function StudyProceedingsParamsEditor({
                                 setStatus(UpdateBoxStatus.Error);
                             } else if (checkEqual(data.serverStudyProceeding, form.getValues())) {
                                 setStatus(UpdateBoxStatus.Ok);
-                                router.refresh();
+                                reloadWindow();
                             } else {
                                 setStatus(UpdateBoxStatus.NotSynced);
                             }

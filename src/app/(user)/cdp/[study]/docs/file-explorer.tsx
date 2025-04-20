@@ -19,7 +19,7 @@ import { Input } from '@/components/ui/input';
 import { TemplateCopyDialog } from './clone-template';
 import { DustbinDialog } from './dustbin';
 import { NewFileDialog } from './new-file';
-import { reloadWindow } from './utils';
+import { reloadWindow } from '@/lib/utils';
 
 interface FileExplorerProps {
     missions: DriveFile[] | null;

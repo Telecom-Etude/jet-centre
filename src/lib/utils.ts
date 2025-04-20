@@ -62,3 +62,12 @@ export function arrayEqual<T>(
     }
     return true;
 }
+
+/**
+ * Reloads the window.
+ *
+ * This checks that the component is in the client-side version of the component.
+ */
+export function reloadWindow() {
+    if (typeof window != 'undefined') location.reload();
+}

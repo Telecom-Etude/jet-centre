@@ -88,7 +88,7 @@ function getInfos(status: UpdateBoxStatus): StatusInfos {
                 Icon: FaBug,
                 iconClassName: 'text-destructive',
                 hoverContent:
-                    "Le serveur est toujours vivant, mais vos donnée n'ont pas été sauvegardées 🤔. Réessayez!",
+                    "Le serveur est toujours vivant, mais vos données n'ont pas été sauvegardées 🤔. Réessayez!",
             };
     }
 }

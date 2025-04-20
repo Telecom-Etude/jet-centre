@@ -8,10 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { loadMriData, setMriStatus, storeMriData } from './form/mri';
 import { useState } from 'react';
-import { reloadWindow } from '../docs/utils';
 import { Button } from '@/components/ui/button';
 import { MriStatus } from '@prisma/client';
-import { dbg, log } from '@/lib/utils';
+import { dbg, log, reloadWindow } from '@/lib/utils';
 import { LoadingFullStops } from '@/components/loading';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 
