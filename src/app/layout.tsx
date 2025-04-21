@@ -12,8 +12,6 @@ import { TopBar } from '@/components/navigation/topbar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
 
-
-
 /**
  * Font used by the website, this is the font that is part of our corporate identity. This font mus't be modified.
  *

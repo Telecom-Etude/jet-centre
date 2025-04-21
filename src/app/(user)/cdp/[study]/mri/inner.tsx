@@ -16,11 +16,6 @@ import { loadMriData, setMriStatus, storeMriData } from './form/mri';
 import { MriFormType, MriServerData, equalMri, mriCreationSchema } from './form/schema';
 import { RenderMRI } from './render';
 
-
-
-
-
-
 interface InnerProps {
     study: string;
     serverMriData: MriServerData;

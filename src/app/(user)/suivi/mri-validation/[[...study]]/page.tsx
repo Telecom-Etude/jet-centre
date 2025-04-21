@@ -6,7 +6,6 @@ import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 
 import { getStudyInfosWithMRI } from '../action';
 
-
 function assertAllFieldsFull(
     mri: Mri | null,
     title: string | null

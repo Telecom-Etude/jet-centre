@@ -28,7 +28,6 @@ import { COMPANY_SIZES, DOMAIN_NAMES } from '@/db/types';
 import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
 
-
 import { StudyCreationSchema } from '../schema';
 
 import {
@@ -40,7 +39,6 @@ import {
 import { ContactForm } from './contactForm';
 import { EditableContactItem } from './editableContactItem';
 import { SimpleContactItem } from './simpleContactItem';
-
 
 export interface CompaniesProps {
     companies: Company[];

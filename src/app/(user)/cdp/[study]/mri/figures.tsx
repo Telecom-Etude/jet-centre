@@ -8,8 +8,6 @@ import PayHigh from '@/../public/mri/pay/high.png';
 import PayLow from '@/../public/mri/pay/low.png';
 import PayMedium from '@/../public/mri/pay/medium.png';
 
-
-
 import { DOMAINS } from '@/db/types';
 
 export function ImageElt({

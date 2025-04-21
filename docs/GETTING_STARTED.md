@@ -4,8 +4,8 @@
 
 ### Requirements
 
--   [Node.js and npm](https://nodejs.org/en/download)
--   [Postgresql](https://www.postgresql.org/download/)
+- [Node.js and npm](https://nodejs.org/en/download)
+- [Postgresql](https://www.postgresql.org/download/)
 
 ### Node setup
 

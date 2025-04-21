@@ -18,8 +18,6 @@ import { LEVELS, DOMAINS, DOMAIN_NAMES, LEVEL_NAMES } from '@/db/types';
 
 import { MriFormType } from './schema';
 
-
-
 interface MRICreationProps {
     updateServer: () => void;
     form: UseFormReturn<MriFormType>;

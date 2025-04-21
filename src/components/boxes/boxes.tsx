@@ -13,7 +13,6 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
 
-
 const Box = forwardRef<
     HTMLDivElement,
     { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>

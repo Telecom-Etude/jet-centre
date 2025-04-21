@@ -35,7 +35,7 @@ If you find a bug or have a question:
 ### Contributing Code
 
 1. [Fork](#fork) the project.
-2. Create a clone of your forked git repo and add a remote pointing to this repo  
+2. Create a clone of your forked git repo and add a remote pointing to this repo
    The remote ensures that your can easily pull more recent changes to your forked repo
 
 ```bash
@@ -94,9 +94,9 @@ Follow the Conventional Commits format:
 
 Examples of _actions_ include:
 
-- **fix**: A functionnality that wasn't working before is now working
-- **add**: A functionnality that didn't exist before has been added
-- **ref** (short for [refactor](https://en.wikipedia.org/wiki/Code_refactoring)): Some code has been rewritten but functionnalities have not been modified
+- **fix**: A functionality that wasn't working before is now working
+- **add**: A functionality that didn't exist before has been added
+- **ref** (short for [refactor](https://en.wikipedia.org/wiki/Code_refactoring)): Some code has been rewritten but functionalities have not been modified
 
 For instance, if you fix the redirection callback on the signin page, a good commit name is
 

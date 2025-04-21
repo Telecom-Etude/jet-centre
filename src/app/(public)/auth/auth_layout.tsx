@@ -6,7 +6,6 @@ import BirdLogo from '@/../public/bird.svg';
 import { Button } from '@/components/ui/button';
 import { LabeledSeparator } from '@/components/ui/separator';
 
-
 /**
  * Layout for wrapping the button next to the bird image in the login/logout pages.
  *

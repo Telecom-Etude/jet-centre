@@ -13,7 +13,6 @@ import {
     FormMessage,
 } from '../../ui/form';
 
-
 const labelVariants = cva('', {
     variants: {
         labelStat: {

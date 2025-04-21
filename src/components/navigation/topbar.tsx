@@ -7,7 +7,6 @@ import { SearchBar } from '../meta-components/searchbar';
 import { Button } from '../ui/button';
 import { SidebarTrigger } from '../ui/sidebar';
 
-
 export const TopBar = () => {
     return (
         <div className="flex w-full items-center">

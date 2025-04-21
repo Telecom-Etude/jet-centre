@@ -13,8 +13,6 @@ import {
     FormMessage,
 } from '../../ui/form';
 
-
-
 interface CheckboxFormElementProps<T extends FieldValues> extends FormElementProps<T> {
     formId?: string;
     onChange?: (checked: boolean) => void;

@@ -14,7 +14,6 @@ import { RoleSideBar } from '@/settings/sidebars/types';
 import SidebarCdp from './sidebar-cdp';
 import { SidebarList } from './sidebar-list';
 
-
 interface Tab {
     id: string;
     title: string;
