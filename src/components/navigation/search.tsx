@@ -1,7 +1,8 @@
 'use client';
 
-import { Command, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import React from 'react';
+
+import { Command, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 
 type CommandProp = {
     value: string;

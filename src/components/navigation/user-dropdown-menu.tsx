@@ -1,6 +1,9 @@
 'use client';
 
-import { UserAvatar } from '@/components/ui/user-avatar';
+import { LogOut } from 'lucide-react';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -10,9 +13,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { LogOut } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import Link from 'next/link';
+import { UserAvatar } from '@/components/ui/user-avatar';
 
 interface UserDropdownMenuProps {
     isMobile: boolean;

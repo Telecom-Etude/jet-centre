@@ -1,5 +1,6 @@
-import { z, EMPTY_STRING, required, nonEmptyExcluded } from '@/lib/zod';
 import { CompanySize, Domain } from '@prisma/client';
+
+import { z, EMPTY_STRING, required, nonEmptyExcluded } from '@/lib/zod';
 // import { zCompanySize, zDOMAINS } from '@/settings/vars';
 
 const zIdx = z.object({

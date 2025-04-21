@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { StudySelection } from './sidebar-study-selection';
-import { SidebarList } from './sidebar-list';
+
 import { SidebarSeparator } from '@/components/ui/sidebar';
 import { CDP_SIDEBAR } from '@/settings/sidebars/sidebars';
+
+import { SidebarList } from './sidebar-list';
+import { StudySelection } from './sidebar-study-selection';
 
 export default function SidebarCdp({ missions }: { missions: string[] }) {
     const [selectedMission, setSelectedMission] = useState(0);

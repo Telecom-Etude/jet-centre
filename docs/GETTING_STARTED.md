@@ -4,8 +4,8 @@
 
 ### Requirements
 
-- [Node.js and npm](https://nodejs.org/en/download)
-- [Postgresql](https://www.postgresql.org/download/)
+-   [Node.js and npm](https://nodejs.org/en/download)
+-   [Postgresql](https://www.postgresql.org/download/)
 
 ### Node setup
 
@@ -27,7 +27,7 @@ The port and database names are defined in the `docker-compose.yml` file.
 Generate a random `AUTH_SECRET` (e.g. by using `openssl rand -base64 255`), and set up the following environment variables in a `.env` file at the root of the project.
 
 You must also generate a Google Secret and ID. To set those up, refer to this [tutorial](https://www.youtube.com/watch?v=Rs8018RO5YQ&t=252).
-The redirection URI should br `http://localhost:5005/api/auth/callback/google`
+The redirection URI should be `http://localhost:5005/api/auth/callback/google`
 
 Finally, to make tests on your drive, you will need to specify what folder is used by Jet Centre. For that, create a folder in your drive and copy the ID (in the url, after `folders/`) and add it `DOSSIER_SUIVI`.
 

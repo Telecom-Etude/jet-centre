@@ -1,18 +1,25 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { MriStatus } from '@prisma/client';
+import { useState } from 'react';
+import { useForm, UseFormReturn } from 'react-hook-form';
+
 import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
+import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
+import { LoadingFullStops } from '@/components/loading';
+import { Button } from '@/components/ui/button';
+import { dbg, log, reloadWindow } from '@/lib/utils';
+
 import MRICreationForm from './form/form';
+import { loadMriData, setMriStatus, storeMriData } from './form/mri';
 import { MriFormType, MriServerData, equalMri, mriCreationSchema } from './form/schema';
 import { RenderMRI } from './render';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, UseFormReturn } from 'react-hook-form';
-import { loadMriData, setMriStatus, storeMriData } from './form/mri';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { MriStatus } from '@prisma/client';
-import { dbg, log, reloadWindow } from '@/lib/utils';
-import { LoadingFullStops } from '@/components/loading';
-import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
+
+
+
+
+
 
 interface InnerProps {
     study: string;

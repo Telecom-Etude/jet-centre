@@ -1,6 +1,7 @@
-import { arrayEqual } from '@/lib/utils';
 import { DeliverableStatus, StudyProgressStep } from '@prisma/client';
 import { z } from 'zod';
+
+import { arrayEqual } from '@/lib/utils';
 
 export const deliverableFormSchema = z.object({
     description: z.string(),

@@ -1,8 +1,9 @@
 'use client';
 
+import { IoCloudUploadOutline } from 'react-icons/io5';
+
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { IoCloudUploadOutline } from 'react-icons/io5';
 
 const className =
     'min-h-[300px] m-auto text-primary w-full max-w-[600px] flex items-center justify-center space-x-4 border-4 border-primary border-dashed';

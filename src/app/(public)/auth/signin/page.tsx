@@ -1,8 +1,11 @@
 import Image from 'next/image';
+
 import BirdLogo from '@/../public/bird_color.svg';
-import { GoogleButton } from '@/app/(public)/auth/google';
-import { AuthLayout } from '../auth_layout';
+
 import { googleId, signIn } from '@/actions/auth';
+import { GoogleButton } from '@/app/(public)/auth/google';
+
+import { AuthLayout } from '../auth_layout';
 
 export default async function SignInPage() {
     return (

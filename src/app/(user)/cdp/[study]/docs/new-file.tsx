@@ -1,4 +1,14 @@
-import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,20 +18,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useState } from 'react';
-import { FILE_POSSIBLE_CREATION } from '@/drive/types';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { reloadWindow } from '@/lib/utils';
-import { FileExplorerDialogProps } from './utils';
+import { Input } from '@/components/ui/input';
 import { newFileInMissionFolder } from '@/drive/files';
+import { FILE_POSSIBLE_CREATION } from '@/drive/types';
+import { reloadWindow } from '@/lib/utils';
+
+import { FileExplorerDialogProps } from './utils';
 
 export function NewFileDialog({ open, setOpen, study }: FileExplorerDialogProps) {
     const [position, setPosition] = useState<number | undefined>(undefined);

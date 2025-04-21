@@ -1,8 +1,11 @@
+import Image from 'next/image';
+import { ReactNode } from 'react';
+
+import BirdLogo from '@/../public/bird.svg';
+
 import { Button } from '@/components/ui/button';
 import { LabeledSeparator } from '@/components/ui/separator';
-import { ReactNode } from 'react';
-import Image from 'next/image';
-import BirdLogo from '@/../public/bird.svg';
+
 
 /**
  * Layout for wrapping the button next to the bird image in the login/logout pages.

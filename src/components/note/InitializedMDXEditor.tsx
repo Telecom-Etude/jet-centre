@@ -1,6 +1,5 @@
 'use client';
 
-import type { ForwardedRef } from 'react';
 import {
     headingsPlugin,
     listsPlugin,
@@ -20,6 +19,7 @@ import {
     InsertThematicBreak,
     type MDXEditorMethods,
 } from '@mdxeditor/editor';
+import type { ForwardedRef } from 'react';
 
 import '@mdxeditor/editor/style.css';
 import './style.css';

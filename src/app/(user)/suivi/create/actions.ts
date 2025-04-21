@@ -1,10 +1,13 @@
 'use server';
 
-import prisma from '@/db';
-import { StudyCreationSchema } from './forms/schema';
 import { Domain, NotificationLevel } from '@prisma/client';
-import { NewAdmin } from './forms/settings/settingsSchema';
+
+import prisma from '@/db';
 import { CompanySize, toPgCompanySize } from '@/settings/vars';
+
+import { StudyCreationSchema } from './forms/schema';
+import { NewAdmin } from './forms/settings/settingsSchema';
+
 
 export async function createNewStudy(data: StudyCreationSchema) {
     const falseId = Math.random().toString().repeat(5);

@@ -8,8 +8,9 @@ import {
 } from '@/components/ui/dialog';
 import { copyTemplate } from '@/drive/files';
 import { TEMPLATE_NAMES } from '@/drive/template';
-import { FileExplorerDialogProps } from './utils';
 import { reloadWindow } from '@/lib/utils';
+
+import { FileExplorerDialogProps } from './utils';
 
 interface TemplateCopyDialog extends FileExplorerDialogProps {
     setLoading: (loading: boolean) => void;

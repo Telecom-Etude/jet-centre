@@ -1,19 +1,18 @@
 'use client';
 
-import { ReactNode, forwardRef } from 'react';
 import Link from 'next/link';
-
+import { ReactNode, forwardRef } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { FaGripLines, FaPen, FaPlus, FaTrash } from 'react-icons/fa6';
+import { GoProjectTemplate } from 'react-icons/go';
 import { HiRefresh } from 'react-icons/hi';
+import { IconType } from 'react-icons/lib';
 
 import { Button } from '@/components/ui/button';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
-import { IconType } from 'react-icons/lib';
-import { GoProjectTemplate } from 'react-icons/go';
 
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 const Box = forwardRef<
     HTMLDivElement,

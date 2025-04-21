@@ -12,8 +12,8 @@ import {
     BoxCollapser,
     BoxContent,
 } from '@/components/boxes/boxes';
-import MDXEditor from '@/components/note/mdxEditor';
 import { DragHandle } from '@/components/meta-components/sortableList';
+import MDXEditor from '@/components/note/mdxEditor';
 
 export default function Notes({
     title,

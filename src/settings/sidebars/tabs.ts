@@ -1,7 +1,8 @@
 import { FaMailBulk } from 'react-icons/fa';
-import { SideBarItem } from './types';
 import { FaMoneyBill, FaBriefcase } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
+
+import { SideBarItem } from './types';
 
 export const MRI_ICON: IconType = FaMailBulk;
 export const TRESO_ICON: IconType = FaMoneyBill;

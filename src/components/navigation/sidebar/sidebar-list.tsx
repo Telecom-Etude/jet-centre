@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -6,7 +8,6 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { SideBarGroup } from '@/settings/sidebars/types';
-import Link from 'next/link';
 
 type Props = {
     sidebar_groups: SideBarGroup[];

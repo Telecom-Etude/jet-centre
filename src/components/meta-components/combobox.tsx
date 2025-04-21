@@ -1,4 +1,8 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Command,
     CommandEmpty,
@@ -7,10 +11,7 @@ import {
     CommandItem,
     CommandList,
 } from '@/components/ui/command';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { Check, ChevronsUpDown } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
 type ComboboxProps = {

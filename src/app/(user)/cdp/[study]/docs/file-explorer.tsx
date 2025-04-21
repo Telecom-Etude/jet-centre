@@ -1,3 +1,7 @@
+import Link from 'next/link';
+import { useState } from 'react';
+import { FaArrowRightFromBracket, FaArrowUpFromBracket, FaPencil, FaTrash } from 'react-icons/fa6';
+
 import {
     Box,
     BoxButtonPlus,
@@ -10,16 +14,14 @@ import {
     BoxTitle,
 } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
-import { DriveFile, googleUrl } from '@/drive/types';
-import { useState } from 'react';
-import { FaArrowRightFromBracket, FaArrowUpFromBracket, FaPencil, FaTrash } from 'react-icons/fa6';
-import Link from 'next/link';
-import { trashFile, renameFile } from '@/drive/files';
 import { Input } from '@/components/ui/input';
+import { trashFile, renameFile } from '@/drive/files';
+import { DriveFile, googleUrl } from '@/drive/types';
+import { reloadWindow } from '@/lib/utils';
+
 import { TemplateCopyDialog } from './clone-template';
 import { DustbinDialog } from './dustbin';
 import { NewFileDialog } from './new-file';
-import { reloadWindow } from '@/lib/utils';
 
 interface FileExplorerProps {
     missions: DriveFile[] | null;

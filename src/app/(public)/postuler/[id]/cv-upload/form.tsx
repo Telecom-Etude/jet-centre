@@ -1,7 +1,7 @@
 'use client';
 
-import { DropableFormElts } from './elts';
 import { submitCV } from './action';
+import { DropableFormElts } from './elts';
 
 export function DragAndDrop({ id }: { id: string }) {
     return (

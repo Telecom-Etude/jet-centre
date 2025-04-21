@@ -1,6 +1,8 @@
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+
 import LogoGoogle from '@/../public/google.svg';
+
+import { Button } from '@/components/ui/button';
 
 /**
  * Button to log in and out using the Google provider

@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 import { ReactNode } from 'react';
+
+import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
+
 import { listMriToValidate } from './action';
 import { ValidationButton } from './validation-button';
 

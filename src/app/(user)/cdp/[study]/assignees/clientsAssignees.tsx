@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
 
+import Client from './client';
 import { Assignee } from './page';
 import { Interview } from './right-components/interview';
 import { PDF } from './right-components/pdf';
-import Client from './client';
 
 function getCurrentTitle(right: Right, current: Assignee) {
     let currentTitle;

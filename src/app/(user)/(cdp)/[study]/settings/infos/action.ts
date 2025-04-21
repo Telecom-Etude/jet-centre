@@ -1,8 +1,9 @@
 'use server';
 
 import prisma from '@/db';
-import { StudyInfosParamsEditorFormType } from './schema';
 import { dbg } from '@/lib/utils';
+
+import { StudyInfosParamsEditorFormType } from './schema';
 
 export interface ServerStudyInfos {
     serverStudyInfo: StudyInfosParamsEditorFormType;

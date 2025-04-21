@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-
+import { FaFilePdf } from 'react-icons/fa';
 import { IconType } from 'react-icons/lib';
 import { MdOpenInNew } from 'react-icons/md';
-import { FaFilePdf } from 'react-icons/fa';
 
 import {
     InnerBox,
@@ -16,11 +15,11 @@ import {
     BoxCollapseButton,
     BoxDragHandle,
 } from '@/components/boxes/boxes';
-import { Button } from '@/components/ui/button';
 import { DragHandle } from '@/components/meta-components/sortableList';
+import { Button } from '@/components/ui/button';
 
-import { Assignee } from './page';
 import { Right } from './clientsAssignees';
+import { Assignee } from './page';
 
 const eltCN = 'bg-background border-2 border-muted p-2';
 

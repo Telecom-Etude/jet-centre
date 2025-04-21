@@ -1,7 +1,8 @@
 'use server';
 
-import prisma from '@/db';
 import { MriStatus } from '@prisma/client';
+
+import prisma from '@/db';
 
 export async function getStudyInfosWithMRI(code: string) {
     try {

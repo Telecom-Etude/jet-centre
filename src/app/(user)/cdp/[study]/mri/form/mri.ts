@@ -1,9 +1,11 @@
 'use server';
 
-import prisma from '@/db';
-import { adminDisplay, DEFAULT_MRI_VALUES, MriFormType, MriServerData } from './schema';
 import { Domain, Level, MriStatus } from '@prisma/client';
+
+import prisma from '@/db';
 import { dbg } from '@/lib/utils';
+
+import { adminDisplay, DEFAULT_MRI_VALUES, MriFormType, MriServerData } from './schema';
 
 export async function loadMriData(code: string): Promise<MriServerData | undefined> {
     try {

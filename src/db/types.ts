@@ -1,13 +1,13 @@
 import { CompanySize, DeliverableStatus, Domain, Level, StudyProgressStep } from '@prisma/client';
 import { StaticImageData } from 'next/image';
 
+import Cyber from '@/../public/mri/domains/cyber.png';
 import Data from '@/../public/mri/domains/data.png';
 import Dev from '@/../public/mri/domains/dev.png';
-import Cyber from '@/../public/mri/domains/cyber.png';
-import Se from '@/../public/mri/domains/se.png';
-import Reseaux from '@/../public/mri/domains/reseaux.png';
 import Ima from '@/../public/mri/domains/ima.png';
 import Market from '@/../public/mri/domains/market.png';
+import Reseaux from '@/../public/mri/domains/reseaux.png';
+import Se from '@/../public/mri/domains/se.png';
 
 interface EnumInfo {
     display: string;

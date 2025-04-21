@@ -1,13 +1,15 @@
-import PayLow from '@/../public/mri/pay/low.png';
-import PayMedium from '@/../public/mri/pay/medium.png';
-import PayHigh from '@/../public/mri/pay/high.png';
+import { Domain, Level } from '@prisma/client';
+import Image, { StaticImageData } from 'next/image';
 
 import DifficultyEasy from '@/../public/mri/difficulties/easy.png';
-import DifficultyMedium from '@/../public/mri/difficulties/medium.png';
 import DifficultyHard from '@/../public/mri/difficulties/hard.png';
+import DifficultyMedium from '@/../public/mri/difficulties/medium.png';
+import PayHigh from '@/../public/mri/pay/high.png';
+import PayLow from '@/../public/mri/pay/low.png';
+import PayMedium from '@/../public/mri/pay/medium.png';
 
-import Image, { StaticImageData } from 'next/image';
-import { Domain, Level } from '@prisma/client';
+
+
 import { DOMAINS } from '@/db/types';
 
 export function ImageElt({

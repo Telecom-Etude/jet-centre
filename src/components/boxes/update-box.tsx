@@ -1,3 +1,9 @@
+import { ReactNode } from 'react';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FaBug, FaCheck } from 'react-icons/fa6';
+import { IoWarning } from 'react-icons/io5';
+import { IconType } from 'react-icons/lib';
+
 import {
     Box,
     BoxButtonIcon,
@@ -6,11 +12,6 @@ import {
     BoxHeaderBlock,
     BoxTitle,
 } from '@/components/boxes/boxes';
-import { ReactNode } from 'react';
-import { IoWarning } from 'react-icons/io5';
-import { FaBug, FaCheck } from 'react-icons/fa6';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { IconType } from 'react-icons/lib';
 
 /**
  * @enum {number}

@@ -1,7 +1,8 @@
-import { StudyParams } from '@/routes';
-import { StudyInfosParamsEditor } from './infos/form';
-import { getStudyInfos } from './infos/action';
 import { ErrorPage } from '@/components/error';
+import { StudyParams } from '@/routes';
+
+import { getStudyInfos } from './infos/action';
+import { StudyInfosParamsEditor } from './infos/form';
 import { getStudyProceedings } from './proceedings/action';
 import { StudyProceedingsParamsEditor } from './proceedings/form';
 

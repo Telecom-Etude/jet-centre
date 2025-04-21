@@ -1,4 +1,5 @@
 import { X } from 'lucide-react';
+
 import { Button } from './ui/button';
 
 export const DeletableItem = ({ deleteItem, item }: { item: string; deleteItem: () => void }) => (

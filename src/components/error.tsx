@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+
 import { LogoBird } from './logo/logo';
 
 interface ErrorPageProps {

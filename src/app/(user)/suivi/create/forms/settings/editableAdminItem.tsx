@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { FaPen } from 'react-icons/fa';
 
 import {
@@ -12,9 +11,10 @@ import {
     BoxContent,
     BoxButtonTrash,
 } from '@/components/boxes/boxes';
-import { Button } from '@/components/ui/button';
 import { DragHandle } from '@/components/meta-components/sortableList';
+import { Button } from '@/components/ui/button';
 import { NBSP } from '@/lib/utils';
+
 import { AdminForm } from './adminForm';
 import { NewAdmin } from './settingsSchema';
 

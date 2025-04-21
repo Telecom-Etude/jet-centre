@@ -1,13 +1,14 @@
-import { TREASURER_SIDEBAR } from './treasurer';
-import { VPO_SIDEBAR } from './vpo';
-import { SECRETARY_GENERAL_SIDEBAR } from './secge';
-import { COMMERCIAL_DIRECTOR_SIDEBAR } from './dirco';
-import { SideBarGroup } from './types';
 import { FaGears, FaHouse, FaNoteSticky } from 'react-icons/fa6';
-import { MRI_ICON, TRESO_ICON } from './tabs';
-import { PiStudent } from 'react-icons/pi';
 import { GiFinishLine } from 'react-icons/gi';
+import { PiStudent } from 'react-icons/pi';
+
 import { ADMIN_SIDEBAR } from './admin';
+import { COMMERCIAL_DIRECTOR_SIDEBAR } from './dirco';
+import { SECRETARY_GENERAL_SIDEBAR } from './secge';
+import { MRI_ICON, TRESO_ICON } from './tabs';
+import { TREASURER_SIDEBAR } from './treasurer';
+import { SideBarGroup } from './types';
+import { VPO_SIDEBAR } from './vpo';
 
 export const ROLES_SIDEBARS = {
     Trésorier: TREASURER_SIDEBAR,

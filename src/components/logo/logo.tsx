@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import logoBird from '@/../public/bird.svg';
 import logoBirdText from '@/../public/bird_text.svg';
 

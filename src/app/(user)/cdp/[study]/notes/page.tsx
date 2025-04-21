@@ -1,6 +1,7 @@
 'use client';
 
 import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
+
 import Note from './note';
 
 const TEST_MD = `

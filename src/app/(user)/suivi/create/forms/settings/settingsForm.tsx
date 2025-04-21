@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 import {
@@ -10,19 +11,20 @@ import {
     BoxHeader,
     BoxTitle,
 } from '@/components/boxes/boxes';
-import { FormProvider, FormRule } from '@/components/ui/form';
-import { InputFormElement } from '@/components/meta-components/form/input';
-
-import { Admin, AdminFormValue, emptyAdminCreationSchema } from './settingsSchema';
 import { CheckboxFormElement } from '@/components/meta-components/form/checkbox';
-import { StudyCreationSchema } from '../schema';
-import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
-import { useEffect, useState } from 'react';
-import { AdminForm } from './adminForm';
-import { ANIMATION_DURATION_MS } from '@/settings/vars';
-import { SimpleAdminItem } from './simpleAdminItem';
-import { EditableAdminItem } from './editableAdminItem';
+import { InputFormElement } from '@/components/meta-components/form/input';
 import { SearchBar } from '@/components/meta-components/searchbar';
+import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
+import { FormProvider, FormRule } from '@/components/ui/form';
+import { ANIMATION_DURATION_MS } from '@/settings/vars';
+
+import { StudyCreationSchema } from '../schema';
+
+import { AdminForm } from './adminForm';
+import { EditableAdminItem } from './editableAdminItem';
+import { Admin, AdminFormValue, emptyAdminCreationSchema } from './settingsSchema';
+import { SimpleAdminItem } from './simpleAdminItem';
+
 
 export interface SettingsFormProps {
     formStudy: UseFormReturn<StudyCreationSchema>;

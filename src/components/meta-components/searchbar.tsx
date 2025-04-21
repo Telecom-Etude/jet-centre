@@ -1,5 +1,8 @@
 'use client';
 
+import { ChangeEvent, useId, useState } from 'react';
+import { FaMagnifyingGlass } from 'react-icons/fa6';
+
 import {
     Command,
     CommandEmpty,
@@ -8,12 +11,9 @@ import {
     CommandItem,
     CommandList,
 } from '@/components/ui/command';
-
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
-import { ChangeEvent, useId, useState } from 'react';
-import { FaMagnifyingGlass } from 'react-icons/fa6';
 
 export interface SearchBarProps<T> {
     className?: string;

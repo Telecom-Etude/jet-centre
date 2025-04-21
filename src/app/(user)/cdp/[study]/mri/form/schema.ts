@@ -1,5 +1,6 @@
-import { z } from '@/lib/zod';
 import { Domain, Level, MriStatus } from '@prisma/client';
+
+import { z } from '@/lib/zod';
 
 export interface AdminDisplay {
     email: string;

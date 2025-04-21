@@ -1,16 +1,19 @@
 'use client';
 
-import { FaQuestion, FaUser } from 'react-icons/fa6';
-import SidebarCdp from './sidebar-cdp';
 import { ReactNode, useState } from 'react';
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import React from 'react';
+import { FaQuestion, FaUser } from 'react-icons/fa6';
+import { IconType } from 'react-icons/lib';
+
 import { Button } from '@/components/ui/button';
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
-import { SidebarList } from './sidebar-list';
 import { ROLES_SIDEBARS } from '@/settings/sidebars/sidebars';
 import { RoleSideBar } from '@/settings/sidebars/types';
-import { IconType } from 'react-icons/lib';
+
+import SidebarCdp from './sidebar-cdp';
+import { SidebarList } from './sidebar-list';
+
 
 interface Tab {
     id: string;

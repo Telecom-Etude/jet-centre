@@ -1,3 +1,6 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Path, UseFormReturn } from 'react-hook-form';
+
 import {
     Box,
     BoxButtonLabelPlus,
@@ -10,19 +13,23 @@ import {
     BoxHeaderBlock,
     BoxTitle,
 } from '@/components/boxes/boxes';
-import { FormProvider, FormRule } from '@/components/ui/form';
-import { InputFormElement } from '@/components/meta-components/form/input';
-import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
+import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
+import { InputFormElement } from '@/components/meta-components/form/input';
+import { LightFormElement } from '@/components/meta-components/form/wrapper';
+import { SearchBar } from '@/components/meta-components/searchbar';
 import {
     DragHandle,
     SortableList,
     useSortableList,
 } from '@/components/meta-components/sortableList';
+import { FormProvider, FormRule } from '@/components/ui/form';
+import { COMPANY_SIZES, DOMAIN_NAMES } from '@/db/types';
+import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
 
-import { Path, UseFormReturn } from 'react-hook-form';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { StudyCreationSchema } from '../schema';
 
 import {
     Company,
@@ -30,14 +37,10 @@ import {
     emptyCompany,
     emptyContactCreationSchema,
 } from './companiesSchema';
-import { SimpleContactItem } from './simpleContactItem';
-import { cn } from '@/lib/utils';
 import { ContactForm } from './contactForm';
-import { SearchBar } from '@/components/meta-components/searchbar';
 import { EditableContactItem } from './editableContactItem';
-import { StudyCreationSchema } from '../schema';
-import { LightFormElement } from '@/components/meta-components/form/wrapper';
-import { COMPANY_SIZES, DOMAIN_NAMES } from '@/db/types';
+import { SimpleContactItem } from './simpleContactItem';
+
 
 export interface CompaniesProps {
     companies: Company[];

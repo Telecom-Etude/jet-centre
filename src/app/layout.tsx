@@ -1,15 +1,18 @@
 import './globals.css';
-import React, { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
-import localFont from 'next/font/local';
 import { NextFont } from 'next/dist/compiled/@next/font';
-import { TopBar } from '@/components/navigation/topbar';
-import { SidebarApp } from '@/components/navigation/sidebar/sidebar-app';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { SessionProvider } from 'next-auth/react';
-import { get_user_sidebar_info } from '@/actions/cdp';
-import { auth } from '@/actions/auth';
+import localFont from 'next/font/local';
 import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import React, { ReactNode } from 'react';
+
+import { auth } from '@/actions/auth';
+import { get_user_sidebar_info } from '@/actions/cdp';
+import { SidebarApp } from '@/components/navigation/sidebar/sidebar-app';
+import { TopBar } from '@/components/navigation/topbar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
+
+
 
 /**
  * Font used by the website, this is the font that is part of our corporate identity. This font mus't be modified.

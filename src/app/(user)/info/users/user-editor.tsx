@@ -1,7 +1,9 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
 import { useState } from 'react';
+
+import { Input } from '@/components/ui/input';
+
 import { getPosition, updatePosition } from './users';
 
 interface UserEditorProps {

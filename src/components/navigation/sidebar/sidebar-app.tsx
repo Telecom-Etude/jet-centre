@@ -3,7 +3,6 @@
 import * as React from 'react';
 
 import { useSidebar } from '@/components/ui/sidebar';
-
 import {
     Sidebar,
     SidebarHeader,
@@ -11,10 +10,11 @@ import {
     SidebarContent,
     SidebarFooter,
 } from '@/components/ui/sidebar';
-
 import { cn } from '@/lib/utils';
-import { SidebarLogo } from './sidebar-logo';
+
 import { UserDropdownMenu } from '../user-dropdown-menu';
+
+import { SidebarLogo } from './sidebar-logo';
 import { SidebarSwitch } from './sidebar-switch';
 
 interface Props {

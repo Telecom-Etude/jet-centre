@@ -1,8 +1,11 @@
-import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
+import { Mri } from '@prisma/client';
+
 import { adminDisplay, MriFormType } from '@/app/(user)/cdp/[study]/mri/form/schema';
 import { RenderMRI } from '@/app/(user)/cdp/[study]/mri/render';
+import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
+
 import { getStudyInfosWithMRI } from '../action';
-import { Mri } from '@prisma/client';
+
 
 function assertAllFieldsFull(
     mri: Mri | null,

@@ -1,6 +1,7 @@
-import { StudyParams } from '@/routes';
-import { DocumentList } from './doc-list';
 import { getMissionFiles } from '@/drive/files';
+import { StudyParams } from '@/routes';
+
+import { DocumentList } from './doc-list';
 
 export default async function Page({ params }: StudyParams) {
     const { study } = await params;

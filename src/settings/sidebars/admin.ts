@@ -1,6 +1,7 @@
-import { RoleSideBar } from './types';
-import { MdAdminPanelSettings } from 'react-icons/md';
 import { FaPeopleGroup } from 'react-icons/fa6';
+import { MdAdminPanelSettings } from 'react-icons/md';
+
+import { RoleSideBar } from './types';
 
 export const ADMIN_SIDEBAR: RoleSideBar = {
     icon: MdAdminPanelSettings,

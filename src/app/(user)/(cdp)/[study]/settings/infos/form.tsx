@@ -1,20 +1,22 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
+import { CheckboxFormElement } from '@/components/meta-components/form/checkbox';
+import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
+import { InputFormElement } from '@/components/meta-components/form/input';
 import { FormProvider } from '@/components/ui/form';
+import { DOMAIN_NAMES, DOMAINS } from '@/db/types';
+import { dbg } from '@/lib/utils';
+
+import { ServerStudyInfos, updateStudyInfos } from './action';
 import {
     checkEqual,
     studyInfosParamsEditorFormSchema,
     StudyInfosParamsEditorFormType,
 } from './schema';
-import { InputFormElement } from '@/components/meta-components/form/input';
-import { CheckboxFormElement } from '@/components/meta-components/form/checkbox';
-import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
-import { useState } from 'react';
-import { ServerStudyInfos, updateStudyInfos } from './action';
-import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
-import { DOMAIN_NAMES, DOMAINS } from '@/db/types';
-import { dbg } from '@/lib/utils';
 
 interface StudyInfosParamsEditorParams extends ServerStudyInfos {
     study: string;

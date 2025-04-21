@@ -1,11 +1,14 @@
 'use client';
 
-import { getFileIds, getFiles } from '@/drive/files';
-import { use, useState } from 'react';
-import { Button } from '../ui/button';
 import Image from 'next/image';
-import { Skeleton } from '../ui/skeleton';
+import { use, useState } from 'react';
+
+import { getFileIds, getFiles } from '@/drive/files';
 import { DriveFile } from '@/drive/types';
+
+import { Button } from '../ui/button';
+import { Skeleton } from '../ui/skeleton';
+
 
 function FileComponent({ pFile }: { pFile: Promise<DriveFile> | null }) {
     const file = pFile === null ? null : use(pFile);

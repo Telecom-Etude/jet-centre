@@ -1,6 +1,9 @@
-import { Checkbox } from '@/components/ui/checkbox';
-
+import { ReactNode } from 'react';
 import { ControllerRenderProps, FieldValues, Path, UseFormReturn } from 'react-hook-form';
+
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
+
 import {
     FormControl,
     FormDescription,
@@ -9,8 +12,8 @@ import {
     FormLabel,
     FormMessage,
 } from '../../ui/form';
-import { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+
+
 
 interface CheckboxFormElementProps<T extends FieldValues> extends FormElementProps<T> {
     formId?: string;

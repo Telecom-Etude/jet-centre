@@ -1,10 +1,12 @@
-import { FaBug } from 'react-icons/fa';
-import { Button } from '../ui/button';
 import Link from 'next/link';
+import { FaBug } from 'react-icons/fa';
 
-import { SidebarTrigger } from '../ui/sidebar';
-import { SearchBar } from '../meta-components/searchbar';
 import { MAILTO_DSI } from '@/lib/links';
+
+import { SearchBar } from '../meta-components/searchbar';
+import { Button } from '../ui/button';
+import { SidebarTrigger } from '../ui/sidebar';
+
 
 export const TopBar = () => {
     return (

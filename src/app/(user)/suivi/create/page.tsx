@@ -1,6 +1,7 @@
+import prisma from '@/db';
+
 import { Company } from './forms/companies/companiesSchema';
 import Inner from './inner';
-import prisma from '@/db';
 
 export default async function CreateStudy() {
     // -------- Companies ------- //

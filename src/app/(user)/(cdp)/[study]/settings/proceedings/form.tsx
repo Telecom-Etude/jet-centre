@@ -1,18 +1,17 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { FormProvider } from '@/components/ui/form';
-import {
-    checkEqual,
-    StudyPhaseFormType,
-    studyProceedingsParamsEditorFormSchema,
-    StudyProceedingsParamsEditorFormType,
-} from './schema';
-import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { useState } from 'react';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
+
+import { InnerBox } from '@/components/boxes/boxes';
+import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
+import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
+import { Button } from '@/components/ui/button';
+import { FormProvider } from '@/components/ui/form';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { dbg, reloadWindow } from '@/lib/utils';
-import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
+
 import {
     addPhase,
     deletePhase,
@@ -21,10 +20,13 @@ import {
     updatePhase,
     updateStudyStep,
 } from './action';
-import { InnerBox } from '@/components/boxes/boxes';
-import { Button } from '@/components/ui/button';
-import { FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { StudyPhaseEditor } from './phase';
+import {
+    checkEqual,
+    StudyPhaseFormType,
+    studyProceedingsParamsEditorFormSchema,
+    StudyProceedingsParamsEditorFormType,
+} from './schema';
 
 interface SinglePhaseInnerBoxParams {
     study: StudyPhaseFormType;

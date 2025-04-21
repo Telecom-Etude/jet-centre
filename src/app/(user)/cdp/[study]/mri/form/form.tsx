@@ -1,11 +1,10 @@
-import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
-import { MriFormType } from './schema';
-import { InputFormElement } from '@/components/meta-components/form/input';
-import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
-import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
-import { UseFormReturn } from 'react-hook-form';
-import { LEVELS, DOMAINS, DOMAIN_NAMES, LEVEL_NAMES } from '@/db/types';
 import { useState } from 'react';
+import { UseFormReturn } from 'react-hook-form';
+
+import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
+import { InputFormElement } from '@/components/meta-components/form/input';
+import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
+import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogClose,
@@ -14,7 +13,12 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
+import { LEVELS, DOMAINS, DOMAIN_NAMES, LEVEL_NAMES } from '@/db/types';
+
+import { MriFormType } from './schema';
+
+
 
 interface MRICreationProps {
     updateServer: () => void;

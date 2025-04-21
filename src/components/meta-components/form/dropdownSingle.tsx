@@ -1,6 +1,16 @@
 'use client';
 
+import { Check, ChevronsUpDown } from 'lucide-react';
 import { useState, useRef } from 'react';
+import {
+    ControllerRenderProps,
+    FieldValues,
+    Path,
+    PathValue,
+    UseFormReturn,
+} from 'react-hook-form';
+
+import { Button } from '@/components/ui/button';
 import {
     Command,
     CommandEmpty,
@@ -9,18 +19,10 @@ import {
     CommandItem,
     CommandList,
 } from '@/components/ui/command';
-import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import {
-    ControllerRenderProps,
-    FieldValues,
-    Path,
-    PathValue,
-    UseFormReturn,
-} from 'react-hook-form';
-import { FormElementProps, FormElementWrapper } from './wrapper';
-import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+import { FormElementProps, FormElementWrapper } from './wrapper';
 
 interface DropdownFormElementProps<V, T extends FieldValues> extends FormElementProps<T> {
     formId?: string;

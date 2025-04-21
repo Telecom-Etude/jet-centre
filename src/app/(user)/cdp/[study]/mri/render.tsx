@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import {
     FaInstagram,
     FaLinkedin,
@@ -8,12 +9,10 @@ import {
     FaGlobe,
 } from 'react-icons/fa6';
 
-import Link from 'next/link';
-import { getDifficulty, getDomain, getPay, ImageElt } from './figures';
-import { AdminDisplay, MriFormType } from './form/schema';
-import { NBSP } from '@/lib/utils';
 import BirdLogo from '@/../public/mri/bird.png';
+
 import { Button } from '@/components/ui/button';
+import { NBSP } from '@/lib/utils';
 import {
     applyUrl,
     CONTACT_EMAIL,
@@ -23,6 +22,9 @@ import {
     SHOWCASE_WEBSITE_URL,
     TWITTER_URL,
 } from '@/settings/links';
+
+import { getDifficulty, getDomain, getPay, ImageElt } from './figures';
+import { AdminDisplay, MriFormType } from './form/schema';
 
 interface RenderMRIProps {
     study: string;

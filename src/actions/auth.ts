@@ -7,10 +7,11 @@
  * @file auth.ts
  */
 
-import prisma from '@/db';
 import type { NextAuthConfig, Profile } from 'next-auth';
 import NextAuth from 'next-auth';
 import Google, { GoogleProfile } from 'next-auth/providers/google';
+
+import prisma from '@/db';
 
 const config = {
     providers: [

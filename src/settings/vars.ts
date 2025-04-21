@@ -1,5 +1,6 @@
-import { z } from '@/lib/zod';
 import { CompanySize as PgCompanySize } from '@prisma/client';
+
+import { z } from '@/lib/zod';
 
 /**
  * See {@link https://www.economie.gouv.fr/cedef/entreprises-categories}.

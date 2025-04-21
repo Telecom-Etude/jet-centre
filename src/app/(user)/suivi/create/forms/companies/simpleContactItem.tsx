@@ -1,9 +1,10 @@
 import { Box, BoxHeader, BoxHeaderBlock, BoxTitle, BoxDragHandle } from '@/components/boxes/boxes';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { DragHandle } from '@/components/meta-components/sortableList';
-import { ContactFormValue } from './companiesSchema';
 import { Switch } from '@/components/ui/switch';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn, NBSP } from '@/lib/utils';
+
+import { ContactFormValue } from './companiesSchema';
 
 export type ContactItemProps = {
     dragHandleProps: DragHandle;

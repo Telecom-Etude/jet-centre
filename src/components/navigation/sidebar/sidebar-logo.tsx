@@ -1,8 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+
 import { LogoBird } from '@/components/logo/logo';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
 export function SidebarLogo() {
     return (

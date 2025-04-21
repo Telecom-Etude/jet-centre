@@ -1,6 +1,7 @@
+import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
+
 import { UserEditor } from './user-editor';
 import { getAdmins } from './users';
-import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 
 export default async function Page() {
     const admins = await getAdmins();

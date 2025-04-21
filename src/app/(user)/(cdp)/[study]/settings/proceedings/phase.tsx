@@ -1,18 +1,20 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog';
-import { useForm } from 'react-hook-form';
-import { studyPhaseFormSchema, StudyPhaseFormType } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormProvider } from '@/components/ui/form';
-import { InputFormElement } from '@/components/meta-components/form/input';
-import { useState } from 'react';
-import { Checkbox } from '@/components/ui/checkbox';
-import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
-import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
-import { DELIVERABLE_STEPS, DELIVERABLE_STEPS_NAMES } from '@/db/types';
-import { DialogTitle } from '@radix-ui/react-dialog';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { DeliverableStatus } from '@prisma/client';
+import { DialogTitle } from '@radix-ui/react-dialog';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
+import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
+import { InputFormElement } from '@/components/meta-components/form/input';
+import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Dialog, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog';
+import { FormProvider } from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
+import { DELIVERABLE_STEPS, DELIVERABLE_STEPS_NAMES } from '@/db/types';
+
+import { studyPhaseFormSchema, StudyPhaseFormType } from './schema';
 
 interface StudyPhaseEditorParams {
     open: boolean;
