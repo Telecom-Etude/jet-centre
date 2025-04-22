@@ -26,16 +26,19 @@ export const CDP_SIDEBAR: SideBarGroup[] = [
             {
                 title: "Paramètres de l'étude",
                 icon: FaGears,
+                prefix: 'cdp',
                 href: '/settings',
             },
             {
                 title: 'Écriture MRI',
                 icon: MRI_ICON,
+                prefix: 'cdp',
                 href: '/mri',
             },
             {
                 title: "Sélection d'intervenants",
                 icon: PiStudent,
+                prefix: 'cdp',
                 href: '/assignees',
             },
         ],
@@ -46,11 +49,13 @@ export const CDP_SIDEBAR: SideBarGroup[] = [
             {
                 title: 'Notes clients & étude',
                 icon: FaNoteSticky,
+                prefix: 'cdp',
                 href: '/notes',
             },
             {
                 title: 'Documents de mission',
                 icon: FaNoteSticky,
+                prefix: 'cdp',
                 href: '/docs',
             },
         ],
@@ -61,11 +66,13 @@ export const CDP_SIDEBAR: SideBarGroup[] = [
             {
                 title: 'Tableau de bord',
                 icon: FaHouse,
+                prefix: 'cdp',
                 href: '/dashboard',
             },
             {
                 title: "Finalisation de l'étude",
                 icon: GiFinishLine,
+                prefix: 'cdp',
                 href: '/finalisation',
             },
         ],
@@ -76,6 +83,7 @@ export const CDP_SIDEBAR: SideBarGroup[] = [
             {
                 title: 'Espace trésorerie',
                 icon: TRESO_ICON,
+                prefix: 'cdp',
                 href: '/treso',
             },
         ],

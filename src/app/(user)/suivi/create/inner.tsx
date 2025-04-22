@@ -39,7 +39,7 @@ export default function Inner({ companies, admins }: CreateStudyProps) {
                 onSubmit={formStudy.handleSubmit(async (d) => {
                     console.log('// Study submit //', d);
                     await createNewStudy(d);
-                    router.push(`/${d.settings.code}/dashboard`);
+                    router.push(`/cdp/${d.settings.code}/dashboard`);
                 })}
                 id={STUDY_FORM_ID}
             />
