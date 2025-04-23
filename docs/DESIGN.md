@@ -4,10 +4,10 @@
 
 On sépare les données selon 4 types :
 
--   données statiques
--   données semi-statiques
--   données semi-dynamiques
--   données dynamiques
+- données statiques
+- données semi-statiques
+- données semi-dynamiques
+- données dynamiques
 
 ### Données statiques
 
@@ -22,8 +22,8 @@ Ces données ont vocation à être disponibles dans toute l'application. Il s'ag
 
 #### Exemples
 
--   Administrateurs (mail, rôles)
--   Identification de la structure (SIREN, SIRET, adresse)
+- Administrateurs (mail, rôles)
+- Identification de la structure (SIREN, SIRET, adresse)
 
 ### Données semi-statiques
 
@@ -54,3 +54,17 @@ Ces données ont vocation à être créées régulièrement de manière presque 
 #### Exemple
 
 Les données créées au cours d'une étude (PVRi, PVRf, relance client, notes de réunion, etc...)
+
+### Données dynamiques
+
+#### Création et mise à jour des données
+
+Ces données sont définies manuellement, mais ne sont jamais crées et mises à jour manuellement. Elle découlent exclusivement des autres données présentes dans l'outil.
+
+#### Type de données
+
+Ces données ont vocation à servir au contrôle (humain ou automatisé) de l'état de santé de la structure, ainsi qu'aux audits annuels.
+
+#### Exemple
+
+KPIs, chiffre d'affaire signé, chiffre d'affaire facturé, charge des membres, ...
