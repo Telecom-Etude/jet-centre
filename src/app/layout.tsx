@@ -7,6 +7,7 @@ import React, { ReactNode } from 'react';
 
 import { auth } from '@/actions/auth';
 import { get_user_sidebar_info } from '@/actions/cdp';
+import DevWindow from '@/components/dev/dev-floating';
 import { SidebarApp } from '@/components/navigation/sidebar/sidebar-app';
 import { TopBar } from '@/components/navigation/topbar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
@@ -66,8 +67,9 @@ export default async function RootLayout({
 
     return (
         <html lang="fr">
-            <body className={cn(avenir.className, 'h-dvh')}>
+            <body className={cn(avenir.className, 'h-dvh overflow-hidden')}>
                 {session ? <AdminSideBar session={session}>{children}</AdminSideBar> : children}
+                <DevWindow />
             </body>
         </html>
     );
