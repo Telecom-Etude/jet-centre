@@ -14,7 +14,7 @@ Please refer to the [Contribution Guide](/docs/CONTRIBUTING.md) before contribut
 
 ## External resources
 
-- [Planning and Specifications](https://docs.google.com/document/d/1CzvHDF7RaJH02KWRsCnQcQE092i8NNxbOPfbOsbXEHg/edit?usp=sharing)
+- [Planning and Specifications](https://docs.google.com/document/d/1CzvHDF7RaJH02KWRsCnQcQE092i8NNxbOPfbOsbXEHg/edit?usp=sharing) (we have moved everything to Github issues)
 - [Figma Design](https://www.figma.com/design/3MOoUXn1fM81b36aXTMpKJ/Telecom-Etude-Centralized-Tool?node-id=0-1&t=yhJvmaIEMpC5kIlt-1)
 - [DB Designer](https://dbdesigner.page.link/URRwLbFdp8r9qiiF6)
 

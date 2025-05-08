@@ -32,6 +32,19 @@ If you find a bug or have a question:
     - Add screenshots or logs, if applicable.
     - We will answer shortly, please keep in touch!
 
+### Issue types
+
+- `Bug`: An unexpected problem or behaviour
+- `Enhancement`: An improvement of an already existing feature
+- `New Feature`: A request, idea, or new functionnality that wan't in the original project idea
+- `Task`: A specific functionnality that was part of the original project idea
+
+### Issue labels
+
+- `cdp`, `dirco`, `intervenant`, `secgé`, `tréso`, `vpo`: Issues related with a specific page
+- `★★★✰✰`: Difficulty of the issue (1 to 5)
+- `Heisenbug`: A bug that was reported but that we can't replicate consistantly
+
 ### Contributing Code
 
 1. [Fork](#fork) the project.
@@ -40,7 +53,7 @@ If you find a bug or have a question:
 
 ```bash
 git clone https://github.com/<your_username>/jet-centre.git
-git remote upstream add https://github.com/Telecom-Etude/jet-centre.git
+git remote add upstream https://github.com/Telecom-Etude/jet-centre.git
 ```
 
 3. **Read the [Getting Started Guide](/docs/GETTING_STARTED.md)** to set up the project locally.
