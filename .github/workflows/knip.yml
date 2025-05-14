@@ -1,0 +1,28 @@
+name: Knip Analysis
+
+on:
+    push:
+        branches:
+            - '*'
+    pull_request:
+        branches:
+            - '*'
+
+jobs:
+    knip:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Install Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '22'
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run Knip
+              run: npx knip

@@ -28,8 +28,8 @@ jobs:
                     --health-retries=3
 
         steps:
-            - name: Checkout Code
-              uses: actions/checkout@v3
+            - name: Checkout code
+              uses: actions/checkout@v4
 
             - name: Setting up cache for dependencies and Next.js cache
               uses: actions/cache@v4

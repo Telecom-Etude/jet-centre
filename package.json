@@ -69,6 +69,7 @@
         "@types/react-dom": "^19.0.4",
         "eslint": "^9.23",
         "eslint-config-next": "^15.2.4",
+        "knip": "^5.56.0",
         "postcss": "^8.5.3",
         "prettier": "^3.5.3",
         "prisma": "6.5.0",
