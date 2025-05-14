@@ -22,8 +22,8 @@ sudo -u postgres psql           # Connect the server using the `psql` command as
 
 ### Windows
 
-> Download the installer from [this page](https://www.postgresql.org/download/windows/)  
-> Make sure you install PostgreSQL on port 5432  
+> Download the installer from [this page](https://www.postgresql.org/download/windows/)
+> Make sure you install PostgreSQL on port 5432
 > After the installation, make sure to add `C:\Program Files\PostgreSQL\<version>\bin` to your PATH.
 
 ```bash
@@ -74,3 +74,7 @@ If you have already set up the database (applied a prisma migration), you can ap
 ```bash
 npm run prisma:seed
 ```
+
+## Contributing
+
+To view the documentation of the database; please refer to this [link](https://telecom-etude.github.io/jet-centre).
