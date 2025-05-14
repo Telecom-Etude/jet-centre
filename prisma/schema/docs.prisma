@@ -1,9 +1,17 @@
+/// Represents a Google Drive document.
+///
+/// To have more information about Google Drive documents,
+/// refer to docs/google_drive.md
 model Document {
+    /// Don't use this id to reference the document. Use googleId.
     id                     String        @id @default(cuid())
     title                  String
+    //// Id of the google document. Refer to google_drive.md
     googleId               String        @unique
+    /// Mime type of the file. Refer to google_drive.md.
     type                   String
     status                 Status?       @relation(fields: [statusId], references: [id])
+    /// Identity card
     assigneeCni            AssigneeDocs? @relation("cni")
     assigneeSocialSecurity AssigneeDocs? @relation("socialSecurity")
     assigneeStudentCard    AssigneeDocs? @relation("studentCard")
@@ -11,16 +19,31 @@ model Document {
     statusId               String?
 }
 
+/// Status of a study document.
+///
+/// This follows at what date the documents were wrote,
+/// audited, signed, and approved by the clients.
 model Status {
     id         String     @id @default(cuid())
     docsId     String     @unique
+    /// The template was cloned at this date.
     created    DateTime
+    /// Writing finished by the project managers.
+    /// The document was sent to audit at this date.
     wrote      DateTime
+    /// Audited ended at this date.
     audited    DateTime
+    /// Sent to the client at this date.
     sent       DateTime
-    signed     DateTime
+    /// Approved by the client at this date.
+    /// This is only applicable when the client wants
+    /// access to the documents before signing them.
     approved   DateTime
+    /// Signed by all parties at this date.
+    signed     DateTime
+    /// End of validty of the document.
     bypasses   DateTime
+    /// Deadline for delivering the document.
     deadline   DateTime
     document   Document[]
     documentId String     @unique
