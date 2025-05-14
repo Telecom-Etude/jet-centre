@@ -1,7 +1,8 @@
 /// Represents a Google Drive document.
-///
+/// <br />
 /// To have more information about Google Drive documents,
-/// refer to docs/google_drive.md
+/// refer to
+/// <a href="https://github.com/Telecom-Etude/jet-centre/blob/main/prisma/seed.ts">google_drive.md</a>
 model Document {
     /// Don't use this id to reference the document. Use googleId.
     id                     String        @id @default(cuid())
@@ -20,7 +21,7 @@ model Document {
 }
 
 /// Status of a study document.
-///
+/// <br />
 /// This follows at what date the documents were wrote,
 /// audited, signed, and approved by the clients.
 model Status {
@@ -29,6 +30,7 @@ model Status {
     /// The template was cloned at this date.
     created          DateTime?
     /// Writing finished by the project managers.
+    /// <br />
     /// The document was sent to audit at this date.
     wrote            DateTime?
     /// Audited ended at this date.
@@ -36,6 +38,7 @@ model Status {
     /// Sent to the client at this date.
     sent             DateTime?
     /// Approved by the client at this date.
+    /// <br />
     /// This is only applicable when the client wants
     /// access to the documents before signing them.
     approved         DateTime?

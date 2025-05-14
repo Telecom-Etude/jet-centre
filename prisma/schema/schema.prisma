@@ -1,6 +1,6 @@
 //! Generators are executed when running the `prisma generate` command.
 //! This means for instance that the documentation will be produced
-///! automatically when `generate` is run.
+//! automatically when `generate` is run.
 
 /// Adds support and types for interacting with prisma from typescript.
 generator client {

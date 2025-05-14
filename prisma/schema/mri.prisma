@@ -57,12 +57,13 @@ model Assignee {
     studyAssign    StudyAssignee[]
 }
 
-/// Personal information of a
+/// Personal information of an assignee
 model AssigneeInfos {
     id             String   @id @default(cuid())
     assignee       Assignee @relation(fields: [assigneeId], references: [id], onDelete: Cascade)
     assigneeId     String   @unique
     age            Int
+    /// In which year will the assignee graduate?
     promotion      Int
     hasScholarship Boolean
     oldJet         Boolean
@@ -83,7 +84,7 @@ model AssigneeDocs {
 }
 
 /// Links a study to an assignee
-///
+/// <br />
 /// An assignee is linked to a study even if he is not
 /// the assignee of the mission
 model StudyAssignee {
@@ -97,6 +98,7 @@ model StudyAssignee {
     mriForm         MriForm        @relation(fields: [mriFormId], references: [id], onDelete: Cascade)
     mriFormId       String         @unique
     /// Place to store notes about the selection of this assignee
+    /// <br />
     /// E.g. date at which the assignee will stop being a Telecom Paris student
     selectionNotes  String
     /// Whether he was chosen for the mission or not.
@@ -105,12 +107,13 @@ model StudyAssignee {
 
 /// Form the assignee fill on his/her own when applying
 /// to the mission.
-///
+/// <br/>
 /// This is the form that interview has when applying
 /// through the MRI he received.
-///
-/// Refer to https://docs.google.com/forms/d/1dDt-rdFHjVbJnpQsbhbIjPGzpmp_eJM2BhhRYle9Sj0/edit
-/// for more information concerning the different fields.
+/// <br/>
+/// For more information concerning the different fields, please refer to
+/// <a href="https://docs.google.com/forms/d/1dDt-rdFHjVbJnpQsbhbIjPGzpmp_eJM2BhhRYle9Sj0/edit">
+/// the associated google form</a>
 model MriForm {
     id             String         @id @default(cuid())
     mri            Mri            @relation(fields: [mriId], references: [id], onDelete: Cascade)
@@ -121,24 +124,28 @@ model MriForm {
     /// Knowledge related to the mission
     knowledge      String
     /// How would the assignee approach the mission?
+    /// <br />
     /// What is his plan? His approach? How much time?
     ideas          String
-    /// - number of times the assignee applied to a mission?
-    /// - old jet?
-    /// - did he encounter some admins?
+    /// <ul style="list-style-type:disc;">
+    /// <li>number of times the assignee applied to a mission?</li>
+    /// <li>old jet?</li>
+    /// <li>did he encounter some admins?</li>
+    /// </ul>
     jeExperience   Int
 }
 
 /// Form completed by the admins during the interview.
-///
+/// <br />
 /// This is filled during the interview to select the assignee(s)
 /// of the study.
-///
+/// <br />
 /// Some fields that are useful after the selection are stored
 /// in the StudyAsignee table.
-///
-/// Refer to https://docs.google.com/forms/d/1-O-WvsswR_Kk6sBtXeN9YIwVpnRBx8qOQDG8fFP0ejg/edit
-/// for more information concerning the different fields.
+/// <br />
+/// For more information concerning the different fields, please refer to
+/// <a href="https://docs.google.com/forms/d/1-O-WvsswR_Kk6sBtXeN9YIwVpnRBx8qOQDG8fFP0ejg/edit">
+/// the associated google form</a>
 model FormInterviews {
     id              String         @id @default(cuid())
     studyAssignees  StudyAssignee?

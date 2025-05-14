@@ -1,4 +1,7 @@
-/// Model representing any person in the database. This can represent users, that can access the ERP, and external people that will never have access to the ERP.
+/// Model representing any person in the database.
+/// <br/>
+/// This can represent users, that can access the ERP, and external people that
+/// will never have access to the ERP.
 model Person {
     id        String    @id @default(cuid())
     email     String    @unique
@@ -13,7 +16,11 @@ model Person {
     clients   Client?
 }
 
-/// A user is a person that can access the ERP tool by signing in. For the moment, the only people that can be users are admins. In the future, assignees too will have an account and will be able to log in (to see the different studies they applied to, save their CV on the platform, etc.)
+/// A user is a person that can access the ERP tool by signing in.
+/// <br />
+/// For the moment, the only people that can be users are admins. In the future,
+/// assignees too will have an account and will be able to log in (to see the
+/// different studies they applied to, save their CV on the platform, etc.)
 model User {
     id             String        @id @default(cuid())
     person         Person        @relation(fields: [personId], references: [id])

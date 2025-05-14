@@ -19,11 +19,13 @@ model StudyInfos {
     id                String    @id @default(cuid())
     code              String    @unique
     /// Id of the folder in Google Drive that contains the study.
+    /// <br />
     /// This folder is normally in the "Dossiers de suivi" directory.
     googleFolder      String?   @unique
     /// Title of the study
     title             String?
     /// The client usually pays for administrative costs.
+    /// <br />
     /// Unit: percentage added to the price for this cost.
     applicationFee    Float     @default(5)
     /// Indicates whether the mission is a CC or not.
@@ -31,6 +33,7 @@ model StudyInfos {
     /// Different domains related to the mission
     domains           Domain[]
     /// Estimated duration of the mission
+    /// <br />
     /// Unit: number of JEH
     estimatedDuration Int?
     /// Deadline for signing the CE
@@ -67,8 +70,10 @@ enum StudyProgressStep {
     /// QS sent
     SatisfactionFormSent
     /// Warranty expired
-    /// - 3 months for a tech deliverable
-    /// - 15 days for paper deliverable
+    /// <ul style="list-style-type:disc;">
+    /// <li>3 months for a tech deliverable</li>
+    /// <li>15 days for paper deliverable</li>
+    /// </ul>
     WarrantyExpired
 }
 
@@ -101,6 +106,7 @@ enum DeliverableStatus {
     /// Phase in progress
     InProgress
     /// Deliverable ready
+    /// <br />
     /// A meeting can be set with the client
     Finished
     /// PVRI.F signed and deliverable given to the client.

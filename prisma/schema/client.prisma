@@ -1,5 +1,5 @@
-/// Represents a person from the client company, not the company. 
-/// 
+/// Represents a person from the client company, not the company.
+/// <br />
 /// This table includes private individuals.
 model Client {
     id           String        @id @default(cuid())
@@ -12,10 +12,10 @@ model Client {
 }
 
 /// An interface to link a client to a study.
-///
+/// <br />
 /// This also contains the information of a client that depends on
 /// clients (e.g. QS).
-///
+/// <br />
 /// A study is linked to a client and not to a company as we can do
 /// multiple studies with a same company but with different members
 /// of the comany.
@@ -57,9 +57,10 @@ model Company {
 }
 
 /// Size of the company, measured by its number of employees.
-///
-/// Refer to https://www.economie.gouv.fr/cedef/entreprises-categories
-/// for more information.
+/// <br />
+/// For more information, please refer to
+/// <a href="https://www.economie.gouv.fr/cedef/entreprises-categories">
+/// https://www.economie.gouv.fr/cedef/entreprises-categories</a>
 enum CompanySize {
     MicroEntreprise
     PetiteEntreprise
@@ -78,21 +79,26 @@ model CompanyInfos {
 
 /// Domain of the study or of a company.
 enum Domain {
-
-    /* IA */
+    /**
+     * IA
+     */
 
     Chatbot
     DataScience
     MachineLearning
     IntelligenceArtificielle
 
-    /* Dev */
+    /**
+     * Dev
+     */
 
     WebDev
     MobileDev
     AppDev
 
-    /* Networks */
+    /**
+     * Networks
+     */
 
     Cybersecurity
     Cryptography
@@ -100,21 +106,27 @@ enum Domain {
     Telecommunications
     Internet
 
-    /* Systems */
-  
+    /**
+     * Systems
+     */
+
     IoT
     EmbeddedSystems
 
-    /* Image */
-  
+    /**
+     * Image
+     */
+
     Image
     ComputerVision
     ComputerGraphics
     /// Prefixed by d_ because a variant must begin with a letter.
     d_3D
 
-    /* SES */
-  
+    /**
+     * SES
+     */
+
     MarketAnalysis
     StateOfTheArt
 }
