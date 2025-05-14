@@ -35,11 +35,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
 .vscode
 test/
 .next/
 data/cv
 .config
 .cspell.json
-erd.md
+docs/schema
+bun.lock

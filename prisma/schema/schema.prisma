@@ -8,8 +8,7 @@ datasource db {
     url      = env("DB_URL")
 }
 
-generator markdown {
-    provider = "prisma-markdown"
-    output   = "./erd.md"
-    title    = "Jet Centre's Schema"
+generator docs {
+    provider = "node node_modules/prisma-docs-generator"
+    output   = "../../docs/schema"
 }

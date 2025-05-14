@@ -11,6 +11,7 @@
         "fmt": "npx prettier -cw ."
     },
     "prisma": {
+        "schema": "./prisma",
         "seed": "ts-node prisma/seed.ts"
     },
     "dependencies": {
@@ -72,7 +73,7 @@
         "postcss": "^8.5.3",
         "prettier": "^3.5.3",
         "prisma": "^6.5.0",
-        "prisma-markdown": "^2.0.0",
+        "prisma-docs-generator": "git+https://github.com/t-webber/prisma-docs-generator",
         "tailwindcss": "^3.4.17",
         "typescript": "^5.8.2"
     }
