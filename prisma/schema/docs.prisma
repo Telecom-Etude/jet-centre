@@ -24,27 +24,27 @@ model Document {
 /// This follows at what date the documents were wrote,
 /// audited, signed, and approved by the clients.
 model Status {
-    id         String     @id @default(cuid())
-    docsId     String     @unique
+    id               String     @id @default(cuid())
+    docsId           String     @unique
     /// The template was cloned at this date.
-    created    DateTime
+    created          DateTime?
     /// Writing finished by the project managers.
     /// The document was sent to audit at this date.
-    wrote      DateTime
+    wrote            DateTime?
     /// Audited ended at this date.
-    audited    DateTime
+    audited          DateTime?
     /// Sent to the client at this date.
-    sent       DateTime
+    sent             DateTime?
     /// Approved by the client at this date.
     /// This is only applicable when the client wants
     /// access to the documents before signing them.
-    approved   DateTime
+    approved         DateTime?
     /// Signed by all parties at this date.
-    signed     DateTime
+    signed           DateTime?
     /// End of validty of the document.
-    bypasses   DateTime
+    end_of_validity  DateTime?
     /// Deadline for delivering the document.
-    deadline   DateTime
-    document   Document[]
-    documentId String     @unique
+    writing_deadline DateTime?
+    document         Document[]
+    documentId       String     @unique
 }
