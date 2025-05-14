@@ -1,0 +1,38 @@
+name: Deploy doc to GItHub pages
+
+on:
+    push:
+        branches:
+            - '*'
+    pull_request:
+        branches:
+            - '*'
+
+permissions:
+    contents: write
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Install Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '22'
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm install --legacy-peer-deps
+
+            - name: Generate prisma doc
+              run: npx prisma generate
+
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./docs/schema
