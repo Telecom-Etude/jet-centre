@@ -89,17 +89,28 @@ npm run fmt
 Follow the Conventional Commits format:
 
 ```txt
-(scope) action: what the commit does
+action(scope): what the commit does
 ```
 
-Examples of _actions_ include:
+> See [https://www.conventionalcommits.org](https://www.conventionalcommits.org) for more information.
 
-- **fix**: A functionality that wasn't working before is now working
-- **add**: A functionality that didn't exist before has been added
-- **ref** (short for [refactor](https://en.wikipedia.org/wiki/Code_refactoring)): Some code has been rewritten but functionalities have not been modified
+_action_ **must** (cf. ci in [here](/.github/workflows/commits.yml)) be one of these:
+
+- feat (add a new feature)
+- fix (fix a bug, an issue)
+- chore (update versions, add dependencies, CIs, etc.)
+- docs (add documentation)
+- style (change style)
+- refactor (rewrite some code)
+- perf (improve performance of some code)
+- test (add tests)
+
+_action_ is typically the answer to 'What will this commit do?'
+
+_scope_ is typically the answer to 'Where does this commit make changes?' (some examples of scopes: sigin-page, authentication, github, docs, follow-page, create-page, etc.)
 
 For instance, if you fix the redirection callback on the signin page, a good commit name is
 
 ```txt
-(auth) fix: redirection callback on the signin page
+fix(auth): redirection callback on the signin page
 ```

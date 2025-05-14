@@ -22,7 +22,7 @@ Please refer to the [Contribution Guide](/docs/CONTRIBUTING.md) before contribut
 
 ### Technical stack
 
-- Fullstack [Next.js](https://nextjs.org/) (v14), with the App router.
+- Fullstack [Next.js](https://nextjs.org/) (v15), with the App router.
 - [TypeScript](https://www.typescriptlang.org/), for type safety.
 - [Tailwind CSS](https://tailwindcss.com/), for styling.
 - [Auth.js](https://authjs.dev/) (v5 of [NextAuth.js](https://next-auth.js.org/)), for authentication, with the Google Provider.
