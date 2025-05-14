@@ -1,5 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import { parseArgs } from 'node:util';
+
+import { PrismaClient } from '@prisma/client';
 
 const options = {
     environment: { type: 'string' as const },

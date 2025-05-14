@@ -1,13 +1,22 @@
+//! Generators are executed when running the `prisma generate` command.
+//! This means for instance that the documentation will be produced
+///! automatically when `generate` is run.
+
+/// Adds support and types for interacting with prisma from typescript.
 generator client {
     provider        = "prisma-client-js"
     previewFeatures = ["prismaSchemaFolder"]
 }
 
+/// Indicates how to access the database.
 datasource db {
     provider = "postgresql"
     url      = env("DB_URL")
 }
 
+/// Generation of the documentation.
+///
+/// It creates a web based documentation in the output folder.
 generator docs {
     provider = "node node_modules/prisma-docs-generator"
     output   = "../../docs/schema"
