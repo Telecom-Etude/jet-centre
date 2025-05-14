@@ -1,3 +1,6 @@
+/// Represents a person from the client company, not the company. 
+/// 
+/// This table includes private individuals.
 model Client {
     id           String        @id @default(cuid())
     company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
@@ -8,6 +11,14 @@ model Client {
     studyClients StudyClient[]
 }
 
+/// An interface to link a client to a study.
+///
+/// This also contains the information of a client that depends on
+/// clients (e.g. QS).
+///
+/// A study is linked to a client and not to a company as we can do
+/// multiple studies with a same company but with different members
+/// of the comany.
 model StudyClient {
     id           String        @id @default(cuid())
     study        Study         @relation(fields: [studyId], references: [id], onDelete: Cascade)
@@ -17,6 +28,7 @@ model StudyClient {
     satisfaction Satisfaction?
 }
 
+/// QS
 model Satisfaction {
     id                     String      @id @default(cuid())
     studyClient            StudyClient @relation(fields: [studyClientId], references: [id], onDelete: Cascade)
@@ -32,16 +44,22 @@ model Satisfaction {
     recommendUs            Int
 }
 
+/// Represents the company that the client represents.
 model Company {
     id             String       @id @default(cuid())
     name           String       @unique
     address        Address      @relation(fields: [addressId], references: [id], onDelete: Cascade)
     addressId      String       @unique
     companyInfos   CompanyInfos @relation(fields: [companyInfosId], references: [id])
+    /// Members of the company we are likely to encounter.
     members        Client[]
     companyInfosId String
 }
 
+/// Size of the company, measured by its number of employees.
+///
+/// Refer to https://www.economie.gouv.fr/cedef/entreprises-categories
+/// for more information.
 enum CompanySize {
     MicroEntreprise
     PetiteEntreprise
@@ -49,6 +67,7 @@ enum CompanySize {
     GrandeEntreprise
 }
 
+/// Additional information concerning a company.
 model CompanyInfos {
     id      String       @id @default(cuid())
     domains Domain[]
@@ -57,31 +76,45 @@ model CompanyInfos {
     company Company[]
 }
 
+/// Domain of the study or of a company.
 enum Domain {
-    /// IA
+
+    /* IA */
+
     Chatbot
     DataScience
     MachineLearning
     IntelligenceArtificielle
-    /// Dev
+
+    /* Dev */
+
     WebDev
     MobileDev
     AppDev
-    /// Networks
+
+    /* Networks */
+
     Cybersecurity
     Cryptography
     Networks
     Telecommunications
     Internet
-    /// Systems
+
+    /* Systems */
+  
     IoT
     EmbeddedSystems
-    /// Image
+
+    /* Image */
+  
     Image
     ComputerVision
     ComputerGraphics
-    d_3D // Préfixé par d_ car un variant doit commencer par une lettre
-    /// SES
+    /// Prefixed by d_ because a variant must begin with a letter.
+    d_3D
+
+    /* SES */
+  
     MarketAnalysis
     StateOfTheArt
 }
