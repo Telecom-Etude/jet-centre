@@ -16,7 +16,7 @@ import { Admin } from './forms/settings/settingsSchema';
 
 export const STUDY_FORM_ID = 'study-form-id';
 
-export type CreateStudyProps = {
+type CreateStudyProps = {
     companies: Company[];
     admins: Admin[];
 };

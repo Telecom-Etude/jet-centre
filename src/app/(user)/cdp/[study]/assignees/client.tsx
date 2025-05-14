@@ -23,7 +23,7 @@ import { Assignee } from './page';
 
 const eltCN = 'bg-background border-2 border-muted p-2';
 
-export type ClientProps = {
+type ClientProps = {
     assignee: Assignee;
     setCurrent: (assignee: Assignee) => void;
     setRight: (right: Right) => void;

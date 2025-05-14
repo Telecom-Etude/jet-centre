@@ -40,7 +40,7 @@ import { ContactForm } from './contactForm';
 import { EditableContactItem } from './editableContactItem';
 import { SimpleContactItem } from './simpleContactItem';
 
-export interface CompaniesProps {
+interface CompaniesProps {
     companies: Company[];
     formStudy: UseFormReturn<StudyCreationSchema>;
     formStudyId: string;

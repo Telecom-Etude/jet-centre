@@ -9,7 +9,7 @@ import { FormProvider, FormRow } from '@/components/ui/form';
 
 import { contactCreationSchema, ContactCreationSchema, NewContact } from './companiesSchema';
 
-export interface ContactFormProps {
+interface ContactFormProps {
     defaultValues: ContactCreationSchema;
     onSubmit: (contact: NewContact) => void;
     onCancel: () => void;

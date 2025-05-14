@@ -45,7 +45,7 @@ export const LEVELS: Record<Level, EnumInfo> = {
 
 export const LEVEL_NAMES: Level[] = Object.keys(LEVELS) as Level[];
 
-export interface DomainInfo extends EnumInfo {
+interface DomainInfo extends EnumInfo {
     image: StaticImageData;
 }
 

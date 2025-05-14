@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
-export interface SearchBarProps<T> {
+interface SearchBarProps<T> {
     className?: string;
     label: string;
     placeholder?: string;

@@ -3,11 +3,6 @@ export interface NameIdFile {
     name: string;
 }
 
-export interface Template {
-    file: NameIdFile;
-    excel?: NameIdFile;
-}
-
 const EXCEL_CE: NameIdFile = { id: process.env.TEMPLATE_EXCEL_CE, name: 'Excel CE/ACE/BC/BCR' };
 const EXCEL_RM: NameIdFile = { id: process.env.TEMPLATE_EXCEL_RM, name: 'Excel RM/ARM' };
 

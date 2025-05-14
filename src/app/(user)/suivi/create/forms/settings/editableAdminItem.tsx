@@ -18,7 +18,7 @@ import { NBSP } from '@/lib/utils';
 import { AdminForm } from './adminForm';
 import { NewAdmin } from './settingsSchema';
 
-export type AdminItemProps = {
+type AdminItemProps = {
     dragHandleProps: DragHandle;
     updateAdmin: (newAdmin: NewAdmin) => void;
     deleteAdmin: () => void;

@@ -8,8 +8,6 @@ export const deliverableFormSchema = z.object({
     status: z.nativeEnum(DeliverableStatus),
 });
 
-export type DeliverableFormType = z.infer<typeof deliverableFormSchema>;
-
 export const studyPhaseFormSchema = z.object({
     id: z.string(),
     title: z.string(),

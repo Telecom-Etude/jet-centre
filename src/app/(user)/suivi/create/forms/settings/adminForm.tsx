@@ -9,7 +9,7 @@ import { FormProvider, FormRow } from '@/components/ui/form';
 
 import { adminCreationSchema, AdminCreationSchema, NewAdmin } from './settingsSchema';
 
-export interface AdminFormProps {
+interface AdminFormProps {
     defaultValues: AdminCreationSchema;
     onSubmit: (admin: NewAdmin) => void;
     onCancel: () => void;

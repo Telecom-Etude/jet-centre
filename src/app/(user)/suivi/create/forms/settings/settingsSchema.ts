@@ -57,7 +57,7 @@ export const settingsCreationSchema = z.object({
     cdps: zAdminFormValue.array(),
 });
 
-export type SettingsCreationSchema = z.infer<typeof settingsCreationSchema>;
+type SettingsCreationSchema = z.infer<typeof settingsCreationSchema>;
 
 export const emptySettingsCreationSchema: SettingsCreationSchema = {
     code: '',

@@ -18,7 +18,7 @@ import { NBSP } from '@/lib/utils';
 import { NewContact } from './companiesSchema';
 import { ContactForm } from './contactForm';
 
-export type ContactItemProps = {
+type ContactItemProps = {
     dragHandleProps: DragHandle;
     updateContact: (newContact: NewContact) => void;
     deleteContact: () => void;

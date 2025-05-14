@@ -25,7 +25,7 @@ import { EditableAdminItem } from './editableAdminItem';
 import { Admin, AdminFormValue, emptyAdminCreationSchema } from './settingsSchema';
 import { SimpleAdminItem } from './simpleAdminItem';
 
-export interface SettingsFormProps {
+interface SettingsFormProps {
     formStudy: UseFormReturn<StudyCreationSchema>;
     formStudyId: string;
     admins: Admin[];

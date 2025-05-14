@@ -75,7 +75,6 @@ export const zCompany = z.object({
 export type Company = z.infer<typeof zCompany>;
 
 export const zNewCompany = zCompany.merge(zIsNew);
-export type NewCompany = z.infer<typeof zNewCompany>;
 
 export const zCompanyFormValue = zNewCompany.merge(zIdx).or(zCompany.merge(zIdx));
 export type CompanyFormValue = z.infer<typeof zCompanyFormValue>;
@@ -99,6 +98,6 @@ export const emptyCompany = {
 export const companiesCreationSchema = z.object({
     companies: z.array(zCompanyFormValue.nullable()),
 });
-export type CompaniesCreationSchema = z.infer<typeof companiesCreationSchema>;
+type CompaniesCreationSchema = z.infer<typeof companiesCreationSchema>;
 
 export const emptyCompaniesCreationSchema: CompaniesCreationSchema = { companies: [] };

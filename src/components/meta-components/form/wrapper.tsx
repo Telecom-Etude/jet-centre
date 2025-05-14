@@ -23,7 +23,7 @@ const labelVariants = cva('', {
     },
 });
 
-export type LabelStat = 'unwritten' | 'in-focus' | 'written';
+type LabelStat = 'unwritten' | 'in-focus' | 'written';
 
 export interface FormElementProps<T extends FieldValues> {
     form: UseFormReturn<T>;
