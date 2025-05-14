@@ -5,13 +5,9 @@ import { z } from '@/lib/zod';
 /**
  * See {@link https://www.economie.gouv.fr/cedef/entreprises-categories}.
  */
-export const zCompanySize = z.enum([
-    'Micro-entreprise',
-    'Petite entreprise',
-    'Moyenne entreprise',
-    'Grande entreprise',
-]);
-export type CompanySize = z.infer<typeof zCompanySize>;
+export type CompanySize = z.infer<
+    z.ZodEnum<['Micro-entreprise', 'Petite entreprise', 'Moyenne entreprise', 'Grande entreprise']>
+>;
 
 export function toPgCompanySize(companySize: CompanySize): PgCompanySize {
     switch (companySize) {
@@ -26,5 +22,4 @@ export function toPgCompanySize(companySize: CompanySize): PgCompanySize {
     }
 }
 
-export const DATA_FILES_PATH = './data';
 export const ANIMATION_DURATION_MS = 200;

@@ -30,12 +30,6 @@ export async function getFiles(fileIds: string[]): Promise<Promise<DriveFile>[]>
     });
 }
 
-export async function getFileModifiedDate(fileId: string): Promise<string> {
-    const file = await (await googleDrive()).files.get({ fileId, fields: 'modifiedTime' }, {});
-
-    return file?.data?.modifiedTime || '';
-}
-
 async function copyFile(file: NameIdFile, code: string): Promise<DriveFile | null> {
     try {
         const folderId = await getMissionFolderId(code);

@@ -15,7 +15,7 @@ const zIsNew = z.object({
 // ======================= Contact ====================== //
 // ====================================================== //
 
-export const zContact = z.object({
+const zContact = z.object({
     firstName: z.string(),
     lastName: z.string(),
     email: z.string().email(),
@@ -47,17 +47,17 @@ export const emptyContactCreationSchema: ContactCreationSchema = {
 };
 
 // ~~~~~~~~~~ Contact Form Value ~~~~~~~~~ //
-export const zNewContact = contactCreationSchema.merge(zIsNew);
+const zNewContact = contactCreationSchema.merge(zIsNew);
 export type NewContact = z.infer<typeof zNewContact>;
 
-export const zContactFormValue = zNewContact.or(zContact);
+const zContactFormValue = zNewContact.or(zContact);
 export type ContactFormValue = z.infer<typeof zContactFormValue>;
 
 // ====================================================== //
 // ======================= Company ====================== //
 // ====================================================== //
 
-export const zCompany = z.object({
+const zCompany = z.object({
     id: z.string(),
     name: z.string().superRefine(required),
     size: z.nativeEnum(CompanySize).or(EMPTY_STRING).nullish(),
@@ -74,9 +74,9 @@ export const zCompany = z.object({
 });
 export type Company = z.infer<typeof zCompany>;
 
-export const zNewCompany = zCompany.merge(zIsNew);
+const zNewCompany = zCompany.merge(zIsNew);
 
-export const zCompanyFormValue = zNewCompany.merge(zIdx).or(zCompany.merge(zIdx));
+const zCompanyFormValue = zNewCompany.merge(zIdx).or(zCompany.merge(zIdx));
 export type CompanyFormValue = z.infer<typeof zCompanyFormValue>;
 
 export const emptyCompany = {

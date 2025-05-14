@@ -12,7 +12,7 @@ const eslintConfig = [
         },
         rules: {
             'import/order': [
-                'warn',
+                'error',
                 {
                     groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
                     pathGroups: [

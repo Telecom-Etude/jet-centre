@@ -14,7 +14,7 @@ import { emptyStudyCreationSchema, studyCreationSchema, StudyCreationSchema } fr
 import { SettingsForm } from './forms/settings/settingsForm';
 import { Admin } from './forms/settings/settingsSchema';
 
-export const STUDY_FORM_ID = 'study-form-id';
+const STUDY_FORM_ID = 'study-form-id';
 
 type CreateStudyProps = {
     companies: Company[];

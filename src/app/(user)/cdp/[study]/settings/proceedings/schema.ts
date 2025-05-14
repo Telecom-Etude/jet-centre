@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { arrayEqual } from '@/lib/utils';
 
-export const deliverableFormSchema = z.object({
+const deliverableFormSchema = z.object({
     description: z.string(),
     status: z.nativeEnum(DeliverableStatus),
 });

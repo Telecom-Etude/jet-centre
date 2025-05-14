@@ -1,9 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import { ReactNode, forwardRef } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { FaGripLines, FaPen, FaPlus, FaTrash } from 'react-icons/fa6';
+import { FaGripLines, FaPlus, FaTrash } from 'react-icons/fa6';
 import { GoProjectTemplate } from 'react-icons/go';
 import { HiRefresh } from 'react-icons/hi';
 import { IconType } from 'react-icons/lib';
@@ -101,12 +100,6 @@ const BoxCollapser = ({
     </AnimateHeight>
 );
 
-const BoxLink = ({ children, href }: { children: string | string[]; href: string }) => (
-    <Button variant="link" className="px-0 py-0 h-fit text-link">
-        <Link href={href}>{children}</Link>
-    </Button>
-);
-
 const BoxTitle = ({ children, className }: { children: string | string[]; className?: string }) => (
     <h2 className={cn('font-semibold text-lg overflow-hidden text-ellipsis', className)}>
         {children}
@@ -137,7 +130,6 @@ const BoxButtonTemplate = (props: BoxButtonProps) =>
     BoxButtonIcon({ ...props, Icon: GoProjectTemplate });
 const BoxButtonTrash = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: FaTrash });
 const BoxButtonReload = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: HiRefresh });
-const BoxButtonEdit = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: FaPen });
 
 interface BoxButtonProps {
     onClick: () => void;
@@ -255,7 +247,6 @@ export {
     BoxButtonPlus,
     BoxButtonTrash,
     BoxButtonIcon,
-    BoxButtonEdit,
     BoxButtonReload,
     BoxCollapseButton,
     BoxCollapser,
@@ -263,7 +254,6 @@ export {
     BoxDragHandle,
     BoxHeader,
     BoxHeaderBlock,
-    BoxLink,
     BoxTitle,
     InnerBox,
 };
