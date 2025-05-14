@@ -53,13 +53,16 @@
         "zod-i18n-map": "^2.27.0"
     },
     "devDependencies": {
+        "@eslint/eslintrc": "^3.3.1",
         "@types/node": "^22.14.1",
         "@types/react": "^19.0.12",
         "@types/react-dom": "^19.0.4",
         "eslint": "^9.23",
         "eslint-config-next": "^15.2.4",
+        "eslint-plugin-import": "^2.31.0",
         "knip": "^5.56.0",
         "postcss": "^8.5.3",
+        "postcss-load-config": "^6.0.1",
         "prettier": "^3.5.3",
         "prisma": "6.5.0",
         "prisma-docs-generator": "git+https://github.com/t-webber/prisma-docs-generator",
