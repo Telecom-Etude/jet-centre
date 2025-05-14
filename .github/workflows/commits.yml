@@ -50,7 +50,7 @@ jobs:
                   node-version: '22'
 
             - name: Install commitlint
-              run: npm i --legacy-peer-deps --no-save @commitlint/{cli,config-conventional}
+              run: npm i --legacy-peer-deps
 
             - name: Lint PR commits
               run: |
