@@ -12,6 +12,7 @@ jobs:
     pr-lint:
         if: github.event_name == 'pull_request'
         runs-on: ubuntu-latest
+
         steps:
             - uses: amannn/action-semantic-pull-request@v5
               with:
@@ -30,6 +31,30 @@ jobs:
     push-lint:
         if: github.event_name == 'push'
         runs-on: ubuntu-latest
+
         steps:
             - uses: actions/checkout@v4
             - uses: wagoid/commitlint-github-action@v5
+
+    lint-commits:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+
+            - name: Install commitlint
+              run: npm i --legacy-peer-deps --no-save @commitlint/{cli,config-conventional}
+
+            - name: Lint PR commits
+              run: |
+                  git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%H" | while read commit; do
+                      echo "Checking commit $commit"
+                      git show -s --format=%B $commit | npx commitlint
+                  done
