@@ -1,8 +1,10 @@
+/// Model representing any person in the database. This can represent users, that can access the ERP, and external people that will never have access to the ERP.
 model Person {
     id        String    @id @default(cuid())
     email     String    @unique
     firstName String
     lastName  String
+    /// Telephone number
     number    String?
     address   Address?  @relation(fields: [addressId], references: [id])
     addressId String?
@@ -11,6 +13,7 @@ model Person {
     clients   Client?
 }
 
+/// A user is a person that can access the ERP tool by signing in. For the moment, the only people that can be users are admins. In the future, assignees too will have an account and will be able to log in (to see the different studies they applied to, save their CV on the platform, etc.)
 model User {
     id             String        @id @default(cuid())
     person         Person        @relation(fields: [personId], references: [id])
@@ -20,16 +23,19 @@ model User {
     userSettingsId String?
 }
 
+/// An admin represents an administrator of Telecom Etude, i.e. a person that is in mandate.
 model Admin {
     id             String  @id @default(cuid())
     user           User    @relation(fields: [userId], references: [id])
     userId         String  @unique
+    /// Title of the position within the JE (e.g. président, respo info, etc.)
     position       String?
     image          String?
     studies        Study[] @relation("cdp")
     auditedStudies Study[] @relation("auditor")
 }
 
+/// Settings are used to customise the ERP (colours, notifications, keybindings, behaviours, etc.)
 model UserSettings {
     id                String            @id @default(cuid())
     theme             String
@@ -38,12 +44,14 @@ model UserSettings {
     User              User[]
 }
 
+/// Aggressiveness of the notifications (push-notifications, no notifications, etc.)
 enum NotificationLevel {
     Low
     Medium
     High
 }
 
+/// Stores the address of a person/company
 model Address {
     id      String   @id @default(cuid())
     number  String
