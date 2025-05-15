@@ -23,3 +23,7 @@ Paste images if applicable.
 - [ ] My code follows the style guidelines.
 - [ ] All tests pass.
 - [ ] The code is documented (if applicable).
+
+## Breaking change
+
+Indicate if your PR is breaking change (on a feature, on the database schema, etc.)
