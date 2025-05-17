@@ -7,8 +7,9 @@
         "build": "next build --turbopack",
         "start": "next start --port 5005 --turbopack",
         "lint": "next lint",
-        "prettier": "npx prettier",
-        "fmt": "npx prettier -cw ."
+        "prettier": "prettier",
+        "fmt": "prettier -cw .",
+        "commitlint": "commitlint --from=HEAD~10 --to=HEAD"
     },
     "prisma": {
         "seed": "ts-node prisma/seed.ts"
@@ -53,9 +54,10 @@
         "zod-i18n-map": "^2.27.0"
     },
     "devDependencies": {
-        "@eslint/eslintrc": "^3.3.1",
         "@commitlint/cli": "^19.8.1",
         "@commitlint/config-conventional": "^19.8.1",
+        "@commitlint/types": "^19.8.1",
+        "@eslint/eslintrc": "^3.3.1",
         "@types/node": "^22.14.1",
         "@types/react": "^19.0.12",
         "@types/react-dom": "^19.0.4",
