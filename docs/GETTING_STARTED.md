@@ -6,36 +6,43 @@
 
 - [Node.js and npm](https://nodejs.org/en/download)
 - [Postgresql](https://www.postgresql.org/download/)
+- [Docker](https://docs.docker.com/engine/install/)
 
 ### Node setup
 
 Start by installing all project dependencies.
 
 ```bash
-npm install
+npm install --legacy-peer-dep
 ```
 
 ### Setup your .env
 
 > At the end of this step, you can check you have all the variables by looking at `env.d.ts`.
 
+Create a file named `.env` at the root of the project.
+
 Add the `DB_URL` variable in your `.env` file like so : `DB_URL=postgres://postgres:postgres@postgres:5432/maindb?schema=public`
-The port and database names are defined in the `docker-compose.yml` file.
 
-> If you just want to test it locally with access to all pages, you can just set `DEV_MODE=true` and enter rubbish in the 3 `AUTH_` variables.
+Add the `REDIS_URL` variable in your `.env` file like so : `REDIS_URL=redis://cache:6379/0`
 
-Generate a random `AUTH_SECRET` (e.g. by using `openssl rand -base64 255`), and set up the following environment variables in a `.env` file at the root of the project.
+_The port and database names are defined in the `docker-compose.yml` file._
+
+> If you just want to test the project locally with access to all pages, you can just set `DEV_MODE=true` and enter rubbish in the 3 `AUTH_` variables.
+
+Generate a random `AUTH_SECRET` for your `.env` file. (e.g. by using `openssl rand -base64 255`)
 
 You must also generate a Google Secret and ID. To set those up, refer to this [tutorial](https://www.youtube.com/watch?v=Rs8018RO5YQ&t=252).
 The redirection URI should be `http://localhost:5005/api/auth/callback/google`
 
-Finally, to make tests on your drive, you will need to specify what folder is used by Jet Centre. For that, create a folder in your drive and copy the ID (in the url, after `folders/`) and add it `DOSSIER_SUIVI`.
+Finally, to make tests on your drive, you will need to specify what folder is used by Jet Centre. For that, create a folder in your drive and copy the ID (in the url, after `folders/`) and add it as `DOSSIER_SUIVI`.
 
 > If you want to run _next start_ locally, also set `AUTH_TRUST_HOST="http://localhost:5005"`
 
 Here's what your `.env` file must look like at this stage:
 
 ```bash
+# Auth
 AUTH_SECRET="your_auth_secret"
 AUTH_GOOGLE_ID="your_google_id"
 AUTH_GOOGLE_SECRET="your_google_secret"
@@ -44,6 +51,7 @@ AUTH_GOOGLE_SECRET="your_google_secret"
 DB_URL=postgres://postgres:postgres@postgres:5432/maindb?schema=public
 REDIS_URL=redis://cache:6379/0
 
+# Drive
 DOSSIER_SUIVI="LJHlkj1LjhLEKJhlKJDHlkjhIUY3063hOIU89367IGd"
 
 # Others
@@ -51,29 +59,39 @@ DEV_MODE=true
 AUTH_TRUST_HOST="http://localhost:5005"
 ```
 
-### Initialise the database
+### Setting up Docker
 
-You now need to initialise your database:
+After you've installed Docker using [this guide](https://docs.docker.com/engine/install) (you'll need to have systemd for Docker to work), you may want to also follow [these extra steps](https://docs.docker.com/engine/install/linux-postinstall/), notably `Manage Docker as a non-root user` to avoid having to write `sudo` before each command.
 
-```bash
-npm run prisma:migrate
-```
+> If you're on Windows... good luck (I had to switch to Linux to avoid the headache)
 
 ### Running the project
 
+First make sure that Docker is running (see [website](https://docs.docker.com/engine/install)), then activate the Docker containers:
+
+```bash
+sudo docker start app-dev jet-centre-postgres-1 jet-centre-cache-1
+```
+
+> To check your containers run `sudo docker ps -a`
+
+Now initialize the database:
+
+- Makefile
+
+```bash
+sudo make migrate
+```
+
 You can now run the project:
 
-Makefile
+- Makefile
 
 ```bash
-make dev
+sudo make dev
 ```
 
-Legacy
-
-```bash
-docker-compose up --build
-```
+**Check out the [Makefile](../Makefile) for other commands you can run !**
 
 ## The code base
 
