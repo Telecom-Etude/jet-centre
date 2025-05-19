@@ -340,3 +340,191 @@ export default function Page() {
 #### Example
 
 ![sortable](/docs/images/sortable.png)
+
+### Task list
+
+#### Description
+
+Component to check/uncheck elements on a list of tasks.
+
+#### Usage
+
+```jsx
+import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
+import { Task, TaskBulletList } from '@/components/meta-components/task-bullet-list';
+
+export default function Page() {
+    return (
+        <div className="p-8">
+            <Box>
+                <BoxHeader>
+                    <BoxTitle>Checklist du CDP</BoxTitle>
+                </BoxHeader>
+                <BoxContent>
+                    <TaskBulletList initialList={getTasks()} />
+                </BoxContent>
+            </Box>
+        </div>
+    );
+}
+
+function getTasks(): Task[] {
+    return [
+        {
+            id: '1',
+            name: 'Buy groceries',
+            date: new Date('2025-01-20'),
+            checked: false,
+        },
+        {
+            id: '2',
+            name: 'Complete Rust tutorial',
+            date: new Date('2025-01-21'),
+            checked: true,
+        },
+        {
+            id: '3',
+            name: 'Fix bugs in C compiler',
+            date: new Date('2025-01-22'),
+            checked: false,
+        },
+        {
+            id: '4',
+            name: 'Prepare internship application',
+            date: new Date('2025-01-23'),
+            checked: false,
+        },
+        {
+            id: '5',
+            name: 'Read about asynchronous programming',
+            date: new Date('2025-01-24'),
+            checked: true,
+        },
+        {
+            id: '6',
+            name: 'Design database schema for chat service',
+            date: new Date('2025-01-25'),
+            checked: false,
+        },
+        {
+            id: '7',
+            name: 'Optimize CRM-ERP performance',
+            date: new Date('2025-01-26'),
+            checked: false,
+        },
+        {
+            id: '8',
+            name: 'Plan regional congress presentation',
+            date: new Date('2025-01-27'),
+            checked: true,
+        },
+        {
+            id: '9',
+            name: 'Test multithreading in embedded systems',
+            date: new Date('2025-01-28'),
+            checked: false,
+        },
+        {
+            id: '10',
+            name: 'Learn about algebraic curves',
+            date: new Date('2025-01-29'),
+            checked: false,
+        },
+    ];
+}
+```
+
+#### Example
+
+![task-list](/docs/images/task-list.png)
+
+### Search bar
+
+#### Description
+
+Find and select an element from a list of elements.
+
+#### Usage
+
+```jsx
+'use client';
+
+import { SearchBar } from '@/components/meta-components/searchbar';
+
+const LANGUAGES = [
+    'C',
+    'C++',
+    'Rust',
+    'Zig',
+    'Go',
+    'Swift',
+    'V',
+    'Objective-C',
+    'D',
+    'Odin',
+    'Hare',
+    'Nim',
+    'Crystal',
+];
+
+export default function Page() {
+    return (
+        <div className="p-8">
+            <SearchBar
+                label="Programming language..."
+                placeholder="Rust"
+                items={LANGUAGES}
+                onSelect={() => {}}
+            />
+        </div>
+    );
+}
+```
+
+#### Example
+
+![search](/docs/images/search.png)
+
+### Loading
+
+#### Description
+
+Prevent users from submitting multiple times a form a sending too many requests by replacing the button by some loading full stops!
+
+#### Usage
+
+```jsx
+'use client';
+
+import { useState } from 'react';
+
+import { LoadingFullStops } from '@/components/loading';
+import { Button } from '@/components/ui/button';
+
+export default function Page() {
+    const [isLoading, setIsLoading] = useState(false);
+    const slowFunction = () => {};
+
+    return (
+        <div className="p-8">
+            {isLoading ? (
+                <LoadingFullStops />
+            ) : (
+                <Button
+                    onClick={() => {
+                        a;
+                        setIsLoading(true);
+                        slowFunction();
+                    }}
+                >
+                    Submit
+                </Button>
+            )}
+        </div>
+    );
+}
+```
+
+#### Example
+
+![loading-full-stops](/docs/images/loading-full-stops.png)
