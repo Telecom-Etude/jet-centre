@@ -61,7 +61,7 @@ git pull upstream main
 
 ### Fork
 
-![Fork](fork.png)
+![Fork](/docs/images/fork.png)
 
 ### Style Guidelines
 
@@ -114,3 +114,8 @@ For instance, if you fix the redirection callback on the signin page, a good com
 ```txt
 fix(auth): redirection callback on the signin page
 ```
+
+### Language
+
+The chosen language is British English.
+All code, documentation and commits must thus be in British English.
