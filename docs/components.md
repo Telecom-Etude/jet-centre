@@ -47,9 +47,71 @@ export default function Page() {
 }
 ```
 
+Second example with collapsible content:
+
+```jsx
+'use client';
+
+import { useState } from 'react';
+
+import {
+    Box,
+    BoxButtonPlus,
+    BoxButtonReload,
+    BoxButtonTemplate,
+    BoxButtonTrash,
+    BoxCollapseButton,
+    BoxCollapser,
+    BoxContent,
+    BoxHeader,
+    BoxHeaderBlock,
+    BoxTitle,
+} from '@/components/boxes/boxes';
+
+export default function Page() {
+    const [collapse, setCollapse] = useState(true);
+
+    return (
+        <div className="p-2">
+            <Box className="w-full">
+                <BoxHeader>
+                    <BoxTitle>Documents de l&apos;étude</BoxTitle>
+                    <BoxHeaderBlock>
+                        <BoxButtonTrash onClick={() => {}} />
+                        <BoxButtonReload onClick={() => {}} />
+                        <BoxButtonTemplate onClick={() => {}} />
+                        <BoxButtonPlus onClick={() => {}} />
+                        <BoxCollapseButton
+                            onClick={() => {}}
+                            collapse={collapse}
+                            setCollapse={setCollapse}
+                        />
+                    </BoxHeaderBlock>
+                </BoxHeader>
+                <BoxContent>
+                    <BoxCollapser collapse={collapse}>
+                        <BoxContent>
+                            <div>Email</div>
+                            <div>Expérience</div>
+                            <div>Connaissances</div>
+                            <div>Idées</div>
+                            <div>Expérience JE</div>
+                        </BoxContent>
+                    </BoxCollapser>
+                </BoxContent>
+            </Box>
+        </div>
+    );
+}
+```
+
 #### Example
 
 ![box-component](/docs/images/box-component.png)
+
+With collapsible content:
+
+![box-collapse](/docs/images/box-collapse.png)
 
 ### Form elements
 
@@ -209,3 +271,72 @@ export default function Page() {
 ![update-box-synching](/docs/images/update-box-synching.png)
 
 ![update-box-success](/docs/images/update-box-success.png)
+
+### Sortable
+
+#### Description
+
+Sort element by dragging them!
+
+#### Usage
+
+```jsx
+'use client';
+
+import {
+    Box,
+    BoxButtonLabelPlus,
+    BoxContent,
+    BoxDragHandle,
+    BoxHeader,
+    BoxHeaderBlock,
+    BoxTitle,
+    InnerBox,
+} from '@/components/boxes/boxes';
+import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
+
+const PEOPLE = [
+    { id: 1, name: 'Alice' },
+    { id: 2, name: 'Bob' },
+    { id: 3, name: 'Charles' },
+    { id: 4, name: 'Donald' },
+];
+
+export default function Page() {
+    const people = useSortableList(PEOPLE);
+
+    return (
+        <div className="p-8">
+            <Box>
+                <BoxHeader>
+                    <BoxTitle>Retour des candidatures</BoxTitle>
+                </BoxHeader>
+                <BoxContent>
+                    <SortableList
+                        {...people}
+                        className="h-full px-2"
+                        render={(person, dragHandleProps) => (
+                            <InnerBox className="w-full">
+                                <BoxHeader>
+                                    <BoxTitle>{person.name}</BoxTitle>
+                                    <BoxHeaderBlock>
+                                        <BoxButtonLabelPlus
+                                            onClick={() => {}}
+                                            className="flex items-center space-x-2"
+                                        />
+                                        <BoxDragHandle {...dragHandleProps} />
+                                    </BoxHeaderBlock>
+                                </BoxHeader>
+                            </InnerBox>
+                        )}
+                    />
+                </BoxContent>
+            </Box>
+        </div>
+    );
+}
+```
+
+#### Example
+
+![sortable](/docs/images/sortable.png)
