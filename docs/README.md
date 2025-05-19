@@ -22,6 +22,18 @@ It allows the Telecom Etude's administrators to manage more easily and proficien
 
 This is a centralised app that will allow CDP to enter once the data, and see it mirrored on all documents, deadlines, notifications, etc., as well as having everything in one and single place (documents, communication, notifications, help for new CDPs, etc.).
 
+## Presentation
+
+Jet-Centre is a kind of ERP that makes life easier for admins, both as CDP and in your position. First and foremost, it's a centralisation and automation tool. Centralisation in that all information and tools will be accessible from this tool, and automationin that you will only have to enter information once (e.g. to avoid rewriting the cient's information in the 10 BCs, or to write the same thing in a RM and a CE such as the layout of phases).
+
+For example, for the assignee selection, the CDP creates the MRI from the tool and the tool automatically creates the form. The answers to the MRI will automatically appear on the tool (cv + answers to the form) and put them in the follow-up folder, which means you can have all the information in one place without having to put everything in the study folder and open it each time. You can also decide to personalise things that weren't so great before, e.g. when filling in the interview form, only one CDP could answer at a time on the form, and you couldn't see in real time what the other CDP was writing.
+
+It will also help CDPs who are at the beginning of their mandate or who don't do a lot of studies. Having a checklist, tips on how to write documents, email templates, etc. For the time being, for a first version, we've concentrated mainly on the CDP aspect, so the specifics per job will come later. We only have mandatory features like MRI validation for secgé+dirco, the treasury page for treasury docs...
+
+It's a tool that would bring everything together in one place.
+
+- For missions: all the information you need, document writing, MRIs creation, meeting notes, customer emails, forms etc...
+- For your job: job cards and books for handover, integrated indicator tracking (most of which is calculated automatically) to automate a maximum number of tasks to lighten workloads (avoid having to write the same thing several times, send satisfaction forms and manage follow-ups, compute KPIs, etc.).
 
 ### Goal
 
