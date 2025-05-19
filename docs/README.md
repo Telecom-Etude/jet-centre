@@ -1,11 +1,9 @@
 # Jet Centre: Telecom Etude Centralised Tool
 
-
 ![License](https://img.shields.io/github/license/telecom-etude/jet-centre)
 ![Issues](https://img.shields.io/github/issues/telecom-etude/jet-centre)
 ![Pull Requests](https://img.shields.io/github/issues-pr/telecom-etude/jet-centre)
 ![Documentation Website](https://img.shields.io/website?url=https%3A%2F%2Ftelecom-etude.github.io%2Fjet-centre)
-
 
 ## CI/CD checks
 
@@ -13,7 +11,6 @@
 ![Format](https://github.com/telecom-etude/jet-centre/actions/workflows/fmt.yml/badge.svg)
 ![Knip](https://github.com/telecom-etude/jet-centre/actions/workflows/knip.yml/badge.svg)
 ![Conventional commits](https://github.com/telecom-etude/jet-centre/actions/workflows/commits.yml/badge.svg)
-
 
 ## Overview
 
@@ -50,8 +47,7 @@ Here are the main goals of this tool:
 - Follow health and status of missions and departments.
 - Increase GPRD compliance.
 - Automate simple tasks
-- Remove repetitve tasks (e.g. fill a follow-up  un tableau de suivi)
-
+- Remove repetitve tasks (e.g. fill a follow-up un tableau de suivi)
 
 ### Snapshots
 
@@ -61,13 +57,11 @@ Here are the main goals of this tool:
 
 ![Create mission](/docs/images/create.png)
 
-
 ## Contributing
 
 Please refer to the [Getting Started Guide](/docs/GETTING_STARTED.md) to know how to install and launch the project!
 
 Please read the [Contribution Guide](/docs/CONTRIBUTING.md) before contributing to this project.
-
 
 ## External resources
 
@@ -76,9 +70,7 @@ Please read the [Contribution Guide](/docs/CONTRIBUTING.md) before contributing 
 - [Database documentation](https://telecom-etude.github.io/jet-centre)
 - [DB Designer](https://dbdesigner.page.link/URRwLbFdp8r9qiiF6)
 
-
 ## Used technologies
-
 
 ### Technical stack
 
@@ -89,7 +81,6 @@ Please read the [Contribution Guide](/docs/CONTRIBUTING.md) before contributing 
 - [PostgreSQL](https://www.postgresql.org/), for the database.
 - [Prisma](https://www.prisma.io/), for object modeling.
 - [Docker](https://www.docker.com/) for easy deployment
-
 
 ### Recommended tutorials
 
