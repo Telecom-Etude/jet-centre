@@ -2,15 +2,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { CellManyComboBox, CellSingleComboBox } from './cell-combobox';
 import { flexRender } from '@tanstack/react-table';
 import { Domain, StudyProgressStep } from '@prisma/client';
+import { useEffect, useState } from 'react';
+import { getData } from './actions';
 
 interface InputCellProps {
     cell_id: string;
     data: any;
     comp: any;
     context: object;
-    admins: string[];
-    clientNames: string[];
-    clientEmails: string[];
     codeToID: { [key: string]: string };
 }
 
@@ -53,53 +52,29 @@ interface ListId {
     [key: string]: string;
 }
 
-export function InputCell({
-    cell_id,
-    data,
-    comp,
-    context,
-    admins,
-    clientNames,
-    clientEmails,
-    codeToID,
-}: InputCellProps) {
-    /*const [admins, setAdmins] = useState<string[]>([]);
-    const [clientNames, setClientNames] = useState<string[]>([]);
-    const [clientEmails, setClientEmails] = useState<string[]>([]);
-
-    useEffect(() => {
-        const rawAdmins = prisma.admin.findMany({
-            select: {
-                user: { select: { person: { select: { firstName: true, lastName: true } } } },
-            },
-        });
-        rawAdmins.then((value) =>
-            setAdmins(
-                value.map((admin) => admin.user.person.firstName + ' ' + admin.user.person.lastName)
-            )
-        );
-
-        const rawClients = prisma.client.findMany({
-            select: { person: { select: { firstName: true, lastName: true, email: true } } },
-        });
-        rawClients.then((value) => {
-            setClientNames(
-                value.map((client) => client.person.firstName + ' ' + client.person.lastName)
-            );
-            setClientEmails(value.map((client) => client.person.email));
-        });
-    }, [admins, clientNames, clientEmails]);*/
+export function InputCell({ cell_id, data, comp, context, codeToID }: InputCellProps) {
+    const [admins, setAdmins] = useState<string[]>();
+    const [clientsName, setClientsName] = useState<string[]>();
+    const [clientsEmail, setClientsEmail] = useState<string[]>();
 
     const step = Object.values(StudyProgressStep);
     const type_study = Object.values(Domain);
+    useEffect(() => {
+        const rawData = getData();
+        rawData.then((data) => {
+            setAdmins(data.admins);
+            setClientsName(data.clientsName);
+            setClientsEmail(data.clientsEmail);
+        });
+    });
 
     const listItemManyComboBox: ListItem = {
         step: step,
-        refs: admins,
-        cdps: admins,
+        refs: admins ? admins : [],
+        cdps: admins ? admins : [],
         type_study: type_study,
-        client_name: clientNames,
-        client_email: clientEmails,
+        client_name: clientsName ? clientsName : [],
+        client_email: clientsEmail ? clientsEmail : [],
     };
 
     const listItemSingleComboBox: ListItem = {

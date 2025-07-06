@@ -2,22 +2,7 @@ import prisma from '@/db';
 import { columns } from './columns';
 import { DataTable } from './data-table';
 
-const rawAdmins = await prisma.admin.findMany({
-    select: {
-        user: { select: { person: { select: { firstName: true, lastName: true } } } },
-    },
-});
-const admins = rawAdmins.map(
-    (admin) => admin.user.person.firstName + ' ' + admin.user.person.lastName
-);
-
-const rawClients = await prisma.client.findMany({
-    select: { person: { select: { firstName: true, lastName: true, email: true } } },
-});
-const clientNames = rawClients.map(
-    (client) => client.person.firstName + ' ' + client.person.lastName
-);
-const clientEmails = rawClients.map((client) => client.person.email);
+const currentDate = new Date();
 
 export default async function TableauSuivi() {
     const studies = await prisma.study.findMany({
@@ -57,6 +42,7 @@ export default async function TableauSuivi() {
                     },
                 },
             },
+            studyAssignees: { include: { assignee: { include: { docs: true } } } },
             satisfaction: { select: { publish: true } },
         },
     });
@@ -81,10 +67,20 @@ export default async function TableauSuivi() {
         info: study.information.description,
         signature_date: 'Pas défini',
         gap: 'Pas défini',
-        nb_phases: study.progress
-            ? study.progress.phases.length
-            : "Il n'y a pas de phases définies",
-        current_phase_ending: 'Pas défini',
+        nb_phases: study.progress ? study.progress.phases.length : 'Pas de phases définies',
+        current_phase: study.progress
+            ? study.progress.phases.reduce(
+                  (acc, phase) => acc + (currentDate < phase.endDate ? 1 : 0),
+                  1
+              )
+            : 'Pas de phases définies',
+        current_phase_ending: study.progress
+            ? study.progress.phases.reduce(
+                  (acc, phase) =>
+                      phase.endDate < acc && phase.endDate >= currentDate ? phase.endDate : acc,
+                  new Date(8.64e15)
+              )
+            : 'Pas de phases définies',
         end_rm: 'Pas défini',
         end_ce: 'Pas défini',
         av_number: 'Pas défini',
@@ -105,7 +101,9 @@ export default async function TableauSuivi() {
         status: 'Pas défini',
         domain: 'Pas défini',
         jeh_price: 'Pas défini',
-        jeh_number: 'Pas défini',
+        jeh_number: study.progress
+            ? study.progress.phases.reduce((acc, phase) => acc + phase.jehs, 0)
+            : 'Pas de phases définies',
         jeh_price_number: 'Pas défini',
         ca_etude_ht: 'Pas défini',
         percent_ca: 'Pas défini',
@@ -121,14 +119,7 @@ export default async function TableauSuivi() {
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable
-                columns={columns}
-                data={studiesProps}
-                admins={admins}
-                clientNames={clientNames}
-                clientEmails={clientEmails}
-                codeToID={codeToID}
-            />
+            <DataTable columns={columns} data={studiesProps} codeToID={codeToID} />
         </div>
     );
 }

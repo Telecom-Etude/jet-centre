@@ -29,18 +29,12 @@ import React from 'react';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    admins: string[];
-    clientNames: string[];
-    clientEmails: string[];
     codeToID: { [key: string]: string };
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
-    admins,
-    clientNames,
-    clientEmails,
     codeToID,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -119,9 +113,6 @@ export function DataTable<TData, TValue>({
                                                     data={cell.getValue()}
                                                     comp={cell.column.columnDef.cell}
                                                     context={cell.getContext()}
-                                                    admins={admins}
-                                                    clientNames={clientNames}
-                                                    clientEmails={clientEmails}
                                                     codeToID={codeToID}
                                                 />
                                             </TableCell>
