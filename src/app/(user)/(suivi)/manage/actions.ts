@@ -2,7 +2,13 @@
 
 import prisma from '@/db';
 
-export async function getData() {
+export interface ClientsData {
+    admins: string[];
+    clientsName: string[];
+    clientsEmail: string[];
+}
+
+export async function getClientsData(): Promise<ClientsData> {
     const rawAdmins = await prisma.admin.findMany({
         select: {
             user: { select: { person: { select: { firstName: true, lastName: true } } } },
