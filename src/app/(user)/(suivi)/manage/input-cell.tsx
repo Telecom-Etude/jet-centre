@@ -2,7 +2,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { CellManyComboBox, CellSingleComboBox } from './cell-combobox';
 import { flexRender } from '@tanstack/react-table';
 import { Domain, StudyProgressStep } from '@prisma/client';
-import { ClientsData } from './actions';
+import { ClientsData, updateDatabase } from './actions';
 
 interface InputCellProps {
     type: string;
@@ -14,13 +14,13 @@ interface InputCellProps {
 }
 
 enum isSingleCombobox {
+    step,
     oc,
     cconf,
     qs,
 }
 
 enum isManyCombobox {
-    step,
     refs,
     cdps,
     type_study,
@@ -59,7 +59,6 @@ export function InputCell({ type, data, comp, context, id, clientsData }: InputC
     const type_study = Object.values(Domain);
 
     const listItemManyComboBox: ListItem = {
-        step: step,
         refs: admins ? admins : [],
         cdps: admins ? admins : [],
         type_study: type_study,
@@ -68,6 +67,7 @@ export function InputCell({ type, data, comp, context, id, clientsData }: InputC
     };
 
     const listItemSingleComboBox: ListItem = {
+        step: step,
         oc: ["Pas d'OC", 'Non envoyée', 'Envoyée client', 'Acceptée client'],
         cconf: ['Oui', 'Non'],
         qs: ['Non envoyé', 'Non concerné', 'Envoyé', 'Sans réponse', 'Reçu'],
@@ -109,8 +109,6 @@ export function InputCell({ type, data, comp, context, id, clientsData }: InputC
         return <></>;
     } else if (Object.values(isTextarea).includes(type)) {
         return (
-            // Il faut prendre en compte le codeToID ici
-
             <Textarea
                 className="h-full -min-h-[80px] -border resize-none text-center leading-snug -rounded-md px-4"
                 defaultValue={data}
@@ -119,6 +117,7 @@ export function InputCell({ type, data, comp, context, id, clientsData }: InputC
                     target.style.height = 'auto';
                     target.style.height = target.scrollHeight + 'px';
                 }}
+                onBlur={(e) => updateDatabase(e.target.value, type, id)}
             />
         );
     } else {
