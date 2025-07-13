@@ -29,7 +29,7 @@ export function CellManyComboBox({ data, items, placeholder, id, type }: CellCom
             keys.push(key);
             setKeysAndTitle([keys, keys.join(', ')]);
         }
-        updateDatabase(keysAndTitle[0], type, id);
+        updateDatabase(keys, type, id);
     }
 
     return (
@@ -52,9 +52,7 @@ export function CellSingleComboBox({ data, items, placeholder, id, type }: CellC
 
     function selectKey(key: string) {
         setCurrentKey(key);
-        if (currentKey !== null) {
-            updateDatabase(currentKey, type, id);
-        }
+        updateDatabase(key, type, id);
     }
 
     return (
