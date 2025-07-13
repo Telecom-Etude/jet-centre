@@ -13,19 +13,18 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
-import { StudyProgressStep } from '@prisma/client';
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type StudyProps = {
     id: string;
     code: string;
-    step: StudyProgressStep | null;
+    step: string | null;
     next_deadline: string;
     cdps: string[];
     refs: string[];
     title: string | null;
-    type_study: string;
+    type_study: string[];
     date_pre_study: string;
     last_check: string;
     next_check: string;
