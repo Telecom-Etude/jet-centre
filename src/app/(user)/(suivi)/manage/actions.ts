@@ -27,3 +27,45 @@ export async function getData() {
     };
     return data;
 }
+
+export async function updateDatabase(data: string[] | string, type: string, id: string) {
+    switch (type) {
+        case 'step':
+        case 'refs':
+        case 'cdps': {
+            if (typeof data === 'string') {
+                throw new TypeError('Expected type string[] data');
+            }
+            const firstNames = data.map((name) => name.split(' ')[0]);
+            const lastNames = data.map((name) => name.split(' ')[1]);
+            const newCDPs = await prisma.admin.findMany({
+                select: { id: true },
+                where: {
+                    user: {
+                        person: {
+                            AND: { firstName: { in: firstNames }, lastName: { in: lastNames } },
+                        },
+                    },
+                },
+            });
+            await prisma.study.update({
+                where: { id: id },
+                data: { cdps: { set: newCDPs.map((id) => id) } },
+            });
+            console.log('Updated !');
+        }
+        case 'type_study':
+        case 'client_name':
+        case 'client_email':
+        case 'next_deadline':
+        case 'date_pre_study':
+        case 'last_check':
+        case 'next_check':
+        case 'gap':
+        case 'end_rm':
+        case 'pvrf':
+        case 'av_number':
+        case 'title':
+        case 'info':
+    }
+}
