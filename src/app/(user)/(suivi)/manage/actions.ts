@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from '@/db';
+import { Domain, StudyProgressStep } from '@prisma/client';
 
 export interface ClientsData {
     admins: string[];
@@ -35,9 +36,22 @@ export async function getClientsData(): Promise<ClientsData> {
 }
 
 export async function updateDatabase(data: string[] | string, type: string, id: string) {
+    console.log(type);
     switch (type) {
-        case 'step':
+        case 'step': {
+            if (typeof data !== 'string') {
+                throw new TypeError('Expected type string data');
+            }
+            const updated = await prisma.study.update({
+                where: { id: id },
+                data: { progress: { update: { step: { set: data as StudyProgressStep } } } },
+            });
+            console.log(updated);
+            console.log('Updated !');
+            break;
+        }
         case 'refs':
+            break;
         case 'cdps': {
             if (typeof data === 'string') {
                 throw new TypeError('Expected type string[] data');
@@ -54,24 +68,84 @@ export async function updateDatabase(data: string[] | string, type: string, id: 
                     },
                 },
             });
-            await prisma.study.update({
+            const updated = await prisma.study.update({
                 where: { id: id },
                 data: { cdps: { set: newCDPs.map((id) => id) } },
             });
+            console.log(newCDPs);
+            console.log(updated);
             console.log('Updated !');
+            break;
         }
-        case 'type_study':
-        case 'client_name':
+        case 'type_study': {
+            if (typeof data === 'string') {
+                throw new TypeError('Expected type string[] data');
+            }
+            const domain: Domain[] = data.map((domain) => domain as Domain);
+            const updated = await prisma.study.update({
+                where: { id: id },
+                data: {
+                    information: { update: { domain: { set: domain.map((domain) => domain) } } },
+                },
+            });
+            console.log(updated);
+            console.log('Updated !');
+            break;
+        }
+        case 'client_name': {
+            if (typeof data === 'string') {
+                throw new TypeError('Expected type string[] data');
+            }
+            const firstNames = data.map((name) => name.split(' ')[0]);
+            const lastNames = data.map((name) => name.split(' ')[1]);
+            const newClients = await prisma.client.findMany({
+                select: { id: true },
+                where: {
+                    person: {
+                        AND: { firstName: { in: firstNames }, lastName: { in: lastNames } },
+                    },
+                },
+            });
+            /*const updated = await prisma.study.update({
+                where: { id: id },
+                data: { clients: { update: {}} },
+            });*/
+            console.log(newClients);
+            //console.log(updated);
+            console.log('Updated !');
+            break;
+        }
         case 'client_email':
+            break;
         case 'next_deadline':
+            break;
         case 'date_pre_study':
+            break;
         case 'last_check':
+            break;
         case 'next_check':
+            break;
         case 'gap':
+            break;
         case 'end_rm':
+            break;
         case 'pvrf':
+            break;
         case 'av_number':
-        case 'title':
+            break;
+        case 'title': {
+            if (typeof data !== 'string') {
+                throw new TypeError('Expected type string[] data');
+            }
+            const updated = await prisma.study.update({
+                where: { id: id },
+                data: { information: { update: { title: data } } },
+            });
+            console.log(updated);
+            console.log('Updated !');
+            break;
+        }
         case 'info':
+            break;
     }
 }
