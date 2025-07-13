@@ -1,14 +1,16 @@
 import { ManyComboBox, SingleCombobox } from '@/components/meta-components/combobox';
 import { useState } from 'react';
+import { updateDatabase } from './actions';
 
 type CellComboBoxProps = {
     data: any;
     items: string[];
     placeholder: string;
-    codeToID: { [key: string]: string };
+    id: string;
+    type: string;
 };
 
-export function CellManyComboBox({ data, items, placeholder, codeToID }: CellComboBoxProps) {
+export function CellManyComboBox({ data, items, placeholder, id, type }: CellComboBoxProps) {
     const [keysAndTitle, setKeysAndTitle] = useState<[string[], string]>([
         Array.isArray(data) && data.every((item) => typeof item === 'string') ? data : [data],
         Array.isArray(data) && data.every((item) => typeof item === 'string')
@@ -27,7 +29,7 @@ export function CellManyComboBox({ data, items, placeholder, codeToID }: CellCom
             keys.push(key);
             setKeysAndTitle([keys, keys.join(', ')]);
         }
-        console.log(codeToID);
+        updateDatabase(keysAndTitle[0], type, id);
     }
 
     return (
@@ -42,7 +44,7 @@ export function CellManyComboBox({ data, items, placeholder, codeToID }: CellCom
     );
 }
 
-export function CellSingleComboBox({ data, items, placeholder, codeToID }: CellComboBoxProps) {
+export function CellSingleComboBox({ data, items, placeholder, id, type }: CellComboBoxProps) {
     const [currentKey, setCurrentKey] = useState<string | null>(data);
 
     const singleKey = currentKey;
@@ -50,7 +52,9 @@ export function CellSingleComboBox({ data, items, placeholder, codeToID }: CellC
 
     function selectKey(key: string) {
         setCurrentKey(key);
-        console.log(codeToID);
+        if (currentKey !== null) {
+            updateDatabase(currentKey, type, id);
+        }
     }
 
     return (

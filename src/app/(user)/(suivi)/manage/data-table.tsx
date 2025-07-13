@@ -29,14 +29,10 @@ import React from 'react';
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    codeToID: { [key: string]: string };
+    ids: string[];
 }
 
-export function DataTable<TData, TValue>({
-    columns,
-    data,
-    codeToID,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, ids }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -104,16 +100,16 @@ export function DataTable<TData, TValue>({
                                     data-state={row.getIsSelected() && 'selected'}
                                 >
                                     {row.getVisibleCells().map((cell) => {
-                                        console.log(typeof cell.column.columnDef.cell);
+                                        console.log(cell.id);
                                         console.log(cell.getValue());
                                         return (
                                             <TableCell key={cell.id} className="p-1">
                                                 <InputCell
-                                                    cell_id={cell.id}
+                                                    type={cell.id.substring(2)}
                                                     data={cell.getValue()}
                                                     comp={cell.column.columnDef.cell}
                                                     context={cell.getContext()}
-                                                    codeToID={codeToID}
+                                                    id={ids[Number(cell.id.charAt(0))]}
                                                 />
                                             </TableCell>
                                         );

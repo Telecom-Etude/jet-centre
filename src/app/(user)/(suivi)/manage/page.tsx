@@ -112,14 +112,11 @@ export default async function TableauSuivi() {
         drop_reasons: 'Pas défini',
     }));
 
-    const codeToID: { [key: string]: string } = {};
-    for (const study of studiesProps) {
-        codeToID[study.code] = study.id;
-    }
+    const ids = studiesProps.map((study) => study.id);
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable columns={columns} data={studiesProps} codeToID={codeToID} />
+            <DataTable columns={columns} data={studiesProps} ids={ids} />
         </div>
     );
 }

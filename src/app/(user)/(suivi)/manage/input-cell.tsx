@@ -6,11 +6,11 @@ import { useEffect, useState } from 'react';
 import { getData } from './actions';
 
 interface InputCellProps {
-    cell_id: string;
+    type: string;
     data: any;
     comp: any;
     context: object;
-    codeToID: { [key: string]: string };
+    id: string;
 }
 
 enum isSingleCombobox {
@@ -48,11 +48,11 @@ interface ListItem {
     [key: string]: string[];
 }
 
-interface ListId {
+interface ListType {
     [key: string]: string;
 }
 
-export function InputCell({ cell_id, data, comp, context, codeToID }: InputCellProps) {
+export function InputCell({ type, data, comp, context, id }: InputCellProps) {
     const [admins, setAdmins] = useState<string[]>();
     const [clientsName, setClientsName] = useState<string[]>();
     const [clientsEmail, setClientsEmail] = useState<string[]>();
@@ -66,7 +66,7 @@ export function InputCell({ cell_id, data, comp, context, codeToID }: InputCellP
             setClientsName(data.clientsName);
             setClientsEmail(data.clientsEmail);
         });
-    });
+    }, [admins, clientsName, clientsEmail]);
 
     const listItemManyComboBox: ListItem = {
         step: step,
@@ -83,7 +83,7 @@ export function InputCell({ cell_id, data, comp, context, codeToID }: InputCellP
         qs: ['Non envoyé', 'Non concerné', 'Envoyé', 'Sans réponse', 'Reçu'],
     };
 
-    const listId: ListId = {
+    const listId: ListType = {
         step: 'Chercher un status',
         refs: 'Chercher un.e référent.e',
         cdps: 'Chercher des CDPs',
@@ -95,28 +95,29 @@ export function InputCell({ cell_id, data, comp, context, codeToID }: InputCellP
         qs: 'Status QS',
     };
 
-    const id = cell_id.substring(2);
-    if (Object.values(isManyCombobox).includes(id)) {
+    if (Object.values(isManyCombobox).includes(type)) {
         return (
             <CellManyComboBox
                 data={data}
-                items={listItemManyComboBox[id]}
-                placeholder={listId[id]}
-                codeToID={codeToID}
+                items={listItemManyComboBox[type]}
+                placeholder={listId[type]}
+                id={id}
+                type={type}
             />
         );
-    } else if (Object.values(isSingleCombobox).includes(id)) {
+    } else if (Object.values(isSingleCombobox).includes(type)) {
         return (
             <CellSingleComboBox
                 data={data}
-                items={listItemSingleComboBox[id]}
-                placeholder={listId[id]}
-                codeToID={codeToID}
+                items={listItemSingleComboBox[type]}
+                placeholder={listId[type]}
+                id={id}
+                type={type}
             />
         );
-    } else if (Object.values(isInput).includes(id)) {
+    } else if (Object.values(isInput).includes(type)) {
         return <></>;
-    } else if (Object.values(isTextarea).includes(id)) {
+    } else if (Object.values(isTextarea).includes(type)) {
         return (
             // Il faut prendre en compte le codeToID ici
 
