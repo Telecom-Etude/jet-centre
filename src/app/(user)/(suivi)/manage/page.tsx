@@ -50,7 +50,7 @@ export default async function TableauSuivi() {
     const studiesProps = studies.map((study) => ({
         id: study.id,
         code: study.information.code,
-        step: study.progress?.step ?? null,
+        step: study.progress ? (study.progress.step as string) : null,
         next_deadline: 'Pas défini',
         cdps: study.cdps.map((cdp) => cdp.user.person.firstName + ' ' + cdp.user.person.lastName),
         senior_cdps: study.cdps.map(
@@ -60,7 +60,7 @@ export default async function TableauSuivi() {
             (auditor) => auditor.user.person.lastName + ' ' + auditor.user.person.firstName
         ),
         title: study.information.title,
-        type_study: study.information.domain.map((domain) => domain + '\n').toString(),
+        type_study: study.information.domain.map((domain) => domain as string),
         date_pre_study: 'Pas défini',
         oc: "Pas d'OC",
         last_check: 'Pas défini',
