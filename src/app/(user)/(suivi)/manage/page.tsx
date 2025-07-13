@@ -1,6 +1,7 @@
 import prisma from '@/db';
 import { columns } from './columns';
 import { DataTable } from './data-table';
+import { getClientsData } from './actions';
 
 const currentDate = new Date();
 
@@ -114,9 +115,11 @@ export default async function TableauSuivi() {
 
     const ids = studiesProps.map((study) => study.id);
 
+    const clientsData = await getClientsData();
+
     return (
         <div className="container mx-auto py-10">
-            <DataTable columns={columns} data={studiesProps} ids={ids} />
+            <DataTable columns={columns} data={studiesProps} ids={ids} clientsData={clientsData} />
         </div>
     );
 }

@@ -25,14 +25,21 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import React from 'react';
+import { ClientsData } from './actions';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     ids: string[];
+    clientsData: ClientsData;
 }
 
-export function DataTable<TData, TValue>({ columns, data, ids }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+    columns,
+    data,
+    ids,
+    clientsData,
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -106,6 +113,7 @@ export function DataTable<TData, TValue>({ columns, data, ids }: DataTableProps<
                                             <TableCell key={cell.id} className="p-1">
                                                 <InputCell
                                                     type={cell.id.substring(2)}
+                                                    clientsData={clientsData}
                                                     data={cell.getValue()}
                                                     comp={cell.column.columnDef.cell}
                                                     context={cell.getContext()}

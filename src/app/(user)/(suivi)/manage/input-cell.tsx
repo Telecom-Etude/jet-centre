@@ -2,8 +2,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { CellManyComboBox, CellSingleComboBox } from './cell-combobox';
 import { flexRender } from '@tanstack/react-table';
 import { Domain, StudyProgressStep } from '@prisma/client';
-import { useEffect, useState } from 'react';
-import { getData } from './actions';
+import { ClientsData } from './actions';
 
 interface InputCellProps {
     type: string;
@@ -11,6 +10,7 @@ interface InputCellProps {
     comp: any;
     context: object;
     id: string;
+    clientsData: ClientsData;
 }
 
 enum isSingleCombobox {
@@ -52,21 +52,11 @@ interface ListType {
     [key: string]: string;
 }
 
-export function InputCell({ type, data, comp, context, id }: InputCellProps) {
-    const [admins, setAdmins] = useState<string[]>();
-    const [clientsName, setClientsName] = useState<string[]>();
-    const [clientsEmail, setClientsEmail] = useState<string[]>();
+export function InputCell({ type, data, comp, context, id, clientsData }: InputCellProps) {
+    const { admins, clientsName, clientsEmail } = clientsData;
 
     const step = Object.values(StudyProgressStep);
     const type_study = Object.values(Domain);
-    useEffect(() => {
-        const rawData = getData();
-        rawData.then((data) => {
-            setAdmins(data.admins);
-            setClientsName(data.clientsName);
-            setClientsEmail(data.clientsEmail);
-        });
-    }, [admins, clientsName, clientsEmail]);
 
     const listItemManyComboBox: ListItem = {
         step: step,
