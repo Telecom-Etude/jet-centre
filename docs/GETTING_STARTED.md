@@ -22,7 +22,7 @@ npm install --legacy-peer-dep
 
 Create a file named `.env` at the root of the project.
 
-Add the `DB_URL` variable in your `.env` file like so : `DB_URL=postgres://postgres:postgres@postgres:5432/maindb?schema=public`
+Add the `DB_URL` variable in your `.env` file like so : `DB_URL=postgres://postgres:postgres@localhost:5432/maindb?schema=public`
 
 Add the `REDIS_URL` variable in your `.env` file like so : `REDIS_URL=redis://cache:6379/0`
 
@@ -48,7 +48,7 @@ AUTH_GOOGLE_ID="your_google_id"
 AUTH_GOOGLE_SECRET="your_google_secret"
 
 # Database
-DB_URL=postgres://postgres:postgres@postgres:5432/maindb?schema=public
+DB_URL=postgres://postgres:postgres@localhost:5432/maindb?schema=public
 REDIS_URL=redis://cache:6379/0
 
 # Drive
