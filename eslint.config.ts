@@ -1,10 +1,12 @@
 import { FlatCompat } from '@eslint/eslintrc';
+import { globalIgnores } from 'eslint/config';
 
 const compat: FlatCompat = new FlatCompat({
     baseDirectory: import.meta.dirname,
 });
 
 const eslintConfig = [
+    globalIgnores(['tailwind.config.ts']),
     {
         files: ['**/*.{ts,tsx}'],
 
