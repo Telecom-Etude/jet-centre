@@ -1,8 +1,10 @@
 'use client';
 
 import {
+    ColumnFiltersState,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     useReactTable,
 } from '@tanstack/react-table';
@@ -18,6 +20,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import type { CompanyColumn, CompanyTable, CompanyName } from './types';
 import { DataTablePagination } from './pagination';
+import { useState } from 'react';
+import { Input } from '@/components/ui/input';
 
 function TableEntries({ table, columns }: { table: CompanyTable; columns: CompanyColumn[] }) {
     return (
@@ -82,15 +86,29 @@ interface DataTableProps {
 }
 
 export function CompanyTable({ columns, data }: DataTableProps) {
+    const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        onColumnFiltersChange,
+        getFilteredRowModel: getFilteredRowModel(),
+        state: { columnFilters },
     });
 
     return (
         <>
+            <div className="flex items-center w-full pb-main">
+                <Input
+                    placeholder="Rechercher..."
+                    value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+                    onChange={(event) =>
+                        table.getColumn('name')?.setFilterValue(event.target.value)
+                    }
+                    className="lg:max-w-[50%]"
+                />
+            </div>
             <TableEntries table={table} columns={columns} />
             <DataTablePagination table={table} />
         </>
