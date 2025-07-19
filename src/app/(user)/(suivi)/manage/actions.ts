@@ -5,19 +5,44 @@ import { Domain, StudyProgressStep } from '@prisma/client';
 
 export interface ClientsData {
     admins: string[];
+    seniors: string[];
+    refs: string[];
+    auditors: string[];
     clientsName: string[];
     clientsEmail: string[];
 }
+
+const Referents = ['VPO', 'President'];
+
+const Qualite = [
+    'Respo Qualite',
+    'Respo Gestion Des Etudes',
+    'Charge Ressources Internes',
+    'Charge Gestion des Risques',
+    'Charge Image de Marque',
+];
 
 export async function getClientsData(): Promise<ClientsData> {
     const rawAdmins = await prisma.admin.findMany({
         select: {
             user: { select: { person: { select: { firstName: true, lastName: true } } } },
+            position: true,
+            senior: true,
         },
     });
-    const admins = rawAdmins.map(
-        (admin) => admin.user.person.firstName + ' ' + admin.user.person.lastName
-    );
+    const admins = rawAdmins
+        .filter((admin) => !admin.senior)
+        .map((admin) => admin.user.person.firstName + ' ' + admin.user.person.lastName);
+    const seniors = rawAdmins
+        .filter((admin) => admin.senior)
+        .map((admin) => admin.user.person.firstName + ' ' + admin.user.person.lastName);
+    const refs = rawAdmins
+        .filter((admin) => (admin.position ? Referents.includes(admin.position) : false))
+        .map((admin) => admin.user.person.firstName + ' ' + admin.user.person.lastName);
+
+    const auditors = rawAdmins
+        .filter((admin) => (admin.position ? admin.position in Qualite : false))
+        .map((admin) => admin.user.person.firstName + ' ' + admin.user.person.lastName);
 
     const rawClients = await prisma.client.findMany({
         select: { person: { select: { firstName: true, lastName: true, email: true } } },
@@ -29,6 +54,9 @@ export async function getClientsData(): Promise<ClientsData> {
 
     const data = {
         admins: admins,
+        seniors: seniors,
+        refs: refs,
+        auditors: auditors,
         clientsName: clientsName,
         clientsEmail: clientsEmail,
     };
@@ -77,6 +105,12 @@ export async function updateDatabase(data: string[] | string, type: string, id: 
             console.log('Updated !');
             break;
         }
+        case 'senior_cdps': {
+            break;
+        }
+        case 'auditor': {
+            break;
+        }
         case 'type_study': {
             if (typeof data === 'string') {
                 throw new TypeError('Expected type string[] data');
@@ -98,20 +132,22 @@ export async function updateDatabase(data: string[] | string, type: string, id: 
             }
             const firstNames = data.map((name) => name.split(' ')[0]);
             const lastNames = data.map((name) => name.split(' ')[1]);
-            const newClients = await prisma.client.findMany({
+            const newClients = await prisma.studyClient.findMany({
                 select: { id: true },
                 where: {
-                    person: {
-                        AND: { firstName: { in: firstNames }, lastName: { in: lastNames } },
+                    client: {
+                        person: {
+                            AND: { firstName: { in: firstNames }, lastName: { in: lastNames } },
+                        },
                     },
                 },
             });
-            /*const updated = await prisma.study.update({
+            const updated = await prisma.study.update({
                 where: { id: id },
-                data: { clients: { update: {}} },
-            });*/
+                data: { clients: { set: newClients.map((id) => id) } },
+            });
             console.log(newClients);
-            //console.log(updated);
+            console.log(updated);
             console.log('Updated !');
             break;
         }
@@ -147,5 +183,7 @@ export async function updateDatabase(data: string[] | string, type: string, id: 
         }
         case 'info':
             break;
+        default:
+            throw new Error("Value of 'type' does not match a column !");
     }
 }
