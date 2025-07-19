@@ -81,7 +81,7 @@ export function ListCompanies({ data }: { data: CompanyName[] }) {
     return (
         <>
             <CompanyTable data={data} setSelectedCompany={setSelectedCompany} />
-            <Box className="w-full">
+            <Box className="h-full w-full">
                 <BoxHeader>
                     <BoxTitle>Informations sur l&apos;entreprise</BoxTitle>
                     <BoxHeaderBlock>
