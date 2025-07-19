@@ -22,6 +22,7 @@ import type { CompanyColumn, CompanyTable, CompanyName } from './types';
 import { DataTablePagination } from './pagination';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
+import { columns } from './columns';
 
 function DataTableEntries({
     table,
@@ -99,12 +100,13 @@ function DataTableSearch({ table }: { table: CompanyTable }) {
     );
 }
 
-interface DataTableProps {
-    columns: CompanyColumn[];
+export function CompanyTable({
+    data,
+    setSelectedClient,
+}: {
     data: CompanyName[];
-}
-
-export function CompanyTable({ columns, data }: DataTableProps) {
+    setSelectedClient: (id: string) => void;
+}) {
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
     const table = useReactTable({
         data,
@@ -115,20 +117,16 @@ export function CompanyTable({ columns, data }: DataTableProps) {
         getFilteredRowModel: getFilteredRowModel(),
         state: { columnFilters },
     });
-    const [selectedClient, setSelectedClient] = useState<string>();
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-            <div>
-                <DataTableSearch table={table} />
-                <DataTableEntries
-                    table={table}
-                    columns={columns}
-                    setSelectedClient={setSelectedClient}
-                />
-                <DataTablePagination table={table} />
-            </div>
-            <div>Selected client: {selectedClient}</div>
+        <div>
+            <DataTableSearch table={table} />
+            <DataTableEntries
+                table={table}
+                columns={columns}
+                setSelectedClient={setSelectedClient}
+            />
+            <DataTablePagination table={table} />
         </div>
     );
 }

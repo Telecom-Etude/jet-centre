@@ -1,6 +1,5 @@
 import { getCompanies } from './actions';
-import { columns } from './columns';
-import { CompanyTable } from './data-table';
+import { ListCompanies } from './client';
 
 export default async function DemoPage() {
     const companies = await getCompanies();
@@ -8,7 +7,9 @@ export default async function DemoPage() {
 
     return (
         <div className="px-main py-main">
-            <CompanyTable columns={columns} data={companies} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-main">
+                <ListCompanies data={companies} />
+            </div>
         </div>
     );
 }

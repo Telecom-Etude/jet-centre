@@ -39,6 +39,7 @@ export default function Page() {
                     <BoxButtonReload onClick={() => {}} />
                     <BoxButtonTemplate onClick={() => {}} />
                     <BoxButtonPlus onClick={() => {}} />
+                    <BoxButtonEdit onClick={() => {}} />
                 </BoxHeaderBlock>
             </BoxHeader>
             <BoxContent>Contenu de la boite</BoxContent>

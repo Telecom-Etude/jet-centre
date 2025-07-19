@@ -2,7 +2,7 @@
 
 import { ReactNode, forwardRef } from 'react';
 import AnimateHeight from 'react-animate-height';
-import { FaGripLines, FaPlus, FaTrash } from 'react-icons/fa6';
+import { FaGripLines, FaPencil, FaPlus, FaTrash } from 'react-icons/fa6';
 import { GoProjectTemplate } from 'react-icons/go';
 import { HiRefresh } from 'react-icons/hi';
 import { IconType } from 'react-icons/lib';
@@ -130,9 +130,11 @@ const BoxButtonTemplate = (props: BoxButtonProps) =>
     BoxButtonIcon({ ...props, Icon: GoProjectTemplate });
 const BoxButtonTrash = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: FaTrash });
 const BoxButtonReload = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: HiRefresh });
+const BoxButtonEdit = (props: BoxButtonProps) => BoxButtonIcon({ ...props, Icon: FaPencil });
 
 interface BoxButtonProps {
     onClick: () => void;
+    hoverContent?: string;
 }
 
 const BoxButton = ({ onClick, children }: BoxButtonProps & { children: ReactNode }) => (
@@ -247,6 +249,7 @@ export {
     BoxButtonPlus,
     BoxButtonTrash,
     BoxButtonIcon,
+    BoxButtonEdit,
     BoxButtonReload,
     BoxCollapseButton,
     BoxCollapser,
