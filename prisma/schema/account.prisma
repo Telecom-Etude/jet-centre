@@ -21,13 +21,16 @@ model User {
 }
 
 model Admin {
-    id             String  @id @default(cuid())
-    user           User    @relation(fields: [userId], references: [id])
-    userId         String  @unique
+    id             String   @id @default(cuid())
+    user           User     @relation(fields: [userId], references: [id])
+    userId         String   @unique
     position       String?
+    senior         Boolean?
     image          String?
-    studies        Study[] @relation("cdp")
-    auditedStudies Study[] @relation("auditor")
+    studies        Study[]  @relation("cdp")
+    auditedStudies Study[]  @relation("auditor")
+    seniorStudies  Study[]  @relation("senior")
+    Study          Study[]
 }
 
 model UserSettings {

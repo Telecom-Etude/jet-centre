@@ -2,6 +2,9 @@ model Study {
     id              String          @id @default(cuid())
     cdps            Admin[]         @relation("cdp")
     auditors        Admin[]         @relation("auditor")
+    referent        Admin?          @relation(fields: [referentID], references: [id])
+    referentID      String?
+    seniorCDPs      Admin[]         @relation("senior")
     information     StudyInfos      @relation(fields: [informationId], references: [id])
     informationId   String          @unique
     progress        StudyProgress?
