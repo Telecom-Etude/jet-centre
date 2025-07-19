@@ -17,6 +17,7 @@ import {
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import type { CompanyColumn, CompanyTable, CompanyName } from './types';
+import { DataTablePagination } from './pagination';
 
 function TableEntries({ table, columns }: { table: CompanyTable; columns: CompanyColumn[] }) {
     return (
@@ -75,29 +76,6 @@ function TableEntries({ table, columns }: { table: CompanyTable; columns: Compan
     );
 }
 
-function TableActions({ table }: { table: CompanyTable }) {
-    return (
-        <div className="flex items-center justify-end space-x-2 py-4">
-            <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-            >
-                Previous
-            </Button>
-            <Button
-                variant="outline"
-                size="sm"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-            >
-                Next
-            </Button>
-        </div>
-    );
-}
-
 interface DataTableProps {
     columns: CompanyColumn[];
     data: CompanyName[];
@@ -114,7 +92,7 @@ export function CompanyTable({ columns, data }: DataTableProps) {
     return (
         <>
             <TableEntries table={table} columns={columns} />
-            <TableActions table={table} />
+            <DataTablePagination table={table} />
         </>
     );
 }
