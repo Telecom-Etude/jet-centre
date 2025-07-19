@@ -23,7 +23,15 @@ import { DataTablePagination } from './pagination';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 
-function TableEntries({ table, columns }: { table: CompanyTable; columns: CompanyColumn[] }) {
+function DataTableEntries({
+    table,
+    columns,
+    setSelectedClient,
+}: {
+    setSelectedClient: (id: string) => void;
+    table: CompanyTable;
+    columns: CompanyColumn[];
+}) {
     return (
         <Table className="rounded-lg border">
             <TableHeader>
@@ -55,15 +63,13 @@ function TableEntries({ table, columns }: { table: CompanyTable; columns: Compan
                                 .filter((cell) => cell.column.columnDef.header !== 'Id')
                                 .map((cell) => (
                                     <TableCell key={cell.id} className="flex p-0">
-                                        <Link
-                                            href={`edit-client/${row.getValue('id')}`}
-                                            className="w-full h-full p-4 hover:underline"
+                                        <Button
+                                            variant="link"
+                                            onClick={() => setSelectedClient(row.getValue('id'))}
+                                            className="w-full flex justify-start h-full p-4 hover:underline"
                                         >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </Link>
+                                            {row.getValue('name')}
+                                        </Button>
                                     </TableCell>
                                 ))}
                         </TableRow>
@@ -77,6 +83,19 @@ function TableEntries({ table, columns }: { table: CompanyTable; columns: Compan
                 )}
             </TableBody>
         </Table>
+    );
+}
+
+function DataTableSearch({ table }: { table: CompanyTable }) {
+    return (
+        <div className="flex items-center w-full pb-main">
+            <Input
+                placeholder="Rechercher..."
+                value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
+                onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
+                className="lg:max-w-[50%]"
+            />
+        </div>
     );
 }
 
@@ -96,21 +115,20 @@ export function CompanyTable({ columns, data }: DataTableProps) {
         getFilteredRowModel: getFilteredRowModel(),
         state: { columnFilters },
     });
+    const [selectedClient, setSelectedClient] = useState<string>();
 
     return (
-        <>
-            <div className="flex items-center w-full pb-main">
-                <Input
-                    placeholder="Rechercher..."
-                    value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-                    onChange={(event) =>
-                        table.getColumn('name')?.setFilterValue(event.target.value)
-                    }
-                    className="lg:max-w-[50%]"
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+            <div>
+                <DataTableSearch table={table} />
+                <DataTableEntries
+                    table={table}
+                    columns={columns}
+                    setSelectedClient={setSelectedClient}
                 />
+                <DataTablePagination table={table} />
             </div>
-            <TableEntries table={table} columns={columns} />
-            <DataTablePagination table={table} />
-        </>
+            <div>Selected client: {selectedClient}</div>
+        </div>
     );
 }
