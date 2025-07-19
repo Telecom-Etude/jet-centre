@@ -12,9 +12,20 @@ export default async function TableauSuivi() {
             cdps: {
                 select: {
                     user: { select: { person: { select: { firstName: true, lastName: true } } } },
+                    position: true,
                 },
             },
             auditors: {
+                select: {
+                    user: { select: { person: { select: { firstName: true, lastName: true } } } },
+                },
+            },
+            seniorCDPs: {
+                select: {
+                    user: { select: { person: { select: { firstName: true, lastName: true } } } },
+                },
+            },
+            referent: {
                 select: {
                     user: { select: { person: { select: { firstName: true, lastName: true } } } },
                 },
@@ -53,11 +64,14 @@ export default async function TableauSuivi() {
         step: study.progress ? (study.progress.step as string) : null,
         next_deadline: 'Pas défini',
         cdps: study.cdps.map((cdp) => cdp.user.person.firstName + ' ' + cdp.user.person.lastName),
-        senior_cdps: study.cdps.map(
-            (cdp) => cdp.user.person.firstName + ' ' + cdp.user.person.lastName
+        senior_cdps: study.seniorCDPs.map(
+            (senior) => senior.user.person.firstName + ' ' + senior.user.person.lastName
         ),
-        refs: study.auditors.map(
-            (auditor) => auditor.user.person.lastName + ' ' + auditor.user.person.firstName
+        ref: study.referent
+            ? study.referent.user.person.firstName + ' ' + study.referent.user.person.lastName
+            : null,
+        auditors: study.auditors.map(
+            (auditor) => auditor.user.person.firstName + ' ' + auditor.user.person.lastName
         ),
         title: study.information.title,
         type_study: study.information.domain.map((domain) => domain as string),
