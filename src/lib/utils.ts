@@ -4,6 +4,7 @@
  * @file utils.ts
  */
 
+import { Address } from '@prisma/client';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -74,4 +75,18 @@ export function reloadWindow() {
 
 export function personName({ firstName, lastName }: { firstName: string; lastName: string }) {
     return firstName + ' ' + lastName;
+}
+
+export function stringifyAddress(address: Address): string {
+    return (
+        address.streetNumber +
+        ' ' +
+        address.streetName +
+        ', ' +
+        address.zipCode +
+        ' ' +
+        address.city +
+        ', ' +
+        address.country
+    );
 }

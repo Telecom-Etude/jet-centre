@@ -14,10 +14,7 @@ import { CompanyTable } from './data-table';
 import { useRouter } from 'next/navigation';
 import { FullCompany, getCompanyFromId } from './actions';
 import { ErrorPage } from '@/components/error';
-
-function DisplayCompany({ company }: { company: FullCompany }) {
-    return <h3>{company.name}</h3>;
-}
+import { DisplayCompany } from './display-company';
 
 function CompanyBoxContent({
     company,
@@ -28,7 +25,11 @@ function CompanyBoxContent({
 }) {
     switch (loadingState) {
         case LoadingState.NotSet:
-            return <p>Sélectionnez une entreprise pour afficher ses informations</p>;
+            return (
+                <ErrorPage title="Aucune entreprise sélectionnée">
+                    <p>Sélectionnez une entreprise pour voir ses informations</p>
+                </ErrorPage>
+            );
         case LoadingState.Loading:
             return <ErrorPage title="Chargement en cours" />;
         case LoadingState.Error:
