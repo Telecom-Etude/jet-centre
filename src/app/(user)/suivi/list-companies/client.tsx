@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Box,
     BoxButtonEdit,
@@ -12,26 +12,89 @@ import {
 import { CompanyName } from './types';
 import { CompanyTable } from './data-table';
 import { useRouter } from 'next/navigation';
+import { FullCompany, getCompanyFromId } from './actions';
+import { ErrorPage } from '@/components/error';
+
+function DisplayCompany({ company }: { company: FullCompany }) {
+    return <h3>{company.name}</h3>;
+}
+
+function CompanyBoxContent({
+    company,
+    loadingState,
+}: {
+    company?: FullCompany;
+    loadingState: LoadingState;
+}) {
+    switch (loadingState) {
+        case LoadingState.NotSet:
+            return <p>Sélectionnez une entreprise pour afficher ses informations</p>;
+        case LoadingState.Loading:
+            return <ErrorPage title="Chargement en cours" />;
+        case LoadingState.Error:
+            return (
+                <ErrorPage title="Erreur innattendue">
+                    <p>Merci de faire un ticket SOS pour signaler cette erreur</p>
+                    <p>Erreur lors de la récupération du client</p>
+                </ErrorPage>
+            );
+        case LoadingState.Displayed:
+            return company === undefined ? (
+                <ErrorPage title="Erreur innattendue">
+                    <p>Merci de faire un ticket SOS pour signaler cette erreur</p>
+                    <p>Erreur lors de la récupération du client</p>
+                </ErrorPage>
+            ) : (
+                <DisplayCompany company={company} />
+            );
+    }
+}
+
+enum LoadingState {
+    NotSet,
+    Loading,
+    Displayed,
+    Error,
+}
 
 export function ListCompanies({ data }: { data: CompanyName[] }) {
-    const [selectedClient, setSelectedClient] = useState<string>();
+    const [selectedCompany, setSelectedCompany] = useState<string>();
+    const [loadingState, setLoadingState] = useState<LoadingState>(LoadingState.NotSet);
+    const [company, setCompany] = useState<FullCompany>();
+
+    useEffect(() => {
+        setLoadingState(LoadingState.NotSet);
+
+        if (!selectedCompany) return setLoadingState(LoadingState.NotSet);
+
+        setLoadingState(LoadingState.Loading);
+        getCompanyFromId(selectedCompany).then((company) => {
+            if (!company) return setLoadingState(LoadingState.Error);
+
+            setCompany(company);
+            setLoadingState(LoadingState.Displayed);
+        });
+    }, [selectedCompany]);
+
     const router = useRouter();
     return (
         <>
-            <CompanyTable data={data} setSelectedClient={setSelectedClient} />
+            <CompanyTable data={data} setSelectedCompany={setSelectedCompany} />
             <Box className="w-full">
                 <BoxHeader>
                     <BoxTitle>Informations sur l&apos;entreprise</BoxTitle>
                     <BoxHeaderBlock>
-                        {selectedClient !== undefined && (
+                        {company && (
                             <BoxButtonEdit
-                                onClick={() => router.push('edit-company/' + selectedClient)}
+                                onClick={() => router.push('edit-company/' + selectedCompany)}
                                 hoverContent="Edit company"
                             />
                         )}
                     </BoxHeaderBlock>
                 </BoxHeader>
-                <BoxContent>Informations...</BoxContent>
+                <BoxContent>
+                    <CompanyBoxContent company={company} loadingState={loadingState} />
+                </BoxContent>
             </Box>
         </>
     );

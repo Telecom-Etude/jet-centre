@@ -27,9 +27,9 @@ import { columns } from './columns';
 function DataTableEntries({
     table,
     columns,
-    setSelectedClient,
+    setSelectedCompany,
 }: {
-    setSelectedClient: (id: string) => void;
+    setSelectedCompany: (id: string) => void;
     table: CompanyTable;
     columns: CompanyColumn[];
 }) {
@@ -66,7 +66,7 @@ function DataTableEntries({
                                     <TableCell key={cell.id} className="flex p-0">
                                         <Button
                                             variant="link"
-                                            onClick={() => setSelectedClient(row.getValue('id'))}
+                                            onClick={() => setSelectedCompany(row.getValue('id'))}
                                             className="w-full flex justify-start h-full p-4 hover:underline"
                                         >
                                             {row.getValue('name')}
@@ -102,10 +102,10 @@ function DataTableSearch({ table }: { table: CompanyTable }) {
 
 export function CompanyTable({
     data,
-    setSelectedClient,
+    setSelectedCompany,
 }: {
     data: CompanyName[];
-    setSelectedClient: (id: string) => void;
+    setSelectedCompany: (id: string) => void;
 }) {
     const [columnFilters, onColumnFiltersChange] = useState<ColumnFiltersState>([]);
     const table = useReactTable({
@@ -124,7 +124,7 @@ export function CompanyTable({
             <DataTableEntries
                 table={table}
                 columns={columns}
-                setSelectedClient={setSelectedClient}
+                setSelectedCompany={setSelectedCompany}
             />
             <DataTablePagination table={table} />
         </div>
