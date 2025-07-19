@@ -22,7 +22,9 @@ export type StudyProps = {
     step: string | null;
     next_deadline: string;
     cdps: string[];
-    refs: string[];
+    ref: string | null;
+    auditors: string[];
+    senior_cdps: string[];
     title: string | null;
     type_study: string[];
     date_pre_study: string;
@@ -86,7 +88,7 @@ export const columns: ColumnDef<StudyProps>[] = [
         header: 'Prochaine deadline',
     },
     {
-        accessorKey: 'refs',
+        accessorKey: 'ref',
         header: "Référent d'étude",
     },
     {
@@ -96,6 +98,10 @@ export const columns: ColumnDef<StudyProps>[] = [
     {
         accessorKey: 'cdps',
         header: 'Chefs de projet',
+    },
+    {
+        accessorKey: 'auditors',
+        header: 'Auditeurs',
     },
     {
         accessorKey: 'title',

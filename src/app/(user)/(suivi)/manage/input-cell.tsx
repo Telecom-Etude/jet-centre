@@ -15,14 +15,16 @@ interface InputCellProps {
 
 enum isSingleCombobox {
     step,
+    ref,
     oc,
     cconf,
     qs,
 }
 
 enum isManyCombobox {
-    refs,
     cdps,
+    auditors,
+    senior_cdps,
     type_study,
     client_name,
     client_email,
@@ -53,14 +55,15 @@ interface ListType {
 }
 
 export function InputCell({ type, data, comp, context, id, clientsData }: InputCellProps) {
-    const { admins, clientsName, clientsEmail } = clientsData;
+    const { admins, seniors, refs, auditors, clientsName, clientsEmail } = clientsData;
 
     const step = Object.values(StudyProgressStep);
     const type_study = Object.values(Domain);
 
     const listItemManyComboBox: ListItem = {
-        refs: admins ? admins : [],
         cdps: admins ? admins : [],
+        auditors: auditors ? auditors : [],
+        senior_cdps: seniors ? seniors : [],
         type_study: type_study,
         client_name: clientsName ? clientsName : [],
         client_email: clientsEmail ? clientsEmail : [],
@@ -68,6 +71,7 @@ export function InputCell({ type, data, comp, context, id, clientsData }: InputC
 
     const listItemSingleComboBox: ListItem = {
         step: step,
+        ref: refs,
         oc: ["Pas d'OC", 'Non envoyée', 'Envoyée client', 'Acceptée client'],
         cconf: ['Oui', 'Non'],
         qs: ['Non envoyé', 'Non concerné', 'Envoyé', 'Sans réponse', 'Reçu'],
@@ -75,8 +79,10 @@ export function InputCell({ type, data, comp, context, id, clientsData }: InputC
 
     const listId: ListType = {
         step: 'Chercher un status',
-        refs: 'Chercher un.e référent.e',
-        cdps: 'Chercher des CDPs',
+        ref: 'Chercher un.e référent.e',
+        cdps: 'Chercher un.e CDP',
+        auditors: 'Chercher un auditeur',
+        senior_cdps: 'Chercher un vieux',
         type_study: 'Chercher un type',
         client_name: 'Chercher un client',
         client_email: 'Chercher un mail client',
