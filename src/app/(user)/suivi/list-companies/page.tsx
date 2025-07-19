@@ -1,19 +1,14 @@
-import { getClients } from './actions';
+import { getCompanies } from './actions';
+import { columns } from './columns';
+import { CompanyTable } from './data-table';
 
-export default async function Page() {
-    const clients = await getClients();
+export default async function DemoPage() {
+    const companies = await getCompanies();
+    if (companies === undefined) throw new Error();
 
     return (
-        <div>
-            {clients ? (
-                clients.map(({ name }, i) => (
-                    <div key={i} className="flex">
-                        <p>{name}</p>
-                    </div>
-                ))
-            ) : (
-                <p>500 error</p>
-            )}
+        <div className="px-main py-main">
+            <CompanyTable columns={columns} data={companies} />
         </div>
     );
 }
