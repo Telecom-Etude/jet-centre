@@ -19,6 +19,7 @@ To create the boxes of the template.
 
 import {
     Box,
+    BoxButtonEdit,
     BoxButtonPlus,
     BoxButtonReload,
     BoxButtonTemplate,
