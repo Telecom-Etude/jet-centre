@@ -5,6 +5,7 @@ import { Address } from '@prisma/client';
 import { useState } from 'react';
 
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
+import { upsertAddress } from './upsert-addres';
 
 function UpdateAddressElement({
     name,
@@ -34,7 +35,32 @@ function UpdateAddressElement({
 export function UpsertAddress({ address }: { address: Address | null }) {
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
 
-    const updateServer = () => {};
+    const updateServer = () => {
+        setStatus(UpdateBoxStatus.Loading);
+        upsertAddress({
+            id,
+            streetName,
+            streetNumber,
+            zipCode,
+            city,
+            country,
+            personId: address?.personId ?? null,
+            companyId: address?.companyId ?? null,
+        }).then((serverAddress) => {
+            if (serverAddress === undefined) return setStatus(UpdateBoxStatus.Error);
+            if (id !== undefined && serverAddress.id != id) return setStatus(UpdateBoxStatus.Error);
+            if (
+                serverAddress.streetNumber !== streetNumber ||
+                serverAddress.streetName !== streetName ||
+                serverAddress.zipCode !== zipCode ||
+                serverAddress.city !== city ||
+                serverAddress.country !== country
+            ) {
+                return setStatus(UpdateBoxStatus.NotSynced);
+            }
+            return setStatus(UpdateBoxStatus.Ok);
+        });
+    };
 
     const [id, setId] = useState(address?.id);
     const [streetNumber, setStreetNumber] = useState(address?.streetNumber ?? '');
@@ -44,7 +70,7 @@ export function UpsertAddress({ address }: { address: Address | null }) {
     const [country, setCountry] = useState(address?.country ?? '');
     return (
         <div className="p-8">
-            <UpdateBox title="Counter" update={updateServer} status={status}>
+            <UpdateBox title="Adresse" update={updateServer} status={status}>
                 <div className="space-y-main">
                     <UpdateAddressElement
                         name="N° rue"
