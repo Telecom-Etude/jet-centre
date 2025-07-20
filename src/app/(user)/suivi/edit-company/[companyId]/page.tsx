@@ -24,7 +24,7 @@ function Name({ company }: { company: FullCompany }) {
     );
 
     return (
-        <div className="flex items-center flex-col justify-center">
+        <div className="flex h-full items-center flex-col justify-center">
             <h1 className="text-3xl text-primary font-bold">{company.name}</h1>
             <HoverCard>
                 <HoverCardTrigger>
@@ -65,13 +65,21 @@ export default async function Page({ params }: { params: Promise<{ companyId: st
 
     return (
         <div className="grid gap-main p-main grid-cols-1 lg:grid-cols-2">
-            <Name company={company} />
-            <UpsertAddress address={company.address} companyId={companyId} />
-            <CompanyDomains
-                companyInfosId={company.companyInfosId}
-                domains={company.companyInfos.domains}
-            />
-            <Employees company={company} />
+            <div className="h-full">
+                <Name company={company} />
+            </div>
+            <div className="h-full">
+                <CompanyDomains
+                    companyInfosId={company.companyInfosId}
+                    domains={company.companyInfos.domains}
+                />
+            </div>
+            <div className="h-full">
+                <UpsertAddress address={company.address} companyId={companyId} />
+            </div>
+            <div className="h-full">
+                <Employees company={company} />
+            </div>
         </div>
     );
 }
