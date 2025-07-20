@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { FaBug, FaCheck } from 'react-icons/fa6';
+import { FaBug, FaCheck, FaUser } from 'react-icons/fa6';
 import { IoWarning } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
 
@@ -44,6 +44,12 @@ export enum UpdateBoxStatus {
      * This is typically when the operation needs interaction with the database or with Google Drive, and thus takes time to execute.
      */
     Loading,
+    /**
+     * The update function can't be run yet: the user hasn't finished.
+     *
+     * This is used when you need to fill all the entries before updating, all the data shouldn't be saved automatically.
+     */
+    UserPending,
 }
 
 /** An object containing information needed to display the status on the {@link UpdateBox}. */
@@ -90,6 +96,13 @@ function getInfos(status: UpdateBoxStatus): StatusInfos {
                 iconClassName: 'text-destructive',
                 hoverContent:
                     "Le serveur est toujours vivant, mais vos données n'ont pas été sauvegardées 🤔. Réessayez!",
+            };
+        case UpdateBoxStatus.UserPending:
+            return {
+                Icon: FaUser,
+                iconClassName: 'text-destructive',
+                hoverContent:
+                    'Lorsque vous avez terminé, cliquez ici pour sauvegarder. Attention, en attendant, vos données ne sont pas sauvegardée.',
             };
     }
 }

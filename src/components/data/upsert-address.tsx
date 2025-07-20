@@ -49,7 +49,7 @@ export function UpsertAddress({
     const updateServer = () => {
         setStatus(UpdateBoxStatus.Loading);
         if (!streetName || !streetNumber || !city || !zipCode || !country)
-            return setStatus(UpdateBoxStatus.NotSynced);
+            return setStatus(UpdateBoxStatus.UserPending);
         upsertAddress({
             id,
             streetName,
