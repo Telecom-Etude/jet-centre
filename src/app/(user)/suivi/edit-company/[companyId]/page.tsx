@@ -4,7 +4,7 @@ import { ErrorPage } from '@/components/error';
 import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { UpsertAddress } from '@/components/data/upsert-address';
-import { CompanyDomains } from './domains';
+import { EditCompanyInfos } from '././company-infos';
 
 function Employees({ company }: { company: FullCompany }) {
     return (
@@ -69,10 +69,7 @@ export default async function Page({ params }: { params: Promise<{ companyId: st
                 <Name company={company} />
             </div>
             <div className="h-full">
-                <CompanyDomains
-                    companyInfosId={company.companyInfosId}
-                    domains={company.companyInfos.domains}
-                />
+                <EditCompanyInfos company={company} />
             </div>
             <div className="h-full">
                 <UpsertAddress address={company.address} companyId={companyId} />
