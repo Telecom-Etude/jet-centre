@@ -1,18 +1,16 @@
 'use server';
 
 import db from '@/db';
-import { Domain } from '@prisma/client';
+import { CompanyInfos } from '@prisma/client';
 
-export async function updateDomains(
-    companyInfosId: string,
-    domains: Domain[]
-): Promise<Domain[] | undefined> {
+export async function updateCompanyInfos(
+    companyInfos: CompanyInfos
+): Promise<CompanyInfos | undefined> {
     try {
-        const updated = await db.companyInfos.update({
-            where: { id: companyInfosId },
-            data: { domains },
+        return await db.companyInfos.update({
+            where: { id: companyInfos.id },
+            data: companyInfos,
         });
-        return updated.domains;
     } catch (e) {
         console.error(`[updateDomains] ${e}`);
     }

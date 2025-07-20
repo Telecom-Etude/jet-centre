@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
@@ -16,7 +16,7 @@ import {
 } from '@/db/types';
 
 import MultipleSelector, { Option } from '@/components/meta-components/multiple-selector';
-import { updateDomains } from './actions';
+import { updateCompanyInfos } from './actions';
 import { arrayEqual } from '@/lib/utils';
 
 import { FullCompany } from '../../list-companies/actions';
@@ -47,20 +47,33 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
     const updateServer = () => {
         setStatus(UpdateBoxStatus.Loading);
         const currentDomains = optionToDomain(domains);
-        updateDomains(company.companyInfosId, currentDomains).then((serverDomains) => {
-            if (serverDomains === undefined) return setStatus(UpdateBoxStatus.Error);
-            if (arrayEqual(serverDomains, currentDomains)) return setStatus(UpdateBoxStatus.Ok);
+        updateCompanyInfos({
+            id: company.companyInfos.id,
+            domains: currentDomains,
+            ca: ca ?? null,
+            size: size ?? null,
+        }).then((serverData) => {
+            if (serverData === undefined) return setStatus(UpdateBoxStatus.Error);
+            console.log('=========', size, serverData.size);
+            if (
+                arrayEqual(serverData.domains, currentDomains) &&
+                (!ca || serverData.ca === ca) &&
+                (!size || serverData.size === size)
+            )
+                return setStatus(UpdateBoxStatus.Ok);
             return setStatus(UpdateBoxStatus.NotSynced);
         });
     };
+
+    useEffect(updateServer, [domains, size]);
 
     return (
         <UpdateBox withBackdrop={false} title="Domaines" update={updateServer} status={status}>
             <MultipleSelector
                 value={domains}
                 onChange={(value) => {
-                    setDomains(value);
                     setStatus(UpdateBoxStatus.UserPending);
+                    setDomains(value);
                 }}
                 defaultOptions={ALL_DOMAIN_OPTIONS}
                 emptyIndicator={
@@ -70,15 +83,24 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
                 }
             />
             <div className="flex items-center space-x-main">
-                <p>CA</p>
-                <Input value={ca} onChange={(e) => setCa(parseInt(e.target.value))} type="number" />
+                <p className="w-fit">CA (k€)</p>
+                <Input
+                    className="flex-grow w-fit"
+                    value={ca}
+                    onChange={(e) => {
+                        setStatus(UpdateBoxStatus.UserPending);
+                        setCa(e.target.value.length === 0 ? undefined : parseInt(e.target.value));
+                    }}
+                    onBlur={() => updateServer()}
+                    type="number"
+                />
             </div>
             <div className="flex items-center space-x-main">
                 <p>Taille</p>
                 <SingleCombobox
                     currentKey={size ? COMPANY_SIZES[size].display : null}
                     selectKey={(size_name) => {
-                        updateServer();
+                        setStatus(UpdateBoxStatus.UserPending);
                         setSize(COMPANY_SIZE_DISPLAYS[size_name as CompanySizeDisplay]);
                     }}
                     emptyMessage="Mauvais nom de taille"
