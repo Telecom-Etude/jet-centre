@@ -5,18 +5,7 @@ import Link from 'next/link';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { UpsertAddress } from '@/components/data/upsert-address';
 import { EditCompanyInfos } from '././company-infos';
-
-function Employees({ company }: { company: FullCompany }) {
-    return (
-        <Box className="w-full">
-            <BoxHeader>
-                <BoxTitle>Employés</BoxTitle>
-                <BoxHeaderBlock></BoxHeaderBlock>
-            </BoxHeader>
-            <BoxContent>content</BoxContent>
-        </Box>
-    );
-}
+import { EditCompanyEmployees } from './company-employees';
 
 function Name({ company }: { company: FullCompany }) {
     const studies: string[] = company.members.flatMap((member) =>
@@ -75,7 +64,7 @@ export default async function Page({ params }: { params: Promise<{ companyId: st
                 <UpsertAddress address={company.address} companyId={companyId} />
             </div>
             <div className="h-full">
-                <Employees company={company} />
+                <EditCompanyEmployees company={company} />
             </div>
         </div>
     );

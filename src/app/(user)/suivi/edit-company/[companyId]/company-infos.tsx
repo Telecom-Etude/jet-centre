@@ -68,7 +68,7 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
     useEffect(updateServer, [domains, size]);
 
     return (
-        <UpdateBox withBackdrop={false} title="Domaines" update={updateServer} status={status}>
+        <UpdateBox withBackdrop={false} title="Informations" update={updateServer} status={status}>
             <MultipleSelector
                 value={domains}
                 onChange={(value) => {
