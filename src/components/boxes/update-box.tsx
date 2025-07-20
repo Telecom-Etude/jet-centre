@@ -115,12 +115,14 @@ function getInfos(status: UpdateBoxStatus): StatusInfos {
  * @property {ReactNode} children - The content rendered inside the update box.
  * @property {UpdateBoxStatus} status - The current status of the update box, affecting the icon.
  * @property {() => void} update - Callback function triggered when the update icon is clicked.
+ * @property {boolean} withBackdrop - Boolean to indicate if the box should have a backdrop.
  */
 interface UpdateBoxProps {
     title: string;
     children: ReactNode;
     status: UpdateBoxStatus;
     update: () => void;
+    withBackdrop?: boolean;
 }
 
 /**
@@ -129,10 +131,16 @@ interface UpdateBoxProps {
  *
  * @param {UpdateBoxProps} props - The properties for the component.
  */
-export function UpdateBox({ title, children, status, update }: UpdateBoxProps) {
+export function UpdateBox({
+    title,
+    children,
+    status,
+    update,
+    withBackdrop = true,
+}: UpdateBoxProps) {
     'use client';
     return (
-        <Box className="w-full">
+        <Box className="w-full" withBackdrop={withBackdrop}>
             <BoxHeader>
                 <BoxTitle>{title}</BoxTitle>
                 <BoxHeaderBlock>

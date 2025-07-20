@@ -14,8 +14,11 @@ import { ANIMATION_DURATION_MS } from '@/settings/vars';
 
 const Box = forwardRef<
     HTMLDivElement,
-    { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>
->(({ children, className, ...props }, ref) => (
+    { children: ReactNode; withBackdrop?: boolean; className?: string | string[] } & Omit<
+        any,
+        'children' | 'className'
+    >
+>(({ children, withBackdrop = true, className, ...props }, ref) => (
     <div
         ref={ref}
         className={cn(
@@ -23,7 +26,7 @@ const Box = forwardRef<
             'border border-box-hover/10',
             'rounded-xl bg-box-background',
             'shadow-lg shadow-black/5',
-            'backdrop-blur-sm',
+            withBackdrop && 'backdrop-blur-sm',
             'transition-all duration-200 ease-in-out',
             'hover:border-box-hover/20',
             className
