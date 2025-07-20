@@ -13,11 +13,13 @@ function UpdateAddressElement({
     value,
     setValue,
     updateServer,
+    setStatus,
 }: {
     name: string;
     value: string | undefined;
     setValue: (value: string) => void;
     updateServer: () => void;
+    setStatus: (status: UpdateBoxStatus) => void;
 }) {
     return (
         <div className="flex items-center space-x-main">
@@ -26,7 +28,10 @@ function UpdateAddressElement({
                 value={value ?? ''}
                 className="w-fit flex-grow"
                 type="text"
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => {
+                    setStatus(UpdateBoxStatus.UserPending);
+                    setValue(e.target.value);
+                }}
                 onBlur={updateServer}
             />
         </div>
@@ -109,30 +114,35 @@ export function UpsertAddress({
                         value={streetNumber}
                         setValue={setStreetNumber}
                         updateServer={updateServer}
+                        setStatus={setStatus}
                     />
                     <UpdateAddressElement
                         name="Nom de rue"
                         value={streetName}
                         setValue={setStreetName}
                         updateServer={updateServer}
+                        setStatus={setStatus}
                     />
                     <UpdateAddressElement
                         name="Code postal"
                         value={zipCode}
                         setValue={setZipCode}
                         updateServer={updateServer}
+                        setStatus={setStatus}
                     />
                     <UpdateAddressElement
                         name="Ville"
                         value={city}
                         setValue={setCity}
                         updateServer={updateServer}
+                        setStatus={setStatus}
                     />
                     <UpdateAddressElement
                         name="Pays"
                         value={country}
                         setValue={setCountry}
                         updateServer={updateServer}
+                        setStatus={setStatus}
                     />
                 </div>
             </UpdateBox>
