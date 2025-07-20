@@ -1,11 +1,12 @@
 'use client';
+
 import { Input } from '@/components/ui/input';
 import { Address } from '@prisma/client';
 import { useState } from 'react';
 
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { upsertAddress } from './upsert-addres';
-import { DangerousError } from '../error';
+import { DangerousError } from '../dangerous-alert';
 
 function UpdateAddressElement({
     name,
@@ -14,7 +15,7 @@ function UpdateAddressElement({
     updateServer,
 }: {
     name: string;
-    value: string;
+    value: string | undefined;
     setValue: (value: string) => void;
     updateServer: () => void;
 }) {
@@ -22,7 +23,7 @@ function UpdateAddressElement({
         <div className="flex items-center space-x-main">
             <p className="w-fit">{name}</p>
             <Input
-                value={value}
+                value={value ?? ''}
                 className="w-fit flex-grow"
                 type="text"
                 onChange={(e) => setValue(e.target.value)}
@@ -32,13 +33,23 @@ function UpdateAddressElement({
     );
 }
 
-export function UpsertAddress({ address }: { address: Address | null }) {
+export function UpsertAddress({
+    address,
+    personId,
+    companyId,
+}: {
+    address: Address | null;
+    personId?: string;
+    companyId?: string;
+}) {
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
     const [mixedIds, setMixedIds] = useState<[string, string]>();
     const [mixedErrorOpen, setMixedErrorOpen] = useState(false);
 
     const updateServer = () => {
         setStatus(UpdateBoxStatus.Loading);
+        if (!streetName || !streetNumber || !city || !zipCode || !country)
+            return setStatus(UpdateBoxStatus.NotSynced);
         upsertAddress({
             id,
             streetName,
@@ -46,8 +57,8 @@ export function UpsertAddress({ address }: { address: Address | null }) {
             zipCode,
             city,
             country,
-            personId: address?.personId ?? null,
-            companyId: address?.companyId ?? null,
+            personId: address?.personId ?? personId ?? null,
+            companyId: address?.companyId ?? companyId ?? null,
         }).then((serverAddress) => {
             if (serverAddress === undefined) return setStatus(UpdateBoxStatus.Error);
             if (id !== undefined && serverAddress.id != id) {
@@ -63,18 +74,20 @@ export function UpsertAddress({ address }: { address: Address | null }) {
             ) {
                 return setStatus(UpdateBoxStatus.NotSynced);
             }
+            if (id === undefined) setId(serverAddress.id);
             return setStatus(UpdateBoxStatus.Ok);
         });
     };
 
     const [id, setId] = useState(address?.id);
-    const [streetNumber, setStreetNumber] = useState(address?.streetNumber ?? '');
-    const [streetName, setStreetName] = useState(address?.streetName ?? '');
-    const [zipCode, setZipCode] = useState(address?.zipCode ?? '');
-    const [city, setCity] = useState(address?.city ?? '');
-    const [country, setCountry] = useState(address?.country ?? '');
+    const [streetNumber, setStreetNumber] = useState(address?.streetNumber);
+    const [streetName, setStreetName] = useState(address?.streetName);
+    const [zipCode, setZipCode] = useState(address?.zipCode);
+    const [city, setCity] = useState(address?.city);
+    const [country, setCountry] = useState(address?.country);
+
     return (
-        <div className="p-8">
+        <div>
             <DangerousError
                 title="Cette modification a potentiellement écrasé une valeur en mémoire."
                 open={mixedErrorOpen}
@@ -87,6 +100,9 @@ export function UpsertAddress({ address }: { address: Address | null }) {
                 </p>
             </DangerousError>
             <UpdateBox title="Adresse" update={updateServer} status={status}>
+                <p className="italic">
+                    Remplissez tous les champs pour que la sauvegarde s'effectue.
+                </p>
                 <div className="space-y-main">
                     <UpdateAddressElement
                         name="N° rue"
