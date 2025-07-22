@@ -6,8 +6,10 @@ import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import MultipleSelector, { Option } from '@/components/meta-components/multiple-selector';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { getCompanyLessPeople } from './actions';
+import { createPerson, getCompanyLessPeople } from './actions';
 import { NewEmployee } from './new-employee';
+import { NewEmployeeSchemaType } from './schema';
+import { personName } from '@/lib/utils';
 
 export function EditCompanyEmployees({
     companyId,
@@ -49,6 +51,14 @@ export function EditCompanyEmployees({
         });
     };
 
+    const addEmployee = (person: NewEmployeeSchemaType) => {
+        createPerson(person.firstName, person.lastName).then((person) => {
+            if (person === undefined) return setStatus(UpdateBoxStatus.Error);
+            setMembers((current) => [...current, { label: personName(person), value: person.id }]);
+            updateServer();
+        });
+    };
+
     return (
         <UpdateBox title="Employés" update={updateServer} status={status}>
             <p className="italic">
@@ -74,12 +84,7 @@ export function EditCompanyEmployees({
                     Rafraîchir la base de personnes
                 </Button>
                 <Separator className="bg-primary" />
-                <NewEmployee
-                    addEmployee={(employee) => {}}
-                    updateServer={updateServer}
-                    status={status}
-                    setStatus={setStatus}
-                />
+                <NewEmployee addEmployee={(employee) => {}} status={status} setStatus={setStatus} />
             </div>
         </UpdateBox>
     );

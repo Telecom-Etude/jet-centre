@@ -15,12 +15,10 @@ import { UpdateBoxStatus } from '@/components/boxes/update-box';
 
 export function NewEmployee({
     addEmployee,
-    updateServer,
     status,
     setStatus,
 }: {
-    addEmployee: (person: { firstName: string; lastName: string; job: string }) => void;
-    updateServer: () => void;
+    addEmployee: (person: NewEmployeeSchemaType) => void;
     status: UpdateBoxStatus;
     setStatus: (status: UpdateBoxStatus) => void;
 }) {
@@ -31,7 +29,7 @@ export function NewEmployee({
     return (
         <FormProvider {...form}>
             <form
-                onSubmit={form.handleSubmit(async (values) => {
+                onSubmit={form.handleSubmit((values) => {
                     setStatus(UpdateBoxStatus.Loading);
                     addEmployee(values);
                 })}

@@ -39,6 +39,14 @@ export async function getCompanyLessPeople() {
     }
 }
 
+export async function createPerson(firstName: string, lastName: string) {
+    try {
+        return await db.person.create({ data: { firstName, lastName } });
+    } catch (e) {
+        console.error(`[createPerson] ${e}`);
+    }
+}
+
 export async function addPersonToCompany(personId: string, companyId: string, job: string) {
     try {
         return await db.client.create({ data: { personId, companyId, job } });

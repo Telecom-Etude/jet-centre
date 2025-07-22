@@ -54,7 +54,6 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
             size: size ?? null,
         }).then((serverData) => {
             if (serverData === undefined) return setStatus(UpdateBoxStatus.Error);
-            console.log('=========', size, serverData.size);
             if (
                 arrayEqual(serverData.domains, currentDomains) &&
                 (!ca || serverData.ca === ca) &&
