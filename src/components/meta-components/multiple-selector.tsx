@@ -178,7 +178,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             value,
             onChange,
             placeholder,
-            defaultOptions: arrayDefaultOptions = [],
+            defaultOptions = [],
             options: arrayOptions,
             delay,
             onSearch,
@@ -209,10 +209,14 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
 
         const [selected, setSelected] = React.useState<Option[]>(value || []);
         const [options, setOptions] = React.useState<GroupOption>(
-            transToGroupOption(arrayDefaultOptions, groupBy)
+            transToGroupOption(defaultOptions, groupBy)
         );
         const [inputValue, setInputValue] = React.useState('');
         const debouncedSearchTerm = useDebounce(inputValue, delay || 500);
+
+        useEffect(() => {
+            setOptions(transToGroupOption(defaultOptions, groupBy));
+        }, [defaultOptions]);
 
         React.useImperativeHandle(
             ref,
@@ -298,7 +302,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
             if (JSON.stringify(newOption) !== JSON.stringify(options)) {
                 setOptions(newOption);
             }
-        }, [arrayDefaultOptions, arrayOptions, groupBy, onSearch, options]);
+        }, [defaultOptions, arrayOptions, groupBy, onSearch, options]);
 
         useEffect(() => {
             /** sync search */
@@ -407,7 +411,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                 );
             }
 
-            return <CommandEmpty>{emptyIndicator}</CommandEmpty>;
+            return <CommandEmpty className="p-0">{emptyIndicator}</CommandEmpty>;
         }, [creatable, emptyIndicator, onSearch, options]);
 
         const selectables = React.useMemo<GroupOption>(
@@ -583,7 +587,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                                         <CommandGroup
                                             key={key}
                                             heading={key}
-                                            className="h-full overflow-auto"
+                                            className="p-0 h-full overflow-auto"
                                         >
                                             <>
                                                 {dropdowns.map((option) => {
