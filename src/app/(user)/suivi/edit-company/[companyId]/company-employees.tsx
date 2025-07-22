@@ -7,6 +7,7 @@ import MultipleSelector, { Option } from '@/components/meta-components/multiple-
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getCompanyLessPeople } from './actions';
+import { NewEmployee } from './new-employee';
 
 export function EditCompanyEmployees({
     companyId,
@@ -25,7 +26,9 @@ export function EditCompanyEmployees({
 
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
 
-    const updateServer = () => {};
+    const updateServer = () => {
+        setStatus(UpdateBoxStatus.Loading);
+    };
 
     const updatePeopleList = () => {
         const oldStatus = status;
@@ -71,7 +74,12 @@ export function EditCompanyEmployees({
                     Rafraîchir la base de personnes
                 </Button>
                 <Separator className="bg-primary" />
-                <p>nouvelle personne</p>
+                <NewEmployee
+                    addEmployee={(employee) => {}}
+                    updateServer={updateServer}
+                    status={status}
+                    setStatus={setStatus}
+                />
             </div>
         </UpdateBox>
     );

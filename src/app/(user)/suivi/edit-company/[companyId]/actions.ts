@@ -32,8 +32,17 @@ export async function getCompanyLessPeople() {
             value: person.id,
             label: personName(person),
             disable: !!person.clients,
+            clientId: person.clients?.id,
         }));
     } catch (e) {
         console.error(`[peopleNotInCompany] ${e}`);
+    }
+}
+
+export async function addPersonToCompany(personId: string, companyId: string, job: string) {
+    try {
+        return await db.client.create({ data: { personId, companyId, job } });
+    } catch (e) {
+        console.error(`[addPersonToCompany] ${e}`);
     }
 }
