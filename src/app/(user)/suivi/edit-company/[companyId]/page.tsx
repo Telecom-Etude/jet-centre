@@ -1,4 +1,3 @@
-import { Box, BoxContent, BoxHeader, BoxHeaderBlock, BoxTitle } from '@/components/boxes/boxes';
 import { FullCompany, getCompanyFromId } from '../../list-companies/actions';
 import { ErrorPage } from '@/components/error';
 import Link from 'next/link';
@@ -6,6 +5,8 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { UpsertAddress } from '@/components/data/upsert-address';
 import { EditCompanyInfos } from '././company-infos';
 import { EditCompanyEmployees } from './company-employees';
+import { personName } from '@/lib/utils';
+import { getCompanyLessPeople } from './actions';
 
 function Name({ company }: { company: FullCompany }) {
     const studies: string[] = company.members.flatMap((member) =>
@@ -51,6 +52,15 @@ export default async function Page({ params }: { params: Promise<{ companyId: st
     const { companyId } = await params;
     const company = await getCompanyFromId(companyId);
     if (company === null) return NoCompanyFound();
+    const members = company.members.map((member) => ({
+        label: personName(member.person),
+        value: member.personId,
+    }));
+    const personClientIdMap = Object.fromEntries(
+        company.members.map((client) => [client.personId, client.id])
+    );
+    const companyLessPeople = await getCompanyLessPeople();
+    if (companyLessPeople === undefined) throw new Error();
 
     return (
         <div className="grid gap-main p-main grid-cols-1 lg:grid-cols-2">
@@ -64,7 +74,12 @@ export default async function Page({ params }: { params: Promise<{ companyId: st
                 <UpsertAddress address={company.address} companyId={companyId} />
             </div>
             <div className="h-full">
-                <EditCompanyEmployees company={company} />
+                <EditCompanyEmployees
+                    companyId={companyId}
+                    members={members}
+                    companyLessPeople={companyLessPeople}
+                    personClientIdMap={personClientIdMap}
+                />
             </div>
         </div>
     );

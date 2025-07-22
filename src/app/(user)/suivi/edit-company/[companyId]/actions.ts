@@ -1,6 +1,7 @@
 'use server';
 
 import db from '@/db';
+import { personName } from '@/lib/utils';
 import { CompanyInfos } from '@prisma/client';
 
 export async function updateCompanyInfos(
@@ -13,5 +14,18 @@ export async function updateCompanyInfos(
         });
     } catch (e) {
         console.error(`[updateDomains] ${e}`);
+    }
+}
+
+export async function getCompanyLessPeople() {
+    try {
+        const companyLessPeople = await db.person.findMany({
+            select: { firstName: true, lastName: true, id: true },
+            where: { clients: undefined },
+        });
+
+        return companyLessPeople.map((person) => ({ value: person.id, label: personName(person) }));
+    } catch (e) {
+        console.error(`[peopleNotInCompany] ${e}`);
     }
 }

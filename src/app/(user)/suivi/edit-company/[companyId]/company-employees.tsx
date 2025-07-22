@@ -3,42 +3,58 @@
 import { useState } from 'react';
 
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
-import { FullCompany } from '../../list-companies/actions';
-import MultipleSelector from '@/components/meta-components/multiple-selector';
+import MultipleSelector, { Option } from '@/components/meta-components/multiple-selector';
 import { Button } from '@/components/ui/button';
-import { personName } from '@/lib/utils';
 import { Separator } from '@/components/ui/separator';
+import { getCompanyLessPeople } from './actions';
 
-export function EditCompanyEmployees({ company }: { company: FullCompany }) {
+export function EditCompanyEmployees({
+    companyId,
+    members: initialMembers,
+    personClientIdMap: initialPersonClientIdMap,
+    companyLessPeople: initialCompanyLessPeople,
+}: {
+    companyId: string;
+    members: Option[];
+    personClientIdMap: { [key: string]: string };
+    companyLessPeople: Option[];
+}) {
+    const [personClientIdMap, setPersonClientIdMap] = useState(initialPersonClientIdMap);
+    const [companyLessPeople, setCompanyLessPeople] = useState(initialCompanyLessPeople);
+    const [members, setMembers] = useState(initialMembers);
+
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
-    const [employees, setEmployees] = useState<{ label: string; value: string }[]>(
-        company.members.map((member) => ({
-            label: personName(member.person),
-            value: member.personId,
-        }))
-    );
-    const [people, setPeople] = useState([]);
 
     const updateServer = () => {};
-    const updatePeopleList = () => {};
+
+    const updatePeopleList = () => {
+        setStatus(UpdateBoxStatus.Loading);
+        getCompanyLessPeople().then((people) => {
+            if (people === undefined) return setStatus(UpdateBoxStatus.Error);
+            setCompanyLessPeople(people);
+            setStatus(UpdateBoxStatus.UserPending);
+        });
+    };
 
     return (
         <UpdateBox title="Employés" update={updateServer} status={status}>
             <div className="flex flex-col items-center space-y-main">
                 <MultipleSelector
-                    value={employees}
-                    onChange={(value) => {
+                    value={members}
+                    onChange={(people) => {
                         setStatus(UpdateBoxStatus.UserPending);
-                        setEmployees(value);
+                        setMembers(people);
                     }}
-                    defaultOptions={people}
+                    defaultOptions={companyLessPeople}
                     emptyIndicator={
-                        <p className="text-center text-lg leading-10 text-destructive">
+                        <p className="py-2 text-center text-destructive">
                             Personne n'existe avec ce nom.
                         </p>
                     }
                 />
-                <Button variant="outline">Rafraichir la base d&apos;utilisateurs</Button>
+                <Button variant="outline" onClick={updatePeopleList}>
+                    Rafraîchir la base de personnes
+                </Button>
                 <Separator className="bg-primary" />
                 <p>nouvelle personne</p>
             </div>
