@@ -28,15 +28,11 @@ export async function getCompanyLessPeople() {
             },
         });
 
-        console.log(JSON.stringify(companyLessPeople, null, 4));
-
-        const x = companyLessPeople.map((person) => ({
+        return companyLessPeople.map((person) => ({
             value: person.id,
             label: personName(person),
             disable: !!person.clients,
         }));
-        console.log(JSON.stringify(x, null, 4));
-        return x;
     } catch (e) {
         console.error(`[peopleNotInCompany] ${e}`);
     }

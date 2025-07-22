@@ -54,6 +54,7 @@ interface MultipleSelectorProps {
      **/
     onSearchSync?: (value: string) => Option[];
     onChange?: (options: Option[]) => void;
+    onBlur?: () => void;
     /** Limit the maximum number of selected options. */
     maxSelected?: number;
     /** When the number of selected options exceeds the limit, the onMaxSelected will be called. */
@@ -177,6 +178,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
         {
             value,
             onChange,
+            onBlur,
             placeholder,
             defaultOptions = [],
             options: arrayOptions,
@@ -447,6 +449,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
                     commandProps?.shouldFilter !== undefined ? commandProps.shouldFilter : !onSearch
                 } // When onSearch is provided, we don't want to filter the options. You can still override it.
                 filter={commandFilter()}
+                onBlur={onBlur}
             >
                 <div
                     className={cn(

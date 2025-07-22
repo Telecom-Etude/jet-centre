@@ -33,6 +33,15 @@ export function EditCompanyEmployees({
         getCompanyLessPeople().then((people) => {
             if (people === undefined) return setStatus(UpdateBoxStatus.Error);
             setCompanyLessPeople(people);
+
+            const entries = [];
+            for (const person of people) {
+                if (person.clientId) {
+                    entries.push([person.value, person.clientId]);
+                }
+            }
+            setPersonClientIdMap(Object.fromEntries(entries));
+
             setStatus(oldStatus);
         });
     };
@@ -45,9 +54,11 @@ export function EditCompanyEmployees({
             <div className="flex flex-col items-center space-y-main">
                 <MultipleSelector
                     value={members}
+                    onBlur={() => updateServer()}
                     onChange={(people) => {
-                        setStatus(UpdateBoxStatus.UserPending);
                         setMembers(people);
+                        setStatus(UpdateBoxStatus.UserPending);
+                        updateServer();
                     }}
                     defaultOptions={companyLessPeople}
                     emptyIndicator={
