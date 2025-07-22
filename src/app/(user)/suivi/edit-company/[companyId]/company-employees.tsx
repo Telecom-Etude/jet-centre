@@ -28,16 +28,20 @@ export function EditCompanyEmployees({
     const updateServer = () => {};
 
     const updatePeopleList = () => {
+        const oldStatus = status;
         setStatus(UpdateBoxStatus.Loading);
         getCompanyLessPeople().then((people) => {
             if (people === undefined) return setStatus(UpdateBoxStatus.Error);
             setCompanyLessPeople(people);
-            setStatus(UpdateBoxStatus.UserPending);
+            setStatus(oldStatus);
         });
     };
 
     return (
         <UpdateBox title="Employés" update={updateServer} status={status}>
+            <p className="italic">
+                Les personnes non sélectionnables appartiennent déjà à une entreprise.
+            </p>
             <div className="flex flex-col items-center space-y-main">
                 <MultipleSelector
                     value={members}

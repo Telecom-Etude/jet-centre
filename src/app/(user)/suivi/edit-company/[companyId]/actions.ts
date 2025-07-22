@@ -20,11 +20,23 @@ export async function updateCompanyInfos(
 export async function getCompanyLessPeople() {
     try {
         const companyLessPeople = await db.person.findMany({
-            select: { firstName: true, lastName: true, id: true },
-            where: { clients: undefined },
+            select: {
+                firstName: true,
+                lastName: true,
+                id: true,
+                clients: { select: { id: true } },
+            },
         });
 
-        return companyLessPeople.map((person) => ({ value: person.id, label: personName(person) }));
+        console.log(JSON.stringify(companyLessPeople, null, 4));
+
+        const x = companyLessPeople.map((person) => ({
+            value: person.id,
+            label: personName(person),
+            disable: !!person.clients,
+        }));
+        console.log(JSON.stringify(x, null, 4));
+        return x;
     } catch (e) {
         console.error(`[peopleNotInCompany] ${e}`);
     }
