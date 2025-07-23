@@ -12,7 +12,7 @@ model Person {
     address   Address?
     user      User?
     assignee  Assignee?
-    clients   Client?
+    client    Client? @relation("ClientToPerson")
 
     @@unique(name: "name", [firstName, lastName])
 }

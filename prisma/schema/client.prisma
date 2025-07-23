@@ -6,7 +6,7 @@ model Client {
     privateIndividual Boolean       @default(false)
     company           Company?      @relation(fields: [companyId], references: [id])
     companyId         String?
-    person            Person        @relation(fields: [personId], references: [id], onDelete: Cascade)
+    person            Person        @relation("ClientToPerson", fields: [personId], references: [id])
     personId          String        @unique
     job               String
     studyClients      StudyClient[]
