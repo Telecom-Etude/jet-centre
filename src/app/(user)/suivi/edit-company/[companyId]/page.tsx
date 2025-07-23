@@ -5,8 +5,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { UpsertAddress } from '@/components/data/upsert-address';
 import { EditCompanyInfos } from '././company-infos';
 import { EditCompanyEmployees } from './company-employees';
-import { personName } from '@/lib/utils';
-import { getCompanyLessPeople } from './actions';
+import { getPossibleMembers } from './actions';
 
 function Name({ company }: { company: FullCompany }) {
     const studies: string[] = company.members.flatMap((member) =>
@@ -14,7 +13,7 @@ function Name({ company }: { company: FullCompany }) {
     );
 
     return (
-        <div className="flex h-full items-center flex-col justify-center">
+        <div className="flex items-center flex-col justify-center">
             <h1 className="text-3xl text-primary font-bold">{company.name}</h1>
             <HoverCard>
                 <HoverCardTrigger>
@@ -52,34 +51,22 @@ export default async function Page({ params }: { params: Promise<{ companyId: st
     const { companyId } = await params;
     const company = await getCompanyFromId(companyId);
     if (company === null) return NoCompanyFound();
-    const members = company.members.map((member) => ({
-        label: personName(member.person),
-        value: member.personId,
-    }));
-    const personClientIdMap = Object.fromEntries(
-        company.members.map((client) => [client.personId, client.id])
-    );
-    const companyLessPeople = await getCompanyLessPeople();
-    if (companyLessPeople === undefined) throw new Error();
+    const possibleMembers = await getPossibleMembers();
+    if (possibleMembers === undefined) throw new Error();
 
     return (
-        <div className="grid gap-main p-main grid-cols-1 lg:grid-cols-2">
-            <div className="h-full">
+        <div className="flex flex-col space-y-main lg:flex-row lg:space-y-0 lg:space-x-main p-main">
+            <div className="w-full space-y-main">
                 <Name company={company} />
-            </div>
-            <div className="h-full">
-                <EditCompanyInfos company={company} />
-            </div>
-            <div className="h-full">
-                <UpsertAddress address={company.address} companyId={companyId} />
-            </div>
-            <div className="h-full">
                 <EditCompanyEmployees
                     companyId={companyId}
-                    members={members}
-                    companyLessPeople={companyLessPeople}
-                    personClientIdMap={personClientIdMap}
+                    members={company.members.map((member) => ({ ...member, ...member.person }))}
+                    possibleMembers={possibleMembers}
                 />
+            </div>
+            <div className="w-full space-y-main">
+                <EditCompanyInfos company={company} />
+                <UpsertAddress address={company.address} companyId={companyId} />
             </div>
         </div>
     );
