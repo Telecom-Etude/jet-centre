@@ -9,6 +9,9 @@ import { getPossibleMembers, createMember } from './actions';
 import { NewEmployee } from './new-employee';
 import { Member, NewEmployeeSchemaType, PossibleMember } from './schema';
 import { FaTimes } from 'react-icons/fa';
+import { personName } from '@/lib/utils';
+import { Table, TableBody, TableRow } from '@/components/ui/table';
+import { EditEmployee } from './edit-employee';
 
 export function EditCompanyEmployees({
     companyId,
@@ -65,22 +68,31 @@ export function EditCompanyEmployees({
 
     return (
         <UpdateBox title="Employés" update={() => {}} status={status}>
-            <p className="italic">
-                Les personnes non sélectionnables appartiennent déjà à une entreprise.
-            </p>
             <div className="flex flex-col items-center space-y-main">
-                <div>
+                <Table className="table-fixed w-full">
+                    <TableBody>
+                        {members.map((member, i) => (
+                            <TableRow key={i}>
+                                <EditEmployee employee={member} />
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <ul className="flex flex-col items-start w-full space-y-main">
                     {members.map((member, key) => (
-                        <div key={key}>
-                            <p>{member.firstName}</p>
-                            <p>{member.lastName}</p>
+                        <li key={key} className="flex items-center space-x-main ">
+                            <p>{`${personName(member)}`}</p>
                             <p>{member.job}</p>
-                            <Button variant="ghost" onClick={() => removeEmployee(member)}>
+                            <Button
+                                variant="ghost"
+                                className="p-0"
+                                onClick={() => removeEmployee(member)}
+                            >
                                 <FaTimes />
                             </Button>
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ul>
                 <Button variant="outline" onClick={updatePossibleEmployees}>
                     Rafraîchir la base de personnes
                 </Button>

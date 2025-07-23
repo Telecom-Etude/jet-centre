@@ -14,8 +14,8 @@ export type NewEmployeeSchemaType = z.infer<typeof newEmployeeSchema>;
 export interface Member {
     firstName: string;
     lastName: string;
-    personId?: string;
-    clientId?: string;
+    personId: string;
+    clientId: string;
     job: string;
 }
 
