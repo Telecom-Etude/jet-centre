@@ -1,20 +1,24 @@
-import { UpdateBoxStatus } from '@/components/boxes/update-box';
+import { getUpdateBoxStatusInfos, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { Input } from '@/components/ui/input';
 import { TableCell } from '@/components/ui/table';
 import { useState } from 'react';
 import { Member } from './schema';
-import db from '@/db';
+import { BoxButtonIcon } from '@/components/boxes/boxes';
+import { updateJob, updatePerson } from './actions';
 
 function EditableCell({
     initialValue,
     setStatus,
     update,
+    value,
+    setValue,
 }: {
     initialValue: string;
     setStatus: (status: UpdateBoxStatus) => void;
-    update: (newValue: string) => void;
+    update: () => void;
+    value: string;
+    setValue: (newValue: string) => void;
 }) {
-    const [value, setValue] = useState(initialValue);
     const [editing, setEditing] = useState(false);
 
     return (
@@ -30,7 +34,7 @@ function EditableCell({
                     }}
                     onBlur={() => {
                         setEditing(false);
-                        update(value);
+                        update();
                     }}
                 />
             ) : (
@@ -44,51 +48,57 @@ function EditableCell({
 
 export function EditEmployee({ employee }: { employee: Member }) {
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
+    const [firstName, setFirstName] = useState(employee.firstName);
+    const [lastName, setLastName] = useState(employee.lastName);
+    const [job, setJob] = useState(employee.job);
 
-    const updateFirstName = (firstName: string) => {
-        setStatus(UpdateBoxStatus.Loading);
-        db.person
-            .update({ where: { id: employee.personId }, data: { firstName } })
-            .then((person) => {
-                if (person === undefined) return setStatus(UpdateBoxStatus.Error);
-                if (person.firstName !== firstName) return setStatus(UpdateBoxStatus.NotSynced);
-                if (status !== UpdateBoxStatus.UserPending) setStatus(UpdateBoxStatus.Ok);
-            });
-    };
+    const [otherFinished, setOtherFinished] = useState(true);
 
-    const updateLastName = (lastName: string) => {
+    const update = () => {
         setStatus(UpdateBoxStatus.Loading);
-        db.person
-            .update({ where: { id: employee.personId }, data: { lastName } })
-            .then((person) => {
-                if (person === undefined) return setStatus(UpdateBoxStatus.Error);
-                if (person.lastName !== lastName) return setStatus(UpdateBoxStatus.NotSynced);
-                if (status !== UpdateBoxStatus.UserPending) setStatus(UpdateBoxStatus.Ok);
-            });
-    };
-
-    const updateJob = (job: string) => {
-        setStatus(UpdateBoxStatus.Loading);
-        db.client.update({ where: { id: employee.clientId }, data: { job } }).then((client) => {
+        setOtherFinished(false);
+        updatePerson(firstName, lastName, employee.personId).then((person) => {
+            if (person === undefined) return setStatus(UpdateBoxStatus.Error);
+            if (person.lastName !== lastName || person.firstName !== firstName)
+                return setStatus(UpdateBoxStatus.NotSynced);
+            if (otherFinished) setStatus(UpdateBoxStatus.Ok);
+            setOtherFinished(true);
+        });
+        updateJob(job, employee.clientId).then((client) => {
             if (client === undefined) return setStatus(UpdateBoxStatus.Error);
             if (client.job !== job) return setStatus(UpdateBoxStatus.NotSynced);
-            if (status !== UpdateBoxStatus.UserPending) setStatus(UpdateBoxStatus.Ok);
+            if (otherFinished) setStatus(UpdateBoxStatus.Ok);
+            setOtherFinished(true);
         });
     };
 
     return (
         <>
+            {JSON.stringify(employee.clientId)}
             <EditableCell
+                value={firstName}
+                setValue={setFirstName}
                 initialValue={employee.firstName}
                 setStatus={setStatus}
-                update={updateFirstName}
+                update={update}
             />
             <EditableCell
+                value={lastName}
+                setValue={setLastName}
                 initialValue={employee.lastName}
                 setStatus={setStatus}
-                update={updateLastName}
+                update={update}
             />
-            <EditableCell initialValue={employee.job} setStatus={setStatus} update={updateJob} />
+            <EditableCell
+                value={job}
+                setValue={setJob}
+                initialValue={employee.job}
+                setStatus={setStatus}
+                update={update}
+            />
+            <TableCell className="py-0">
+                <BoxButtonIcon {...getUpdateBoxStatusInfos(status)} onClick={() => {}} />
+            </TableCell>
         </>
     );
 }

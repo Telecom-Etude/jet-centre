@@ -63,13 +63,13 @@ interface StatusInfos {
 }
 
 /**
- * @function getIcon
+ * @function getUpdateBoxStatusInfos
  * @brief Returns an icon configuration based on the given update box status.
  *
  * @param {UpdateBoxStatus} status - The current status of the update box.
  * @returns {StatusInfos} The data needed to display the status.
  */
-function getInfos(status: UpdateBoxStatus): StatusInfos {
+export function getUpdateBoxStatusInfos(status: UpdateBoxStatus): StatusInfos {
     switch (status) {
         case UpdateBoxStatus.Ok:
             return {
@@ -144,7 +144,7 @@ export function UpdateBox({
             <BoxHeader>
                 <BoxTitle>{title}</BoxTitle>
                 <BoxHeaderBlock>
-                    <BoxButtonIcon {...getInfos(status)} onClick={update} />
+                    <BoxButtonIcon {...getUpdateBoxStatusInfos(status)} onClick={update} />
                 </BoxHeaderBlock>
             </BoxHeader>
             <BoxContent>{children}</BoxContent>

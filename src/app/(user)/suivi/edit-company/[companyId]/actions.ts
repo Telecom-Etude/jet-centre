@@ -59,3 +59,19 @@ export async function addPersonToCompany(personId: string, companyId: string, jo
         console.error(`[addPersonToCompany] ${e}`);
     }
 }
+
+export async function updatePerson(firstName: string, lastName: string, personId: string) {
+    try {
+        return await db.person.update({ where: { id: personId }, data: { firstName, lastName } });
+    } catch (e) {
+        console.error(`[updatePerson] ${e}`);
+    }
+}
+
+export async function updateJob(job: string, clientId: string) {
+    try {
+        return await db.client.update({ where: { id: clientId }, data: { job } });
+    } catch (e) {
+        console.error(`[updateJob] ${e}`);
+    }
+}
