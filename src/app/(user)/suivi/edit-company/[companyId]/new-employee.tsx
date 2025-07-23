@@ -9,7 +9,6 @@ import { NewEmployeeSchemaType, newEmployeeSchema } from './schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 import { LoadingFullStops } from '@/components/loading';
 import { UpdateBoxStatus } from '@/components/boxes/update-box';
 

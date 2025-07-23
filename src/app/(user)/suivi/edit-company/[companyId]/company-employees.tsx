@@ -3,88 +3,89 @@
 import { useState } from 'react';
 
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
-import MultipleSelector, { Option } from '@/components/meta-components/multiple-selector';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { createPerson, getCompanyLessPeople } from './actions';
+import { getPossibleMembers, createMember } from './actions';
 import { NewEmployee } from './new-employee';
-import { NewEmployeeSchemaType } from './schema';
-import { personName } from '@/lib/utils';
+import { Member, NewEmployeeSchemaType, PossibleMember } from './schema';
+import { FaTimes } from 'react-icons/fa';
 
 export function EditCompanyEmployees({
     companyId,
     members: initialMembers,
-    personClientIdMap: initialPersonClientIdMap,
-    companyLessPeople: initialCompanyLessPeople,
+    possibleMembers: initialPossibleMembers,
 }: {
     companyId: string;
-    members: Option[];
-    personClientIdMap: { [key: string]: string };
-    companyLessPeople: Option[];
+    members: Member[];
+    possibleMembers: PossibleMember[];
 }) {
-    const [personClientIdMap, setPersonClientIdMap] = useState(initialPersonClientIdMap);
-    const [companyLessPeople, setCompanyLessPeople] = useState(initialCompanyLessPeople);
+    const [possibleMembers, setPossibleMembers] = useState(initialPossibleMembers);
     const [members, setMembers] = useState(initialMembers);
 
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
 
-    const updateServer = () => {
+    const checkServer = () => {
         setStatus(UpdateBoxStatus.Loading);
     };
 
-    const updatePeopleList = () => {
+    const updatePossibleEmployees = () => {
         const oldStatus = status;
         setStatus(UpdateBoxStatus.Loading);
-        getCompanyLessPeople().then((people) => {
+        getPossibleMembers().then((people) => {
             if (people === undefined) return setStatus(UpdateBoxStatus.Error);
-            setCompanyLessPeople(people);
-
-            const entries = [];
-            for (const person of people) {
-                if (person.clientId) {
-                    entries.push([person.value, person.clientId]);
-                }
-            }
-            setPersonClientIdMap(Object.fromEntries(entries));
-
+            setPossibleMembers(people);
             setStatus(oldStatus);
         });
     };
 
     const addEmployee = (person: NewEmployeeSchemaType) => {
-        createPerson(person.firstName, person.lastName).then((person) => {
-            if (person === undefined) return setStatus(UpdateBoxStatus.Error);
-            setMembers((current) => [...current, { label: personName(person), value: person.id }]);
-            updateServer();
+        createMember(person.firstName, person.lastName, person.job, companyId).then((data) => {
+            if (data === undefined) return setStatus(UpdateBoxStatus.Error);
+            const {
+                client: { job, id: clientId },
+                person: { firstName, lastName, id: personId },
+            } = data;
+            if (firstName !== person.firstName || lastName !== person.lastName || job != person.job)
+                return setStatus(UpdateBoxStatus.NotSynced);
+            setMembers((current) => [
+                ...current,
+                {
+                    firstName: person.firstName,
+                    lastName: person.lastName,
+                    job: person.job,
+                    personId,
+                    clientId,
+                },
+            ]);
+            checkServer();
         });
     };
 
+    const removeEmployee = (member: Member) => {};
+
     return (
-        <UpdateBox title="Employés" update={updateServer} status={status}>
+        <UpdateBox title="Employés" update={() => {}} status={status}>
             <p className="italic">
                 Les personnes non sélectionnables appartiennent déjà à une entreprise.
             </p>
             <div className="flex flex-col items-center space-y-main">
-                <MultipleSelector
-                    value={members}
-                    onBlur={() => updateServer()}
-                    onChange={(people) => {
-                        setMembers(people);
-                        setStatus(UpdateBoxStatus.UserPending);
-                        updateServer();
-                    }}
-                    defaultOptions={companyLessPeople}
-                    emptyIndicator={
-                        <p className="py-2 text-center text-destructive">
-                            Personne n'existe avec ce nom.
-                        </p>
-                    }
-                />
-                <Button variant="outline" onClick={updatePeopleList}>
+                <div>
+                    {members.map((member, key) => (
+                        <div key={key}>
+                            <p>{member.firstName}</p>
+                            <p>{member.lastName}</p>
+                            <p>{member.job}</p>
+                            <Button variant="ghost" onClick={() => removeEmployee(member)}>
+                                <FaTimes />
+                            </Button>
+                        </div>
+                    ))}
+                </div>
+                <Button variant="outline" onClick={updatePossibleEmployees}>
                     Rafraîchir la base de personnes
                 </Button>
                 <Separator className="bg-primary" />
-                <NewEmployee addEmployee={(employee) => {}} status={status} setStatus={setStatus} />
+                <NewEmployee addEmployee={addEmployee} status={status} setStatus={setStatus} />
             </div>
         </UpdateBox>
     );
