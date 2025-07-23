@@ -1,8 +1,8 @@
 'use server';
 
 import db from '@/db';
-import { personName } from '@/lib/utils';
 import { CompanyInfos } from '@prisma/client';
+import { PossibleMember } from './schema';
 
 export async function updateCompanyInfos(
     companyInfos: CompanyInfos
@@ -17,33 +17,38 @@ export async function updateCompanyInfos(
     }
 }
 
-export async function getCompanyLessPeople() {
+export async function getPossibleMembers(): Promise<PossibleMember[] | undefined> {
     try {
-        const companyLessPeople = await db.person.findMany({
+        const people = await db.person.findMany({
             select: {
                 firstName: true,
                 lastName: true,
                 id: true,
-                clients: { select: { id: true } },
+                client: { select: { id: true } },
             },
         });
-
-        return companyLessPeople.map((person) => ({
-            value: person.id,
-            label: personName(person),
-            disable: !!person.clients,
-            clientId: person.clients?.id,
-        }));
+        return people ?? undefined;
     } catch (e) {
         console.error(`[peopleNotInCompany] ${e}`);
     }
 }
 
-export async function createPerson(firstName: string, lastName: string) {
+export async function createMember(
+    firstName: string,
+    lastName: string,
+    job: string,
+    companyId: string
+) {
     try {
-        return await db.person.create({ data: { firstName, lastName } });
+        const person = await db.person.create({ data: { firstName, lastName } });
+        if (!person) throw new Error("Person couldn't be created");
+        const client = await db.client.create({
+            data: { job, companyId, personId: person.id },
+        });
+        if (!client) throw new Error("Client couldn't be created");
+        return { client, person };
     } catch (e) {
-        console.error(`[createPerson] ${e}`);
+        console.error(`[createMember] ${e}`);
     }
 }
 

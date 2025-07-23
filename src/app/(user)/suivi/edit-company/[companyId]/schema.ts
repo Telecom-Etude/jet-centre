@@ -10,3 +10,18 @@ export const newEmployeeSchema = z.object({
 });
 
 export type NewEmployeeSchemaType = z.infer<typeof newEmployeeSchema>;
+
+export interface Member {
+    firstName: string;
+    lastName: string;
+    personId?: string;
+    clientId?: string;
+    job: string;
+}
+
+export interface PossibleMember {
+    firstName: string;
+    lastName: string;
+    id: string;
+    client: { id: string } | null;
+}
