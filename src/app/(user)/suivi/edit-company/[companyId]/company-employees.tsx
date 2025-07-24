@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { getPossibleMembers, createMember } from './actions';
+
+import { getPossibleMembers, createMember, removeClient } from './actions';
 import { NewEmployee } from './new-employee';
 import { Member, NewEmployeeSchemaType, PossibleMember } from './schema';
-import { FaTimes } from 'react-icons/fa';
-import { personName } from '@/lib/utils';
+
 import { Table, TableBody, TableRow } from '@/components/ui/table';
 import { EditEmployee } from './edit-employee';
 
@@ -64,7 +64,14 @@ export function EditCompanyEmployees({
         });
     };
 
-    const removeEmployee = (clientId: string) => {};
+    const removeEmployee = (clientId: string) => {
+        setStatus(UpdateBoxStatus.Loading);
+        setMembers((members) => members.filter((member) => member.clientId !== clientId));
+        removeClient(clientId).then((ok) => {
+            if (ok) return setStatus(UpdateBoxStatus.Ok);
+            setStatus(UpdateBoxStatus.Error);
+        });
+    };
 
     return (
         <UpdateBox title="Employés" update={() => {}} status={status}>

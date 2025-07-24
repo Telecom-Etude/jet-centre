@@ -75,3 +75,11 @@ export async function updateJob(job: string, clientId: string) {
         console.error(`[updateJob] ${e}`);
     }
 }
+
+export async function removeClient(clientId: string) {
+    try {
+        return await db.client.delete({ where: { id: clientId } });
+    } catch (e) {
+        console.error(`[removeClient] ${e}`);
+    }
+}
