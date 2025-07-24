@@ -64,7 +64,7 @@ export function EditCompanyEmployees({
         });
     };
 
-    const removeEmployee = (member: Member) => {};
+    const removeEmployee = (clientId: string) => {};
 
     return (
         <UpdateBox title="Employés" update={() => {}} status={status}>
@@ -73,26 +73,14 @@ export function EditCompanyEmployees({
                     <TableBody>
                         {members.map((member, i) => (
                             <TableRow key={i}>
-                                <EditEmployee employee={member} />
+                                <EditEmployee
+                                    employee={member}
+                                    removeEmployee={() => removeEmployee(member.clientId)}
+                                />
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-                <ul className="flex flex-col items-start w-full space-y-main">
-                    {members.map((member, key) => (
-                        <li key={key} className="flex items-center space-x-main ">
-                            <p>{`${personName(member)}`}</p>
-                            <p>{member.job}</p>
-                            <Button
-                                variant="ghost"
-                                className="p-0"
-                                onClick={() => removeEmployee(member)}
-                            >
-                                <FaTimes />
-                            </Button>
-                        </li>
-                    ))}
-                </ul>
                 <Button variant="outline" onClick={updatePossibleEmployees}>
                     Rafraîchir la base de personnes
                 </Button>

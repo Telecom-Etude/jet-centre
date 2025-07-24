@@ -3,17 +3,15 @@ import { Input } from '@/components/ui/input';
 import { TableCell } from '@/components/ui/table';
 import { useState } from 'react';
 import { Member } from './schema';
-import { BoxButtonIcon } from '@/components/boxes/boxes';
+import { BoxButtonIcon, BoxButtonTrash } from '@/components/boxes/boxes';
 import { updateJob, updatePerson } from './actions';
 
 function EditableCell({
-    initialValue,
     setStatus,
     update,
     value,
     setValue,
 }: {
-    initialValue: string;
     setStatus: (status: UpdateBoxStatus) => void;
     update: () => void;
     value: string;
@@ -46,7 +44,13 @@ function EditableCell({
     );
 }
 
-export function EditEmployee({ employee }: { employee: Member }) {
+export function EditEmployee({
+    employee,
+    removeEmployee,
+}: {
+    employee: Member;
+    removeEmployee: () => void;
+}) {
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
     const [firstName, setFirstName] = useState(employee.firstName);
     const [lastName, setLastName] = useState(employee.lastName);
@@ -74,30 +78,24 @@ export function EditEmployee({ employee }: { employee: Member }) {
 
     return (
         <>
-            {JSON.stringify(employee.clientId)}
             <EditableCell
                 value={firstName}
                 setValue={setFirstName}
-                initialValue={employee.firstName}
                 setStatus={setStatus}
                 update={update}
             />
             <EditableCell
                 value={lastName}
                 setValue={setLastName}
-                initialValue={employee.lastName}
                 setStatus={setStatus}
                 update={update}
             />
-            <EditableCell
-                value={job}
-                setValue={setJob}
-                initialValue={employee.job}
-                setStatus={setStatus}
-                update={update}
-            />
-            <TableCell className="py-0">
-                <BoxButtonIcon {...getUpdateBoxStatusInfos(status)} onClick={() => {}} />
+            <EditableCell value={job} setValue={setJob} setStatus={setStatus} update={update} />
+            <TableCell className="p-0">
+                <div className="flex justify-around items-center">
+                    <BoxButtonIcon {...getUpdateBoxStatusInfos(status)} onClick={update} />
+                    <BoxButtonTrash onClick={removeEmployee} />
+                </div>
             </TableCell>
         </>
     );

@@ -60,7 +60,13 @@ export default async function Page({ params }: { params: Promise<{ companyId: st
                 <Name company={company} />
                 <EditCompanyEmployees
                     companyId={companyId}
-                    members={company.members.map((member) => ({ ...member, ...member.person }))}
+                    members={company.members.map(({ person, ...member }) => ({
+                        job: member.job,
+                        firstName: person.firstName,
+                        lastName: person.lastName,
+                        personId: person.id,
+                        clientId: member.id,
+                    }))}
                     possibleMembers={possibleMembers}
                 />
             </div>
