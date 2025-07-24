@@ -12,12 +12,12 @@ import { Button } from '@/components/ui/button';
 import { LoadingFullStops } from '@/components/loading';
 import { UpdateBoxStatus } from '@/components/boxes/update-box';
 
-export function NewEmployee({
-    addEmployee,
+export function CreateEmployee({
+    createEmployee,
     status,
     setStatus,
 }: {
-    addEmployee: (person: NewEmployeeSchemaType) => void;
+    createEmployee: (person: NewEmployeeSchemaType) => void;
     status: UpdateBoxStatus;
     setStatus: (status: UpdateBoxStatus) => void;
 }) {
@@ -30,7 +30,7 @@ export function NewEmployee({
             <form
                 onSubmit={form.handleSubmit((values) => {
                     setStatus(UpdateBoxStatus.Loading);
-                    addEmployee(values);
+                    createEmployee(values);
                 })}
                 className="flex flex-col items-center w-full"
             >

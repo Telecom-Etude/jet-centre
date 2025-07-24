@@ -13,26 +13,45 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 
-type ComboboxProps = {
+type Stringifiable = { toString(): string };
+
+type ComboboxProps<T> = {
+    /**
+     * Message displayed when items is empty or no entry matches the search
+     */
     emptyMessage: string;
+    /**
+     * Placeholder in the search input
+     */
     placeholder: string;
+    /**
+     * Text of the collapsed combobox
+     */
     title: string;
-    items: readonly string[];
+    /**
+     * List of items to appear in the combobox's dropdown
+     */
+    items: readonly T[];
+    /**
+     * Way to display the items, if not numbers of strings
+     */
+    toString?: (item: T) => string;
 };
 
-type SingleComboboxProps = {
-    currentKey: string | null;
-    selectKey: (key: string) => void;
-} & ComboboxProps;
+type SingleComboboxProps<T> = {
+    currentKey: T | null;
+    selectKey: (key: T) => void;
+} & ComboboxProps<T>;
 
-export const SingleCombobox = ({
+export function SingleCombobox<T extends Stringifiable>({
     items,
     emptyMessage,
     currentKey,
     title,
     selectKey,
     placeholder,
-}: SingleComboboxProps) => {
+    toString = (item: T) => item.toString(),
+}: SingleComboboxProps<T>) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -44,7 +63,7 @@ export const SingleCombobox = ({
                     aria-expanded={open}
                     className="w-full justify-between"
                 >
-                    {currentKey && items.includes(currentKey) ? currentKey : title}
+                    {currentKey && items.includes(currentKey) ? toString(currentKey) : title}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
@@ -57,10 +76,10 @@ export const SingleCombobox = ({
                             {items.map((item, i) => (
                                 <CommandItem
                                     key={i}
-                                    value={item}
+                                    value={toString(item)}
                                     onSelect={(newKey) => {
-                                        if (!currentKey || currentKey !== newKey) {
-                                            selectKey(newKey);
+                                        if (!currentKey || toString(currentKey) !== newKey) {
+                                            selectKey(item);
                                         }
                                         setOpen(false);
                                     }}
@@ -71,7 +90,7 @@ export const SingleCombobox = ({
                                             currentKey === item ? 'opacity-100' : 'opacity-0'
                                         )}
                                     />
-                                    {item}
+                                    {toString(item)}
                                 </CommandItem>
                             ))}
                         </CommandGroup>
@@ -80,4 +99,4 @@ export const SingleCombobox = ({
             </PopoverContent>
         </Popover>
     );
-};
+}
