@@ -27,7 +27,7 @@ export async function getPossibleMembers(): Promise<PossibleMember[] | undefined
                 client: { select: { id: true } },
             },
         });
-        return people ?? undefined;
+        return people?.filter((person) => person.client === null);
     } catch (e) {
         console.error(`[peopleNotInCompany] ${e}`);
     }
