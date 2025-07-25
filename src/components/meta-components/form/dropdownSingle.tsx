@@ -143,7 +143,7 @@ function DropdownSingleElement<T extends FieldValues, V>({
                         inFocus && 'ring-0 border-foreground'
                     )}
                 >
-                    {displayValue(field.value)}
+                    {field.value ? displayValue(field.value) : ''}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
