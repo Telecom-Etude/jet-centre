@@ -86,9 +86,11 @@ export function DisplayCompany({ company }: { company: FullCompany }) {
             )}
             <Separator className="bg-primary" />
             <h4 className="font-bold">Employés</h4>
-            {company.members.map((member, i) => (
-                <DisplayMember key={i} member={member} />
-            ))}
+            {company.members.length === 0 ? (
+                <p>Aucun employé renseigné pour le moment</p>
+            ) : (
+                company.members.map((member, i) => <DisplayMember key={i} member={member} />)
+            )}
         </div>
     );
 }
