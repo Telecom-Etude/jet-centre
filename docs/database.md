@@ -6,7 +6,11 @@ We use [PostgreSQL](https://www.postgresql.org/) as our [BDMS](https://en.wikipe
 
 ## Important notice
 
-This is a legacy page, since we since setup docker you don't have to setup postgresql manually anymore.
+> [!IMPORTANT]
+> This tutorial isn't needed anymore.
+>
+> We recommend now using docker. Thus, you don't need to setup PostgreSQL manually anymore, so you don't need this tutorial.
+> Even though it is not the prefered installation method, this page is still maintained and opened to improvement.
 
 ## Setup (installation)
 
@@ -15,10 +19,34 @@ To set up the database, first install postgresql and connect the server.
 ### Linux
 
 ```bash
-apt install postgresql          # Install PostgreSQL
-sudo -u postgres psql           # Connect the server using the `psql` command as the `postgres` user
-# sudo sudo -u postgres psql    # If the first version fails, try this one
+sudo apt install postgresql       # Install PostgreSQL
+sudo systemctl start postgresql   # Start the PostgreSQL daemon
+sudo systemctl enable postgresql  # (optional) automatically start the daemon
+                                  # when you turn on your computer
+sudo -u postgres psql             # Connect the server using the `psql` command as the `postgres` user
+# sudo sudo -u postgres psql      # If the first version fails, try this one
 ```
+
+### macOS (with Homebrew)
+
+```bash
+brew search postgresql              # Find the latest version of postgresql
+brew install postgresql@17          # Install it (replace 17 by your version)
+brew services start postgresql@17   # Start the PostgreSQL daemon
+brew services run postgresql@17     # (optional) automatically start the daemon
+                                    # when you turn on your computer
+export PATH="$PATH:/opt/homebrew/postgresql@17/bin" # add this to your .bashrc, .zshrc, etc.
+createuser -s user
+createdb db
+```
+
+You can now use
+
+```bash
+DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
+```
+
+and skip the weird `CREATE ROLE` SQL command in the next section.
 
 ### Windows
 
