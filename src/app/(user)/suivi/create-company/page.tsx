@@ -15,16 +15,32 @@ import {
 import { LoadingFullStops } from '@/components/loading';
 import Link from 'next/link';
 
-enum Status {
+enum CreationStatus {
     Ok,
-    None,
     Checking,
-    Redirecting,
+    NoName,
     Exists,
+    Creating,
+    DbFailed,
+    Redirecting,
 }
 
+const STATUS_INFOS: Record<CreationStatus, { pending?: boolean; border?: string; error?: string }> =
+    {
+        [CreationStatus.Ok]: {},
+        [CreationStatus.Checking]: { pending: true },
+        [CreationStatus.NoName]: { border: 'border-destructive', error: 'Merci de donner un nom.' },
+        [CreationStatus.Exists]: { border: 'border-primary' },
+        [CreationStatus.Creating]: { pending: true },
+        [CreationStatus.DbFailed]: {
+            border: 'border-destructive',
+            error: "Une erreur inattendue s'est produite. Merci de faire un ticket SOS.",
+        },
+        [CreationStatus.Redirecting]: { pending: true },
+    };
+
 export default function Page() {
-    const [status, setStatus] = useState(Status.Ok);
+    const [status, setCreationStatus] = useState(CreationStatus.Ok);
     const [name, setName] = useState<string | undefined>();
     const [id, setId] = useState<string | undefined>();
 
@@ -43,32 +59,26 @@ export default function Page() {
                 <CardContent>
                     <Input
                         placeholder="Nom de l'entreprise"
-                        className={
-                            status === Status.Exists
-                                ? 'border-primary'
-                                : status === Status.None
-                                  ? 'border-destructive'
-                                  : 'border-border'
-                        }
+                        className={STATUS_INFOS[status]?.border ?? 'border-border'}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
-                    {(status === Status.None && (
-                        <p className="text-sm text-center text-destructive">
-                            Merci de donner un nom à l'entreprise pour continuer.
-                        </p>
+                    {(status === CreationStatus.Exists && (
+                        <Link
+                            href={`edit-company/${id}`}
+                            className="text-sm text-center text-primary"
+                        >
+                            Une entreprise avec ce nom existe déjà, cliquez ici pour la modifier
+                        </Link>
                     )) ||
-                        (status === Status.Exists && (
-                            <Link
-                                href={`edit-company/${id}`}
-                                className="text-sm text-center text-primary"
-                            >
-                                Une entreprise avec ce nom existe déjà, cliquez ici pour la modifier
-                            </Link>
+                        (STATUS_INFOS[status].error && (
+                            <p className="text-sm text-center text-destructive">
+                                {STATUS_INFOS[status].error}
+                            </p>
                         ))}
                 </CardContent>
                 <CardFooter className="flex justify-center">
-                    {status === Status.Checking || status === Status.Redirecting ? (
+                    {STATUS_INFOS[status].pending ? (
                         <LoadingFullStops />
                     ) : (
                         <Button className="px-main">Créer</Button>
