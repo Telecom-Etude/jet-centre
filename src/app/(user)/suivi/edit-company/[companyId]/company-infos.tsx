@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
-import { Domain } from '@prisma/client';
+import { CompanySize, Domain } from '@prisma/client';
 
 import {
     COMPANY_SIZE_DISPLAYS,
@@ -42,7 +42,9 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
     const [domains, setDomains] = useState<Option[]>(domainToOption(company.companyInfos.domains));
     const [ca, setCa] = useState(company.companyInfos.ca ?? undefined);
-    const [size, setSize] = useState(company.companyInfos.size ?? undefined);
+    const [size, setSize] = useState<CompanySize | undefined>(
+        company.companyInfos.size ?? undefined
+    );
 
     const updateServer = () => {
         setStatus(UpdateBoxStatus.Loading);
@@ -75,11 +77,7 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
                     setDomains(value);
                 }}
                 defaultOptions={ALL_DOMAIN_OPTIONS}
-                emptyIndicator={
-                    <p className="text-center text-lg leading-10 text-destructive">
-                        no results found.
-                    </p>
-                }
+                emptyIndicator={<p className="text-center leading-10">Mauvais nom de domaine</p>}
             />
             <div className="flex items-center space-x-main">
                 <p className="w-fit">CA (k€)</p>
@@ -96,16 +94,17 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
             </div>
             <div className="flex items-center space-x-main">
                 <p>Taille</p>
-                <SingleCombobox
-                    currentKey={size ? COMPANY_SIZES[size].display : null}
-                    selectKey={(size_name) => {
+                <SingleCombobox<CompanySize>
+                    currentKey={size ?? null}
+                    selectKey={(company_size) => {
                         setStatus(UpdateBoxStatus.UserPending);
-                        setSize(COMPANY_SIZE_DISPLAYS[size_name as CompanySizeDisplay]);
+                        setSize(company_size);
                     }}
                     emptyMessage="Mauvais nom de taille"
                     placeholder="Sélectionnez une taille"
                     title="Sélectionnez une taille"
-                    items={COMPANY_SIZE_NAMES.map((size) => COMPANY_SIZES[size].display)}
+                    toString={(company_size) => COMPANY_SIZES[company_size].display}
+                    items={COMPANY_SIZE_NAMES}
                 />
             </div>
         </UpdateBox>
