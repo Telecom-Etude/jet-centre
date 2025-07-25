@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { Member } from './schema';
 import { BoxButtonIcon, BoxButtonTrash } from '@/components/boxes/boxes';
 import { updateJob, updatePerson } from './actions';
+import { MdError } from 'react-icons/md';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 
 function EditableCell({
     setStatus,
@@ -35,8 +37,15 @@ function EditableCell({
                         update();
                     }}
                 />
+            ) : value === '' ? (
+                <HoverCard>
+                    <HoverCardTrigger onClick={() => setEditing(true)}>
+                        <MdError className="text-destructive cursor-help" />
+                    </HoverCardTrigger>
+                    <HoverCardContent>Un champ vide n'est pas autorisé.</HoverCardContent>
+                </HoverCard>
             ) : (
-                <p className="py-4" onClick={() => setEditing(true)}>
+                <p className="cursor-pointer py-4" onClick={() => setEditing(true)}>
                     {value}
                 </p>
             )}
@@ -51,7 +60,9 @@ export function EditEmployee({
     employee: Member;
     removeEmployee: () => void;
 }) {
-    const [status, setStatus] = useState(UpdateBoxStatus.Ok);
+    const [status, setStatus] = useState(
+        employee.job === '' ? UpdateBoxStatus.UserPending : UpdateBoxStatus.Ok
+    );
     const [firstName, setFirstName] = useState(employee.firstName);
     const [lastName, setLastName] = useState(employee.lastName);
     const [job, setJob] = useState(employee.job);
