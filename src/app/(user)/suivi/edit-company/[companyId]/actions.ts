@@ -83,3 +83,11 @@ export async function removeClient(clientId: string) {
         console.error(`[removeClient] ${e}`);
     }
 }
+
+export async function createClient(personId: string, companyId: string) {
+    try {
+        return await db.client.create({ data: { personId, companyId, job: '' } });
+    } catch (e) {
+        console.error(`[createClient] ${e}`);
+    }
+}

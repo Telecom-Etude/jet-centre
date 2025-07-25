@@ -6,7 +6,7 @@ import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
-import { getPossibleMembers, createMember, removeClient } from './actions';
+import { getPossibleMembers, createMember, removeClient, createClient } from './actions';
 import { Member, NewEmployeeSchemaType, PossibleMember } from './schema';
 
 import { Table, TableBody, TableRow } from '@/components/ui/table';
@@ -14,6 +14,7 @@ import { EditEmployee } from './edit-employee';
 
 import { SingleCombobox } from '@/components/meta-components/combobox';
 import { CreateEmployee } from './create-employee';
+import { personName } from '@/lib/utils';
 
 export function EditCompanyEmployees({
     companyId,
@@ -30,7 +31,7 @@ export function EditCompanyEmployees({
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
 
     const checkServer = () => {
-        setStatus(UpdateBoxStatus.Loading);
+        setStatus(UpdateBoxStatus.Ok);
     };
 
     const updatePossibleEmployees = () => {
@@ -81,9 +82,23 @@ export function EditCompanyEmployees({
         });
     };
 
-    const addEmployee = (personId: string) => {
+    const addEmployee = (newMember: PossibleMember) => {
         setStatus(UpdateBoxStatus.Loading);
-        setPossibleMembers((members) => members.filter((member) => member.id !== personId));
+        setPossibleMembers((members) => members.filter((member) => member.id !== newMember.id));
+        createClient(newMember.id, companyId).then((client) => {
+            if (client == undefined) return setStatus(UpdateBoxStatus.Error);
+            setMembers((members) => [
+                ...members,
+                {
+                    firstName: newMember.firstName,
+                    personId: client.personId,
+                    clientId: client.id,
+                    job: client.job,
+                    lastName: newMember.lastName,
+                },
+            ]);
+            checkServer();
+        });
     };
 
     return (
@@ -106,9 +121,10 @@ export function EditCompanyEmployees({
                     currentKey={null}
                     selectKey={addEmployee}
                     emptyMessage="Non trouvé. Rafraichissez la base des utilisateurs"
-                    placeholder="placeholder"
-                    title="title"
+                    placeholder="Cherchez par nom"
+                    title="Ajouter un client existant"
                     items={possibleMembers}
+                    toString={personName}
                 />
                 <Button variant="outline" onClick={updatePossibleEmployees}>
                     Rafraîchir la base de personnes
