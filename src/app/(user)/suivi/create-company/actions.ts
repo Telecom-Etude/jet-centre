@@ -8,7 +8,7 @@ export async function getCompanyByName(companyName: string): Promise<string | un
             where: { name: companyName },
             select: { id: true },
         });
-        return company?.id;
+        return company?.id ?? null;
     } catch (e) {
         console.error(`[getCompanyByName] ${e}`);
     }
@@ -19,7 +19,6 @@ export async function createCompanyWithName(companyName: string): Promise<string
         const company = await db.company.create({
             data: { name: companyName, companyInfos: { create: {} } },
         });
-
         return company.id;
     } catch (e) {
         console.error(`[createCompanyWithName] ${companyName}`);

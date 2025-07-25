@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getCompanyByName, createCompanyWithName } from './actions';
 import {
     Card,
     CardContent,
@@ -14,35 +15,60 @@ import {
 } from '@/components/ui/card';
 import { LoadingFullStops } from '@/components/loading';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 enum CreationStatus {
     Ok,
-    Checking,
     NoName,
+    Checking,
+    CheckingFailed,
     Exists,
     Creating,
-    DbFailed,
+    CreationFailed,
     Redirecting,
 }
 
 const STATUS_INFOS: Record<CreationStatus, { pending?: boolean; border?: string; error?: string }> =
     {
         [CreationStatus.Ok]: {},
-        [CreationStatus.Checking]: { pending: true },
         [CreationStatus.NoName]: { border: 'border-destructive', error: 'Merci de donner un nom.' },
+        [CreationStatus.Checking]: { pending: true },
+        [CreationStatus.CheckingFailed]: {
+            border: 'border-destructive',
+            error: "Une erreur inattendue s'est produite lors de la vérification du nom. Merci de faire un ticket SOS.",
+        },
         [CreationStatus.Exists]: { border: 'border-primary' },
         [CreationStatus.Creating]: { pending: true },
-        [CreationStatus.DbFailed]: {
+        [CreationStatus.CreationFailed]: {
             border: 'border-destructive',
-            error: "Une erreur inattendue s'est produite. Merci de faire un ticket SOS.",
+            error: "Une erreur inattendue s'est produite lors de la création de l'entreprise. Merci de faire un ticket SOS.",
         },
         [CreationStatus.Redirecting]: { pending: true },
     };
 
 export default function Page() {
-    const [status, setCreationStatus] = useState(CreationStatus.Ok);
-    const [name, setName] = useState<string | undefined>();
+    const [status, setStatus] = useState(CreationStatus.Ok);
+    const [name, setName] = useState<string>('');
     const [id, setId] = useState<string | undefined>();
+
+    const router = useRouter();
+
+    const tryCreate = () => {
+        setStatus(CreationStatus.Checking);
+        setId(undefined);
+        if (!name) return setStatus(CreationStatus.NoName);
+        getCompanyByName(name).then((id) => {
+            if (id === undefined) return setStatus(CreationStatus.CheckingFailed);
+            if (id !== null) {
+                setId(id);
+                return setStatus(CreationStatus.Exists);
+            }
+            createCompanyWithName(name).then((id) => {
+                if (!id) return setStatus(CreationStatus.CreationFailed);
+                router.push(`/suivi/edit-company/${id}`);
+            });
+        });
+    };
 
     return (
         <div className="p-8">
@@ -81,7 +107,9 @@ export default function Page() {
                     {STATUS_INFOS[status].pending ? (
                         <LoadingFullStops />
                     ) : (
-                        <Button className="px-main">Créer</Button>
+                        <Button className="px-main" onClick={tryCreate}>
+                            Créer
+                        </Button>
                     )}
                 </CardFooter>
             </Card>
