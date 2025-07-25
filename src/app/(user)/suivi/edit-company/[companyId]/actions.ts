@@ -17,6 +17,9 @@ export async function updateCompanyInfos(
     }
 }
 
+/**
+ * Retrieves all the people that are not employees in any company.
+ */
 export async function getPossibleMembers(): Promise<PossibleMember[] | undefined> {
     try {
         const people = await db.person.findMany({
@@ -33,6 +36,9 @@ export async function getPossibleMembers(): Promise<PossibleMember[] | undefined
     }
 }
 
+/**
+ * Creates a person and the associated employee in one go.
+ */
 export async function createMember(
     firstName: string,
     lastName: string,
@@ -52,14 +58,9 @@ export async function createMember(
     }
 }
 
-export async function addPersonToCompany(personId: string, companyId: string, job: string) {
-    try {
-        return await db.client.create({ data: { personId, companyId, job } });
-    } catch (e) {
-        console.error(`[addPersonToCompany] ${e}`);
-    }
-}
-
+/**
+ * Updates the name of person
+ */
 export async function updatePerson(firstName: string, lastName: string, personId: string) {
     try {
         return await db.person.update({ where: { id: personId }, data: { firstName, lastName } });
@@ -68,6 +69,9 @@ export async function updatePerson(firstName: string, lastName: string, personId
     }
 }
 
+/**
+ * Updates the job of an employee
+ * */
 export async function updateJob(job: string, clientId: string) {
     try {
         return await db.client.update({ where: { id: clientId }, data: { job } });
@@ -76,6 +80,11 @@ export async function updateJob(job: string, clientId: string) {
     }
 }
 
+/**
+ * Removes a person from a company.
+ *
+ * The person will still exist after this deletion
+ * */
 export async function removeClient(clientId: string) {
     try {
         return await db.client.delete({ where: { id: clientId } });
@@ -84,6 +93,9 @@ export async function removeClient(clientId: string) {
     }
 }
 
+/**
+ * Adds an existing person to a company
+ * */
 export async function createClient(personId: string, companyId: string) {
     try {
         return await db.client.create({ data: { personId, companyId, job: '' } });
