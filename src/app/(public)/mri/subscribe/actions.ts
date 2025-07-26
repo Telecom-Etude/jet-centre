@@ -2,13 +2,7 @@
 
 import db from '@/db';
 import { MriSubscriptionType } from './schema';
-import { SubscribePersonReturn, SubscribePersonStatus } from './types';
-
-interface FoundPerson {
-    id: string;
-    email: string | null;
-    assignee: { id: string; mriReceiver: { assigneeId: string } | null } | null;
-}
+import { FoundPerson, SubscribePersonReturn, SubscribePersonStatus } from './types';
 
 async function findPerson({
     firstName,
@@ -79,25 +73,31 @@ const OK: SubscribePersonReturn = { status: SubscribePersonStatus.Ok };
 
 export async function subscribePerson(
     values: MriSubscriptionType,
-    personId?: string
+    previousPerson?: FoundPerson
 ): Promise<SubscribePersonReturn> {
-    const person = await findPerson(values);
+    if (previousPerson === undefined) {
+        const person = await findPerson(values);
 
-    if (person === undefined) return { status: SubscribePersonStatus.FindPersonFailure } as const;
+        if (person === undefined)
+            return { status: SubscribePersonStatus.FindPersonFailure } as const;
 
-    if (person === null) {
-        const mriReceiver = await subscribeNewPerson(values);
-        if (mriReceiver === undefined)
-            return { status: SubscribePersonStatus.SubscribeNewPersonFailure };
-        return OK;
+        if (person === null) {
+            const mriReceiver = await subscribeNewPerson(values);
+            if (mriReceiver === undefined)
+                return { status: SubscribePersonStatus.SubscribeNewPersonFailure };
+            return OK;
+        }
+
+        if (person.email && person.email !== values.email)
+            return {
+                status: SubscribePersonStatus.WrongEmail,
+                person,
+            };
+
+        previousPerson = person;
     }
 
-    if (person.email && person.email !== values.email)
-        return {
-            status: SubscribePersonStatus.WrongEmail,
-            email: person.email,
-            id: person.id,
-        };
+    const person = previousPerson;
 
     if (person.assignee === null) {
         const mriReceiver = await subscribeNewAssignee(person.id);

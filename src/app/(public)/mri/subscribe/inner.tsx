@@ -11,7 +11,7 @@ import {
 
 import { useState } from 'react';
 import { subscribePerson } from './actions';
-import { SubscribePersonReturn, SubscribePersonStatus } from './types';
+import { FoundPerson, SubscribePersonReturn, SubscribePersonStatus } from './types';
 import { MriSubscriptionType } from './schema';
 import { MriSubscriptionForm } from './form';
 import Link from 'next/link';
@@ -21,11 +21,11 @@ export function Inner() {
     const [loading, setLoading] = useState(false);
     const [formValues, setFormValues] = useState<undefined | MriSubscriptionType>();
 
-    const updateServer = (values: MriSubscriptionType, personId?: string) => {
+    const updateServer = (values: MriSubscriptionType, person?: FoundPerson) => {
         setFormValues(formValues);
         setLoading(true);
         setServerData(undefined);
-        subscribePerson(values, personId).then((data) => {
+        subscribePerson(values, person).then((data) => {
             setServerData(data);
             setLoading(false);
         });
@@ -47,20 +47,20 @@ export function Inner() {
                         <AlertDialogAction
                             onClick={() => {
                                 const data = getDataUnchecked();
-                                if (!data) return;
+                                if (!data || !data.server.person.email) return;
                                 updateServer(
-                                    { ...data.client, email: data.server.email },
-                                    data.server.id
+                                    { ...data.client, email: data.server.person.email },
+                                    data.server.person
                                 );
                             }}
                         >
-                            Continuer avec {getDataUnchecked()?.server.email}
+                            Continuer avec {getDataUnchecked()?.server.person.email}
                         </AlertDialogAction>
                         <AlertDialogAction
                             onClick={() => {
                                 const data = getDataUnchecked();
                                 if (!data) return;
-                                updateServer(data.client, data.server.id);
+                                updateServer(data.client, data.server.person);
                             }}
                         >
                             Continuer avec {getDataUnchecked()?.client.email}
