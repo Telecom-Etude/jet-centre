@@ -49,13 +49,13 @@ model Mri {
 model Assignee {
     id              String          @id @default(cuid())
     /// Number of times the assignee applied to mission.
-    nbApplications  Int
+    nbApplications  Int?
     docs            AssigneeDocs[]
     information     AssigneeInfos?
     person          Person          @relation(fields: [peopleId], references: [id], onDelete: Cascade)
     peopleId        String          @unique
     assignedStudies StudyAssignee[]
-    mriReceived     MriReceived?
+    mriReceiver     MriReceiver?
 }
 
 /// Personal information of an assignee
@@ -182,7 +182,7 @@ model FormInterviews {
     questions       String
 }
 
-model MriReceived {
-    members    Assignee @relation(fields: [assigneeId], references: [id])
+model MriReceiver {
+    assignee   Assignee @relation(fields: [assigneeId], references: [id])
     assigneeId String   @id
 }
