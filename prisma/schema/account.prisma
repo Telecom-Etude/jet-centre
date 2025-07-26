@@ -3,16 +3,15 @@
 /// This can represent users, that can access the ERP, and external people that
 /// will never have access to the ERP.
 model Person {
-    id        String    @id @default(cuid())
-    email     String?
-    firstName String
-    lastName  String
-    /// Telephone number
-    number    String?
-    address   Address?
-    user      User?
-    assignee  Assignee?
-    client    Client? @relation("ClientToPerson")
+    id           String    @id @default(cuid())
+    email        String?
+    firstName    String
+    lastName     String
+    phone_number String?
+    address      Address?
+    user         User?
+    assignee     Assignee?
+    client       Client?   @relation("ClientToPerson")
 
     @@unique(name: "name", [firstName, lastName])
 }

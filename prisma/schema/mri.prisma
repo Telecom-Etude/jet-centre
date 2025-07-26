@@ -47,14 +47,15 @@ model Mri {
 /// Links all the data related to an assignee
 /// (documents, applications, personal information, etc.)
 model Assignee {
-    id             String          @id @default(cuid())
+    id              String          @id @default(cuid())
     /// Number of times the assignee applied to mission.
-    nbApplications Int
-    docs           AssigneeDocs[]
-    information    AssigneeInfos?
-    person         Person          @relation(fields: [peopleId], references: [id], onDelete: Cascade)
-    peopleId       String          @unique
-    studyAssign    StudyAssignee[]
+    nbApplications  Int
+    docs            AssigneeDocs[]
+    information     AssigneeInfos?
+    person          Person          @relation(fields: [peopleId], references: [id], onDelete: Cascade)
+    peopleId        String          @unique
+    assignedStudies StudyAssignee[]
+    mriReceived     MriReceived?
 }
 
 /// Personal information of an assignee
@@ -64,7 +65,7 @@ model AssigneeInfos {
     assigneeId     String   @unique
     age            Int
     /// In which year will the assignee graduate?
-    promotion      Int
+    graduationYear Int
     hasScholarship Boolean
     oldJet         Boolean
 }
@@ -179,4 +180,9 @@ model FormInterviews {
     cdpRequirements String
     /// Questions asked by the assignee during the interview
     questions       String
+}
+
+model MriReceived {
+    members    Assignee @relation(fields: [assigneeId], references: [id])
+    assigneeId String   @id
 }
