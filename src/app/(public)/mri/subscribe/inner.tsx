@@ -81,8 +81,23 @@ export function Inner() {
                     <p className="text-center">
                         Merci de vous être abonné à cette liste de diffusion!
                     </p>
-                    <Link href="/mri/unsubscribe" className="text-center">
+                    <Link href="/mri/unsubscribe" className="underline text-primary text-center">
                         Cliquez ici pour vous désinscrire
+                    </Link>
+                </div>
+            ) : !loading && serverData && serverData.status !== SubscribePersonStatus.WrongEmail ? (
+                <div className="flex flex-col space-y-main">
+                    <p className="text-destructive text-center">
+                        Une erreur inattendue s'est produite.
+                        <br />
+                        Merci de reporter le code suivant en faisant un ticket SOS:{' '}
+                        {serverData.status}
+                    </p>
+                    <Link
+                        href="mailto:info@telecom-etude.fr"
+                        className="underline text-primary text-center"
+                    >
+                        Ticket SOS
                     </Link>
                 </div>
             ) : (
