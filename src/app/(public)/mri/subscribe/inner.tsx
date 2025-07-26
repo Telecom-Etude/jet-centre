@@ -26,7 +26,7 @@ export function Inner() {
         setFormValues(formValues);
         setLoading(true);
         setServerData(undefined);
-        subscribePerson(values, person).then((data) => {
+        subscribePerson(values, person?.id, person?.assignee?.id).then((data) => {
             setServerData(data);
             setLoading(false);
         });

@@ -74,9 +74,13 @@ const OK: SubscribePersonReturn = { status: SubscribePersonStatus.Ok };
 
 export async function subscribePerson(
     values: MriSubscriptionType,
-    previousPerson?: FoundPerson
+    previousPersonId?: string,
+    previousAssigneeId?: string
 ): Promise<SubscribePersonReturn> {
-    if (previousPerson === undefined) {
+    let personId;
+    let assigneeId;
+
+    if (previousPersonId === undefined) {
         const person = await findPerson(values);
 
         if (person === undefined)
@@ -95,13 +99,15 @@ export async function subscribePerson(
                 person,
             };
 
-        previousPerson = person;
+        personId = person.id;
+        assigneeId = person.assignee?.id;
+    } else {
+        personId = previousPersonId;
+        assigneeId = previousAssigneeId;
     }
 
-    const person = previousPerson;
-
-    if (person.assignee === null) {
-        const mriReceiver = await subscribeNewAssignee(person.id);
+    if (assigneeId === undefined) {
+        const mriReceiver = await subscribeNewAssignee(personId);
         if (mriReceiver === undefined)
             return {
                 status: SubscribePersonStatus.SubscribeNewAssigneeFailure,
@@ -109,7 +115,7 @@ export async function subscribePerson(
         return OK;
     }
 
-    const mriReceiver = subscribeExisting(person.assignee.id);
+    const mriReceiver = subscribeExisting(assigneeId);
     if (mriReceiver === undefined)
         return { status: SubscribePersonStatus.SubscribeExistingFailure };
     return OK;
