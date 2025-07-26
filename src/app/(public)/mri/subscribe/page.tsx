@@ -1,13 +1,6 @@
 import { LogoBird } from '@/components/logo/logo';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card';
-import { MriSubscriptionForm } from './form';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Inner } from '././inner';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -17,17 +10,17 @@ export default function Page() {
         <div className="h-full flex flex-col items-center justify-center space-y-main">
             <LogoBird />
             <Card>
-                <CardHeader>
+                <CardHeader className="space-y-main">
                     <CardTitle className="font-semi text-primary text-center">
                         S'abonner aux MRIs
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-center italic">
                         Inscrivez-vous à la liste de diffusion de Telecom Etude pour recevoir toutes
                         les offres de mission !
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-col space-y-main">
-                    <MriSubscriptionForm />
+                    <Inner />
                     <div className="flex items-center space-x-2 w-full">
                         <Separator className="bg-primary flex-1" />
                         <p className="text-primary">ou</p>
