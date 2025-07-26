@@ -9,8 +9,6 @@ import { FormProvider } from '@/components/ui/form';
 
 import { NewEmployeeSchemaType, newEmployeeSchema } from './schema';
 
-
-
 export function CreateEmployee({
     createEmployee,
     status,

@@ -21,6 +21,6 @@ export async function createCompanyWithName(companyName: string): Promise<string
         });
         return company.id;
     } catch (e) {
-        console.error(`[createCompanyWithName] ${companyName}`);
+        console.error(`[createCompanyWithName] ${e}`);
     }
 }

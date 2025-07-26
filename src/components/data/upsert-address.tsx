@@ -10,7 +10,6 @@ import { DangerousError } from '../dangerous-alert';
 
 import { upsertAddress } from './upsert-addres';
 
-
 function UpdateAddressElement({
     name,
     value,
@@ -109,7 +108,7 @@ export function UpsertAddress({
             </DangerousError>
             <UpdateBox title="Adresse" update={updateServer} status={status}>
                 <p className="italic">
-                    Remplissez tous les champs pour que la sauvegarde s'effectue.
+                    Remplissez tous les champs pour que la sauvegarde s&apos;effectue.
                 </p>
                 <div className="space-y-main">
                     <UpdateAddressElement

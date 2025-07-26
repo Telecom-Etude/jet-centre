@@ -109,7 +109,7 @@ function EditClientForm({ onSubmit, client, isLoading }: EditClientFormProps) {
                         )}
                     </div>
                     <div className="space-y-main py-main">
-                        <h2>L'entreprise</h2>
+                        <h2>L&apos;entreprise</h2>
                         <EnableBox
                             checked={editCompany}
                             onCheckedChange={setEditCompany}
@@ -143,7 +143,7 @@ function EditClientForm({ onSubmit, client, isLoading }: EditClientFormProps) {
                                     }
                                 />
                                 <Separator />
-                                <h2>Adresse de 'entreprise</h2>
+                                <h2>Adresse de l&apos;entreprise</h2>
                                 <EnableBox
                                     checked={editCompanyAddress}
                                     onCheckedChange={setEditCompanyAddress}

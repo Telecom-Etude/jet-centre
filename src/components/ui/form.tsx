@@ -168,6 +168,7 @@ const FormRow = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEle
         );
     }
 );
+FormRow.displayName = 'FormRow';
 
 interface FormRuleProps extends React.HTMLAttributes<HTMLHRElement> {
     primary?: boolean;
@@ -184,6 +185,7 @@ const FormRule = React.forwardRef<HTMLHRElement, FormRuleProps>(
         );
     }
 );
+FormRule.displayName = 'FormRule';
 
 export {
     useFormField,

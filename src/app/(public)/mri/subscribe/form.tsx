@@ -37,7 +37,7 @@ export function MriSubscriptionForm({
                     {disabled ? (
                         <LoadingFullStops />
                     ) : (
-                        <Button className="px-main">S'inscrire</Button>
+                        <Button className="px-main">S&apos;inscrire</Button>
                     )}
                 </div>
             </form>

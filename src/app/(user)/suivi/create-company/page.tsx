@@ -80,7 +80,7 @@ export default function Page() {
                     </CardTitle>
                     <CardDescription className="italic text-center">
                         Renseigner son nom ci-dessous. Vous serez rediriger vers une page pour
-                        renseigner d'avantage d'informations.
+                        renseigner d&apos;avantage d&apos;informations.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

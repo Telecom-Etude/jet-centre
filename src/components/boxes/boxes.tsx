@@ -14,10 +14,7 @@ import { ANIMATION_DURATION_MS } from '@/settings/vars';
 
 const Box = forwardRef<
     HTMLDivElement,
-    { children: ReactNode; withBackdrop?: boolean; className?: string | string[] } & Omit<
-        any,
-        'children' | 'className'
-    >
+    { children: ReactNode; withBackdrop?: boolean; className?: string | string[] }
 >(({ children, withBackdrop = true, className, ...props }, ref) => (
     <div
         ref={ref}
@@ -37,18 +34,25 @@ const Box = forwardRef<
     </div>
 ));
 
-const InnerBox = forwardRef<
-    HTMLDivElement,
-    { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>
->(({ children, className, ...props }, ref) => (
-    <div ref={ref} className={cn('rounded-xl bg-background flex flex-col ', className)} {...props}>
-        {children}
-    </div>
-));
+Box.displayName = 'Box';
+
+const InnerBox = forwardRef<HTMLDivElement, { children: ReactNode; className?: string | string[] }>(
+    ({ children, className, ...props }, ref) => (
+        <div
+            ref={ref}
+            className={cn('rounded-xl bg-background flex flex-col ', className)}
+            {...props}
+        >
+            {children}
+        </div>
+    )
+);
+
+InnerBox.displayName = 'InnerBox';
 
 const BoxHeader = forwardRef<
     HTMLDivElement,
-    { children: ReactNode; className?: string | string[] } & Omit<any, 'children' | 'className'>
+    { children: ReactNode; className?: string | string[] }
 >(({ children, className, ...props }, ref) => (
     <div
         ref={ref}
@@ -64,9 +68,13 @@ const BoxHeader = forwardRef<
     </div>
 ));
 
+BoxHeader.displayName = 'BoxHeader';
+
 const BoxHeaderBlock = ({ children, className }: { children?: ReactNode; className?: string }) => (
     <div className={cn('flex justify-between items-center gap-2', className)}>{children}</div>
 );
+
+BoxHeaderBlock.displayName = 'BoxHeaderBlock';
 
 type Height = 'auto' | 'limited';
 
@@ -91,6 +99,8 @@ const BoxContent = ({
     </div>
 );
 
+BoxContent.displayName = 'BoxContent';
+
 const BoxCollapser = ({
     children,
     collapse = false,
@@ -103,11 +113,15 @@ const BoxCollapser = ({
     </AnimateHeight>
 );
 
+BoxCollapser.displayName = 'BoxCollapser';
+
 const BoxTitle = ({ children, className }: { children: string | string[]; className?: string }) => (
     <h2 className={cn('font-semibold text-lg overflow-hidden text-ellipsis', className)}>
         {children}
     </h2>
 );
+
+BoxTitle.displayName = 'BoxTitle';
 
 const BoxButtonLabelPlus = ({
     onClick,
@@ -172,11 +186,15 @@ const BoxButtonIcon = ({ onClick, Icon, iconClassName, hoverContent }: BoxButton
     );
 };
 
+BoxButtonIcon.displayName = 'BoxButtonIcon';
+
 const BoxDragHandle = forwardRef<HTMLDivElement>((props, ref) => (
     <div className="h-6 w-6 content-center" ref={ref} {...props}>
         <FaGripLines />
     </div>
 ));
+
+BoxDragHandle.displayName = 'BoxDragHandle';
 
 const BoxCollapseButton = ({
     collapse,

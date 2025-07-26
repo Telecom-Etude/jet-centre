@@ -101,8 +101,8 @@ function DeleteClientDialog({ isOpen, setIsOpen, studyClientId }: DeleteClientDi
                     <AlertDialogTitle>Confirmer la suppression du client</AlertDialogTitle>
                     <AlertDialogDescription>
                         Ce client sera enlevé de cette étude. Il existera toujours dans la base si
-                        vous désirez l'ajouter plus tard. Changer le client risque de corrompre
-                        certaines données si l'étude est trop avancée.
+                        vous désirez l&apos;ajouter plus tard. Changer le client risque de corrompre
+                        certaines données si l&apos;étude est trop avancée.
                     </AlertDialogDescription>
                     {isLoading ? (
                         <div className="w-full items-center flex justify-center">

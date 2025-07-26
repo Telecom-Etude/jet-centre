@@ -44,9 +44,9 @@ async function LoadMRI({ study }: { study: string }) {
     }
     const mri = assertAllFieldsFull(studyInfos.study.mri, studyInfos.title);
     return mri === null ? (
-        <p>Le MRI n'a pas encore été fini.</p>
+        <p>Le MRI n&apos;a pas encore été fini.</p>
     ) : mri === undefined ? (
-        <p>La rédaction du MRI n'a pas encore commencé</p>
+        <p>La rédaction du MRI n&apos;a pas encore commencé</p>
     ) : (
         <RenderMRI mri={mri} study={study} admins={studyInfos.study.cdps.map(adminDisplay)} />
     );

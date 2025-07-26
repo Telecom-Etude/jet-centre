@@ -10,10 +10,6 @@ import { TableCell } from '@/components/ui/table';
 import { updateJob, updatePerson } from './actions';
 import { Member } from './schema';
 
-
-
-
-
 function EditableCell({
     setStatus,
     update,
@@ -48,7 +44,7 @@ function EditableCell({
                     <HoverCardTrigger onClick={() => setEditing(true)}>
                         <MdError className="text-destructive cursor-help" />
                     </HoverCardTrigger>
-                    <HoverCardContent>Un champ vide n'est pas autorisé.</HoverCardContent>
+                    <HoverCardContent>Un champ vide n&apos;est pas autorisé.</HoverCardContent>
                 </HoverCard>
             ) : (
                 <p className="cursor-pointer py-4" onClick={() => setEditing(true)}>

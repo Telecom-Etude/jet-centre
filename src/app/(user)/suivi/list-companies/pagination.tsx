@@ -1,5 +1,4 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { ReactNode } from 'react';
 import { IconType } from 'react-icons/lib';
 
 import { Button } from '@/components/ui/button';
@@ -12,7 +11,6 @@ import {
 } from '@/components/ui/select';
 
 import { CompanyTable } from './types';
-
 
 function NbPerPageSelector({ table }: { table: CompanyTable }) {
     return (
@@ -40,14 +38,12 @@ function NbPerPageSelector({ table }: { table: CompanyTable }) {
 }
 
 function NavigatorButton({
-    table,
     onSmallScreens,
     onClick,
     disabled,
     srText,
     Icon,
 }: {
-    table: CompanyTable;
     onSmallScreens: boolean;
     disabled: boolean;
     onClick: () => void;
@@ -72,7 +68,6 @@ function PageNavigator({ table }: { table: CompanyTable }) {
     return (
         <div className="flex items-center space-x-2">
             <NavigatorButton
-                table={table}
                 onSmallScreens={false}
                 onClick={() => table.setPageIndex(0)}
                 disabled={!table.getCanPreviousPage()}
@@ -80,7 +75,6 @@ function PageNavigator({ table }: { table: CompanyTable }) {
                 Icon={ChevronsLeft}
             />
             <NavigatorButton
-                table={table}
                 onSmallScreens={true}
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
@@ -88,7 +82,6 @@ function PageNavigator({ table }: { table: CompanyTable }) {
                 Icon={ChevronLeft}
             />
             <NavigatorButton
-                table={table}
                 onSmallScreens={true}
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
@@ -96,7 +89,6 @@ function PageNavigator({ table }: { table: CompanyTable }) {
                 Icon={ChevronRight}
             />
             <NavigatorButton
-                table={table}
                 onSmallScreens={false}
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}

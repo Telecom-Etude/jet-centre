@@ -14,8 +14,6 @@ import { CreateEmployee } from './create-employee';
 import { EditEmployee } from './edit-employee';
 import { Member, NewEmployeeSchemaType, PossibleMember } from './schema';
 
-
-
 export function EditCompanyEmployees({
     companyId,
     members: initialMembers,

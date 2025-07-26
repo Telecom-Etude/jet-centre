@@ -14,7 +14,7 @@ export default function Page() {
             <Card>
                 <CardHeader className="space-y-main">
                     <CardTitle className="font-semi text-primary text-center">
-                        S'abonner aux MRIs
+                        S&apos;abonner aux MRIs
                     </CardTitle>
                     <CardDescription className="text-center italic">
                         Inscrivez-vous à la liste de diffusion de Telecom Etude pour recevoir toutes
@@ -29,7 +29,7 @@ export default function Page() {
                         <Separator className="bg-primary flex-1" />
                     </div>
                     <Button variant="outline" asChild className="m-auto">
-                        <Link href="/404">S'inscrire avec le SSO de Télécom Paris</Link>
+                        <Link href="/404">S&apos;inscrire avec le SSO de Télécom Paris</Link>
                     </Button>
                 </CardContent>
             </Card>

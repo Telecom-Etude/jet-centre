@@ -82,7 +82,7 @@ export function RenderMRI({ mri, admins, study }: RenderMRIProps) {
                             </Link>
                         </Button>
 
-                        <p>N&apos;hésitez pas à nous contacter pour plus d'information:</p>
+                        <p>N&apos;hésitez pas à nous contacter pour plus d&apos;information:</p>
                         <div className="flex">
                             {admins.map((admin, i) => (
                                 <Link

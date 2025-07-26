@@ -6,6 +6,9 @@ const compat: FlatCompat = new FlatCompat({
 });
 
 const eslintConfig = [
+    {
+        ignores: ['.next/**', 'node_modules/**'],
+    },
     globalIgnores(['tailwind.config.ts']),
     {
         files: ['**/*.{ts,tsx}'],
@@ -52,15 +55,22 @@ const eslintConfig = [
         },
     },
     ...compat.config({
-        extends: ['next/core-web-vitals', 'next/typescript'],
+        extends: [
+            'plugin:react/recommended',
+            'plugin:react-hooks/recommended',
+            'next/core-web-vitals',
+            'next/typescript',
+        ],
         rules: {
-            'react/display-name': 'off',
-            'react/no-unescaped-entities': 'off',
+            'react/display-name': 'error',
+            'react/no-unescaped-entities': 'error',
             'import/no-anonymous-default-export': 'error',
-            '@next/next/no-page-custom-font': 'off',
+            '@next/next/no-page-custom-font': 'error',
             'no-unused-vars': 'off',
             '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/ban-ts-comment': 'off',
+            '@typescript-eslint/ban-ts-comment': 'error',
+            '@typescript-eslint/no-unused-vars': 'error',
+            'react-hooks/exhaustive-deps': 'error',
             'prefer-const': 'error',
         },
     }),

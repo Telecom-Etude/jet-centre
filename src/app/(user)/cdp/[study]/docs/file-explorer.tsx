@@ -67,7 +67,7 @@ export function FileExplorerBox({
                     ) : missions.length !== 0 ? (
                         <FileExplorer missions={missions} selectFile={selectFile} />
                     ) : (
-                        <p>Aucun document n'est présent dans le dossier d'étude.</p>
+                        <p>Aucun document n&apos;est présent dans le dossier d&apos;étude.</p>
                     )}
                 </BoxContent>
             </Box>

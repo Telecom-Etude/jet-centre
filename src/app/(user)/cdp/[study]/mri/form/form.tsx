@@ -125,8 +125,8 @@ function TitleEditor({ form, updateServer }: MRICreationProps) {
                     <DialogHeader className="gap-y-6">
                         <DialogTitle>Synchronisation</DialogTitle>
                         <DialogDescription>
-                            Le titre sera synchronisé avec l'ensemble de l'étude. Ce sera notamment
-                            le même sur l'ensemble des documents.
+                            Le titre sera synchronisé avec l&apos;ensemble de l&apos;étude. Ce sera
+                            notamment le même sur l&apos;ensemble des documents.
                         </DialogDescription>
                         <DialogClose asChild>
                             <Button variant="outline">Ok</Button>

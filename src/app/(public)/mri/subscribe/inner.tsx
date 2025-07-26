@@ -17,7 +17,6 @@ import { MriSubscriptionForm } from './form';
 import { MriSubscriptionType } from './schema';
 import { FoundPerson, SubscribePersonReturn, SubscribePersonStatus } from './types';
 
-
 export function Inner() {
     const [serverData, setServerData] = useState<SubscribePersonReturn | undefined>();
     const [loading, setLoading] = useState(false);
@@ -69,7 +68,7 @@ export function Inner() {
                         </AlertDialogAction>
                         <AlertDialogAction asChild>
                             <Link href="mailto:info@telecom-etude.fr">
-                                Ce n'est pas mon email. Contacter la DSI.
+                                Ce n&apos;est pas mon email. Contacter la DSI.
                             </Link>
                         </AlertDialogAction>
                     </AlertDialogFooter>

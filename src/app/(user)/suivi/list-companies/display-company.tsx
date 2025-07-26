@@ -7,7 +7,6 @@ import { personName, stringifyAddress } from '@/lib/utils';
 
 import { FullCompany } from './actions';
 
-
 function DisplayMember({ member }: { member: Client & { person: Person } }) {
     return (
         <div>
