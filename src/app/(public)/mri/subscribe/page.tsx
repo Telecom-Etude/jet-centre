@@ -1,9 +1,5 @@
-import Link from 'next/link';
-
 import { LogoBird } from '@/components/logo/logo';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 
 import { Inner } from '././inner';
 
@@ -23,14 +19,6 @@ export default function Page() {
                 </CardHeader>
                 <CardContent className="flex flex-col space-y-main">
                     <Inner />
-                    <div className="flex items-center space-x-2 w-full">
-                        <Separator className="bg-primary flex-1" />
-                        <p className="text-primary">ou</p>
-                        <Separator className="bg-primary flex-1" />
-                    </div>
-                    <Button variant="outline" asChild className="m-auto">
-                        <Link href="/404">S&apos;inscrire avec le SSO de Télécom Paris</Link>
-                    </Button>
                 </CardContent>
             </Card>
         </div>

@@ -16,6 +16,8 @@ import { subscribePerson } from './actions';
 import { MriSubscriptionForm } from './form';
 import { MriSubscriptionType } from './schema';
 import { FoundPerson, SubscribePersonReturn, SubscribePersonStatus } from './types';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 
 export function Inner() {
     const [serverData, setServerData] = useState<SubscribePersonReturn | undefined>();
@@ -74,10 +76,31 @@ export function Inner() {
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-            <MriSubscriptionForm
-                subscribePerson={updateServer}
-                disabled={loading || serverData !== undefined}
-            />
+            {serverData?.status === SubscribePersonStatus.Ok ? (
+                <div className="flex flex-col space-y-main">
+                    <p className="text-center">
+                        Merci de vous être abonné à cette liste de diffusion!
+                    </p>
+                    <Link href="/mri/unsubscribe" className="text-center">
+                        Cliquez ici pour vous désinscrire
+                    </Link>
+                </div>
+            ) : (
+                <>
+                    <MriSubscriptionForm
+                        subscribePerson={updateServer}
+                        disabled={loading || serverData !== undefined}
+                    />
+                    <div className="flex items-center space-x-2 w-full">
+                        <Separator className="bg-primary flex-1" />
+                        <p className="text-primary">ou</p>
+                        <Separator className="bg-primary flex-1" />
+                    </div>
+                    <Button variant="outline" asChild className="m-auto">
+                        <Link href="/404">S&apos;inscrire avec le SSO de Télécom Paris</Link>
+                    </Button>
+                </>
+            )}
         </>
     );
 }
