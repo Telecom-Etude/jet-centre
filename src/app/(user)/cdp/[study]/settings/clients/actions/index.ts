@@ -54,7 +54,7 @@ export async function getStudyClients(
                 firstName: client.person.firstName,
                 lastName: client.person.lastName,
                 email: client.person.email ?? undefined,
-                number: client.person.number ?? undefined,
+                number: client.person.phone_number ?? undefined,
             };
 
             if (client.person.address) {
@@ -113,7 +113,7 @@ export async function newStudyClient(studyId: string, clientData: ClientFormType
                                     firstName: clientData.firstName,
                                     lastName: clientData.lastName,
                                     email: clientData.email,
-                                    number: clientData.number,
+                                    phone_number: clientData.number,
                                 },
                             },
                         },

@@ -1,8 +1,10 @@
 'use server';
 
-import db from '@/db';
-import { CompanyName } from './types';
 import { Address, Client, Company, CompanyInfos, Person } from '@prisma/client';
+
+import db from '@/db';
+
+import { CompanyName } from './types';
 
 export async function getCompanies(): Promise<CompanyName[] | undefined> {
     try {

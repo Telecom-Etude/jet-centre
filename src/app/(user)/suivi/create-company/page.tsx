@@ -1,10 +1,11 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { LoadingFullStops } from '@/components/loading';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { getCompanyByName, createCompanyWithName } from './actions';
 import {
     Card,
     CardContent,
@@ -13,9 +14,9 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { LoadingFullStops } from '@/components/loading';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+
+import { getCompanyByName, createCompanyWithName } from './actions';
 
 enum CreationStatus {
     Ok,

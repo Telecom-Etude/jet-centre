@@ -55,7 +55,7 @@ CommandInput.displayName = CommandPrimitive.Input.displayName;
 export const HiddenCommandInput = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Input>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+     
 >(({ className, ...props }, ref) => (
     <CommandPrimitive.Input ref={ref} className="hidden" {...props} />
 ));

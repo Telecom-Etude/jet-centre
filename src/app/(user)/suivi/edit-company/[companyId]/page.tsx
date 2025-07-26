@@ -1,11 +1,14 @@
-import { FullCompany, getCompanyFromId } from '../../list-companies/actions';
-import { ErrorPage } from '@/components/error';
 import Link from 'next/link';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+
 import { UpsertAddress } from '@/components/data/upsert-address';
+import { ErrorPage } from '@/components/error';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+
+import { FullCompany, getCompanyFromId } from '../../list-companies/actions';
+
 import { EditCompanyInfos } from '././company-infos';
-import { EditCompanyEmployees } from './company-employees';
 import { getPossibleMembers } from './actions';
+import { EditCompanyEmployees } from './company-employees';
 
 function Name({ company }: { company: FullCompany }) {
     const studies: string[] = company.members.flatMap((member) =>

@@ -1,7 +1,8 @@
 'use server';
 
-import db from '@/db';
 import { Address } from '@prisma/client';
+
+import db from '@/db';
 
 export async function upsertAddress(
     address: Omit<Address, 'id'> & { id: string | undefined }

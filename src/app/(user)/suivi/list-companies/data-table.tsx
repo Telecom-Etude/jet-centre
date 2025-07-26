@@ -8,6 +8,11 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from '@tanstack/react-table';
+import Link from 'next/link';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
     Table,
     TableBody,
@@ -16,13 +21,10 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import type { CompanyColumn, CompanyTable, CompanyName } from './types';
-import { DataTablePagination } from './pagination';
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
+
 import { columns } from './columns';
+import { DataTablePagination } from './pagination';
+import type { CompanyColumn, CompanyTable, CompanyName } from './types';
 
 function DataTableEntries({
     table,

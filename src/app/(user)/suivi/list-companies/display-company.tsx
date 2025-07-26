@@ -1,16 +1,19 @@
-import { Separator } from '@/components/ui/separator';
-import { personName, stringifyAddress } from '@/lib/utils';
 import { Client, Person } from '@prisma/client';
 import { ReactNode } from 'react';
-import { FullCompany } from './actions';
+
+import { Separator } from '@/components/ui/separator';
 import { COMPANY_SIZES, DOMAINS } from '@/db/types';
+import { personName, stringifyAddress } from '@/lib/utils';
+
+import { FullCompany } from './actions';
+
 
 function DisplayMember({ member }: { member: Client & { person: Person } }) {
     return (
         <div>
             <p>{personName(member.person)}</p>
             <CompanyInfo title="Email" text={member.person.email || 'Non renseignée'} />
-            <CompanyInfo title="Téléphone" text={member.person.number || 'Non renseignée'} />
+            <CompanyInfo title="Téléphone" text={member.person.phone_number || 'Non renseignée'} />
         </div>
     );
 }

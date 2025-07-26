@@ -218,7 +218,7 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
 
         useEffect(() => {
             setOptions(transToGroupOption(defaultOptions, groupBy));
-        }, [defaultOptions]);
+        }, [defaultOptions, groupBy]);
 
         React.useImperativeHandle(
             ref,

@@ -1,12 +1,18 @@
+import { useState } from 'react';
+import { MdError } from 'react-icons/md';
+
+import { BoxButtonIcon, BoxButtonTrash } from '@/components/boxes/boxes';
 import { getUpdateBoxStatusInfos, UpdateBoxStatus } from '@/components/boxes/update-box';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Input } from '@/components/ui/input';
 import { TableCell } from '@/components/ui/table';
-import { useState } from 'react';
-import { Member } from './schema';
-import { BoxButtonIcon, BoxButtonTrash } from '@/components/boxes/boxes';
+
 import { updateJob, updatePerson } from './actions';
-import { MdError } from 'react-icons/md';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Member } from './schema';
+
+
+
+
 
 function EditableCell({
     setStatus,

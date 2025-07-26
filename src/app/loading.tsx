@@ -7,8 +7,9 @@
  *
  */
 
-import { ErrorPage } from '@/components/error';
 import { useEffect, useState } from 'react';
+
+import { ErrorPage } from '@/components/error';
 
 const DELAY_TO_SHOW_LOADING_PAGE = 500; // milliseconds
 

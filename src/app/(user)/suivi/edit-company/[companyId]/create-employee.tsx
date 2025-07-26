@@ -1,16 +1,15 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, UseFormReturn } from 'react-hook-form';
 
+import { UpdateBoxStatus } from '@/components/boxes/update-box';
+import { LoadingFullStops } from '@/components/loading';
 import { InputFormElement } from '@/components/meta-components/form/input';
-
+import { Button } from '@/components/ui/button';
 import { FormProvider } from '@/components/ui/form';
 
 import { NewEmployeeSchemaType, newEmployeeSchema } from './schema';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button } from '@/components/ui/button';
-import { LoadingFullStops } from '@/components/loading';
-import { UpdateBoxStatus } from '@/components/boxes/update-box';
 
 export function CreateEmployee({
     createEmployee,

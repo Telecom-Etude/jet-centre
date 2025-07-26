@@ -1,9 +1,11 @@
-import { LogoBird } from '@/components/logo/logo';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Inner } from '././inner';
-import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
+
+import { LogoBird } from '@/components/logo/logo';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+
+import { Inner } from '././inner';
 
 export default function Page() {
     return (

@@ -1,6 +1,8 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+
 import {
     Box,
     BoxButtonEdit,
@@ -9,12 +11,12 @@ import {
     BoxHeaderBlock,
     BoxTitle,
 } from '@/components/boxes/boxes';
-import { CompanyName } from './types';
-import { CompanyTable } from './data-table';
-import { useRouter } from 'next/navigation';
-import { FullCompany, getCompanyFromId } from './actions';
 import { ErrorPage } from '@/components/error';
+
+import { FullCompany, getCompanyFromId } from './actions';
+import { CompanyTable } from './data-table';
 import { DisplayCompany } from './display-company';
+import { CompanyName } from './types';
 
 function CompanyBoxContent({
     company,

@@ -3,18 +3,18 @@
 import { useState } from 'react';
 
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
+import { SingleCombobox } from '@/components/meta-components/combobox';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { Table, TableBody, TableRow } from '@/components/ui/table';
+import { personName } from '@/lib/utils';
 
 import { getPossibleMembers, createMember, removeClient, createClient } from './actions';
+import { CreateEmployee } from './create-employee';
+import { EditEmployee } from './edit-employee';
 import { Member, NewEmployeeSchemaType, PossibleMember } from './schema';
 
-import { Table, TableBody, TableRow } from '@/components/ui/table';
-import { EditEmployee } from './edit-employee';
 
-import { SingleCombobox } from '@/components/meta-components/combobox';
-import { CreateEmployee } from './create-employee';
-import { personName } from '@/lib/utils';
 
 export function EditCompanyEmployees({
     companyId,

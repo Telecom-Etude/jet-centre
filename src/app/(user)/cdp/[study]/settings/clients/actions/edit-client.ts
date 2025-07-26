@@ -22,7 +22,7 @@ export async function editStudyClient(clientId: string, clientData: ClientFormTy
                     firstName: clientData.firstName,
                     lastName: clientData.lastName,
                     email: clientData.email,
-                    number: clientData.number,
+                    phone_number: clientData.number,
                 },
             },
         };

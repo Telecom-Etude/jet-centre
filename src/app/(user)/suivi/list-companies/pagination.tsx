@@ -1,5 +1,8 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ReactNode } from 'react';
+import { IconType } from 'react-icons/lib';
 
+import { Button } from '@/components/ui/button';
 import {
     Select,
     SelectContent,
@@ -7,10 +10,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
+
 import { CompanyTable } from './types';
-import { ReactNode } from 'react';
-import { IconType } from 'react-icons/lib';
+
 
 function NbPerPageSelector({ table }: { table: CompanyTable }) {
     return (

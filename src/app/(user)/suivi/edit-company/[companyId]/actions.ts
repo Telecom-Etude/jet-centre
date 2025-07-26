@@ -1,7 +1,9 @@
 'use server';
 
-import db from '@/db';
 import { CompanyInfos } from '@prisma/client';
+
+import db from '@/db';
+
 import { PossibleMember } from './schema';
 
 export async function updateCompanyInfos(

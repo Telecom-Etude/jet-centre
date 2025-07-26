@@ -1,26 +1,18 @@
 'use client';
 
+import { CompanySize, Domain } from '@prisma/client';
 import { useEffect, useState } from 'react';
 
-import { Input } from '@/components/ui/input';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
-import { CompanySize, Domain } from '@prisma/client';
-
-import {
-    COMPANY_SIZE_DISPLAYS,
-    COMPANY_SIZE_NAMES,
-    COMPANY_SIZES,
-    CompanySizeDisplay,
-    DOMAIN_NAMES,
-    DOMAINS,
-} from '@/db/types';
-
+import { SingleCombobox } from '@/components/meta-components/combobox';
 import MultipleSelector, { Option } from '@/components/meta-components/multiple-selector';
-import { updateCompanyInfos } from './actions';
+import { Input } from '@/components/ui/input';
+import { COMPANY_SIZE_NAMES, COMPANY_SIZES, DOMAIN_NAMES, DOMAINS } from '@/db/types';
 import { arrayEqual } from '@/lib/utils';
 
 import { FullCompany } from '../../list-companies/actions';
-import { SingleCombobox } from '@/components/meta-components/combobox';
+
+import { updateCompanyInfos } from './actions';
 
 function domainToOption(domains: Domain[]): Option[] {
     return domains.map((domain) => ({
@@ -66,7 +58,7 @@ export function EditCompanyInfos({ company }: { company: FullCompany }) {
         });
     };
 
-    useEffect(updateServer, [domains, size]);
+    useEffect(updateServer, [domains, size, ca, company.companyInfos.id]);
 
     return (
         <UpdateBox withBackdrop={false} title="Informations" update={updateServer} status={status}>

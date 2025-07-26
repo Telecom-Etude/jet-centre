@@ -65,7 +65,7 @@
         "@types/react": "^19.0.12",
         "@types/react-dom": "^19.0.4",
         "eslint": "^9.23",
-        "eslint-config-next": "npm:next@canary",
+        "eslint-config-next": "15.4.4",
         "eslint-plugin-import": "^2.31.0",
         "jiti": "^2.4.2",
         "knip": "^5.56.0",

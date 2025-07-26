@@ -1,5 +1,8 @@
 'use client';
 
+import Link from 'next/link';
+import { useState } from 'react';
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -9,12 +12,11 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
-import { useState } from 'react';
 import { subscribePerson } from './actions';
-import { FoundPerson, SubscribePersonReturn, SubscribePersonStatus } from './types';
-import { MriSubscriptionType } from './schema';
 import { MriSubscriptionForm } from './form';
-import Link from 'next/link';
+import { MriSubscriptionType } from './schema';
+import { FoundPerson, SubscribePersonReturn, SubscribePersonStatus } from './types';
+
 
 export function Inner() {
     const [serverData, setServerData] = useState<SubscribePersonReturn | undefined>();
