@@ -7,17 +7,16 @@ import {
     AlertDialog,
     AlertDialogAction,
     AlertDialogContent,
-    AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 
 import { subscribePerson } from './actions';
 import { MriSubscriptionForm } from './form';
 import { MriSubscriptionType } from './schema';
 import { FoundPerson, SubscribePersonReturn, SubscribePersonStatus } from './types';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 
 export function Inner() {
     const [serverData, setServerData] = useState<SubscribePersonReturn | undefined>();
@@ -29,10 +28,16 @@ export function Inner() {
         person?: FoundPerson,
         changeEmail?: string
     ) => {
-        setFormValues(formValues);
+        setFormValues(values);
         setLoading(true);
         setServerData(undefined);
-        subscribePerson(values, person?.id, person?.assignee?.id, changeEmail).then((data) => {
+        subscribePerson(
+            values,
+            person?.id,
+            person?.assignee?.id,
+            changeEmail,
+            !!person?.assignee?.mriReceiver?.assigneeId
+        ).then((data) => {
             setServerData(data);
             setLoading(false);
         });
@@ -50,8 +55,10 @@ export function Inner() {
                     <AlertDialogHeader>
                         <AlertDialogTitle>Vous avez déjà renseigné une adresse</AlertDialogTitle>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
+                    <div className="flex flex-col space-y-main">
                         <AlertDialogAction
+                            variant="outline"
+                            className="w-full"
                             onClick={() => {
                                 const data = getDataUnchecked();
                                 if (!data || !data.server.person.email) return;
@@ -64,6 +71,7 @@ export function Inner() {
                             Continuer avec {getDataUnchecked()?.server.person.email}
                         </AlertDialogAction>
                         <AlertDialogAction
+                            variant="outline"
                             onClick={() => {
                                 const data = getDataUnchecked();
                                 if (!data) return;
@@ -72,12 +80,13 @@ export function Inner() {
                         >
                             Continuer avec {getDataUnchecked()?.client.email}
                         </AlertDialogAction>
-                        <AlertDialogAction asChild>
+                        <AlertDialogAction asChild variant="outline">
                             <Link href="mailto:info@telecom-etude.fr">
-                                Ce n&apos;est pas mon email. Contacter la DSI.
+                                L&apos;autre adresse proposée n&apos;est pas la mienne. Contacter la
+                                DSI.
                             </Link>
                         </AlertDialogAction>
-                    </AlertDialogFooter>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
             {serverData?.status === SubscribePersonStatus.Ok ? (
@@ -92,7 +101,7 @@ export function Inner() {
             ) : !loading && serverData && serverData.status !== SubscribePersonStatus.WrongEmail ? (
                 <div className="flex flex-col space-y-main">
                     <p className="text-destructive text-center">
-                        Une erreur inattendue s'est produite.
+                        Une erreur inattendue s&apos;est produite.
                         <br />
                         Merci de reporter le code suivant en faisant un ticket SOS:{' '}
                         {serverData.status}
