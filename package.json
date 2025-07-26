@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next dev --port 5005 --turbopack",
         "build": "next build --turbopack",
-        "start": "next start --port 5005 --turbopack",
+        "start": "next start --port 5005",
         "lint": "next lint",
         "prettier": "prettier",
         "fmt": "prettier -cw .",

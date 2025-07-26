@@ -88,14 +88,4 @@ export const COMPANY_SIZES = {
     GrandeEntreprise: { display: 'Grande entreprise' },
 } as const;
 
-export type CompanySizeDisplay = (typeof COMPANY_SIZES)[CompanySize]['display'];
-
-type CompanySizeDisplayMap = {
-    [K in CompanySizeDisplay]: CompanySize;
-};
-
-export const COMPANY_SIZE_DISPLAYS = Object.fromEntries(
-    Object.entries(COMPANY_SIZES).map(([enumName, enumInfo]) => [enumInfo.display, enumName])
-) as CompanySizeDisplayMap;
-
 export const COMPANY_SIZE_NAMES: CompanySize[] = Object.keys(COMPANY_SIZES) as CompanySize[];
