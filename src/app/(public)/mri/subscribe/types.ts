@@ -9,10 +9,11 @@ export type SubscribePersonReturn =
     | { status: SubscribePersonStatus.WrongEmail; person: FoundPerson };
 
 export enum SubscribePersonStatus {
-    FindPersonFailure,
-    SubscribeNewPersonFailure,
-    WrongEmail,
-    SubscribeNewAssigneeFailure,
-    SubscribeExistingFailure,
-    Ok,
+    FindPersonFailure = 0,
+    SubscribeNewPersonFailure = 1,
+    WrongEmail = 2,
+    SubscribeNewAssigneeFailure = 3,
+    SubscribeExistingFailure = 4,
+    UnknownFailure = 5,
+    Ok = 6,
 }

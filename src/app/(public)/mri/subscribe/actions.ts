@@ -70,53 +70,82 @@ async function subscribeExisting(id: string) {
     }
 }
 
+async function addEmailToPerson(personId: string, email: string) {
+    try {
+        return db.person.update({
+            where: { id: personId },
+            data: {
+                email,
+            },
+        });
+    } catch (e) {
+        console.error(`[subscribeNewExisting] ${e}`);
+    }
+}
+
 const OK: SubscribePersonReturn = { status: SubscribePersonStatus.Ok };
 
 export async function subscribePerson(
     values: MriSubscriptionType,
     previousPersonId?: string,
-    previousAssigneeId?: string
+    previousAssigneeId?: string,
+    newEmail?: string,
+    previousIsMriReceiver?: boolean
 ): Promise<SubscribePersonReturn> {
-    let personId;
-    let assigneeId;
+    try {
+        let personId;
+        let assigneeId;
+        let isMriReceiver;
 
-    if (previousPersonId === undefined) {
-        const person = await findPerson(values);
+        if (previousPersonId === undefined) {
+            const person = await findPerson(values);
 
-        if (person === undefined)
-            return { status: SubscribePersonStatus.FindPersonFailure } as const;
+            if (person === undefined)
+                return { status: SubscribePersonStatus.FindPersonFailure } as const;
 
-        if (person === null) {
-            const mriReceiver = await subscribeNewPerson(values);
+            if (person === null) {
+                const mriReceiver = await subscribeNewPerson(values);
+                if (mriReceiver === undefined)
+                    return { status: SubscribePersonStatus.SubscribeNewPersonFailure };
+                return OK;
+            }
+
+            if (person.email && person.email !== values.email)
+                return {
+                    status: SubscribePersonStatus.WrongEmail,
+                    person,
+                };
+
+            if (!person.email) addEmailToPerson(person.id, values.email);
+
+            personId = person.id;
+            assigneeId = person.assignee?.id;
+            isMriReceiver = !!person.assignee?.mriReceiver?.assigneeId;
+        } else {
+            personId = previousPersonId;
+            assigneeId = previousAssigneeId;
+            isMriReceiver = previousIsMriReceiver;
+
+            if (newEmail) addEmailToPerson(personId, newEmail);
+        }
+
+        if (assigneeId === undefined) {
+            const mriReceiver = await subscribeNewAssignee(personId);
             if (mriReceiver === undefined)
-                return { status: SubscribePersonStatus.SubscribeNewPersonFailure };
+                return {
+                    status: SubscribePersonStatus.SubscribeNewAssigneeFailure,
+                };
             return OK;
         }
 
-        if (person.email && person.email !== values.email)
-            return {
-                status: SubscribePersonStatus.WrongEmail,
-                person,
-            };
+        if (isMriReceiver) return OK;
 
-        personId = person.id;
-        assigneeId = person.assignee?.id;
-    } else {
-        personId = previousPersonId;
-        assigneeId = previousAssigneeId;
-    }
-
-    if (assigneeId === undefined) {
-        const mriReceiver = await subscribeNewAssignee(personId);
+        const mriReceiver = subscribeExisting(assigneeId);
         if (mriReceiver === undefined)
-            return {
-                status: SubscribePersonStatus.SubscribeNewAssigneeFailure,
-            };
+            return { status: SubscribePersonStatus.SubscribeExistingFailure };
         return OK;
+    } catch (e) {
+        console.error(`[subscribePerson-unhandled] ${e}`);
+        return { status: SubscribePersonStatus.UnknownFailure };
     }
-
-    const mriReceiver = subscribeExisting(assigneeId);
-    if (mriReceiver === undefined)
-        return { status: SubscribePersonStatus.SubscribeExistingFailure };
-    return OK;
 }

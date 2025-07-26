@@ -24,11 +24,15 @@ export function Inner() {
     const [loading, setLoading] = useState(false);
     const [formValues, setFormValues] = useState<undefined | MriSubscriptionType>();
 
-    const updateServer = (values: MriSubscriptionType, person?: FoundPerson) => {
+    const updateServer = (
+        values: MriSubscriptionType,
+        person?: FoundPerson,
+        changeEmail?: string
+    ) => {
         setFormValues(formValues);
         setLoading(true);
         setServerData(undefined);
-        subscribePerson(values, person?.id, person?.assignee?.id).then((data) => {
+        subscribePerson(values, person?.id, person?.assignee?.id, changeEmail).then((data) => {
             setServerData(data);
             setLoading(false);
         });
@@ -63,7 +67,7 @@ export function Inner() {
                             onClick={() => {
                                 const data = getDataUnchecked();
                                 if (!data) return;
-                                updateServer(data.client, data.server.person);
+                                updateServer(data.client, data.server.person, data.client.email);
                             }}
                         >
                             Continuer avec {getDataUnchecked()?.client.email}
