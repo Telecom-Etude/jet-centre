@@ -8,9 +8,14 @@
 ## CI/CD checks
 
 ![Build](https://github.com/telecom-etude/jet-centre/actions/workflows/build.yml/badge.svg)
+
 ![Format](https://github.com/telecom-etude/jet-centre/actions/workflows/fmt.yml/badge.svg)
+
 ![Knip](https://github.com/telecom-etude/jet-centre/actions/workflows/knip.yml/badge.svg)
+
 ![Conventional commits](https://github.com/telecom-etude/jet-centre/actions/workflows/commits.yml/badge.svg)
+
+![Eslint](https://github.com/telecom-etude/jet-centre/actions/workflows/eslint.yml/badge.svg)
 
 ## Overview
 
