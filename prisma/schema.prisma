@@ -4,8 +4,7 @@
 
 /// Adds support and types for interacting with prisma from typescript.
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["prismaSchemaFolder"]
+    provider = "prisma-client-js"
 }
 
 /// Indicates how to access the database.
