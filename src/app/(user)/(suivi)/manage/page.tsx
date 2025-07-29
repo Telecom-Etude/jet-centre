@@ -101,7 +101,7 @@ export default async function TableauSuivi() {
         av_number: 'Pas défini',
         last_av_end: 'Pas défini',
         pvrf: 'Pas défini',
-        gape_signature_pvrf: 'Pas défini',
+        gap_signature_pvrf: 'Pas défini',
         total_duration: 'Pas défini',
         client_name: study.clients.map((client) => ({
             name: client.client.person.firstName + ' ' + client.client.person.lastName,
@@ -115,11 +115,19 @@ export default async function TableauSuivi() {
             : 'Non concerné',
         status: 'Pas défini',
         domain: 'Pas défini',
-        jeh_price: 'Pas défini',
+        jeh_price: study.progress
+            ? study.progress.phases.length > 0
+                ? study.progress.phases[0].unitPrice
+                : 0
+            : 0,
         jeh_number: study.progress
             ? study.progress.phases.reduce((acc, phase) => acc + phase.jehs, 0)
             : 'Pas de phases définies',
-        jeh_price_number: 'Pas défini',
+        jeh_price_number: study.progress
+            ? study.progress.phases
+                  .map((phase) => [phase.unitPrice, phase.jehs])
+                  .reduce((sum, value) => sum + value[0] * value[1], 0)
+            : 'Pas de progrès défini',
         ca_etude_ht: 'Pas défini',
         percent_ca: 'Pas défini',
         client_type: 'Pas défini',
