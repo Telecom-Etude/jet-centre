@@ -1,4 +1,4 @@
-import { getMissionFiles } from '@/drive/files';
+import { getMissionFiles } from '@/google/drive/files';
 import { StudyParams } from '@/routes';
 
 import { DocumentList } from './doc-list';

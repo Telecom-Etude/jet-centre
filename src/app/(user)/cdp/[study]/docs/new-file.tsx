@@ -19,8 +19,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { newFileInMissionFolder } from '@/drive/files';
-import { FILE_POSSIBLE_CREATION } from '@/drive/types';
+import { newFileInMissionFolder } from '@/google/drive/files';
+import { FILE_POSSIBLE_CREATION } from '@/google/drive/types';
 import { reloadWindow } from '@/lib/utils';
 
 import { FileExplorerDialogProps } from './utils';

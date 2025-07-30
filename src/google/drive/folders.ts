@@ -1,9 +1,9 @@
 'use server';
 
 import prisma from '@/db';
+import { googleDrive } from '@/google/api';
 import { log } from '@/lib/utils';
 
-import { googleDrive } from './api';
 import { driveFileToDriveFile, FileType } from './types';
 
 async function getMissionFolderIdFromDrive(code: string): Promise<string | null> {

@@ -2,7 +2,8 @@
 
 import { drive_v3 } from 'googleapis';
 
-import { googleDrive } from './api';
+import { googleDrive } from '@/google/api';
+
 import { getMissionFolderId } from './folders';
 import { NameIdFile, TemplateName, TEMPLATES } from './template';
 import { DriveFile, driveFileToDriveFile, FileType } from './types';

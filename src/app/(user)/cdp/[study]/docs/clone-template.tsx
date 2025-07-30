@@ -6,8 +6,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { copyTemplate } from '@/drive/files';
-import { TEMPLATE_NAMES } from '@/drive/template';
+import { copyTemplate } from '@/google/drive/files';
+import { TEMPLATE_NAMES } from '@/google/drive/template';
 import { reloadWindow } from '@/lib/utils';
 
 import { FileExplorerDialogProps } from './utils';

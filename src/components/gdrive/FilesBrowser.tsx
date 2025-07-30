@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { use, useState } from 'react';
 
-import { getFileIds, getFiles } from '@/drive/files';
-import { DriveFile } from '@/drive/types';
+import { getFileIds, getFiles } from '@/google/drive/files';
+import { DriveFile } from '@/google/drive/types';
 
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';

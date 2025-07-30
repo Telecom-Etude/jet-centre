@@ -15,8 +15,8 @@ import {
 } from '@/components/boxes/boxes';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { trashFile, renameFile } from '@/drive/files';
-import { DriveFile, googleUrl } from '@/drive/types';
+import { trashFile, renameFile } from '@/google/drive/files';
+import { DriveFile, googleUrl } from '@/google/drive/types';
 import { reloadWindow } from '@/lib/utils';
 
 import { TemplateCopyDialog } from './clone-template';

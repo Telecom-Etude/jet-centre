@@ -8,8 +8,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { getMissionFiles, trashFile } from '@/drive/files';
-import { DriveFile } from '@/drive/types';
+import { getMissionFiles, trashFile } from '@/google/drive/files';
+import { DriveFile } from '@/google/drive/types';
 import { reloadWindow } from '@/lib/utils';
 
 import { FileExplorerDialogProps } from './utils';
