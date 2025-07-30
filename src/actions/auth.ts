@@ -21,7 +21,9 @@ const config = {
             clientSecret: process.env.GOOGLE_SECRET,
             authorization: {
                 params: {
-                    scope: ['openid email profile https://www.googleapis.com/auth/drive'],
+                    scope: [
+                        'openid email profile https://www.googleapis.com/auth/drive https://mail.google.com',
+                    ],
                     prompt: 'consent',
                     access_type: 'offline',
                     response_type: 'code',
