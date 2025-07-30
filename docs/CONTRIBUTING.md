@@ -114,7 +114,7 @@ _action_ **must** (cf. ci in [here](/.github/workflows/commits.yml)) be one of t
 - chore (update versions, add dependencies, CIs, etc.)
 - docs (add documentation)
 - style (change style)
-- refactor (rewrite some code)
+- ref (rewrite some code)
 - perf (improve performance of some code)
 - test (add tests)
 
