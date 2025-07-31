@@ -38,7 +38,7 @@ export function getErrorDisplayInformation(error: string): ErrorDisplayInformati
         case ERRORS.invalidPosition:
             return {
                 title: 'Votre rôle dans la JE a été mal défini.',
-                text: "Ceci n'est pas normal, merci de contacter le pôle info au plus vite!",
+                text: "Ceci n'est pas normal, merci de vous déconnecter/reconnecter. Si vous voyez toujours cette erreur, merci de contacter le pôle info au plus vite!",
             };
         default:
             return {

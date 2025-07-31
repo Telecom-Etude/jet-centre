@@ -17,7 +17,7 @@ import type { Session } from 'next-auth';
 import { auth } from './actions/auth';
 import { redis } from './db';
 import { ROUTES } from './routes';
-import { dbg, log } from './lib/utils';
+import { log } from './lib/utils';
 import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
 import { RoleSideBar } from './settings/sidebars/types';
 
@@ -104,7 +104,7 @@ export default auth(async (request: NextAuthRequest) => {
     const isLoggedIn = !!session?.user.email;
     const position = session?.user.position;
     const { pathname } = request.nextUrl;
-    dbg(pathname, 'middleware');
+    log(`middleware at ${pathname} [loggedIn=${isLoggedIn}] [pos=${position}] `);
 
     redisMiddleware();
 
