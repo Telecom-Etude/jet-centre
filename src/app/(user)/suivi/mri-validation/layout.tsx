@@ -6,6 +6,7 @@ import { MRI_VALIDATION } from '@/settings/sidebars/tabs';
 
 import { listMriToValidate } from './actions';
 import { ValidationButton } from './validation-button';
+import { MRI_VALIDATION } from '@/settings/sidebars/tabs';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     const mris = (await listMriToValidate()) ?? [];
