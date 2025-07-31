@@ -57,7 +57,7 @@ const config = {
             const image = picture;
 
             await prisma.person.upsert({
-                where: { name: { lastName, firstName } },
+                where: { email },
 
                 create: {
                     email,
@@ -111,38 +111,36 @@ const config = {
                 token.refresh_token = account.refresh_token;
             }
 
-            const firstName = profile?.given_name;
-            const lastName = profile?.family_name;
+            if (!profile || !user) return token;
 
-            if (!firstName || !lastName) return token;
+            const firstName = profile.given_name;
+            const lastName = profile.family_name;
+            const email = profile.email;
+
+            if (!firstName || !lastName || !email) return token;
 
             token.firstName = firstName;
             token.lastName = lastName;
 
-            if (user !== undefined) {
-                const person = await prisma.person.findUnique({
-                    where: {
-                        name: {
-                            firstName,
-                            lastName,
-                        },
-                    },
+            const person = await prisma.person.findUnique({
+                where: {
+                    email,
+                },
 
-                    select: {
-                        user: true,
-                    },
-                });
+                select: {
+                    user: true,
+                },
+            });
 
-                const admin = await prisma.admin.findFirst({
-                    where: { userId: person?.user?.id },
-                    select: {
-                        position: true,
-                    },
-                });
+            const admin = await prisma.admin.findFirst({
+                where: { userId: person?.user?.id },
+                select: {
+                    position: true,
+                },
+            });
 
-                const position = admin?.position ?? undefined;
-                token.position = position;
-            }
+            const position = admin?.position ?? undefined;
+            token.position = position;
 
             return token;
         },

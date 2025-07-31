@@ -4,7 +4,7 @@
 /// will never have access to the ERP.
 model Person {
     id           String    @id @default(cuid())
-    email        String?
+    email        String?   @unique
     firstName    String
     lastName     String
     phone_number String?
