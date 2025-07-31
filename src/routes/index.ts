@@ -1,3 +1,6 @@
+import { ROLES_SIDEBARS } from '@/settings/sidebars/sidebars';
+import { RoleSideBar } from '@/settings/sidebars/types';
+
 const ERROR_PREFIX = '/error/';
 const AUTH_PREFIX = '/auth/';
 
@@ -15,6 +18,14 @@ export function isNonAuthPublicRoute(pathname: string) {
         if (pathname.startsWith(prefix)) return true;
 
     return false;
+}
+
+export function isAuthorisedToRoute(pathname: string, position: keyof typeof ROLES_SIDEBARS) {
+    if (pathname.startsWith('/cdp/')) return true;
+    const sidebar: RoleSideBar = ROLES_SIDEBARS[position];
+    return sidebar.sidebar.find((section) =>
+        section.items.find((item) => pathname.startsWith(item.href))
+    );
 }
 
 export const ROUTES = {

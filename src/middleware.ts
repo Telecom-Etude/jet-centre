@@ -17,7 +17,7 @@ import type { Session } from 'next-auth';
 import { auth } from './actions/auth';
 import { redis } from './db';
 import { log } from './lib/utils';
-import { isNonAuthPublicRoute, ROUTES } from './routes';
+import { isAuthorisedToRoute, isNonAuthPublicRoute, ROUTES } from './routes';
 import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
 import { RoleSideBar } from './settings/sidebars/types';
 
@@ -76,14 +76,9 @@ async function loggedInMiddleware(
 
     if (isNonAuthPublicRoute(pathname)) return NextResponse.next();
 
-    if (pathname.startsWith('/cdp/')) return NextResponse.next();
-
     if (!position || !(position in ROLES_SIDEBARS)) return rewrite(ROUTES.invalidPosition, request);
 
-    const sidebar: RoleSideBar = ROLES_SIDEBARS[position as keyof typeof ROLES_SIDEBARS];
-    const isAuthorised = sidebar.sidebar.find((section) =>
-        section.items.find((item) => item.href === pathname)
-    );
+    const isAuthorised = isAuthorisedToRoute(pathname, position as keyof typeof ROLES_SIDEBARS);
 
     if (!isAuthorised) return rewrite(ROUTES.unauthorised, request);
 
