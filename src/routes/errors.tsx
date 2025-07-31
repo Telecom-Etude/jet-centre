@@ -1,26 +1,12 @@
-const ERROR_PREFIX = '/error/';
-const AUTH_PREFIX = '/auth/';
+import { ReactNode } from 'react';
 
-const ERRORS = {
-    unauthorised: 'unauthorised',
-    invalidPosition: 'invalid-position',
-};
-
-export const ROUTES = {
-    loginRedirect: '/',
-    /* Error routes */
-    unauthorised: ERROR_PREFIX + ERRORS.unauthorised,
-    invalidPosition: ERROR_PREFIX + ERRORS.invalidPosition,
-    /* Auth routes */
-    signIn: AUTH_PREFIX + 'signin',
-    signOut: AUTH_PREFIX + 'signout',
-} as const;
-
-export type StudyParams = { params: Promise<{ study: string }> };
-
+import { MIDDLEWARE_ERRORS, ROUTES } from '.';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 export interface ErrorDisplayInformation {
     title: string;
     text: string;
+    children?: ReactNode;
 }
 
 /**
@@ -30,15 +16,20 @@ export interface ErrorDisplayInformation {
  * */
 export function getErrorDisplayInformation(error: string): ErrorDisplayInformation {
     switch (error) {
-        case ERRORS.unauthorised:
+        case MIDDLEWARE_ERRORS.unauthorised:
             return {
                 title: "Vous n'êtes pas autotisés à accéder à cette page.",
                 text: "Merci de contacter le pôle info s'il vous manque des permissions.",
             };
-        case ERRORS.invalidPosition:
+        case MIDDLEWARE_ERRORS.invalidPosition:
             return {
                 title: 'Votre rôle dans la JE a été mal défini.',
                 text: "Ceci n'est pas normal, merci de vous déconnecter/reconnecter. Si vous voyez toujours cette erreur, merci de contacter le pôle info au plus vite!",
+                children: (
+                    <Button asChild>
+                        <Link href={ROUTES.signOut}>Déconnectez-vous</Link>
+                    </Button>
+                ),
             };
         default:
             return {

@@ -7,7 +7,7 @@
  */
 
 import { ErrorPage } from '@/components/error';
-import { getErrorDisplayInformation } from '@/routes';
+import { getErrorDisplayInformation } from '@/routes/errors';
 
 export default async function Page({ params }: { params: Promise<{ errorType: string }> }) {
     const { errorType } = await params;
@@ -15,6 +15,7 @@ export default async function Page({ params }: { params: Promise<{ errorType: st
     return (
         <ErrorPage title={displayInformation.title}>
             <p className="text-center">{displayInformation.text}</p>
+            {displayInformation.children}
         </ErrorPage>
     );
 }
