@@ -4,7 +4,8 @@ import { ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 
 import { MIDDLEWARE_ERRORS, ROUTES } from '.';
-export interface ErrorDisplayInformation {
+
+interface ErrorDisplayInformation {
     title: string;
     text: string;
     children?: ReactNode;

@@ -1,5 +1,3 @@
-import { parseArgs } from 'node:util';
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
