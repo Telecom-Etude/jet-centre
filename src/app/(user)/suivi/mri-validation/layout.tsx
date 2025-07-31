@@ -5,6 +5,7 @@ import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 
 import { listMriToValidate } from './actions';
 import { ValidationButton } from './validation-button';
+import { MRI_VALIDATION } from '@/settings/sidebars/tabs';
 
 export default async function Layout({ children }: { children: ReactNode }) {
     const mris = (await listMriToValidate()) ?? [];
@@ -25,7 +26,9 @@ export default async function Layout({ children }: { children: ReactNode }) {
                                 <div className="p-2 w-full flex items-center" key={i}>
                                     <Link
                                         className="hover:underline w-full h-full"
-                                        href={'/mri-validation/' + mri.study.information.code}
+                                        href={
+                                            MRI_VALIDATION.href + '/' + mri.study.information.code
+                                        }
                                     >
                                         {mri.study.information.code +
                                             ' - ' +
