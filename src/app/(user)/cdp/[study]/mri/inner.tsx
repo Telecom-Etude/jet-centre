@@ -9,7 +9,7 @@ import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { LoadingFullStops } from '@/components/loading';
 import { Button } from '@/components/ui/button';
-import { dbg, log, reloadWindow } from '@/lib/utils';
+import { reloadWindow } from '@/lib/utils';
 
 import MRICreationForm from './form/form';
 import { loadMriData, setMriStatus, storeMriData } from './form/mri';
@@ -33,16 +33,14 @@ export default function Inner({ study, serverMriData }: InnerProps) {
 
     const updateServer = () => {
         setStatus(UpdateBoxStatus.Loading);
-        log('##### Storing #####');
-        storeMriData(study, form.watch()).then((success) => {
+        const formData = form.watch();
+        storeMriData(study, formData).then((success) => {
             if (!success) {
                 setStatus(UpdateBoxStatus.Error);
             }
-            log('##### Checking #####');
             loadMriData(study).then((data) => {
-                log('##### Finished #####');
                 setStatus(
-                    data && equalMri(data?.data, form.watch())
+                    data && equalMri(data?.data, formData)
                         ? UpdateBoxStatus.Ok
                         : UpdateBoxStatus.NotSynced
                 );
@@ -50,10 +48,15 @@ export default function Inner({ study, serverMriData }: InnerProps) {
         });
     };
 
+    const setNotSaved = () => {
+        setStatus(UpdateBoxStatus.UserPending);
+    };
+
     return (
         <div className="flex space-x-main h-full">
             <UpdateBox status={status} update={updateServer} title="Écriture du MRI">
                 <MriEditorContent
+                    setNotSaved={setNotSaved}
                     form={form}
                     updateServer={updateServer}
                     serverMriId={serverMriData.mriId}
@@ -79,19 +82,18 @@ interface MriEditorContentProps {
     updateServer: () => void;
     status: MriStatus;
     study: string;
+    setNotSaved: () => void;
 }
 
 function MriEditorContent({
     form,
     updateServer,
+    setNotSaved,
     serverMriId,
     status,
     study,
 }: MriEditorContentProps) {
     const [loading, setLoading] = useState(false);
-
-    dbg(study, 'study');
-    dbg(serverMriId, 'mriId');
 
     switch (status) {
         case MriStatus.Sent:
@@ -131,7 +133,11 @@ function MriEditorContent({
         case MriStatus.InProgress:
             return (
                 <div className="flex flex-col items-center ">
-                    <MRICreationForm form={form} updateServer={updateServer} />
+                    <MRICreationForm
+                        setNotSaved={setNotSaved}
+                        form={form}
+                        updateServer={updateServer}
+                    />
                     {loading ? (
                         <LoadingFullStops />
                     ) : (
@@ -141,24 +147,18 @@ function MriEditorContent({
                                 storeMriData(study, form.watch()).then((mriId) => {
                                     if (mriId === undefined) {
                                         setLoading(false);
-                                        dbg('', 'storing failed');
                                         return;
                                     }
                                     loadMriData(study).then((data) => {
                                         if (!data?.data) {
-                                            dbg('', 'loading failed on data');
                                             setLoading(false);
                                             return;
                                         }
                                         if (!equalMri(data?.data, form.watch())) {
-                                            dbg('', 'loading returned wrong data');
-                                            dbg(form.watch(), 'form data');
-                                            dbg(data?.data, 'response data');
                                             setLoading(false);
                                             return;
                                         }
                                         setMriStatus(mriId, MriStatus.Finished).then(() => {
-                                            dbg('', 'reloading window');
                                             reloadWindow();
                                         });
                                     });

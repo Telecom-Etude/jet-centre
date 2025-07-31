@@ -14,7 +14,6 @@ import Google, { GoogleProfile } from 'next-auth/providers/google';
 
 import prisma from '@/db';
 import { ROUTES } from '@/routes';
-import { dbg } from '@/lib/utils';
 
 async function getUserPosition(email: string): Promise<string | undefined> {
     try {

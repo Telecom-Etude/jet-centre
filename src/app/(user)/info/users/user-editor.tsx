@@ -1,11 +1,11 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 import { Input } from '@/components/ui/input';
 
 import { getPosition, updatePosition } from './users';
-import { useSession } from 'next-auth/react';
 
 interface UserEditorProps {
     adminId: string;

@@ -21,17 +21,19 @@ import { MriFormType } from './schema';
 interface MRICreationProps {
     updateServer: () => void;
     form: UseFormReturn<MriFormType>;
+    setNotSaved: () => void;
 }
 
-export default function MRICreationForm({ form, updateServer }: MRICreationProps) {
+export default function MRICreationForm({ setNotSaved, form, updateServer }: MRICreationProps) {
     return (
         <FormProvider {...form}>
             <form>
-                <TitleEditor form={form} updateServer={updateServer} />
+                <TitleEditor setNotSaved={setNotSaved} form={form} updateServer={updateServer} />
                 <TextAreaFormElement
                     label="Introduction"
                     name="introductionText"
                     onBlur={() => updateServer()}
+                    onChange={setNotSaved}
                     form={form}
                     resizable
                 />
@@ -50,6 +52,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                         label="Rétribution basse"
                         name="wageLowerBound"
                         onBlur={() => updateServer()}
+                        onChange={setNotSaved}
                         type="number"
                         form={form}
                     />
@@ -58,6 +61,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                         label="Rétribution haute"
                         name="wageUpperBound"
                         onBlur={() => updateServer()}
+                        onChange={setNotSaved}
                         type="number"
                         form={form}
                     />
@@ -87,14 +91,23 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
                     name="requiredSkillsText"
                     form={form}
                     onBlur={() => updateServer()}
+                    onChange={setNotSaved}
                     resizable
                 />
-                <TextAreaFormElement label="Échéances" name="timeLapsText" form={form} resizable />
+                <TextAreaFormElement
+                    onChange={setNotSaved}
+                    onBlur={() => updateServer()}
+                    label="Échéances"
+                    name="timeLapsText"
+                    form={form}
+                    resizable
+                />
                 <TextAreaFormElement
                     label="Description"
                     name="descriptionText"
                     form={form}
                     onBlur={() => updateServer()}
+                    onChange={setNotSaved}
                     resizable
                 />
             </form>
@@ -102,7 +115,7 @@ export default function MRICreationForm({ form, updateServer }: MRICreationProps
     );
 }
 
-function TitleEditor({ form, updateServer }: MRICreationProps) {
+function TitleEditor({ setNotSaved, form, updateServer }: MRICreationProps) {
     const [titleWarning, setTitleWarning] = useState(false);
     const [displayed, setDisplayed] = useState(false);
 
@@ -113,6 +126,7 @@ function TitleEditor({ form, updateServer }: MRICreationProps) {
                 name="title"
                 form={form}
                 onChange={() => {
+                    setNotSaved();
                     if (!displayed) {
                         setTitleWarning(true);
                         setDisplayed(true);

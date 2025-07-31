@@ -33,7 +33,7 @@ export function getDomain(domain: Domain) {
 }
 
 export function getPay(wageLowerBound: number, wageUpperBound: number, pay_level: Level) {
-    const label = 'RÉMUNÉRATION';
+    const label = 'RÉTRIBUTION';
     const value = `${wageLowerBound}€ - ${wageUpperBound}€`;
 
     switch (pay_level) {
