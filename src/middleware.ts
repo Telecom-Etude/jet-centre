@@ -76,6 +76,8 @@ async function loggedInMiddleware(
 
     if (isNonAuthPublicRoute(pathname)) return NextResponse.next();
 
+    if (pathname.startsWith('/cdp/')) return NextResponse.next();
+
     if (!position || !(position in ROLES_SIDEBARS)) return rewrite(ROUTES.invalidPosition, request);
 
     const sidebar: RoleSideBar = ROLES_SIDEBARS[position as keyof typeof ROLES_SIDEBARS];
