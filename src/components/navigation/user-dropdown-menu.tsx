@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { UserAvatar } from '@/components/ui/user-avatar';
+import { ROUTES } from '@/routes';
 
 interface UserDropdownMenuProps {
     isMobile: boolean;
@@ -56,7 +57,7 @@ export const UserDropdownMenu = ({ isMobile, isOpen }: UserDropdownMenuProps) =>
                             className="space-x-2 cursor-pointer focus:text-primary-foreground"
                             asChild
                         >
-                            <Link href="/auth/signout">
+                            <Link href={ROUTES.signOut}>
                                 <LogOut />
                                 <p>Log out</p>
                             </Link>
