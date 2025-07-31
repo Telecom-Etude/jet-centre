@@ -2,10 +2,6 @@ import { parseArgs } from 'node:util';
 
 import { PrismaClient } from '@prisma/client';
 
-const options = {
-    environment: { type: 'string' as const },
-};
-
 const prisma = new PrismaClient();
 
 async function seed_dev() {
@@ -52,20 +48,9 @@ async function seed_prod() {
 }
 
 async function main() {
-    const {
-        values: { environment },
-    } = parseArgs({ options });
+    if (process.env.NODE_ENV === 'production') return await seed_prod();
 
-    switch (environment) {
-        case 'dev':
-            await seed_dev();
-            break;
-        case 'prod':
-            await seed_prod();
-            break;
-        default:
-            break;
-    }
+    await seed_dev();
 }
 
 main()
