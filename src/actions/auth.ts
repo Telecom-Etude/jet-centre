@@ -14,6 +14,32 @@ import Google, { GoogleProfile } from 'next-auth/providers/google';
 
 import prisma from '@/db';
 import { ROUTES } from '@/routes';
+import { dbg } from '@/lib/utils';
+
+async function getUserPosition(email: string): Promise<string | undefined> {
+    try {
+        const person = await prisma.person.findUnique({
+            where: {
+                email,
+            },
+
+            select: {
+                user: true,
+            },
+        });
+
+        const admin = await prisma.admin.findFirst({
+            where: { userId: person?.user?.id },
+            select: {
+                position: true,
+            },
+        });
+
+        return admin?.position ?? undefined;
+    } catch (e) {
+        console.error(`[auth:getUserPosition] ${e}`);
+    }
+}
 
 const config = {
     providers: [
@@ -100,12 +126,19 @@ const config = {
             token,
             account,
             profile,
+            trigger,
         }: {
             user: User;
+            trigger?: 'signIn' | 'signUp' | 'update' | undefined;
             token: JWT;
             account?: Account | null;
             profile?: Profile;
         }) {
+            if (trigger === 'update') {
+                token.position = (await getUserPosition(token.email)) ?? token.position;
+            }
+            if (!trigger) return token;
+
             if (account?.access_token) {
                 token.access_token = account.access_token;
                 token.refresh_token = account.refresh_token;
@@ -121,27 +154,7 @@ const config = {
 
             token.firstName = firstName;
             token.lastName = lastName;
-
-            const person = await prisma.person.findUnique({
-                where: {
-                    email,
-                },
-
-                select: {
-                    user: true,
-                },
-            });
-
-            const admin = await prisma.admin.findFirst({
-                where: { userId: person?.user?.id },
-                select: {
-                    position: true,
-                },
-            });
-
-            const position = admin?.position ?? undefined;
-            token.position = position;
-
+            token.position = (await getUserPosition(email)) ?? token.position;
             return token;
         },
 
@@ -149,19 +162,15 @@ const config = {
             session.user.firstName = token.firstName;
             session.user.lastName = token.lastName;
 
-            if (token.access_token) {
-                return {
-                    ...session,
-                    user: {
-                        ...session.user,
-                        position: token.position,
-                        access_token: token.access_token,
-                        refresh_token: token.refresh_token,
-                    },
-                };
-            }
-
-            return session;
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    position: token.position,
+                    access_token: token.access_token ?? session.user.access_token,
+                    refresh_token: token.refresh_token ?? session.user.refresh_token,
+                },
+            };
         },
     },
 } as const satisfies NextAuthConfig;

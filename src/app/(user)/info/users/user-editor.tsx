@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 
 import { getPosition, updatePosition } from './users';
+import { useSession } from 'next-auth/react';
 
 interface UserEditorProps {
     adminId: string;
@@ -22,6 +23,7 @@ enum Status {
 export function UserEditor({ adminId, email, position }: UserEditorProps) {
     const [uiPosition, setUiPosition] = useState(position ?? undefined);
     const [status, setStatus] = useState(Status.Ok);
+    const { update } = useSession();
 
     return (
         <div className="bg-box-background flex items-center gap-main p-2 rounded-sm">
@@ -29,19 +31,18 @@ export function UserEditor({ adminId, email, position }: UserEditorProps) {
             {status === Status.Ok ? (
                 <Input
                     defaultValue={uiPosition || 'Unset'}
-                    onBlur={(e) => {
+                    onBlur={async (e) => {
                         setStatus(Status.Saving);
-                        updatePosition(adminId, e.target.value).then(() => {
-                            setStatus(Status.Checking);
-                            getPosition(adminId).then((position) => {
-                                if (position) {
-                                    setUiPosition(position);
-                                    setStatus(Status.Ok);
-                                } else {
-                                    setStatus(Status.Error);
-                                }
-                            });
-                        });
+                        await updatePosition(adminId, e.target.value);
+                        setStatus(Status.Checking);
+                        const dbPosition = await getPosition(adminId);
+                        if (dbPosition) {
+                            setUiPosition(dbPosition);
+                            setStatus(Status.Ok);
+                            await update({ position });
+                        } else {
+                            setStatus(Status.Error);
+                        }
                     }}
                 />
             ) : status === Status.Saving ? (
