@@ -16,8 +16,8 @@ import type { Session } from 'next-auth';
 
 import { auth } from './actions/auth';
 import { redis } from './db';
-import { isPublicRoute, ROUTES } from './routes';
 import { log } from './lib/utils';
+import { isPublicRoute, ROUTES } from './routes';
 import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
 import { RoleSideBar } from './settings/sidebars/types';
 

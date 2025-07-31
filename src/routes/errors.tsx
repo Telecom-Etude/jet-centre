@@ -1,8 +1,9 @@
+import Link from 'next/link';
 import { ReactNode } from 'react';
 
-import { MIDDLEWARE_ERRORS, ROUTES } from '.';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+
+import { MIDDLEWARE_ERRORS, ROUTES } from '.';
 export interface ErrorDisplayInformation {
     title: string;
     text: string;
