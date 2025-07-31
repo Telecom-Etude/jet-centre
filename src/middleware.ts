@@ -16,7 +16,7 @@ import type { Session } from 'next-auth';
 
 import { auth } from './actions/auth';
 import { redis } from './db';
-import { ROUTES } from './routes';
+import { isPublicRoute, ROUTES } from './routes';
 import { log } from './lib/utils';
 import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
 import { RoleSideBar } from './settings/sidebars/types';
@@ -70,9 +70,9 @@ async function loggedInMiddleware(
     position: string | undefined,
     request: NextAuthRequest
 ) {
-    if (pathname === ROUTES.signIn) {
-        return redirect(ROUTES.loginRedirect, request);
-    }
+    if (pathname === ROUTES.signIn) return redirect(ROUTES.loginRedirect, request);
+
+    if (pathname === ROUTES.signOut) return NextResponse.next();
 
     if (!position || !(position in ROLES_SIDEBARS)) return rewrite(ROUTES.invalidPosition, request);
 
@@ -109,6 +109,7 @@ export default auth(async (request: NextAuthRequest) => {
     redisMiddleware();
 
     if (process.env.DEV_MODE) return NextResponse.next();
+    if (isPublicRoute(pathname)) return NextResponse.next();
 
     if (!isLoggedIn) {
         if (pathname === ROUTES.signIn) return NextResponse.next();
