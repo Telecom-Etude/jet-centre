@@ -15,7 +15,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
         data.settings.cdps.map(async (cdp) => {
             const person = await prisma.person.findUnique({
                 where: {
-                    name: cdp,
+                    name: { firstName: cdp.firstName, lastName: cdp.lastName },
                 },
                 select: {
                     user: true,
@@ -33,7 +33,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                 company.members.map(async (member) => {
                     const person = await prisma.person.findUnique({
                         where: {
-                            name: member,
+                            name: { firstName: member.firstName, lastName: member.lastName },
                         },
                     });
                     return { personId: person?.id ?? falseId, ...member };
@@ -61,7 +61,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                         firstName: cdp.firstName,
                                         lastName: cdp.lastName,
                                         // If we don't connect, that means we have a new user
-                                        number: orUndefined((cdp as NewAdmin).tel),
+                                        phone_number: orUndefined((cdp as NewAdmin).tel),
                                     },
                                 },
                                 settings: {
@@ -108,7 +108,6 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                                         email: member.email,
                                                         firstName: member.firstName,
                                                         lastName: member.lastName,
-                                                        number: '',
                                                     },
                                                 },
                                                 company: {
@@ -121,7 +120,6 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                                             address,
                                                             companyInfos: {
                                                                 create: {
-                                                                    nvEmployees: 0,
                                                                     ca: orUndefined(company.ca),
                                                                     size: map(
                                                                         orUndefined(
