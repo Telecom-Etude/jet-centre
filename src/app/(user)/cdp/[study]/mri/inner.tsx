@@ -54,7 +54,12 @@ export default function Inner({ study, serverMriData }: InnerProps) {
 
     return (
         <div className="flex space-x-main h-full">
-            <UpdateBox status={status} update={updateServer} title="Écriture du MRI">
+            <UpdateBox
+                status={status}
+                update={updateServer}
+                title="Écriture du MRI"
+                editable={serverMriData.status === MriStatus.InProgress}
+            >
                 <MriEditorContent
                     setNotSaved={setNotSaved}
                     form={form}

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { FaBug, FaCheck, FaUser } from 'react-icons/fa6';
+import { FaBan, FaBug, FaCheck, FaUser } from 'react-icons/fa6';
 import { IoWarning } from 'react-icons/io5';
 import { IconType } from 'react-icons/lib';
 
@@ -69,7 +69,9 @@ interface StatusInfos {
  * @param {UpdateBoxStatus} status - The current status of the update box.
  * @returns {StatusInfos} The data needed to display the status.
  */
-export function getUpdateBoxStatusInfos(status: UpdateBoxStatus): StatusInfos {
+export function getUpdateBoxStatusInfos(status: UpdateBoxStatus, editable: boolean): StatusInfos {
+    if (!editable) return { Icon: FaBan, hoverContent: "Le contenu n'est plus modifiable" };
+
     switch (status) {
         case UpdateBoxStatus.Ok:
             return {
@@ -116,6 +118,8 @@ export function getUpdateBoxStatusInfos(status: UpdateBoxStatus): StatusInfos {
  * @property {UpdateBoxStatus} status - The current status of the update box, affecting the icon.
  * @property {() => void} update - Callback function triggered when the update icon is clicked.
  * @property {boolean} withBackdrop - Boolean to indicate if the box should have a backdrop.
+ * @property {boolean} editable - Boolean to indicate if the content can still be edited.
+ * This makes the update button clickable or not.
  */
 interface UpdateBoxProps {
     title: string;
@@ -123,6 +127,7 @@ interface UpdateBoxProps {
     status: UpdateBoxStatus;
     update: () => void;
     withBackdrop?: boolean;
+    editable?: boolean;
 }
 
 /**
@@ -137,6 +142,7 @@ export function UpdateBox({
     status,
     update,
     withBackdrop = true,
+    editable = true,
 }: UpdateBoxProps) {
     'use client';
     return (
@@ -144,7 +150,12 @@ export function UpdateBox({
             <BoxHeader>
                 <BoxTitle>{title}</BoxTitle>
                 <BoxHeaderBlock>
-                    <BoxButtonIcon {...getUpdateBoxStatusInfos(status)} onClick={update} />
+                    <BoxButtonIcon
+                        {...getUpdateBoxStatusInfos(status, editable)}
+                        onClick={() => {
+                            editable && update();
+                        }}
+                    />
                 </BoxHeaderBlock>
             </BoxHeader>
             <BoxContent>{children}</BoxContent>
