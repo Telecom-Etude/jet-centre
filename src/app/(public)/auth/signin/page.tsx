@@ -4,6 +4,7 @@ import BirdLogo from '@/../public/bird_color.svg';
 
 import { googleId, signIn } from '@/actions/auth';
 import { GoogleButton } from '@/app/(public)/auth/google';
+import { ROUTES } from '@/routes';
 
 import { AuthLayout } from '../auth_layout';
 
@@ -21,7 +22,9 @@ export default async function SignInPage() {
                     <GoogleButton
                         action={async () => {
                             'use server';
-                            await signIn(googleId);
+                            await signIn(googleId, {
+                                redirectTo: ROUTES.loginRedirect,
+                            });
                         }}
                         text="Se connecter avec Google"
                     />

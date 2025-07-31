@@ -1,8 +1,10 @@
 'use client';
 
-import { listEmails } from '@/google/mail/readonly';
 import { gmail_v1 } from 'googleapis';
 import { useState } from 'react';
+
+import { listEmails } from '@/google/mail/readonly';
+
 import { Button } from '../ui/button';
 
 export default function MailBrowser() {

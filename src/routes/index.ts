@@ -6,12 +6,13 @@ export const MIDDLEWARE_ERRORS = {
     invalidPosition: 'invalid-position',
 };
 
-const PUBLIC_ROUTE_PREFIXES = [AUTH_PREFIX, ERROR_PREFIX, 'mri-mailing-list', 'posulter'];
+const NON_AUTH_PUBLIC_ROUTE_PREFIXES = [ERROR_PREFIX, 'mri-mailing-list', 'posulter'];
 
-export function isPublicRoute(pathname: string) {
+export function isNonAuthPublicRoute(pathname: string) {
     if (pathname === '/') return true;
 
-    for (const prefix of PUBLIC_ROUTE_PREFIXES) if (pathname.startsWith(prefix)) return true;
+    for (const prefix of NON_AUTH_PUBLIC_ROUTE_PREFIXES)
+        if (pathname.startsWith(prefix)) return true;
 
     return false;
 }
