@@ -13,6 +13,7 @@ import { JWT } from 'next-auth/jwt';
 import Google, { GoogleProfile } from 'next-auth/providers/google';
 
 import prisma from '@/db';
+import { ROUTES } from '@/routes';
 
 const config = {
     providers: [
@@ -32,8 +33,8 @@ const config = {
         }),
     ],
     pages: {
-        signIn: '/auth/signin',
-        signOut: '/auth/signout',
+        signIn: ROUTES.signIn,
+        signOut: ROUTES.signOut,
     },
     callbacks: {
         /** Callback called after redirection from {@link accounts.google.com} in the OAuth procedure.

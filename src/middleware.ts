@@ -16,7 +16,75 @@ import type { Session } from 'next-auth';
 
 import { auth } from './actions/auth';
 import { redis } from './db';
-import { authorizedRoutes, DEFAULT_LOGIN_REDIRECT, UNAUTHORIZED_REDIRECT } from './routes';
+import { ROUTES } from './routes';
+import { dbg, log } from './lib/utils';
+import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
+import { RoleSideBar } from './settings/sidebars/types';
+
+/**
+ * Redirect current url onto another page.
+ *
+ * Contrarely to rewrite, this actually edits the URL and history.
+ * */
+function redirect(url: string, request: NextAuthRequest): NextResponse {
+    return NextResponse.redirect(new URL(url, request.nextUrl));
+}
+
+/**
+ * Rewrite current url onto another page.
+ *
+ *
+ * Rewrite means that the page of the given url will be rendered, but in the navigation bar,
+ * you will still be able to see the old URL that caused the error.
+ *
+ * This is useful for instance when accessing a non-existant page because of a typo.
+ * The user has to solely change one character instead of having to rewrite the entire url
+ * because it was replaced by /error/not-found.
+ *
+ * The history of visited page will also log the page the user trying to access and not the one he was rewritten to.
+ * */
+function rewrite(url: string, request: NextAuthRequest): NextResponse {
+    return NextResponse.rewrite(new URL(url, request.nextUrl));
+}
+
+/**
+ * Handles the logic for redis in the middleware
+ */
+async function redisMiddleware() {
+    if (!process.env.NO_CACHE) {
+        const res = await redis?.get('test');
+        console.log('redis returned', res);
+        if (res === null) {
+            redis?.set('test', 0);
+        } else {
+            redis?.incr('test');
+        }
+    }
+}
+
+/**
+ * Handles the logic for users that are logged in.
+ */
+async function loggedInMiddleware(
+    pathname: string,
+    position: string | undefined,
+    request: NextAuthRequest
+) {
+    if (pathname === ROUTES.signIn) {
+        return redirect(ROUTES.loginRedirect, request);
+    }
+
+    if (!position || !(position in ROLES_SIDEBARS)) return rewrite(ROUTES.invalidPosition, request);
+
+    const sidebar: RoleSideBar = ROLES_SIDEBARS[position as keyof typeof ROLES_SIDEBARS];
+    const isAuthorised = sidebar.sidebar.find((section) =>
+        section.items.find((item) => item.href === pathname)
+    );
+
+    if (!isAuthorised) return rewrite(ROUTES.unauthorised, request);
+
+    return NextResponse.next();
+}
 
 /**
  * Extends the internal NextAuth type to add `auth` session.
@@ -35,45 +103,19 @@ export default auth(async (request: NextAuthRequest) => {
     const session = request.auth;
     const isLoggedIn = !!session?.user.email;
     const position = session?.user.position;
-
-    if (!process.env.NO_CACHE) {
-        const res = await redis?.get('test');
-        console.log('redis returned', res);
-        if (res === null) {
-            redis?.set('test', 0);
-        } else {
-            redis?.incr('test');
-        }
-    }
-
-    if (process.env.DEV_MODE) {
-        return;
-    }
-
     const { pathname } = request.nextUrl;
+    dbg(pathname, 'middleware');
 
-    if (isLoggedIn) {
-        if (pathname === '/auth/signin') {
-            return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.nextUrl));
-        }
-    } else {
-        if (pathname !== '/auth/signin') {
-            return NextResponse.redirect(new URL('/auth/signin', request.nextUrl));
-        }
+    redisMiddleware();
+
+    if (process.env.DEV_MODE) return NextResponse.next();
+
+    if (!isLoggedIn) {
+        if (pathname === ROUTES.signIn) return NextResponse.next();
+        return redirect(ROUTES.signIn, request);
     }
 
-    const pathnamePosition = '/' + pathname.split('/')[1];
-    if (pathnamePosition != UNAUTHORIZED_REDIRECT) {
-        const authorizedPath = authorizedRoutes[position as keyof typeof authorizedRoutes];
-        const isAuthorized =
-            authorizedRoutes.default.includes(pathnamePosition) ||
-            authorizedPath?.includes(pathnamePosition);
-        if (!isAuthorized && isLoggedIn) {
-            return NextResponse.redirect(new URL(UNAUTHORIZED_REDIRECT, request.nextUrl));
-        }
-    }
-
-    return NextResponse.next();
+    return loggedInMiddleware(pathname, position, request);
 });
 
 /**
