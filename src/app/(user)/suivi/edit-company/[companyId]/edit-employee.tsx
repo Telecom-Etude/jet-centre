@@ -106,7 +106,7 @@ export function EditEmployee({
             <EditableCell value={job} setValue={setJob} setStatus={setStatus} update={update} />
             <TableCell className="p-0">
                 <div className="flex justify-around items-center">
-                    <BoxButtonIcon {...getUpdateBoxStatusInfos(status)} onClick={update} />
+                    <BoxButtonIcon {...getUpdateBoxStatusInfos(status, true)} onClick={update} />
                     <BoxButtonTrash onClick={removeEmployee} />
                 </div>
             </TableCell>

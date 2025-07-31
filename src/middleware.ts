@@ -19,7 +19,6 @@ import { redis } from './db';
 import { log } from './lib/utils';
 import { isAuthorisedToRoute, isNonAuthPublicRoute, ROUTES } from './routes';
 import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
-import { RoleSideBar } from './settings/sidebars/types';
 
 /**
  * Redirect current url onto another page.

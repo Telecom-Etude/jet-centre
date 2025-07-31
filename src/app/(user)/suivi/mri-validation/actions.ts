@@ -33,7 +33,11 @@ export async function listMriToValidate() {
                 },
             },
             where: {
-                OR: [{ status: MriStatus.Finished }, { status: MriStatus.Validated }],
+                OR: [
+                    { status: MriStatus.Finished },
+                    { status: MriStatus.Validated },
+                    { status: MriStatus.Sent },
+                ],
             },
         });
     } catch (e) {
