@@ -4,6 +4,7 @@ declare namespace NodeJS {
         AUTH_SECRET: string;
         AUTH_GOOGLE_ID: string;
         AUTH_GOOGLE_SECRET: string;
+        AUTH_TRUST_HOST?: string;
         /// Google Ids
         DOSSIER_SUIVI: string;
         TEMPLATE_EXCEL_CE: string;
@@ -19,14 +20,15 @@ declare namespace NodeJS {
         TEMPLATE_PVRF: string;
         TEMPLATE_PVRI: string;
         TEMPLATE_RM: string;
-        /// Others
+        /// Seed
         ADMIN_EMAIL: string;
         ADMIN_POSITION?: string;
+        ENV: 'prod' | 'dev';
+        /// Others
         WEBSITE_URL: string;
         DB_URL: string;
         NO_CACHE?: string;
         REDIS_URL: string;
-        DEV_MODE?: '';
-        AUTH_TRUST_HOST?: string;
+        DEV_MODE?: true;
     }
 }
