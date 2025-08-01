@@ -22,6 +22,7 @@ import { reloadWindow } from '@/lib/utils';
 import { TemplateCopyDialog } from './clone-template';
 import { DustbinDialog } from './dustbin';
 import { NewFileDialog } from './new-file';
+import { getMimeTypeIcon } from '@/components/google/file-icons';
 
 interface FileExplorerProps {
     missions: DriveFile[] | null;
@@ -115,6 +116,7 @@ function FileItem({
             className="bg-accent p-2 rounded flex justify-between items-center space-x-main"
             key={file.id}
         >
+            {getMimeTypeIcon(file.mimeType)}
             {reloading ? (
                 <p className="w-full">Updating name...</p>
             ) : isRenaming ? (
