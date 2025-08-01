@@ -116,7 +116,7 @@ function FileItem({
             className="bg-accent p-2 rounded flex justify-between items-center space-x-main"
             key={file.id}
         >
-            {getMimeTypeIcon(file.mimeType)}
+            <div>{getMimeTypeIcon(file.mimeType)}</div>
             {reloading ? (
                 <p className="w-full">Updating name...</p>
             ) : isRenaming ? (
@@ -151,41 +151,33 @@ interface FileButtonsProps {
 
 function FileButtons({ url, file, selectFile, enterRenameMode }: FileButtonsProps) {
     return (
-        <div className="flex items-center space-x-main">
+        <div className="flex  space-x-main">
             <Button
                 variant="ghost"
                 onClick={() => {
                     trashFile(file.id, true).then(() => reloadWindow());
                 }}
-                className="w-full h-full no-padding"
+                className="no-padding"
             >
-                <FaTrash className="w-full h-full" />
+                <FaTrash />
             </Button>
-            <Button
-                variant="ghost"
-                onClick={() => enterRenameMode()}
-                className="w-full h-full no-padding"
-            >
-                <FaPencil className="w-full h-full" />
+            <Button variant="ghost" onClick={() => enterRenameMode()} className="no-padding">
+                <FaPencil />
             </Button>
             {url && (
-                <Button variant="ghost" asChild className="w-full h-full">
+                <Button variant="ghost" asChild>
                     <Link
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full h-full no-padding"
+                        className="no-padding"
                     >
-                        <FaArrowUpFromBracket className="w-full h-full" />
+                        <FaArrowUpFromBracket />
                     </Link>
                 </Button>
             )}
-            <Button
-                variant="ghost"
-                onClick={() => selectFile(file)}
-                className="w-full h-full no-padding"
-            >
-                <FaArrowRightFromBracket className="w-full h-full" />
+            <Button variant="ghost" onClick={() => selectFile(file)} className="no-padding">
+                <FaArrowRightFromBracket />
             </Button>
         </div>
     );
