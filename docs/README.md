@@ -92,3 +92,5 @@ Please read the [Contribution Guide](/docs/CONTRIBUTING.md) before contributing 
 
 - [Auth.js](https://www.youtube.com/watch?v=1MTyCvS05V4) (advanced level, for deep understanding)
 - [Google Provider](https://www.youtube.com/watch?v=Rs8018RO5YQ)
+- [Docker](https://youtu.be/pg19Z8LL06w)
+- [Docker Compose](https://youtu.be/SXwC9fSwct8)
