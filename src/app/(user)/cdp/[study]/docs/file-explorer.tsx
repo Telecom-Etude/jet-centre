@@ -13,7 +13,9 @@ import {
     BoxHeaderBlock,
     BoxTitle,
 } from '@/components/boxes/boxes';
+import { getMimeTypeIcon } from '@/components/google/file-icons';
 import { Button } from '@/components/ui/button';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Input } from '@/components/ui/input';
 import { trashFile, renameFile } from '@/google/drive/files';
 import { DriveFile, googleUrl } from '@/google/drive/types';
@@ -22,7 +24,6 @@ import { reloadWindow } from '@/lib/utils';
 import { TemplateCopyDialog } from './clone-template';
 import { DustbinDialog } from './dustbin';
 import { NewFileDialog } from './new-file';
-import { getMimeTypeIcon } from '@/components/google/file-icons';
 
 interface FileExplorerProps {
     missions: DriveFile[] | null;
@@ -51,10 +52,32 @@ export function FileExplorerBox({
                 <BoxHeader>
                     <BoxTitle>Documents de l&apos;étude</BoxTitle>
                     <BoxHeaderBlock>
-                        <BoxButtonTrash onClick={() => setDustbinOpen(true)} />
-                        <BoxButtonReload onClick={() => loadFiles()} />
-                        <BoxButtonTemplate onClick={() => setTemplateDialogOpen(true)} />
-                        <BoxButtonPlus onClick={() => setNewFileOpen(true)} />
+                        <HoverCard>
+                            <HoverCardTrigger>
+                                <BoxButtonTrash onClick={() => setDustbinOpen(true)} />
+                            </HoverCardTrigger>
+                            <HoverCardContent>Ouvrir la corbeille.</HoverCardContent>
+                        </HoverCard>
+                        <HoverCard>
+                            <HoverCardTrigger>
+                                <BoxButtonReload onClick={() => loadFiles()} />
+                            </HoverCardTrigger>
+                            <HoverCardContent>
+                                Synchroniser les données avec Google Drive.
+                            </HoverCardContent>
+                        </HoverCard>
+                        <HoverCard>
+                            <HoverCardTrigger>
+                                <BoxButtonTemplate onClick={() => setTemplateDialogOpen(true)} />
+                            </HoverCardTrigger>
+                            <HoverCardContent>Cloner un template.</HoverCardContent>
+                        </HoverCard>
+                        <HoverCard>
+                            <HoverCardTrigger>
+                                <BoxButtonPlus onClick={() => setNewFileOpen(true)} />
+                            </HoverCardTrigger>
+                            <HoverCardContent>Créer un nouveau fichier vierge.</HoverCardContent>
+                        </HoverCard>
                     </BoxHeaderBlock>
                 </BoxHeader>
                 <BoxContent>

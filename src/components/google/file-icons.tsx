@@ -1,8 +1,9 @@
-import { FileType } from '@/google/drive/types';
 import { ReactNode } from 'react';
 import { FaFileCircleQuestion, FaFilePdf, FaFolder, FaWpforms } from 'react-icons/fa6';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 import { LuPresentation, LuFileSpreadsheet } from 'react-icons/lu';
+
+import { FileType } from '@/google/drive/types';
 
 export function getMimeTypeIcon(fileType: FileType | null): ReactNode {
     switch (fileType) {
