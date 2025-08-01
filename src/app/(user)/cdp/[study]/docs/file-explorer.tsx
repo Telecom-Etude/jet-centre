@@ -175,33 +175,61 @@ interface FileButtonsProps {
 function FileButtons({ url, file, selectFile, enterRenameMode }: FileButtonsProps) {
     return (
         <div className="flex  space-x-main">
-            <Button
-                variant="ghost"
-                onClick={() => {
-                    trashFile(file.id, true).then(() => reloadWindow());
-                }}
-                className="no-padding"
-            >
-                <FaTrash />
-            </Button>
-            <Button variant="ghost" onClick={() => enterRenameMode()} className="no-padding">
-                <FaPencil />
-            </Button>
-            {url && (
-                <Button variant="ghost" asChild>
-                    <Link
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
+            <HoverCard>
+                <HoverCardTrigger>
+                    <Button
+                        variant="ghost"
+                        onClick={() => {
+                            trashFile(file.id, true).then(() => reloadWindow());
+                        }}
                         className="no-padding"
                     >
-                        <FaArrowUpFromBracket />
-                    </Link>
-                </Button>
+                        <FaTrash />
+                    </Button>
+                </HoverCardTrigger>
+                <HoverCardContent>Déplacer vers la corbeille.</HoverCardContent>
+            </HoverCard>
+            <HoverCard>
+                <HoverCardTrigger>
+                    <Button
+                        variant="ghost"
+                        onClick={() => enterRenameMode()}
+                        className="no-padding"
+                    >
+                        <FaPencil />
+                    </Button>
+                </HoverCardTrigger>
+                <HoverCardContent>Renommer.</HoverCardContent>
+            </HoverCard>
+            {url && (
+                <HoverCard>
+                    <HoverCardTrigger>
+                        <Button variant="ghost" asChild>
+                            <Link
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="no-padding"
+                            >
+                                <FaArrowUpFromBracket />
+                            </Link>
+                        </Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent>
+                        Ouvrir dans directement dans Google, dans un nouvel onglet.
+                    </HoverCardContent>
+                </HoverCard>
             )}
-            <Button variant="ghost" onClick={() => selectFile(file)} className="no-padding">
-                <FaArrowRightFromBracket />
-            </Button>
+            <HoverCard>
+                <HoverCardTrigger>
+                    <Button variant="ghost" onClick={() => selectFile(file)} className="no-padding">
+                        <FaArrowRightFromBracket />
+                    </Button>
+                </HoverCardTrigger>
+                <HoverCardContent>
+                    Ouvrir le fichier en mode intégré à la page. Synchroniser les données avec
+                </HoverCardContent>
+            </HoverCard>
         </div>
     );
 }
