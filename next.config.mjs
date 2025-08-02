@@ -18,6 +18,7 @@ const nextConfig = {
         // Everything below is accessible on the internet without requiring authentication.
         WEBSITE_URL: process.env.WEBSITE_URL,
     },
+    output: 'standalone',
 };
 
 export default nextConfig;

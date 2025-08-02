@@ -1,0 +1,89 @@
+services:
+    app:
+        container_name: jc-app
+        build:
+            context: .
+            target: dev
+        restart: always
+        command: bun run dev
+        environment:
+            - NODE_ENV=development
+            # For our dear WSL2 users :)
+            - WATCHPACK_POLLING=true
+
+        env_file:
+            - .env
+
+        volumes:
+            - .:/app
+            - /app/node_modules
+            - /app/.next
+            - prisma-generated:/app/node_modules/.prisma
+            - prisma-client:/app/node_modules/@prisma/client
+        ports:
+            - 5005:5005
+
+        networks:
+            - db-network
+            - cache-network
+            - internet
+        depends_on:
+            - postgres
+            - cache
+
+    studio:
+        image: oven/bun:1
+        container_name: jc-studio
+        working_dir: /app
+        volumes:
+            - .:/app
+        ports:
+            - '5555:5555'
+        env_file:
+            - .env
+        command: sh -c "bun install --save-dev prisma && bunx prisma studio --hostname 0.0.0.0 --port 5555"
+        networks:
+            - internet
+            - db-network
+        depends_on:
+            - postgres
+
+    postgres:
+        image: postgres:15
+        container_name: jc-postgres
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: maindb
+        volumes:
+            - postgres:/var/lib/postgresql/data
+        networks:
+            - db-network
+
+    cache:
+        image: redis:latest
+        container_name: jc-redis
+        restart: always
+        ports:
+            - '6379:6379'
+        command: redis-server --save 20 1
+        volumes:
+            - cache:/data
+        networks:
+            - cache-network
+
+networks:
+    db-network:
+        external: false
+    cache-network:
+        external: false
+    internet:
+        driver: bridge
+
+volumes:
+    postgres:
+    cache:
+    bun-cache:
+    app-data:
+    prisma-generated:
+    prisma-client:

@@ -1,0 +1,60 @@
+services:
+    jet-centre:
+        container_name: jc-app
+        build:
+            context: ./
+            target: runner
+
+        env_file:
+            - .env.production
+        environment:
+            - NODE_ENV=production
+
+        restart: always
+        ports:
+            - 3000:3000
+        networks:
+            - db-network
+            - cache-network
+            - internet
+        depends_on:
+            - postgres
+            - cache
+
+    postgres:
+        image: postgres:15
+        container_name: jc-postgres
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: maindb
+        volumes:
+            - postgres:/var/lib/postgresql/data
+        networks:
+            - db-network
+
+    cache:
+        image: redis:latest
+        container_name: jc-redis
+        restart: always
+        ports:
+            - '6379:6379'
+        command: redis-server --save 20 1
+        volumes:
+            - cache:/data
+        networks:
+            - cache-network
+
+networks:
+    db-network:
+        external: false
+    cache-network:
+        external: false
+    internet:
+        driver: bridge
+
+volumes:
+    postgres:
+    cache:
+    bun-cache:
+    app-data:
