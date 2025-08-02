@@ -17,16 +17,13 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Install Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '22'
-                  cache: 'npm'
+              uses: oven-sh/setup-bun@v2
 
             - name: Install dependencies
-              run: npm install --legacy-peer-deps
+              run: bun i
 
             - name: Generate prisma doc
-              run: npx prisma generate
+              run: bun x prisma generate
 
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
