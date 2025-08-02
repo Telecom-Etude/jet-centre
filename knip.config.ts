@@ -5,6 +5,7 @@ const config: KnipConfig = {
         'src/lib/utils.ts',
         'src/components/ui/**',
         'src/components/meta-components/multiple-selector.tsx',
+        '.github/**',
     ],
     ignoreDependencies: ['eslint-config-next', 'eslint-plugin-import', 'prisma-docs-generator'],
 };
