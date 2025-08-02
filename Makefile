@@ -39,4 +39,12 @@ run-prod:
 stop-prod:
 	$(COMPOSE) -f docker-compose.yml down
 
-.PHONY: build dev studio seed reset_db stop build-prod run-prod stop-prod
+help:
+	@echo "Available commands:"
+	@echo "   docker-start   dev  build  fmt  studio  seed  seed-prod  reset_db  migrate  stop  build-prod  run-prod  stop-prod"
+	@echo ""
+	@echo "Documentation available at docs/makefile_commands.md"
+
+.PHONY: build dev studio seed reset_db stop build-prod run-prod stop-prod help
+
+.DEFAULT_GOAL := help
