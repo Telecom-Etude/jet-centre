@@ -85,16 +85,16 @@ git pull upstream main
 
 To format your code using the Prettier configuration, run one of the following command:
 
-Makefile
+#### Makefile
 
 ```bash
 make fmt
 ```
 
-Legacy
+#### Legacy
 
 ```bash
-npm run fmt
+bun run fmt
 ```
 
 ### Commit Messages

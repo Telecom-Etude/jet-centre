@@ -4,7 +4,7 @@
 
 ### Requirements
 
-- [Node.js and npm](https://nodejs.org/en/download)
+- [Bun](https://bun.com/docs/installation)
 - [Postgresql](https://www.postgresql.org/download/)
 - [Docker](https://docs.docker.com/engine/install/)
 
@@ -13,7 +13,7 @@
 Start by installing all project dependencies.
 
 ```bash
-npm install --legacy-peer-dep
+bun install
 ```
 
 ### Setup your .env
@@ -98,7 +98,7 @@ make dev
 ```
 .
 ├── docs                Folder including documentation, including this file.
-├── package.json        File including dependencies and scripts to run (like `npm run dev`).
+├── package.json        File including dependencies and scripts to run (like `bun run dev`).
 ├── prisma              Folder containing the database (data and schemas)
 ├── public              Folder containing the static data (images, pdfs, etc.).
 ├── src                 Folder containing the code (front-end, back-end, requests, api, etc..).

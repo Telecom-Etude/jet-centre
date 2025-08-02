@@ -75,7 +75,7 @@ DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_databa
 To initialize the database, run a prisma migration.
 
 ```bash
-npm run prisma:migrate
+bun x prisma migrate deploy
 ```
 
 ## Schemas
@@ -89,19 +89,23 @@ You do not need to include those files in any way, prisma will look at all `*.pr
 To update the schemas of the database, update them in the `*.prisma` files. Then, to generate and apply the migration, run the command :
 
 ```bash
-npm run prisma:migration
+bun x prisma migrate dev
 ```
 
 When prisma applies a migration, it will also create files in the `node_modules/@prisma/client` directory to provide types in typescript.
 
-## Seeding
+## Reset & Seeding
 
 To seed the database (apply modifications when the project is set up), use the `prisma/seed.ts`.
-If you have already set up the database (applied a prisma migration), you can apply the seed with :
+To seed is applied when you empty and reset your database. To reset your database, run this command:
 
 ```bash
-npm run prisma:seed
+bun x prisma reset
 ```
+
+> [!WARNING]
+>
+> You will loose all your data by running this command.
 
 ## Contributing
 
