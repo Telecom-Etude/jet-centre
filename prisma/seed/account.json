@@ -1,0 +1,33 @@
+{
+    "data": {
+        "firstName": "FirstName",
+        "lastName": "LastName",
+        "email?": "Email",
+        "phone_number?": "PhoneNumber",
+        "user?": {
+            "create": {
+                "settings?": {
+                    "create": {
+                        "gui": "Boolean",
+                        "notificationLevel": "Lvl",
+                        "theme": "RgbColour"
+                    }
+                },
+                "admin": {
+                    "create": {
+                        "position": "JePos"
+                    }
+                }
+            }
+        },
+        "address": {
+            "create": {
+                "city": "City",
+                "country": "Country",
+                "streetName": "Street",
+                "streetNumber": "StreetNumber",
+                "zipCode": "FrenchPostCode"
+            }
+        }
+    }
+}
