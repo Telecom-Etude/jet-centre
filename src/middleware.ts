@@ -99,10 +99,12 @@ interface NextAuthRequest extends NextRequest {
  */
 export default auth(async (request: NextAuthRequest) => {
     const session = request.auth;
-    const isLoggedIn = !!session?.user.email;
-    const position = session?.user.position;
+    const isLoggedIn = !!session?.user?.email;
+    const position = session?.user?.position;
     const { pathname } = request.nextUrl;
     log(`middleware at ${pathname} [loggedIn=${isLoggedIn}] [pos=${position}] `);
+
+    return NextResponse.next();
 
     redisMiddleware();
 

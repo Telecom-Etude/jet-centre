@@ -8,7 +8,7 @@ model Study {
     informationId      String            @unique
     studyProceedings   StudyProceedings?
     clients            StudyClient[]
-    mri                Mri?
+    mri                Mri[]
     studyAssignees     StudyAssignee[]
     satisfaction       Satisfaction?
     studyProceedingsId String?
@@ -39,6 +39,8 @@ model StudyInfos {
     /// Deadline for signing the CE
     deadlinePreStudy  DateTime?
     study             Study?
+    /// If confidential, only the president and selected people should know about the study
+    confidential      Boolean   @default(false)
 }
 
 /// Information to follow the study

@@ -33,7 +33,7 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
         if (!study) {
             throw new Error('studyInfo exists without study.');
         }
-        const mri = study.mri;
+        const mri = study.mri[0]; // TODO: handle multiple MRIs better
         const data: MriFormType = {
             title: infos.title ?? '',
             wageLowerBound: mri?.wageLowerBound ?? 0,
@@ -58,6 +58,7 @@ export async function loadMriData(code: string): Promise<MriServerData | undefin
 }
 
 export async function storeMriData(code: string, data: MriFormType): Promise<string | undefined> {
+    // TODO: create another method to update MRI, or clearly set a way to distinguish MRIs
     try {
         const mriData = {
             wageLowerBound: data.wageLowerBound,
@@ -88,16 +89,13 @@ export async function storeMriData(code: string, data: MriFormType): Promise<str
                 study: {
                     update: {
                         mri: {
-                            upsert: {
-                                create: { ...mriData },
-                                update: { ...mriData },
-                            },
+                            create: { ...mriData },
                         },
                     },
                 },
             },
         });
-        return studyInfos.study?.mri?.id;
+        return studyInfos.study?.mri[0]?.id;
     } catch (e) {
         console.error(`[storeMriData] ${e}`);
     }

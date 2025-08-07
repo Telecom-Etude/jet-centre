@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 
 import { ErrorPage } from '@/components/error';
 
-const DELAY_TO_SHOW_LOADING_PAGE = 500; // milliseconds
+const DELAY_TO_SHOW_LOADING_PAGE = 0; // milliseconds
 
 export default function Loading() {
     const [show, setShow] = useState(false);

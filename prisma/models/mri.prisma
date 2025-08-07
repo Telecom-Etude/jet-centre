@@ -20,6 +20,7 @@ enum MriStatus {
 /// Information that figure on the MRI
 model Mri {
     id                 String    @id @default(cuid())
+    title              String?
     /// Approximate lower bound of the total `retribution`
     wageLowerBound     Int?
     /// Approximate upper bound of the total `retribution`
@@ -40,7 +41,7 @@ model Mri {
     /// Status of the MRI: written? validated? sent? expired?
     status             MriStatus @default(InProgress)
     study              Study     @relation(fields: [studyId], references: [id], onDelete: Cascade)
-    studyId            String    @unique
+    studyId            String
     formMRIs           MriForm[]
 }
 

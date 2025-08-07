@@ -42,7 +42,7 @@ async function LoadMRI({ study }: { study: string }) {
     if (!studyInfos || !studyInfos.study) {
         throw new Error('Failed to fetch study.');
     }
-    const mri = assertAllFieldsFull(studyInfos.study.mri, studyInfos.title);
+    const mri = assertAllFieldsFull(studyInfos.study.mri[0], studyInfos.title); // TODO: handle multiple MRIs per study
     return mri === null ? (
         <p>Le MRI n&apos;a pas encore été fini.</p>
     ) : mri === undefined ? (

@@ -11,12 +11,12 @@ import { SideBarGroup } from './types';
 import { VPO_SIDEBAR } from './vpo';
 
 export const ROLES_SIDEBARS = {
-    Trésorier: TREASURER_SIDEBAR,
-    VPO: VPO_SIDEBAR,
-    SecGe: SECRETARY_GENERAL_SIDEBAR,
-    DirCo: COMMERCIAL_DIRECTOR_SIDEBAR,
-    Info: ADMIN_SIDEBAR,
-    Admin: ADMIN_SIDEBAR,
+    treasurer: TREASURER_SIDEBAR,
+    operational_vice_president: VPO_SIDEBAR,
+    general_secretary: SECRETARY_GENERAL_SIDEBAR,
+    commercial_director: COMMERCIAL_DIRECTOR_SIDEBAR,
+    info: ADMIN_SIDEBAR,
+    admin: ADMIN_SIDEBAR,
 } as const;
 
 export const CDP_SIDEBAR: SideBarGroup[] = [
