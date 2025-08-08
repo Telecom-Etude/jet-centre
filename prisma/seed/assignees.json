@@ -1,0 +1,32 @@
+{
+    "data": {
+        "firstName": "FirstName",
+        "lastName": "LastName",
+        "email?": "Email",
+        "phone_number?": "PhoneNumber",
+        "address?": {
+            "create": {
+                "city": "City",
+                "country": "Country",
+                "streetName": "Street",
+                "streetNumber": "StreetNumber",
+                "postalCode": "FrenchPostCode"
+            }
+        },
+        "assignee": {
+            "create": {
+                "mriReceiver?": { "create": {} },
+                "nbApplications?": "0..13",
+                "information?": {
+                    "create": {
+                        "age": "18..27",
+                        "graduationYear": "2020..2030",
+                        "hasScholarship": "Bool",
+                        "oldJet": "Bool"
+                    }
+                }
+            }
+        }
+    },
+    "select!": { "assignee": { "select": { "id": true } } }
+}
