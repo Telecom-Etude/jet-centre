@@ -8,14 +8,14 @@
             "create": {
                 "settings?": {
                     "create": {
-                        "gui": "Boolean",
-                        "notificationLevel": "Lvl",
-                        "theme": "RgbColour"
+                        "gui": "Bool",
+                        "notificationLevel": "High|Medium|Low",
+                        "theme": "EditorColourTheme"
                     }
                 },
                 "admin": {
                     "create": {
-                        "position": "JePos"
+                        "position": "DirCo|Info|VPO|SecGe|Trez"
                     }
                 }
             }
