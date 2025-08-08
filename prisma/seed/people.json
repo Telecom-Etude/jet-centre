@@ -1,0 +1,18 @@
+{
+    "data": {
+        "firstName": "FirstName",
+        "lastName": "LastName",
+        "email?": "Email",
+        "phone_number?": "PhoneNumber",
+        "address?": {
+            "create": {
+                "city": "City",
+                "country": "Country",
+                "streetName": "Street",
+                "streetNumber": "StreetNumber",
+                "postalCode": "FrenchPostCode"
+            }
+        }
+    },
+    "select!": { "id": true }
+}
