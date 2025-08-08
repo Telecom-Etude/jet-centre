@@ -64,7 +64,7 @@ model Address {
     streetNumber String
     streetName   String
     city         String
-    zipCode      String
+    postalCode   String
     country      String
     person       Person?  @relation(fields: [personId], references: [id])
     Company      Company? @relation(fields: [companyId], references: [id])
