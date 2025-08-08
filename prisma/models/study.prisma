@@ -10,7 +10,6 @@ model Study {
     clients            StudyClient[]
     mris               Mri[]
     studyAssignees     StudyAssignee[]
-    satisfaction       Satisfaction?
     studyProceedingsId String?
 }
 
