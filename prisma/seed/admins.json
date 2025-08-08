@@ -20,14 +20,15 @@
                 }
             }
         },
-        "address": {
+        "address?": {
             "create": {
                 "city": "City",
                 "country": "Country",
                 "streetName": "Street",
                 "streetNumber": "StreetNumber",
-                "zipCode": "FrenchPostCode"
+                "postalCode": "FrenchPostCode"
             }
         }
-    }
+    },
+    "select!": { "user": { "select": { "admin": { "select": { "id": true } } } } }
 }
