@@ -4,7 +4,7 @@
  * The data created here was generated with the following command (cf database.md for mor information):
  *
  * ```
-random-json -c 100 -f admins.json --before $'\nperson = await db.person.create(' --after $');\n\nadmins.push(person!.user!.admin!.id);'
+random-json -c 100 --before 'await db.studyClient.create(' --after $');\n\n' --schema study-client.json  | sed 's/"CLIENTID": \(.*\)$/"id": clients[\1]/;s/"STUDYID": \(.*\)$/"id": studies[\1]/'
  * ```
  */
 

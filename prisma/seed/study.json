@@ -8,7 +8,9 @@
                 "title": "Sentence",
                 "applicationFee": "0.0..0.1",
                 "cc": "Bool",
-                "domains": ["Domain"],
+                "domains": [
+                    "Chatbot|DataScience|MachineLearning|IntelligenceArtificielle|WebDev|MobileDev|AppDev|Cybersecurity|Cryptography|Networks|Telecommunications|Internet|IoT|EmbeddedSystems|Image|ComputerVision|ComputerGraphics|d_3D|MarketAnalysis|StateOfTheArt"
+                ],
                 "estimatedDuration": "0..40"
             }
         },
@@ -38,7 +40,7 @@
                 "wageUpperBound": "50..50000",
                 "wageLevel": "High|Medium|Low",
                 "difficulty": "High|Medium|Low",
-                "mainDomain": "Domain",
+                "mainDomain": "Chatbot|DataScience|MachineLearning|IntelligenceArtificielle|WebDev|MobileDev|AppDev|Cybersecurity|Cryptography|Networks|Telecommunications|Internet|IoT|EmbeddedSystems|Image|ComputerVision|ComputerGraphics|d_3D|MarketAnalysis|StateOfTheArt",
                 "status": "InProgress|Finished|Validated|Sent|Expired",
                 "introductionText": "Paragraph",
                 "descriptionText": "Paragraph",
