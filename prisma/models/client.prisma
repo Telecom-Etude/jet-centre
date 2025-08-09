@@ -34,8 +34,6 @@ model Satisfaction {
     id                     String      @id @default(cuid())
     studyClient            StudyClient @relation(fields: [studyClientId], references: [id], onDelete: Cascade)
     studyClientId          String      @unique
-    study                  Study       @relation(fields: [studyId], references: [id], onDelete: Cascade)
-    studyId                String      @unique
     publish                Boolean
     howKnowUs              String
     whyUs                  String

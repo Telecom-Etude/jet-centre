@@ -1,0 +1,34 @@
+{
+    "data": {
+        "firstName": "FirstName",
+        "lastName": "LastName",
+        "email?": "Email",
+        "phone_number?": "PhoneNumber",
+        "user": {
+            "create": {
+                "settings?": {
+                    "create": {
+                        "gui": "Bool",
+                        "notificationLevel": "High|Medium|Low",
+                        "theme": "EditorColourTheme"
+                    }
+                },
+                "admin": {
+                    "create": {
+                        "position": "DirCo|Info|VPO|SecGe|Trez"
+                    }
+                }
+            }
+        },
+        "address?": {
+            "create": {
+                "city": "City",
+                "country": "Country",
+                "streetName": "Street",
+                "streetNumber": "StreetNumber",
+                "postalCode": "FrenchPostCode"
+            }
+        }
+    },
+    "select!": { "user": { "select": { "admin": { "select": { "id": true } } } } }
+}

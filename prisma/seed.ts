@@ -1,12 +1,22 @@
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+import { seedAdminsTestData } from './seed/admins';
+import { seedAssigneesTestData } from './seed/assignees';
+import { seedStudiesTestData } from './seed/study';
+import { seedStudyAssigneesTestData } from './seed/study-assignee';
+import { seedClientsTestData } from './seed/client';
+import { seedCompaniesTestData } from './seed/company';
+import { seedStudyClientsTestData } from './seed/study-client';
 
-async function seed_dev() {
-    const email = process.env.ADMIN_EMAIL || 'example@telecom-etude.fr';
-    const position = process.env.ADMIN_POSITION || 'president';
+const db = new PrismaClient();
 
-    await prisma.admin.create({
+async function seedDev() {
+    const email = process.env.ADMIN_EMAIL;
+    if (!email) return console.error('ADMIN_EMAIL not provided. Skipping seed.');
+
+    const position = process.env.ADMIN_POSITION ?? 'Info';
+
+    await db.admin.create({
         data: {
             position,
             user: {
@@ -24,19 +34,19 @@ async function seed_dev() {
     });
 }
 
-async function seed_prod() {
+async function seedProd() {
     const email = 'admin@telecom-etude.fr';
 
-    await prisma.admin.create({
+    await db.admin.create({
         data: {
-            position: 'respo-info',
+            position: 'Info',
             user: {
                 create: {
                     person: {
                         create: {
                             email,
-                            firstName: '',
-                            lastName: '',
+                            firstName: 'admin',
+                            lastName: 'admin',
                         },
                     },
                 },
@@ -46,17 +56,44 @@ async function seed_prod() {
 }
 
 async function main() {
-    if (process.env.NODE_ENV === 'production') return await seed_prod();
+    if (process.env.ENV === 'prod') return await seedProd();
+    if (process.env.ENV !== 'dev')
+        throw new Error(
+            `Invalid ENV var in .env: expected 'prod' or 'dev', found ${process.env.ENV}`
+        );
 
-    await seed_dev();
+    process.stdout.write('🌱  Adding the test data for development database.');
+
+    await seedDev();
+
+    const assignees = await seedAssigneesTestData(db);
+
+    const admins = await seedAdminsTestData(db);
+    const studies = await seedStudiesTestData(db, admins);
+    const studiesWithMri = studies.filter(
+        (study): study is { studyId: string; mriId: string } => study.mriId !== undefined
+    );
+    await seedStudyAssigneesTestData(db, assignees, studiesWithMri);
+
+    const clients = await seedClientsTestData(db);
+    const companyClients = clients
+        .filter((client) => !client.privateIndividual)
+        .map((client) => client.clientId);
+    await seedCompaniesTestData(db, companyClients);
+
+    const studyIds = studies.map((study) => study.studyId);
+    const clientIds = clients.map((client) => client.clientId);
+    await seedStudyClientsTestData(db, clientIds, studyIds);
+
+    return;
 }
 
 main()
     .then(async () => {
-        await prisma.$disconnect();
+        await db.$disconnect();
     })
     .catch(async (e) => {
         console.error(`#####\n${e}\n#####`);
-        await prisma.$disconnect();
+        await db.$disconnect();
         process.exit(1);
     });

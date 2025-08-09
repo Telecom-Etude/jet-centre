@@ -1,0 +1,25 @@
+{
+    "data": {
+        "companyInfos": {
+            "create": {
+                "domains": [
+                    "Chatbot|DataScience|MachineLearning|IntelligenceArtificielle|WebDev|MobileDev|AppDev|Cybersecurity|Cryptography|Networks|Telecommunications|Internet|IoT|EmbeddedSystems|Image|ComputerVision|ComputerGraphics|d_3D|MarketAnalysis|StateOfTheArt",
+                    0,
+                    10
+                ],
+                "size": "MicroEntreprise|MoyenneEntreprise|PetiteEntreprise|GrandeEntreprise"
+            }
+        },
+        "members": { "connect": [{ "CLIENTID": "0..99" }, 0, 10] },
+        "name": "CompanyName*",
+        "address": {
+            "create": {
+                "city": "City",
+                "country": "Country",
+                "postalCode": "FrenchPostCode",
+                "streetName": "Street",
+                "streetNumber": "StreetNumber"
+            }
+        }
+    }
+}
