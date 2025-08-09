@@ -1,0 +1,21 @@
+{
+    "data": {
+        "companyInfos": {
+            "create": {
+                "domains": ["Domain", 0, 10],
+                "size": "MicroEntreprise|MoyenneEntreprise|PetiteEntreprise|GrandeEntreprise"
+            }
+        },
+        "members": { "connect": [{ "CLIENTID": "0..99" }, 0, 10] },
+        "name": "CompanyName*",
+        "address": {
+            "create": {
+                "city": "City",
+                "country": "Country",
+                "postalCode": "FrenchPostCode",
+                "streetName": "Street",
+                "streetNumber": "StreetNumber"
+            }
+        }
+    }
+}

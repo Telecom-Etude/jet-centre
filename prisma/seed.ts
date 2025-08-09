@@ -5,6 +5,7 @@ import { seedAssigneesTestData } from './seed/assignees';
 import { seedStudiesTestData } from './seed/study';
 import { seedStudyAssigneesTestData } from './seed/study-assignee';
 import { seedClientsTestData } from './seed/client';
+import { seedCompaniesTestData } from './seed/company';
 
 const db = new PrismaClient();
 
@@ -59,18 +60,24 @@ async function main() {
             `Invalid ENV var in .env: expected 'prod' or 'dev', found ${process.env.ENV}`
         );
 
-    const admins = await seedAdminsTestData(db);
-    const clients = await seedClientsTestData(db);
+    await seedDev();
+
     const assignees = await seedAssigneesTestData(db);
+
+    const admins = await seedAdminsTestData(db);
     const studies = await seedStudiesTestData(db, admins);
     const studiesWithMri = studies.filter(
         (study): study is { studyId: string; mriId: string } => study.mriId !== undefined
     );
     const studyAssignees = await seedStudyAssigneesTestData(db, assignees, studiesWithMri);
-    const studyIds = studies.map((study) => study.studyId);
-    //     await seedCompanyTestData(db, people, studyIds);
 
-    return await seedDev();
+    const clients = await seedClientsTestData(db);
+    const companyClients = clients
+        .filter((client) => !client.privateIndividual)
+        .map((client) => client.clientId);
+    await seedCompaniesTestData(db, companyClients);
+
+    return;
 }
 
 main()
