@@ -1,12 +1,10 @@
 /**
- * This file fills the database with some data.
- *
- * This file is filling the models corresponding to @file prisma/models/account.prisma
+ * This file fills the database with Telecom Etude administrators.
  *
  * Known limitations:
  * - Images are never created
  *
- * The data created here was generated with the following command, using random-json from @{link https://github.com/t-webber/random-json}':
+ * The data created here was generated with the following command (cf database.md for mor information):
  *
  * ```
 random-json -c 100 -f admins.json --before $'\nperson = await db.person.create(' --after $');\n\nadmins.push(person!.user!.admin!.id);'
