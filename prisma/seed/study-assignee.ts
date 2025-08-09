@@ -16,7 +16,7 @@ export async function seedStudyAssigneesTestData(
     db: PrismaClient,
     assignees: string[],
     studies: { mriId: string; studyId: string }[]
-) {
+): Promise<string[]> {
     const studyAssignees = [];
     let studyAssignee;
 

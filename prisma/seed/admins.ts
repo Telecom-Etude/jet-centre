@@ -13,7 +13,7 @@ random-json -c 100 -f admins.json --before $'\nperson = await db.person.create('
 
 import { PrismaClient } from '@prisma/client';
 
-export async function seedAdminsTestData(db: PrismaClient) {
+export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
     const admins = [];
     let person;
 
