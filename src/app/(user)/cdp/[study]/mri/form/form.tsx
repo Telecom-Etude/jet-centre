@@ -1,18 +1,8 @@
-import { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
-import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
 import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
 import { LEVELS, DOMAINS, DOMAIN_NAMES, LEVEL_NAMES } from '@/db/types';
 
@@ -28,7 +18,15 @@ export default function MRICreationForm({ setNotSaved, form, updateServer }: MRI
     return (
         <FormProvider {...form}>
             <form>
-                <TitleEditor setNotSaved={setNotSaved} form={form} updateServer={updateServer} />
+                <InputFormElement
+                    label="Titre"
+                    name="title"
+                    form={form}
+                    onChange={() => {
+                        setNotSaved();
+                    }}
+                    onBlur={() => updateServer()}
+                />
                 <TextAreaFormElement
                     label="Introduction"
                     name="introductionText"
@@ -112,42 +110,5 @@ export default function MRICreationForm({ setNotSaved, form, updateServer }: MRI
                 />
             </form>
         </FormProvider>
-    );
-}
-
-function TitleEditor({ setNotSaved, form, updateServer }: MRICreationProps) {
-    const [titleWarning, setTitleWarning] = useState(false);
-    const [displayed, setDisplayed] = useState(false);
-
-    return (
-        <>
-            <InputFormElement
-                label="Titre"
-                name="title"
-                form={form}
-                onChange={() => {
-                    setNotSaved();
-                    if (!displayed) {
-                        setTitleWarning(true);
-                        setDisplayed(true);
-                    }
-                }}
-                onBlur={() => updateServer()}
-            />
-            <Dialog open={titleWarning} onOpenChange={setTitleWarning}>
-                <DialogContent>
-                    <DialogHeader className="gap-y-6">
-                        <DialogTitle>Synchronisation</DialogTitle>
-                        <DialogDescription>
-                            Le titre sera synchronisé avec l&apos;ensemble de l&apos;étude. Ce sera
-                            notamment le même sur l&apos;ensemble des documents.
-                        </DialogDescription>
-                        <DialogClose asChild>
-                            <Button variant="outline">Ok</Button>
-                        </DialogClose>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
-        </>
     );
 }

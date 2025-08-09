@@ -4,21 +4,29 @@ import { MriStatus } from '@prisma/client';
 
 import prisma from '@/db';
 
-export async function getStudyInfosWithMRI(code: string) {
+export async function fetchMriById(mriId: string) {
     try {
-        return await prisma.studyInfos.findUnique({
-            where: { code },
+        const mri = await prisma.mri.findUnique({
+            where: { id: mriId },
             include: {
                 study: {
                     include: {
-                        mri: true,
-                        cdps: { include: { user: { include: { person: true } } } },
+                        cdps: {
+                            include: {
+                                user: {
+                                    include: {
+                                        person: true,
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
             },
         });
+        return mri ?? undefined;
     } catch (e) {
-        console.error(`[getStudyInfosWithMRI] ${e}`);
+        console.error(`[fetchMriById] ${e}`);
     }
 }
 

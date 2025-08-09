@@ -26,13 +26,9 @@ export default async function Layout({ children }: { children: ReactNode }) {
                                 <div className="p-2 w-full flex items-center" key={i}>
                                     <Link
                                         className="hover:underline w-full h-full"
-                                        href={
-                                            MRI_VALIDATION.href + '/' + mri.study.information.code
-                                        }
+                                        href={MRI_VALIDATION.href + '/' + mri.id}
                                     >
-                                        {mri.study.information.code +
-                                            ' - ' +
-                                            mri.study.information.title}
+                                        {mri.study.information.code + ' - ' + mri.title}
                                     </Link>
                                     <ValidationButton status={mri.status} mriId={mri.id} />
                                 </div>
