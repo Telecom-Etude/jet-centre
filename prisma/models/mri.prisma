@@ -97,7 +97,7 @@ model StudyAssignee {
     assigneeId      String
     formInterview   FormInterviews @relation(fields: [formInterviewId], references: [id], onDelete: Cascade)
     formInterviewId String         @unique
-    mriForm         MriForm?
+    mriForm         MriForm[]
     /// Place to store notes about the selection of this assignee
     /// <br />
     /// E.g. date at which the assignee will stop being a Telecom Paris student
@@ -117,10 +117,10 @@ model StudyAssignee {
 /// the associated google form</a>
 model MriForm {
     id              String        @id @default(cuid())
-    mri             Mri           @relation(fields: [mriId], references: [id], onDelete: Cascade)
-    mriId           String        @unique
+    mri             Mri           @relation(fields: [mriId], references: [id])
+    mriId           String
     studyAssignees  StudyAssignee @relation(fields: [studyAssigneeId], references: [id])
-    studyAssigneeId String        @unique
+    studyAssigneeId String
     /// Experience related to the mission
     experience      String
     /// Knowledge related to the mission
@@ -135,6 +135,8 @@ model MriForm {
     /// <li>did he encounter some admins?</li>
     /// </ul>
     jeExperience    Int
+
+    @@unique([studyAssigneeId, mriId])
 }
 
 /// Form completed by the admins during the interview.
