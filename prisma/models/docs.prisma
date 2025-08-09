@@ -11,7 +11,7 @@ model Document {
     googleId               String        @unique
     /// Mime type of the file. Refer to google_drive.md.
     type                   String
-    status                 Status?       @relation(fields: [statusId], references: [id])
+    status                 DocStatus?    @relation(fields: [statusId], references: [id])
     /// Identity card
     assigneeCni            AssigneeDocs? @relation("cni")
     assigneeSocialSecurity AssigneeDocs? @relation("socialSecurity")
@@ -24,7 +24,7 @@ model Document {
 /// <br />
 /// This follows at what date the documents were wrote,
 /// audited, signed, and approved by the clients.
-model Status {
+model DocStatus {
     id               String     @id @default(cuid())
     docsId           String     @unique
     /// The template was cloned at this date.
