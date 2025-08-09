@@ -1,4 +1,8 @@
 import { PrismaClient } from '@prisma/client';
+import { seedAdminsTestData } from './seed/admins';
+import { seedPeopleTestData } from './seed/people';
+import { seedAssigneesTestData } from './seed/assignees';
+import { seedStudiesTestData } from './seed/study';
 
 const db = new PrismaClient();
 
@@ -48,9 +52,19 @@ async function seedProd() {
 
 async function main() {
     if (process.env.ENV === 'prod') return await seedProd();
-    if (process.env.ENV === 'dev') return await seedDev();
+    if (process.env.ENV !== 'dev')
+        throw new Error(
+            `Invalid ENV var in .env: expected 'prod' or 'dev', found ${process.env.ENV}`
+        );
 
-    throw new Error(`Invalid ENV var in .env: expected 'prod' or 'dev', found ${process.env.ENV}`);
+    console.error('==================================');
+    const admins = await seedAdminsTestData(db);
+    const people = await seedPeopleTestData(db);
+    const assignees = await seedAssigneesTestData(db);
+    const studies = await seedStudiesTestData(db, admins);
+    //     await seedClientTestData(db, people);
+
+    return await seedDev();
 }
 
 main()

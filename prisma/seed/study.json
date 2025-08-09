@@ -1,0 +1,50 @@
+{
+    "data": {
+        "cdps": { "connect": [{ "ADMINID": "0..99" }, 0, 4] },
+        "auditors": { "connect": [{ "ADMINID": "0..99" }, 0, 2] },
+        "information": {
+            "create": {
+                "code": "220001..230999",
+                "title": "Sentence",
+                "applicationFee": "0.0..0.1",
+                "cc": "Bool",
+                "domains": ["Domain"],
+                "estimatedDuration": "0..40"
+            }
+        },
+        "studyProceedings": {
+            "create": {
+                "studyProcessStep": "Created|Recruited|TripartiteMeeting|DocumentsWrote|InStudy|Ended|CompanyFactored|AssigneePaid|SatisfactionFormSent|WarrantyExpired",
+                "phases": {
+                    "create": [
+                        {
+                            "jehs": "1..20",
+                            "title": "Sentence",
+                            "unitPrice": "380..450",
+                            "deliverable": {
+                                "create": {
+                                    "description": "Paragraph",
+                                    "status": "NotStarted|InProgress|Finished|Given"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "mri": {
+            "create": {
+                "wageLowerBound": "50..50000",
+                "wageUpperBound": "50..50000",
+                "wageLevel": "High|Medium|Low",
+                "difficulty": "High|Medium|Low",
+                "mainDomain": "Domain",
+                "status": "InProgress|Finished|Validated|Sent|Expired",
+                "introductionText": "Paragraph",
+                "descriptionText": "Paragraph",
+                "timeLapsText": "Paragraph"
+            }
+        }
+    },
+    "select!": { "id": true }
+}
