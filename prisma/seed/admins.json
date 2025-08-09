@@ -4,7 +4,7 @@
         "lastName": "LastName",
         "email?": "Email",
         "phone_number?": "PhoneNumber",
-        "user?": {
+        "user": {
             "create": {
                 "settings?": {
                     "create": {

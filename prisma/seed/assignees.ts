@@ -9,19 +9,3014 @@
  * The data created here was generated with the following command, using random-json from @{link https://github.com/t-webber/random-json}':
  *
  * ```
- * random-json -c 100 -u 'JePos:DirCo|VPO|Info|Secge' -u 'Lvl:High|Medium|Low' -f prisma/seed/admins.json --before $'\nperson = await db.person.create(' --after $');\n\nid = person?.user?.admin?.id; if (id) admins.push(id);'
+random-json -c 100 -f assignees.json --before $'\nperson = await db.person.create(' --after $');\n\nassignees.push(person!.assignee!.id);'
  * ```
  */
 
 import { PrismaClient } from '@prisma/client';
 
-export async function seedPeopleTestData(db: PrismaClient) {
+export async function seedAssigneesTestData(db: PrismaClient) {
     const assignees = [];
     let person;
-    let id;
 
     person = await db.person.create({
         data: {
+            address: {
+                create: {
+                    city: 'Istanbul',
+                    country: 'Kiribati',
+                    postalCode: '20257',
+                    streetName: 'Champs Elysees',
+                    streetNumber: '242',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2020,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 0,
+                },
+            },
+            email: 'Francine.Norris@freenet.de',
+            firstName: 'Arnulfo',
+            lastName: 'Cross',
+            phone_number: '782476430858869',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Hull',
+                    country: 'Gabon',
+                    postalCode: '93012',
+                    streetName: 'Gran Via',
+                    streetNumber: '212',
+                },
+            },
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 7,
+                },
+            },
+            email: 'Kira.Curtis@rediffmail.com',
+            firstName: 'Delma',
+            lastName: 'Chavez',
+            phone_number: '784082908157413',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Tehran',
+                    country: 'Benin',
+                    postalCode: '35165',
+                    streetName: 'Nevsky Prospekt',
+                    streetNumber: '470',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 19,
+                            graduationYear: 2021,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            email: 'Donia.Franklin@hotmail.co.uk',
+            firstName: 'Forest',
+            lastName: 'Dean',
+            phone_number: '946193757496330',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Saint Petersburg',
+                    country: 'Slovakia',
+                    postalCode: '88342',
+                    streetName: "King's Road",
+                    streetNumber: '91 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 21,
+                            graduationYear: 2021,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 4,
+                },
+            },
+            firstName: 'Ronan',
+            lastName: 'Russell',
+            phone_number: '133739764393787',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Brussels',
+                    country: 'Switzerland',
+                    postalCode: '24212',
+                    streetName: 'Broadway',
+                    streetNumber: '76',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 25,
+                            graduationYear: 2027,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 2,
+                },
+            },
+            firstName: 'Doretha',
+            lastName: 'Rich',
+            phone_number: '21091429154182',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Glasgow',
+                    country: 'Uruguay',
+                    postalCode: '46240',
+                    streetName: 'Khao San Road',
+                    streetNumber: '372',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 23,
+                            graduationYear: 2021,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 13,
+                },
+            },
+            email: 'Lauren.Hamilton@gmx.de',
+            firstName: 'Donia',
+            lastName: 'Daniel',
+            phone_number: '47132714824199',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Zurich',
+                    country: 'Chile',
+                    postalCode: '60133',
+                    streetName: 'Kurfürstendamm',
+                    streetNumber: '311',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2023,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            email: 'Dallas.Wells@seznam.cz',
+            firstName: 'Goldie',
+            lastName: 'Park',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 4,
+                },
+            },
+            firstName: 'Dwight',
+            lastName: 'Shields',
+            phone_number: '178909979123303',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Solapur',
+                    country: 'Madagascar',
+                    postalCode: '42318',
+                    streetName: 'Gran Via',
+                    streetNumber: '273 ter',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 18,
+                            graduationYear: 2025,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 9,
+                },
+            },
+            firstName: 'Alma',
+            lastName: 'Sherman',
+            phone_number: '137475171258285',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    nbApplications: 2,
+                },
+            },
+            email: 'Valentina.Blake@hotmail.fr',
+            firstName: 'Katherine',
+            lastName: 'Mcdonald',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Ludhiana',
+                    country: 'Sweden',
+                    postalCode: '23276',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '228',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 24,
+                            graduationYear: 2030,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            email: 'Calder.Sampson@ntlworld.co.uk',
+            firstName: 'Demetra',
+            lastName: 'Lawrence',
+            phone_number: '660736674943990',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Delhi',
+                    country: 'India',
+                    postalCode: '77020',
+                    streetName: 'Via del Corso',
+                    streetNumber: '244 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    nbApplications: 13,
+                },
+            },
+            firstName: 'Veronica',
+            lastName: 'Sexton',
+            phone_number: '630179003601361',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Southampton',
+                    country: 'Belarus',
+                    postalCode: '84440',
+                    streetName: 'Beale Street',
+                    streetNumber: '24',
+                },
+            },
+            assignee: {
+                create: {},
+            },
+            email: 'Celina.Ray@mail.ua',
+            firstName: 'Davy',
+            lastName: 'Robinson',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Aurangabad',
+                    country: 'Chile',
+                    postalCode: '62006',
+                    streetName: 'Pennsylvania Avenue',
+                    streetNumber: '430',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2026,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 6,
+                },
+            },
+            email: 'Konner.Petersen@ntlworld.co.uk',
+            firstName: 'Germain',
+            lastName: 'Mcmillan',
+            phone_number: '561474099640366',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Dallas',
+                    country: 'Barbados',
+                    postalCode: '38361',
+                    streetName: 'Pennsylvania Avenue',
+                    streetNumber: '80',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 27,
+                            graduationYear: 2024,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 11,
+                },
+            },
+            email: 'Joyce.Taylor@gmail.co.in',
+            firstName: 'Aisling',
+            lastName: 'Sampson',
+            phone_number: '18843016489951',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Paris',
+                    country: 'Lesotho',
+                    postalCode: '56295',
+                    streetName: 'Ginza',
+                    streetNumber: '13',
+                },
+            },
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 1,
+                },
+            },
+            email: 'Jane.Lloyd@yandex.com',
+            firstName: 'Sidney',
+            lastName: 'Gill',
+            phone_number: '414568130929621',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Suzhou',
+                    country: 'Ghana',
+                    postalCode: '49046',
+                    streetName: 'Portobello Road',
+                    streetNumber: '490',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 25,
+                            graduationYear: 2025,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 1,
+                },
+            },
+            email: 'Bart.Sparks@sfr.fr',
+            firstName: 'Whitney',
+            lastName: 'Davis',
+            phone_number: '914997759666413',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Ghaziabad',
+                    country: 'Uruguay',
+                    postalCode: '22354',
+                    streetName: 'Gran Via',
+                    streetNumber: '328',
+                },
+            },
+            assignee: {
+                create: {},
+            },
+            firstName: 'Camino',
+            lastName: 'Kerr',
+            phone_number: '889629920365034',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Buenos Aires',
+                    country: 'Laos',
+                    postalCode: '30459',
+                    streetName: 'Fifth Avenue',
+                    streetNumber: '1',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 21,
+                            graduationYear: 2029,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            email: 'Alecia.Woods@charter.net',
+            firstName: 'Davida',
+            lastName: 'Sears',
+            phone_number: '913653712113074',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Prague',
+                    country: 'Lebanon',
+                    postalCode: '51192',
+                    streetName: 'Unter den Linden',
+                    streetNumber: '379',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2020,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 1,
+                },
+            },
+            email: 'Ismael.Mcfadden@tutanota.com',
+            firstName: 'Lori',
+            lastName: 'Dean',
+            phone_number: '363314273928815',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 21,
+                            graduationYear: 2025,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 11,
+                },
+            },
+            email: 'Darius.Chavez@tiscali.co.uk',
+            firstName: 'Randy',
+            lastName: 'Hughes',
+            phone_number: '24413518490719',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Moscow',
+                    country: 'Marshall Islands',
+                    postalCode: '88188',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '41',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 11,
+                },
+            },
+            email: 'Sarah.Williamson@sfr.fr',
+            firstName: 'Doc',
+            lastName: "O'connor",
+            phone_number: '739586950583855',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Chandigarh',
+                    country: 'Tanzania',
+                    postalCode: '61485',
+                    streetName: 'Lombard Street',
+                    streetNumber: '445',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2028,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 5,
+                },
+            },
+            email: 'Cornelius.Wiley@docomo.ne.jp',
+            firstName: 'Aquilina',
+            lastName: 'Robinson',
+            phone_number: '471159364263874',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Seoul',
+                    country: 'Iran',
+                    postalCode: '52323',
+                    streetName: 'Unter den Linden',
+                    streetNumber: '304',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 23,
+                            graduationYear: 2020,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 5,
+                },
+            },
+            firstName: 'Apoorva',
+            lastName: 'Conner',
+            phone_number: '51346525062021',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Stockholm',
+                    country: 'Pakistan',
+                    postalCode: '26011',
+                    streetName: 'Sunshine Coast Highway',
+                    streetNumber: '182 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2030,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 10,
+                },
+            },
+            email: 'Deonna.Stout@bigpond.com',
+            firstName: 'Howard',
+            lastName: 'Nicholson',
+            phone_number: '279374447629258',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2027,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 1,
+                },
+            },
+            email: 'Dorothy.Mcintosh@mailinator.com',
+            firstName: 'Arnav',
+            lastName: 'Gray',
+            phone_number: '625578615050915',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Seoul',
+                    country: 'Mauritania',
+                    postalCode: '95156',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '474',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 25,
+                            graduationYear: 2027,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 10,
+                },
+            },
+            firstName: 'Isabela',
+            lastName: 'Evans',
+            phone_number: '396629744414417',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Shenyang',
+                    country: 'Italy',
+                    postalCode: '75451',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '194',
+                },
+            },
+            assignee: {
+                create: {},
+            },
+            email: 'Alondra.Ellison@centrum.cz',
+            firstName: 'Fabian',
+            lastName: 'Grant',
+            phone_number: '237425862172921',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 21,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                },
+            },
+            email: 'Evangelina.Foster@web.de',
+            firstName: 'Adolphus',
+            lastName: 'Porter',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 24,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 5,
+                },
+            },
+            firstName: 'Alexander',
+            lastName: 'Chapman',
+            phone_number: '305564683223088',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2027,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            firstName: 'Griffin',
+            lastName: 'Hopkins',
+            phone_number: '799969055895706',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Amsterdam',
+                    country: 'Guinea-Bissau',
+                    postalCode: '25293',
+                    streetName: 'Las Olas Boulevard',
+                    streetNumber: '486',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 9,
+                },
+            },
+            firstName: 'Brayan',
+            lastName: 'Jennings',
+            phone_number: '297015667353113',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Shanghai',
+                    country: 'Seychelles',
+                    postalCode: '56212',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '323',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2029,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                },
+            },
+            email: 'Deb.Mcdonald@icloud.com',
+            firstName: 'Dianna',
+            lastName: 'Rogers',
+            phone_number: '441722856273036',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Marseille',
+                    country: 'Russia',
+                    postalCode: '57095',
+                    streetName: 'Orchard Road',
+                    streetNumber: '344',
+                },
+            },
+            assignee: {
+                create: {
+                    nbApplications: 5,
+                },
+            },
+            email: 'Leticia.Dennis@rogers.com',
+            firstName: 'Andre',
+            lastName: 'Parker',
+            phone_number: '177585041617169',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 5,
+                },
+            },
+            email: 'Demetria.Berry@rambler.ru',
+            firstName: 'Isobel',
+            lastName: 'Montgomery',
+            phone_number: '543675421473910',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 7,
+                },
+            },
+            email: 'Adalynn.Vernon@cox.net',
+            firstName: 'Sheldon',
+            lastName: 'Maddox',
+            phone_number: '382755875204028',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2029,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 10,
+                },
+            },
+            firstName: 'Hailee',
+            lastName: 'Mccarthy',
+            phone_number: '714071045383652',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 12,
+                },
+            },
+            email: 'Doc.Collins@hushmail.com',
+            firstName: 'Frederick',
+            lastName: 'Underwood',
+            phone_number: '321869692163772',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Dalian',
+                    country: 'North Korea',
+                    postalCode: '78103',
+                    streetName: 'Bourbon Street',
+                    streetNumber: '224',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 19,
+                            graduationYear: 2021,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 8,
+                },
+            },
+            email: 'Bryce.Mcdonald@outlook.in',
+            firstName: 'Adriano',
+            lastName: 'Ferguson',
+            phone_number: '608968955445523',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 12,
+                },
+            },
+            email: 'Braxton.Mcfadden@me.com',
+            firstName: 'Deann',
+            lastName: 'Randall',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Brussels',
+                    country: 'Azerbaijan',
+                    postalCode: '27196',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '110',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2030,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 3,
+                },
+            },
+            firstName: 'Imelda',
+            lastName: 'Sampson',
+            phone_number: '539813476703568',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Oslo',
+                    country: 'Eswatini',
+                    postalCode: '80273',
+                    streetName: 'Las Olas Boulevard',
+                    streetNumber: '135',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2022,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                },
+            },
+            email: 'Normand.Carter@talktalk.net',
+            firstName: 'Allan',
+            lastName: 'Ochoa',
+            phone_number: '466231846211626',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Qingdao',
+                    country: 'Israel',
+                    postalCode: '05156',
+                    streetName: 'Pennsylvania Avenue',
+                    streetNumber: '158 ter',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 27,
+                            graduationYear: 2024,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 8,
+                },
+            },
+            email: 'Joelle.Bryant@wow.com',
+            firstName: 'Geno',
+            lastName: 'Kent',
+            phone_number: '705264076568461',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Surat',
+                    country: 'Bosnia and Herzegovina',
+                    postalCode: '90207',
+                    streetName: 'Hollywood Boulevard',
+                    streetNumber: '6',
+                },
+            },
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 13,
+                },
+            },
+            email: 'Anisa.Mccoy@numericable.fr',
+            firstName: 'Carla',
+            lastName: 'Moore',
+            phone_number: '190025703795446',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 2,
+                },
+            },
+            firstName: 'Paul',
+            lastName: 'Ferguson',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Ludhiana',
+                    country: 'Croatia',
+                    postalCode: '88412',
+                    streetName: 'Yonge Street',
+                    streetNumber: '320',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2027,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 2,
+                },
+            },
+            email: 'Davina.Mcfadden@mailbox.org',
+            firstName: 'Buster',
+            lastName: 'Lane',
+            phone_number: '929196415550234',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Sheffield',
+                    country: 'Burkina Faso',
+                    postalCode: '61084',
+                    streetName: 'Gran Via',
+                    streetNumber: '135',
+                },
+            },
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 6,
+                },
+            },
+            email: 'Archie.Barber@voila.fr',
+            firstName: 'Zane',
+            lastName: 'Ruiz',
+            phone_number: '603055791503955',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Cardiff',
+                    country: 'Angola',
+                    postalCode: '52085',
+                    streetName: 'Abbey Road',
+                    streetNumber: '494',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2026,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 3,
+                },
+            },
+            email: 'Terry.Vernon@virginmedia.com',
+            firstName: 'Lizette',
+            lastName: 'Saunders',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Dar es Salaam',
+                    country: 'Germany',
+                    postalCode: '84245',
+                    streetName: 'Beale Street',
+                    streetNumber: '333',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 25,
+                            graduationYear: 2028,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 9,
+                },
+            },
+            email: 'Gaelan.Phillips@icloud.com',
+            firstName: 'Frank',
+            lastName: 'Logan',
+            phone_number: '251918194448489',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Casablanca',
+                    country: 'Senegal',
+                    postalCode: '47245',
+                    streetName: 'Rodeo Drive',
+                    streetNumber: '36',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 24,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            email: 'Kristin.Allison@aliceadsl.fr',
+            firstName: 'Shirley',
+            lastName: 'Kinney',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Dongguan',
+                    country: 'Saint Lucia',
+                    postalCode: '60138',
+                    streetName: 'Broadway',
+                    streetNumber: '359',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2026,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 7,
+                },
+            },
+            email: 'Derick.Villarreal@yandex.com',
+            firstName: 'Anais',
+            lastName: 'Fisher',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Helsinki',
+                    country: 'Hungary',
+                    postalCode: '70187',
+                    streetName: 'Hollywood Boulevard',
+                    streetNumber: '234',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2022,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 8,
+                },
+            },
+            email: 'Zion.Fletcher@bt.com',
+            firstName: 'Branch',
+            lastName: 'Harrison',
+            phone_number: '362183301489014',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Bhubaneswar',
+                    country: 'Cyprus',
+                    postalCode: '74078',
+                    streetName: 'Las Olas Boulevard',
+                    streetNumber: '68',
+                },
+            },
+            assignee: {
+                create: {
+                    nbApplications: 12,
+                },
+            },
+            firstName: 'Yahir',
+            lastName: 'Burns',
+            phone_number: '362822997231259',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Guayaquil',
+                    country: 'Bosnia and Herzegovina',
+                    postalCode: '71321',
+                    streetName: 'Unter den Linden',
+                    streetNumber: '286 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 21,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 11,
+                },
+            },
+            email: 'Faris.Ochoa@icloud.com',
+            firstName: 'Alvaro',
+            lastName: 'Glover',
+            phone_number: '215342471766329',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2021,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 10,
+                },
+            },
+            firstName: 'Lourdes',
+            lastName: 'Rhodes',
+            phone_number: '49026168669723',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2029,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                },
+            },
+            email: 'Benito.Robbins@me.com',
+            firstName: 'Ralph',
+            lastName: 'Andrews',
+            phone_number: '830115916007974',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Bangalore',
+                    country: 'Qatar',
+                    postalCode: '58197',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '9 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2020,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 5,
+                },
+            },
+            firstName: 'Samuel',
+            lastName: 'Holland',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Jodhpur',
+                    country: 'Niger',
+                    postalCode: '91068',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '173',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2029,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    nbApplications: 5,
+                },
+            },
+            email: 'Barney.Wallace@westnet.com.au',
+            firstName: 'William',
+            lastName: 'Knight',
+            phone_number: '549504341313462',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Melbourne',
+                    country: 'Djibouti',
+                    postalCode: '86085',
+                    streetName: 'Oxford Street',
+                    streetNumber: '384',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 18,
+                            graduationYear: 2021,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                },
+            },
+            firstName: 'Gloria',
+            lastName: 'Mcgee',
+            phone_number: '91227252337589',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2028,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                },
+            },
+            firstName: 'Neal',
+            lastName: 'Davis',
+            phone_number: '378153913352242',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Barcelona',
+                    country: 'Italy',
+                    postalCode: '09062',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '267 ter',
+                },
+            },
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 8,
+                },
+            },
+            firstName: 'Alva',
+            lastName: 'Cunningham',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'São Paulo',
+                    country: 'Mongolia',
+                    postalCode: '52151',
+                    streetName: 'Nevsky Prospekt',
+                    streetNumber: '117',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2026,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 0,
+                },
+            },
+            email: 'Aiden.Gomez@live.in',
+            firstName: 'Alvaro',
+            lastName: 'Alexander',
+            phone_number: '81662450765054',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2026,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 11,
+                },
+            },
+            email: 'Deb.Andrews@charter.net',
+            firstName: 'Emmitt',
+            lastName: 'Palmer',
+            phone_number: '412615197695150',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Shantou',
+                    country: 'Uruguay',
+                    postalCode: '36447',
+                    streetName: 'Baker Street',
+                    streetNumber: '137 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 21,
+                            graduationYear: 2021,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 6,
+                },
+            },
+            firstName: 'Brent',
+            lastName: 'Parker',
+            phone_number: '382161402436619',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Chicago',
+                    country: 'Saint Vincent and the Grenadines',
+                    postalCode: '24338',
+                    streetName: 'Wall Street',
+                    streetNumber: '63 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 21,
+                            graduationYear: 2026,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 8,
+                },
+            },
+            email: 'Bernie.Richards@windstream.net',
+            firstName: 'Gavin',
+            lastName: 'Alexander',
+            phone_number: '158432093761872',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Osaka',
+                    country: 'Antigua and Barbuda',
+                    postalCode: '46098',
+                    streetName: 'Las Ramblas',
+                    streetNumber: '386',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 19,
+                            graduationYear: 2020,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 6,
+                },
+            },
+            firstName: 'Hilton',
+            lastName: 'Diaz',
+            phone_number: '875823477370209',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Agra',
+                    country: 'Palau',
+                    postalCode: '26167',
+                    streetName: 'Orchard Road',
+                    streetNumber: '205',
+                },
+            },
+            assignee: {
+                create: {
+                    nbApplications: 4,
+                },
+            },
+            firstName: 'Terry',
+            lastName: 'Wilson',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Detroit',
+                    country: 'Mozambique',
+                    postalCode: '47424',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '494',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2021,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 6,
+                },
+            },
+            email: 'Jayden.Little@fastmail.com',
+            firstName: 'Emilie',
+            lastName: 'Gill',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Guwahati',
+                    country: 'Tonga',
+                    postalCode: '64031',
+                    streetName: 'Market Street',
+                    streetNumber: '492',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2029,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 2,
+                },
+            },
+            email: 'Eden.Clayton@yahoo.co.uk',
+            firstName: 'Lula',
+            lastName: 'Powers',
+            phone_number: '187736001324107',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 18,
+                            graduationYear: 2021,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            firstName: 'Elaina',
+            lastName: 'Skinner',
+            phone_number: '629370638272289',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 24,
+                            graduationYear: 2027,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 8,
+                },
+            },
+            email: 'Dena.Madden@lavabit.com',
+            firstName: 'Karter',
+            lastName: 'Merrill',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 23,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 11,
+                },
+            },
+            email: 'Edward.Wallace@live.fr',
+            firstName: 'Althea',
+            lastName: 'Rich',
+            phone_number: '970234912040457',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Saint Petersburg',
+                    country: 'Hungary',
+                    postalCode: '79473',
+                    streetName: 'Michigan Avenue',
+                    streetNumber: '313',
+                },
+            },
+            assignee: {
+                create: {
+                    nbApplications: 8,
+                },
+            },
+            firstName: 'Alistair',
+            lastName: 'Burgess',
+            phone_number: '690306316259020',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Los Angeles',
+                    country: 'Philippines',
+                    postalCode: '11232',
+                    streetName: 'Michigan Avenue',
+                    streetNumber: '90',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 25,
+                            graduationYear: 2030,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 10,
+                },
+            },
+            email: 'Aleen.Velez@mailinator.com',
+            firstName: 'Darrell',
+            lastName: 'Walters',
+            phone_number: '313468199863085',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 1,
+                },
+            },
+            email: 'Giancarlo.Woodward@optusnet.com.au',
+            firstName: 'Talia',
+            lastName: 'Taylor',
+            phone_number: '163595856980612',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Jabalpur',
+                    country: 'Malawi',
+                    postalCode: '67275',
+                    streetName: 'Nanjing Road',
+                    streetNumber: '413',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 25,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 3,
+                },
+            },
+            firstName: 'Pierre',
+            lastName: 'Irwin',
+            phone_number: '183966560499559',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Noida',
+                    country: 'Iceland',
+                    postalCode: '70341',
+                    streetName: 'Kurfürstendamm',
+                    streetNumber: '493',
+                },
+            },
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 12,
+                },
+            },
+            email: 'Efrain.Christensen@yahoo.com',
+            firstName: 'Brittanie',
+            lastName: 'Burton',
+            phone_number: '413979071691394',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 6,
+                },
+            },
+            firstName: 'Eion',
+            lastName: 'Mcgee',
+            phone_number: '197070160204507',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            firstName: 'Maurice',
+            lastName: 'Henderson',
+            phone_number: '208509565202372',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 13,
+                },
+            },
+            email: 'Ike.Perry@outlook.in',
+            firstName: 'Caoilinn',
+            lastName: 'Mills',
+            phone_number: '614539937776572',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Recife',
+                    country: 'Seychelles',
+                    postalCode: '86300',
+                    streetName: 'Rodeo Drive',
+                    streetNumber: '398',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 24,
+                            graduationYear: 2027,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 1,
+                },
+            },
+            email: 'Danila.Lynch@cox.net',
+            firstName: 'Cassian',
+            lastName: 'Lowe',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Glasgow',
+                    country: 'Republic of the Congo',
+                    postalCode: '73070',
+                    streetName: 'Rodeo Drive',
+                    streetNumber: '218 bis',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 20,
+                            graduationYear: 2025,
+                            hasScholarship: true,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                },
+            },
+            email: 'London.Simpson@tutanota.com',
+            firstName: 'Florian',
+            lastName: 'Reeves',
+            phone_number: '357396716602592',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Pimpri-Chinchwad',
+                    country: 'Gabon',
+                    postalCode: '49357',
+                    streetName: 'Avenida Paulista',
+                    streetNumber: '273',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2028,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    nbApplications: 5,
+                },
+            },
+            email: 'Stuart.Tran@bt.com',
+            firstName: 'Guadalupe',
+            lastName: 'Kent',
+            phone_number: '123335753947636',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Jalandhar',
+                    country: 'Mexico',
+                    postalCode: '75450',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '155',
+                },
+            },
             assignee: {
                 create: {
                     information: {
@@ -35,12 +3030,13 @@ export async function seedPeopleTestData(db: PrismaClient) {
                     mriReceiver: {
                         create: {},
                     },
+                    nbApplications: 3,
                 },
             },
-            email: 'Christina.Jackson@verizon.net',
-            firstName: 'Stephen',
-            lastName: 'Mills',
-            phone_number: '140243088764116',
+            email: 'Hester.Reilly@freenet.de',
+            firstName: 'Melissa',
+            lastName: 'Barrett',
+            phone_number: '167263502894292',
         },
         select: {
             assignee: {
@@ -51,440 +3047,25 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
-            assignee: {
-                create: {
-                    nbApplications: 6,
-                },
-            },
-            email: 'Paul.Taylor@gmail.com',
-            firstName: 'Timothy',
-            lastName: 'Jackson',
-            phone_number: '224604776934880',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Dublin',
-                    country: 'Kazakhstan',
-                    postalCode: '75071',
-                    streetName: 'Oxford Street',
-                    streetNumber: '65',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 18,
-                            graduationYear: 2021,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            firstName: 'Harold',
-            lastName: 'Alexander',
-            phone_number: '776745416097078',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Detroit',
-                    country: 'New Zealand',
-                    postalCode: '54425',
-                    streetName: 'Yonge Street',
-                    streetNumber: '485',
-                },
-            },
             assignee: {
                 create: {
                     information: {
                         create: {
                             age: 23,
-                            graduationYear: 2025,
+                            graduationYear: 2021,
                             hasScholarship: false,
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 3,
-                },
-            },
-            email: 'Elizabeth.Gardner@hotmail.co.jp',
-            firstName: 'Emma',
-            lastName: 'Cunningham',
-            phone_number: '679651240848758',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 10,
-                },
-            },
-            firstName: 'Jason',
-            lastName: 'Ellis',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 7,
-                },
-            },
-            email: 'Joshua.Burnett@gmail.de',
-            firstName: 'Ethan',
-            lastName: 'Graham',
-            phone_number: '613663963220641',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'São Paulo',
-                    country: 'Montenegro',
-                    postalCode: '63432',
-                    streetName: 'Unter den Linden',
-                    streetNumber: '329',
-                },
-            },
-            assignee: {
-                create: {
-                    nbApplications: 1,
-                },
-            },
-            email: 'Sarah.Brown@hotmail.de',
-            firstName: 'Anthony',
-            lastName: 'Richardson',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 8,
-                },
-            },
-            email: 'Anthony.Rose@yandex.com',
-            firstName: 'Kathryn',
-            lastName: 'Stephens',
-            phone_number: '768626729416731',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Osaka',
-                    country: 'El Salvador',
-                    postalCode: '42273',
-                    streetName: 'Orchard Road',
-                    streetNumber: '475',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2024,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    nbApplications: 12,
-                },
-            },
-            email: 'Charles.Jones@web.de',
-            firstName: 'Douglas',
-            lastName: 'Smith',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {},
-            },
-            email: 'Ann.Harrison@gmail.co.uk',
-            firstName: 'Nancy',
-            lastName: 'Morrison',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Kinshasa',
-                    country: 'Laos',
-                    postalCode: '73089',
-                    streetName: 'Nanjing Road',
-                    streetNumber: '206',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 7,
-                },
-            },
-            email: 'Julie.Knight@numericable.fr',
-            firstName: 'Kenneth',
-            lastName: 'Ward',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2027,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    nbApplications: 7,
-                },
-            },
-            email: 'Angela.Barrett@outlook.co.uk',
-            firstName: 'Dorothy',
-            lastName: 'Hall',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Varanasi',
-                    country: 'Venezuela',
-                    postalCode: '93264',
-                    streetName: 'Pennsylvania Avenue',
-                    streetNumber: '273',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2023,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    nbApplications: 1,
-                },
-            },
-            email: 'Carolyn.Knight@outlook.com',
-            firstName: 'Helen',
-            lastName: 'Green',
-            phone_number: '487718628071981',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2026,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    nbApplications: 8,
-                },
-            },
-            email: 'Jeffrey.Perry@comcast.net',
-            firstName: 'Christopher',
-            lastName: 'Cooper',
-            phone_number: '509511888979077',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
                     nbApplications: 5,
                 },
             },
-            firstName: 'Christian',
-            lastName: 'Palmer',
-            phone_number: '146120670096521',
+            firstName: 'Dione',
+            lastName: 'Newton',
         },
         select: {
             assignee: {
@@ -495,48 +3076,7 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Buenos Aires',
-                    country: 'Saint Lucia',
-                    postalCode: '07189',
-                    streetName: 'Fifth Avenue',
-                    streetNumber: '411 ter',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2021,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    nbApplications: 11,
-                },
-            },
-            firstName: 'Judith',
-            lastName: 'Turner',
-            phone_number: '75761403780482',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
@@ -544,141 +3084,21 @@ export async function seedPeopleTestData(db: PrismaClient) {
                 create: {
                     information: {
                         create: {
-                            age: 23,
-                            graduationYear: 2028,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 13,
-                },
-            },
-            email: 'Alexander.Cameron@runbox.com',
-            firstName: 'Joe',
-            lastName: 'Mitchell',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Shanghai',
-                    country: 'Mauritius',
-                    postalCode: '87313',
-                    streetName: 'Portobello Road',
-                    streetNumber: '440',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 2,
-                },
-            },
-            email: 'Anna.Wilson@gmail.co.in',
-            firstName: 'Joseph',
-            lastName: 'Watson',
-            phone_number: '140053307265644',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Coimbatore',
-                    country: 'Grenada',
-                    postalCode: '08047',
-                    streetName: 'Unter den Linden',
-                    streetNumber: '5',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2024,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                },
-            },
-            email: 'Carol.Ross@live.in',
-            firstName: 'Debra',
-            lastName: 'Lawrence',
-            phone_number: '73067462080122',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Cairo',
-                    country: 'Switzerland',
-                    postalCode: '95138',
-                    streetName: 'Pennsylvania Avenue',
-                    streetNumber: '8',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
+                            age: 22,
                             graduationYear: 2022,
-                            hasScholarship: false,
+                            hasScholarship: true,
                             oldJet: true,
                         },
                     },
                     mriReceiver: {
                         create: {},
                     },
-                    nbApplications: 0,
+                    nbApplications: 5,
                 },
             },
-            email: 'Gregory.Hill@gmx.de',
-            firstName: 'Peter',
-            lastName: 'Holmes',
-            phone_number: '111289552889856',
+            firstName: 'Danny',
+            lastName: 'Webb',
+            phone_number: '959567729320992',
         },
         select: {
             assignee: {
@@ -689,127 +3109,27 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {},
-            },
-            firstName: 'Douglas',
-            lastName: 'Berry',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Warsaw',
-                    country: 'Honduras',
-                    postalCode: '72121',
-                    streetName: 'Avenida Paulista',
-                    streetNumber: '55',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Richard.Matthews@lavabit.com',
-            firstName: 'Teresa',
-            lastName: 'Cole',
-            phone_number: '363394677563253',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Kalyan-Dombivli',
-                    country: 'Czech Republic',
-                    postalCode: '47266',
-                    streetName: 'Ginza',
-                    streetNumber: '472 bis',
+                    city: 'Thane',
+                    country: 'Sierra Leone',
+                    postalCode: '49046',
+                    streetName: 'Michigan Avenue',
+                    streetNumber: '3',
                 },
             },
             assignee: {
                 create: {
                     information: {
                         create: {
-                            age: 25,
-                            graduationYear: 2026,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 3,
-                },
-            },
-            email: 'Tyler.Watson@verizon.net',
-            firstName: 'Frank',
-            lastName: 'Berry',
-            phone_number: '234933760233299',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Marseille',
-                    country: 'Vietnam',
-                    postalCode: '31228',
-                    streetName: 'Khao San Road',
-                    streetNumber: '341',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2027,
-                            hasScholarship: false,
-                            oldJet: false,
+                            age: 19,
+                            graduationYear: 2030,
+                            hasScholarship: true,
+                            oldJet: true,
                         },
                     },
                     mriReceiver: {
@@ -818,10 +3138,9 @@ export async function seedPeopleTestData(db: PrismaClient) {
                     nbApplications: 9,
                 },
             },
-            email: 'Gerald.Spencer@ukr.net',
-            firstName: 'Kathryn',
-            lastName: 'Stone',
-            phone_number: '899549006802727',
+            firstName: 'Jody',
+            lastName: 'King',
+            phone_number: '536863202428809',
         },
         select: {
             assignee: {
@@ -832,39 +3151,21 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Cape Town',
-                    country: 'Grenada',
-                    postalCode: '95308',
-                    streetName: 'Market Street',
-                    streetNumber: '160',
-                },
-            },
             assignee: {
                 create: {
-                    information: {
-                        create: {
-                            age: 22,
-                            graduationYear: 2024,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
                     mriReceiver: {
                         create: {},
                     },
                     nbApplications: 2,
                 },
             },
-            firstName: 'Scott',
-            lastName: 'Hughes',
-            phone_number: '525933971773368',
+            email: 'Yasmina.Frost@ntlworld.com',
+            firstName: 'Giuseppe',
+            lastName: 'Ramirez',
         },
         select: {
             assignee: {
@@ -875,51 +3176,27 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
+            address: {
+                create: {
+                    city: 'Allahabad',
+                    country: 'Nepal',
+                    postalCode: '18023',
+                    streetName: 'Avenida Paulista',
+                    streetNumber: '395',
+                },
+            },
             assignee: {
                 create: {
                     information: {
                         create: {
-                            age: 25,
-                            graduationYear: 2024,
+                            age: 23,
+                            graduationYear: 2029,
                             hasScholarship: false,
                             oldJet: false,
-                        },
-                    },
-                    nbApplications: 5,
-                },
-            },
-            email: 'Stephanie.Bailey@zoho.com',
-            firstName: 'Anthony',
-            lastName: 'Graham',
-            phone_number: '115466612736124',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 19,
-                            graduationYear: 2022,
-                            hasScholarship: false,
-                            oldJet: true,
                         },
                     },
                     mriReceiver: {
@@ -928,9 +3205,9 @@ export async function seedPeopleTestData(db: PrismaClient) {
                     nbApplications: 4,
                 },
             },
-            email: 'Martha.Blake@icloud.com.au',
-            firstName: 'Kathryn',
-            lastName: 'Rose',
+            email: 'Ernest.Richmond@ezweb.ne.jp',
+            firstName: 'Eion',
+            lastName: 'Yates',
         },
         select: {
             assignee: {
@@ -941,467 +3218,27 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Wuhan',
-                    country: 'Barbados',
-                    postalCode: '78477',
-                    streetName: 'Wall Street',
-                    streetNumber: '185',
+                    city: 'Agra',
+                    country: 'Sri Lanka',
+                    postalCode: '78048',
+                    streetName: 'Nanjing Road',
+                    streetNumber: '1 ter',
                 },
             },
             assignee: {
                 create: {
                     information: {
                         create: {
-                            age: 24,
-                            graduationYear: 2029,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    nbApplications: 7,
-                },
-            },
-            firstName: 'Ronald',
-            lastName: 'Arnold',
-            phone_number: '964938770413487',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Monterrey',
-                    country: 'Rwanda',
-                    postalCode: '01261',
-                    streetName: 'Wall Street',
-                    streetNumber: '285',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 18,
-                            graduationYear: 2023,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 6,
-                },
-            },
-            firstName: 'Douglas',
-            lastName: 'Watson',
-            phone_number: '810320740809754',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Atlanta',
-                    country: 'Ukraine',
-                    postalCode: '64057',
-                    streetName: 'Pennsylvania Avenue',
-                    streetNumber: '36',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 27,
-                            graduationYear: 2030,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 1,
-                },
-            },
-            email: 'Raymond.Robinson@hotmail.fr',
-            firstName: 'Richard',
-            lastName: 'Murray',
-            phone_number: '674781236333112',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 20,
-                            graduationYear: 2029,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                },
-            },
-            email: 'Julie.Hudson@mail.ua',
-            firstName: 'Mary',
-            lastName: 'James',
-            phone_number: '999365433158222',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2022,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 13,
-                },
-            },
-            firstName: 'Mary',
-            lastName: 'Watts',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2023,
+                            age: 25,
+                            graduationYear: 2024,
                             hasScholarship: true,
                             oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 13,
-                },
-            },
-            firstName: 'Raymond',
-            lastName: 'Green',
-            phone_number: '486413606087884',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 20,
-                            graduationYear: 2028,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                },
-            },
-            email: 'Stephen.Holland@westnet.com.au',
-            firstName: 'Jack',
-            lastName: 'Murray',
-            phone_number: '367640550655958',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Athens',
-                    country: 'Greece',
-                    postalCode: '48450',
-                    streetName: 'Unter den Linden',
-                    streetNumber: '165',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 5,
-                },
-            },
-            firstName: 'Peter',
-            lastName: 'Walker',
-            phone_number: '74545511243461',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2021,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                },
-            },
-            email: 'Michelle.Cameron@rediffmail.com',
-            firstName: 'Dorothy',
-            lastName: 'Roberts',
-            phone_number: '9792831422102',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Warsaw',
-                    country: 'Serbia',
-                    postalCode: '07105',
-                    streetName: 'Kurfürstendamm',
-                    streetNumber: '313 bis',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Shirley.Matthews@yandex.ru',
-            firstName: 'Matthew',
-            lastName: 'Morrison',
-            phone_number: '73049495468081',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Jinan',
-                    country: 'Andorra',
-                    postalCode: '35128',
-                    streetName: 'Portobello Road',
-                    streetNumber: '84',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 19,
-                            graduationYear: 2020,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 13,
-                },
-            },
-            firstName: 'Larry',
-            lastName: 'Cook',
-            phone_number: '520590667501715',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Suzhou',
-                    country: 'Mali',
-                    postalCode: '39001',
-                    streetName: 'Hollywood Boulevard',
-                    streetNumber: '492 ter',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 20,
-                            graduationYear: 2020,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                },
-            },
-            email: 'Christian.Simpson@gmail.co.jp',
-            firstName: 'Mark',
-            lastName: 'Ellison',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Dallas',
-                    country: 'Indonesia',
-                    postalCode: '07308',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '299 bis',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 18,
-                            graduationYear: 2022,
-                            hasScholarship: true,
-                            oldJet: false,
                         },
                     },
                     mriReceiver: {
@@ -1410,9 +3247,10 @@ export async function seedPeopleTestData(db: PrismaClient) {
                     nbApplications: 8,
                 },
             },
-            firstName: 'Andrew',
-            lastName: 'Roberts',
-            phone_number: '289751971191516',
+            email: 'Jackson.Arnold@netcourrier.com',
+            firstName: 'Candra',
+            lastName: 'Manning',
+            phone_number: '764032616120524',
         },
         select: {
             assignee: {
@@ -1423,215 +3261,27 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Monterrey',
-                    country: 'Liechtenstein',
-                    postalCode: '25454',
-                    streetName: 'Broadway',
-                    streetNumber: '148 bis',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2026,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 11,
-                },
-            },
-            email: 'Jerry.Collins@shaw.ca',
-            firstName: 'Brenda',
-            lastName: 'Mitchell',
-            phone_number: '463139080123560',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Milan',
-                    country: 'Togo',
-                    postalCode: '94491',
-                    streetName: 'Sunshine Coast Highway',
-                    streetNumber: '233',
-                },
-            },
-            assignee: {
-                create: {},
-            },
-            firstName: 'Scott',
-            lastName: 'Burton',
-            phone_number: '203735024128756',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Vienna',
-                    country: 'Nauru',
-                    postalCode: '24040',
-                    streetName: 'Avenida Paulista',
-                    streetNumber: '381',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 20,
-                            graduationYear: 2021,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Nicholas.King@sfr.fr',
-            firstName: 'Susan',
-            lastName: 'Stephens',
-            phone_number: '800218397801092',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2027,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    nbApplications: 9,
-                },
-            },
-            email: 'Katherine.Carter@outlook.co.uk',
-            firstName: 'Jonathan',
-            lastName: 'Porter',
-            phone_number: '389559145311400',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Foshan',
-                    country: 'Senegal',
-                    postalCode: '09266',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '361',
-                },
-            },
-            assignee: {
-                create: {
-                    nbApplications: 13,
-                },
-            },
-            email: 'Jonathan.Gardner@runbox.com',
-            firstName: 'Timothy',
-            lastName: 'Henderson',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Curitiba',
-                    country: 'Portugal',
-                    postalCode: '36289',
-                    streetName: "King's Road",
-                    streetNumber: '344',
-                },
-            },
             assignee: {
                 create: {
                     information: {
                         create: {
                             age: 24,
-                            graduationYear: 2024,
+                            graduationYear: 2023,
                             hasScholarship: true,
                             oldJet: true,
                         },
                     },
+                    nbApplications: 8,
                 },
             },
-            firstName: 'Kimberly',
-            lastName: 'Ford',
+            email: 'Filip.Parks@centrum.cz',
+            firstName: 'Ebenezer',
+            lastName: 'Ferguson',
+            phone_number: '117601687137181',
         },
         select: {
             assignee: {
@@ -1642,22 +3292,27 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
+                    information: {
+                        create: {
+                            age: 23,
+                            graduationYear: 2020,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
                     },
-                    nbApplications: 5,
+                    nbApplications: 6,
                 },
             },
-            firstName: 'Sean',
-            lastName: 'Glover',
-            phone_number: '720096376310965',
+            email: 'Carla.Sellers@hotmail.fr',
+            firstName: 'Lupita',
+            lastName: 'Briggs',
+            phone_number: '22619201766969',
         },
         select: {
             assignee: {
@@ -1668,72 +3323,34 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Aligarh',
+                    city: 'Ludhiana',
                     country: 'Germany',
-                    postalCode: '04436',
-                    streetName: 'Broadway',
-                    streetNumber: '420',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 3,
-                },
-            },
-            email: 'Dorothy.Clarke@live.in',
-            firstName: 'Sandra',
-            lastName: 'Jones',
-            phone_number: '677330853355891',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Jinan',
-                    country: 'Belgium',
-                    postalCode: '86093',
-                    streetName: 'Ginza',
-                    streetNumber: '316 bis',
+                    postalCode: '83293',
+                    streetName: 'Abbey Road',
+                    streetNumber: '326',
                 },
             },
             assignee: {
                 create: {
                     information: {
                         create: {
-                            age: 25,
-                            graduationYear: 2029,
+                            age: 20,
+                            graduationYear: 2023,
                             hasScholarship: false,
                             oldJet: true,
                         },
                     },
-                    nbApplications: 6,
                 },
             },
-            firstName: 'Catherine',
-            lastName: 'Stewart',
-            phone_number: '63088086012718',
+            firstName: 'Salvatore',
+            lastName: 'Mckay',
+            phone_number: '683072408120642',
         },
         select: {
             assignee: {
@@ -1744,1339 +3361,52 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 23,
+                            graduationYear: 2021,
+                            hasScholarship: true,
+                            oldJet: false,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 9,
+                },
+            },
+            email: 'Vance.Peterson@bk.ru',
+            firstName: 'Goldie',
+            lastName: 'Boone',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Copenhagen',
-                    country: 'Rwanda',
-                    postalCode: '75207',
+                    city: 'Jabalpur',
+                    country: 'Senegal',
+                    postalCode: '44281',
                     streetName: 'Khao San Road',
-                    streetNumber: '53',
+                    streetNumber: '385',
                 },
             },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2030,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 12,
-                },
-            },
-            email: 'Paul.Ellison@btopenworld.com',
-            firstName: 'Linda',
-            lastName: 'Mitchell',
-            phone_number: '95877892085490',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Varanasi',
-                    country: 'Haiti',
-                    postalCode: '68173',
-                    streetName: 'Beale Street',
-                    streetNumber: '246',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 18,
-                            graduationYear: 2020,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 0,
-                },
-            },
-            email: 'Emma.Turner@ukr.net',
-            firstName: 'Jerry',
-            lastName: 'Burnett',
-            phone_number: '422764792246377',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Helsinki',
-                    country: 'Seychelles',
-                    postalCode: '26151',
-                    streetName: 'Wall Street',
-                    streetNumber: '31',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 27,
-                            graduationYear: 2023,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 13,
-                },
-            },
-            firstName: 'Kathryn',
-            lastName: 'Price',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Tianjin',
-                    country: 'Nicaragua',
-                    postalCode: '66010',
-                    streetName: 'Michigan Avenue',
-                    streetNumber: '303 ter',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2030,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            firstName: 'Samantha',
-            lastName: 'Glover',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Angela.Shaw@yandex.com',
-            firstName: 'Justin',
-            lastName: 'Stevens',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Laura.Harrison@freenet.de',
-            firstName: 'William',
-            lastName: 'Burns',
-            phone_number: '908438917182195',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Chittagong',
-                    country: 'Vietnam',
-                    postalCode: '49475',
-                    streetName: 'Friedrichstrasse',
-                    streetNumber: '453 ter',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 3,
-                },
-            },
-            email: 'Harold.Wilson@netcourrier.com',
-            firstName: 'Amy',
-            lastName: 'Burns',
-            phone_number: '21916510359786',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 26,
-                            graduationYear: 2029,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            firstName: 'Amy',
-            lastName: 'Gibson',
-            phone_number: '209808334333638',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Mexico City',
-                    country: 'Armenia',
-                    postalCode: '63117',
-                    streetName: 'Via del Corso',
-                    streetNumber: '249',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 19,
-                            graduationYear: 2030,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 7,
-                },
-            },
-            email: 'Emily.Gray@volny.cz',
-            firstName: 'Cheryl',
-            lastName: 'Jackson',
-            phone_number: '570987923386207',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Chengdu',
-                    country: 'France',
-                    postalCode: '53083',
-                    streetName: 'Portobello Road',
-                    streetNumber: '431',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 19,
-                            graduationYear: 2021,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    nbApplications: 11,
-                },
-            },
-            firstName: 'Terry',
-            lastName: 'Moore',
-            phone_number: '616396369494045',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2025,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Patricia.Walker@bt.com',
-            firstName: 'Andrea',
-            lastName: 'Bailey',
-            phone_number: '933502310770925',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Buenos Aires',
-                    country: 'New Zealand',
-                    postalCode: '06350',
-                    streetName: 'Orchard Road',
-                    streetNumber: '467',
-                },
-            },
-            assignee: {
-                create: {
-                    nbApplications: 0,
-                },
-            },
-            email: 'Dorothy.Jones@blueyonder.co.uk',
-            firstName: 'Larry',
-            lastName: 'Marshall',
-            phone_number: '777556104218572',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Kalyan-Dombivli',
-                    country: 'Lebanon',
-                    postalCode: '28290',
-                    streetName: 'Sunshine Coast Highway',
-                    streetNumber: '260',
-                },
-            },
-            assignee: {
-                create: {},
-            },
-            email: 'Ann.Ward@yahoo.fr',
-            firstName: 'Michael',
-            lastName: 'Hall',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 22,
-                            graduationYear: 2024,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            firstName: 'Katherine',
-            lastName: 'Hall',
-            phone_number: '753925051602553',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Khartoum',
-                    country: 'Poland',
-                    postalCode: '07025',
-                    streetName: 'Michigan Avenue',
-                    streetNumber: '103 ter',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2027,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    nbApplications: 6,
-                },
-            },
-            email: 'Mark.Edwards@hotmail.com',
-            firstName: 'Brian',
-            lastName: 'Chapman',
-            phone_number: '348394106779737',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Lima',
-                    country: 'Laos',
-                    postalCode: '21150',
-                    streetName: 'Lombard Street',
-                    streetNumber: '168',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 27,
-                            graduationYear: 2024,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 12,
-                },
-            },
-            firstName: 'Douglas',
-            lastName: 'Gardner',
-            phone_number: '303795089286745',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 3,
-                },
-            },
-            firstName: 'Helen',
-            lastName: 'Mills',
-            phone_number: '496216285320789',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: "Xi'an",
-                    country: 'Palau',
-                    postalCode: '51369',
-                    streetName: 'Las Olas Boulevard',
-                    streetNumber: '70',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 6,
-                },
-            },
-            firstName: 'Laura',
-            lastName: 'Warren',
-            phone_number: '142447137466695',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Nairobi',
-                    country: 'Poland',
-                    postalCode: '52185',
-                    streetName: 'Gran Via',
-                    streetNumber: '351',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2023,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Sarah.Porter@bbox.fr',
-            firstName: 'Elizabeth',
-            lastName: 'Ford',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            firstName: 'Rebecca',
-            lastName: 'Berry',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 27,
-                            graduationYear: 2030,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                },
-            },
-            firstName: 'Emily',
-            lastName: 'Graham',
-            phone_number: '868868980048396',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Singapore',
-                    country: 'Jordan',
-                    postalCode: '92146',
-                    streetName: 'Nanjing Road',
-                    streetNumber: '277',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 23,
-                            graduationYear: 2020,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                },
-            },
-            email: 'Nathan.Murray@mailbox.org',
-            firstName: 'Kelly',
-            lastName: 'Harris',
-            phone_number: '345240818571446',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2023,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    nbApplications: 2,
-                },
-            },
-            firstName: 'Mary',
-            lastName: 'Douglas',
-            phone_number: '57599617899025',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2025,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            firstName: 'Barbara',
-            lastName: 'Ross',
-            phone_number: '516049634963848',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Guayaquil',
-                    country: 'Timor-Leste',
-                    postalCode: '11261',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '72',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 19,
-                            graduationYear: 2027,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                },
-            },
-            firstName: 'Christopher',
-            lastName: 'Stephens',
-            phone_number: '453848152399817',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Nanjing',
-                    country: 'Syria',
-                    postalCode: '24085',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '430',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 18,
-                            graduationYear: 2027,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Joseph.Cooper@talktalk.net',
-            firstName: 'Samantha',
-            lastName: 'Stone',
-            phone_number: '761536574498817',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2028,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Jennifer.Taylor@ukr.net',
-            firstName: 'Jack',
-            lastName: 'Burton',
-            phone_number: '893876854864454',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Aurangabad',
-                    country: 'Sao Tome and Principe',
-                    postalCode: '36399',
-                    streetName: 'Sunset Boulevard',
-                    streetNumber: '215',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 24,
-                            graduationYear: 2025,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 8,
-                },
-            },
-            email: 'Rebecca.Pearce@gmail.fr',
-            firstName: 'Kenneth',
-            lastName: 'Pearson',
-            phone_number: '19753006406461',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Delhi',
-                    country: 'Lithuania',
-                    postalCode: '45104',
-                    streetName: 'Michigan Avenue',
-                    streetNumber: '96 ter',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 23,
-                            graduationYear: 2021,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Nancy.Davies@ukr.net',
-            firstName: 'Amy',
-            lastName: 'Walker',
-            phone_number: '790661206622950',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Chicago',
-                    country: 'South Korea',
-                    postalCode: '51077',
-                    streetName: 'Broadway',
-                    streetNumber: '212',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 27,
-                            graduationYear: 2024,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    nbApplications: 8,
-                },
-            },
-            email: 'Michael.Turner@verizon.net',
-            firstName: 'Ryan',
-            lastName: 'Dean',
-            phone_number: '189954374271883',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Khartoum',
-                    country: 'Comoros',
-                    postalCode: '06415',
-                    streetName: 'Wall Street',
-                    streetNumber: '432 bis',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 8,
-                },
-            },
-            firstName: 'Shirley',
-            lastName: 'Lawrence',
-            phone_number: '627980974343663',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2022,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 13,
-                },
-            },
-            email: 'Frank.Richardson@t-online.de',
-            firstName: 'Pamela',
-            lastName: 'Johnson',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Buenos Aires',
-                    country: 'San Marino',
-                    postalCode: '45221',
-                    streetName: 'Bourbon Street',
-                    streetNumber: '330',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2023,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Cynthia.Bailey@earthlink.net',
-            firstName: 'Joe',
-            lastName: 'Alexander',
-            phone_number: '950740486322041',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Rajkot',
-                    country: 'Haiti',
-                    postalCode: '90466',
-                    streetName: 'Las Ramblas',
-                    streetNumber: '298',
-                },
-            },
-            assignee: {
-                create: {
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 11,
-                },
-            },
-            firstName: 'Hannah',
-            lastName: 'Baker',
-            phone_number: '16575512560944',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Lagos',
-                    country: 'Armenia',
-                    postalCode: '69154',
-                    streetName: 'Wall Street',
-                    streetNumber: '73',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2024,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 6,
-                },
-            },
-            email: 'Andrew.Spencer@yahoo.com',
-            firstName: 'Jonathan',
-            lastName: 'Burnett',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Milan',
-                    country: 'Iraq',
-                    postalCode: '57092',
-                    streetName: 'Wall Street',
-                    streetNumber: '438',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 24,
-                            graduationYear: 2024,
-                            hasScholarship: true,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 1,
-                },
-            },
-            email: 'Lisa.Reid@rediffmail.com',
-            firstName: 'Anna',
-            lastName: 'Carter',
-            phone_number: '833073290574285',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
             assignee: {
                 create: {
                     information: {
@@ -3087,70 +3417,15 @@ export async function seedPeopleTestData(db: PrismaClient) {
                             oldJet: true,
                         },
                     },
-                },
-            },
-            firstName: 'George',
-            lastName: 'Hamilton',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 20,
-                            graduationYear: 2030,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 10,
-                },
-            },
-            email: 'Roger.Hamilton@web.de',
-            firstName: 'Kathryn',
-            lastName: 'George',
-            phone_number: '713429703433789',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
                     mriReceiver: {
                         create: {},
                     },
                 },
             },
-            firstName: 'Virginia',
-            lastName: 'Hamilton',
-            phone_number: '399190063661031',
+            email: 'Jamie.Gomez@gmail.de',
+            firstName: 'Dmitri',
+            lastName: 'Hayward',
+            phone_number: '950221631597815',
         },
         select: {
             assignee: {
@@ -3161,269 +3436,26 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Singapore',
-                    country: 'Brunei',
-                    postalCode: '43184',
-                    streetName: 'Beale Street',
-                    streetNumber: '456',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 22,
-                            graduationYear: 2020,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Sara.George@wanadoo.fr',
-            firstName: 'Brandon',
-            lastName: 'Phillips',
-            phone_number: '201085901229004',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 18,
-                            graduationYear: 2022,
-                            hasScholarship: false,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 8,
-                },
-            },
-            email: 'Carol.Richardson@club-internet.fr',
-            firstName: 'Mark',
-            lastName: 'Burns',
-            phone_number: '271550243621561',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Madrid',
-                    country: 'South Africa',
-                    postalCode: '39345',
-                    streetName: 'Fifth Avenue',
-                    streetNumber: '125',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 24,
-                            graduationYear: 2020,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    nbApplications: 8,
-                },
-            },
-            email: 'Judith.Watson@icloud.com',
-            firstName: 'Anthony',
-            lastName: 'Martin',
-            phone_number: '935361259474908',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Rome',
-                    country: 'Namibia',
-                    postalCode: '63242',
-                    streetName: 'Las Olas Boulevard',
-                    streetNumber: '16 ter',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 22,
-                            graduationYear: 2020,
-                            hasScholarship: false,
-                            oldJet: true,
-                        },
-                    },
-                    nbApplications: 9,
-                },
-            },
-            firstName: 'Ronald',
-            lastName: 'Campbell',
-            phone_number: '768809266611435',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 18,
-                            graduationYear: 2030,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 10,
-                },
-            },
-            email: 'Stephen.Evans@yahoo.co.jp',
-            firstName: 'Kathleen',
-            lastName: 'Atkinson',
-            phone_number: '562712648361151',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2021,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 0,
-                },
-            },
-            email: 'Samuel.Smith@bellsouth.net',
-            firstName: 'Lauren',
-            lastName: 'Perry',
-            phone_number: '268534435672875',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Raipur',
-                    country: 'Brazil',
-                    postalCode: '25353',
-                    streetName: 'Nanjing Road',
-                    streetNumber: '262',
-                },
-            },
             assignee: {
                 create: {
                     information: {
                         create: {
                             age: 27,
-                            graduationYear: 2021,
-                            hasScholarship: true,
-                            oldJet: false,
+                            graduationYear: 2022,
+                            hasScholarship: false,
+                            oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 3,
                 },
             },
-            email: 'Samuel.Walker@rediffmail.com',
-            firstName: 'Stephen',
-            lastName: 'Green',
-            phone_number: '901941543840908',
+            email: 'Osmond.Long@verizon.net',
+            firstName: 'Durward',
+            lastName: 'Matthews',
+            phone_number: '387649070761908',
         },
         select: {
             assignee: {
@@ -3434,108 +3466,16 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Nagoya',
-                    country: 'Albania',
-                    postalCode: '12028',
-                    streetName: 'Queen Street',
-                    streetNumber: '39',
-                },
-            },
             assignee: {
                 create: {
                     information: {
                         create: {
-                            age: 20,
-                            graduationYear: 2023,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    nbApplications: 13,
-                },
-            },
-            firstName: 'Maria',
-            lastName: 'Morgan',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Zhengzhou',
-                    country: 'Comoros',
-                    postalCode: '14388',
-                    streetName: 'Beale Street',
-                    streetNumber: '238',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2021,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                },
-            },
-            email: 'Anthony.Hill@yahoo.fr',
-            firstName: 'Melissa',
-            lastName: 'Porter',
-            phone_number: '739924653238715',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Fortaleza',
-                    country: 'Romania',
-                    postalCode: '56246',
-                    streetName: 'Khao San Road',
-                    streetNumber: '13',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 25,
-                            graduationYear: 2025,
+                            age: 24,
+                            graduationYear: 2027,
                             hasScholarship: true,
                             oldJet: true,
                         },
@@ -3543,12 +3483,12 @@ export async function seedPeopleTestData(db: PrismaClient) {
                     mriReceiver: {
                         create: {},
                     },
-                    nbApplications: 2,
                 },
             },
-            firstName: 'Joseph',
-            lastName: 'Cook',
-            phone_number: '81834229042213',
+            email: 'Dexter.Hale@live.in',
+            firstName: 'Anya',
+            lastName: 'Blake',
+            phone_number: '64379309032642',
         },
         select: {
             assignee: {
@@ -3559,61 +3499,17 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Jodhpur',
-                    country: 'Pakistan',
-                    postalCode: '91440',
-                    streetName: 'Las Ramblas',
-                    streetNumber: '96 bis',
-                },
-            },
-            assignee: {
-                create: {
-                    information: {
-                        create: {
-                            age: 21,
-                            graduationYear: 2027,
-                            hasScholarship: true,
-                            oldJet: false,
-                        },
-                    },
-                    mriReceiver: {
-                        create: {},
-                    },
-                    nbApplications: 1,
-                },
-            },
-            email: 'Jennifer.Holmes@yahoo.co.in',
-            firstName: 'Jeffrey',
-            lastName: 'Bell',
-        },
-        select: {
-            assignee: {
-                select: {
-                    id: true,
-                },
-            },
-        },
-    });
-
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Shanghai',
-                    country: 'Andorra',
-                    postalCode: '92497',
-                    streetName: 'La Rambla',
-                    streetNumber: '121',
+                    city: 'Bhopal',
+                    country: 'Bahamas',
+                    postalCode: '42046',
+                    streetName: 'Kurfürstendamm',
+                    streetNumber: '25',
                 },
             },
             assignee: {
@@ -3621,18 +3517,21 @@ export async function seedPeopleTestData(db: PrismaClient) {
                     information: {
                         create: {
                             age: 24,
-                            graduationYear: 2025,
-                            hasScholarship: false,
+                            graduationYear: 2020,
+                            hasScholarship: true,
                             oldJet: false,
                         },
                     },
-                    nbApplications: 13,
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 5,
                 },
             },
-            email: 'Kevin.Collins@bellsouth.net',
-            firstName: 'Joyce',
-            lastName: 'Hall',
-            phone_number: '770964030059449',
+            email: 'Dale.Newton@yahoo.de',
+            firstName: 'Agustina',
+            lastName: 'Vasquez',
+            phone_number: '370395015033587',
         },
         select: {
             assignee: {
@@ -3643,8 +3542,87 @@ export async function seedPeopleTestData(db: PrismaClient) {
         },
     });
 
-    id = person?.assignee?.id;
-    if (id) assignees.push(id);
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Thane',
+                    country: 'San Marino',
+                    postalCode: '23355',
+                    streetName: 'Avenida Paulista',
+                    streetNumber: '119',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 26,
+                            graduationYear: 2030,
+                            hasScholarship: false,
+                            oldJet: false,
+                        },
+                    },
+                },
+            },
+            email: 'Hudson.Wyatt@posteo.de',
+            firstName: 'Elouise',
+            lastName: 'Harding',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Solapur',
+                    country: 'Slovenia',
+                    postalCode: '48101',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '393',
+                },
+            },
+            assignee: {
+                create: {
+                    information: {
+                        create: {
+                            age: 22,
+                            graduationYear: 2028,
+                            hasScholarship: false,
+                            oldJet: true,
+                        },
+                    },
+                    mriReceiver: {
+                        create: {},
+                    },
+                    nbApplications: 5,
+                },
+            },
+            email: 'Osmond.Sellers@qq.com',
+            firstName: 'Ian',
+            lastName: 'Parrish',
+        },
+        select: {
+            assignee: {
+                select: {
+                    id: true,
+                },
+            },
+        },
+    });
+
+    assignees.push(person!.assignee!.id);
 
     return assignees;
 }
