@@ -4,9 +4,7 @@
  * The data created here was generated with the following command (cf database.md for mor information):
  *
  * ```
-random-json -c 100 -u 'Domain:Chatbot|DataScience|MachineLearning|IntelligenceArtificielle|WebDev|MobileDev|AppDev|Cybersecurity|Cryptography|Networks|Telecommunications|Internet|IoT|EmbeddedSystems|Image|ComputerVision|ComputerGraphics|d_3D|MarketAnalysis|StateOfTheArt' --schema study.json  --before 'study = await db.study.create(' --after $');\n\nstudies.push(study!.id);\n\n' > out
-
-cat out | sed 's/"ADMINID": \(.*\)$/"id": admins[\1]/;s/"code": \(.*\),/"code": "\1",/'
+random-json -c 100 -f study.json  --before 'study = await db.study.create(' --after $');\n\nstudies.push(study!.id);\n\n' | sed 's/"ADMINID": \(.*\)$/"id": admins[\1]/;s/"code": \(.*\),/"code": "\1",/'
  * ```
  */
 

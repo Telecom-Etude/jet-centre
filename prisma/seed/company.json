@@ -2,7 +2,11 @@
     "data": {
         "companyInfos": {
             "create": {
-                "domains": ["Domain", 0, 10],
+                "domains": [
+                    "Chatbot|DataScience|MachineLearning|IntelligenceArtificielle|WebDev|MobileDev|AppDev|Cybersecurity|Cryptography|Networks|Telecommunications|Internet|IoT|EmbeddedSystems|Image|ComputerVision|ComputerGraphics|d_3D|MarketAnalysis|StateOfTheArt",
+                    0,
+                    10
+                ],
                 "size": "MicroEntreprise|MoyenneEntreprise|PetiteEntreprise|GrandeEntreprise"
             }
         },

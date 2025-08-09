@@ -9,7 +9,7 @@
  * The data created here was generated with the following command (cf database.md for mor information):
  *
  * ```
-random-json -c 100 -u 'Domain:Chatbot|DataScience|MachineLearning|IntelligenceArtificielle|WebDev|MobileDev|AppDev|Cybersecurity|Cryptography|Networks|Telecommunications|Internet|IoT|EmbeddedSystems|Image|ComputerVision|ComputerGraphics|d_3D|MarketAnalysis|StateOfTheArt' --schema company.json  --before 'company = await db.company.create(' --after $');\n\ncompanies.push(company!.id);\n\n' | sed 's/"STUDYID": \(.*\),/"studyId": studies[\1],/;s/"PERSONID": \(.*\)$/"id": people[\1]/'
+random-json -c 100 -f company.json  --before 'company = await db.company.create(' --after $');\n\ncompanies.push(company!.id);\n\n' | sed 's/"STUDYID": \(.*\),/"studyId": studies[\1],/;s/"PERSONID": \(.*\)$/"id": people[\1]/'
  */
 
 import { PrismaClient } from '@prisma/client';
