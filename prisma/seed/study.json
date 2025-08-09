@@ -21,7 +21,7 @@
                             "jehs": "1..20",
                             "title": "Sentence",
                             "unitPrice": "380..450",
-                            "deliverable": {
+                            "deliverable?": {
                                 "create": {
                                     "description": "Paragraph",
                                     "status": "NotStarted|InProgress|Finished|Given"

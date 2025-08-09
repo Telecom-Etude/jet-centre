@@ -1,0 +1,22 @@
+{
+    "data": {
+        "privateIndividual?": "Bool",
+        "job": "Job",
+        "person": {
+            "create": {
+                "address": {
+                    "create": {
+                        "city": "City",
+                        "country": "Country",
+                        "postalCode": "FrenchPostCode",
+                        "streetName": "Street",
+                        "streetNumber": "StreetNumber"
+                    }
+                },
+                "firstName": "FirstName",
+                "lastName": "LastName",
+                "phone_number": "PhoneNumber"
+            }
+        }
+    }
+}
