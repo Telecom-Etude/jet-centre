@@ -1,12 +1,7 @@
 /**
- * This file fills the database with some data.
+ * This file fills the database with some assignees.
  *
- * This file is filling the models corresponding to @file prisma/models/account.prisma
- *
- * Known limitations:
- * - Images are never created
- *
- * The data created here was generated with the following command, using random-json from @{link https://github.com/t-webber/random-json}':
+ * The data created here was generated with the following command (cf database.md for mor information):
  *
  * ```
 random-json -c 100 -f assignees.json --before $'\nperson = await db.person.create(' --after $');\n\nassignees.push(person!.assignee!.id);'

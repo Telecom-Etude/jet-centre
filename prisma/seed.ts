@@ -1,8 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+
 import { seedAdminsTestData } from './seed/admins';
-import { seedPeopleTestData } from './seed/people';
 import { seedAssigneesTestData } from './seed/assignees';
+import { seedPeopleTestData } from './seed/people';
 import { seedStudiesTestData } from './seed/study';
+import { seedStudyAssigneesTestData } from './seed/study-assignee';
 
 const db = new PrismaClient();
 
@@ -62,6 +64,10 @@ async function main() {
     const people = await seedPeopleTestData(db);
     const assignees = await seedAssigneesTestData(db);
     const studies = await seedStudiesTestData(db, admins);
+    const studiesWithMri = studies.filter(
+        (study): study is { studyId: string; mriId: string } => study.mriId !== undefined
+    );
+    const studyAssignees = await seedStudyAssigneesTestData(db, assignees, studiesWithMri);
     //     await seedClientTestData(db, people);
 
     return await seedDev();

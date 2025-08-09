@@ -4,7 +4,7 @@
         "auditors": { "connect": [{ "ADMINID": "0..99" }, 0, 2] },
         "information": {
             "create": {
-                "code": "220001..230999",
+                "code": "200001..250999",
                 "title": "Sentence",
                 "applicationFee": "0.0..0.1",
                 "cc": "Bool",
@@ -46,5 +46,5 @@
             }
         }
     },
-    "select!": { "id": true }
+    "select!": { "id": true, "mri": { "select": { "id": true } } }
 }

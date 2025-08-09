@@ -1,0 +1,32 @@
+{
+    "data": {
+        "study": { "connect": { "STUDYID": "0..99[study]" } },
+        "assignee": { "connect": { "ASSIGNEEID": "0..99" } },
+        "selectionNotes": "Paragraph",
+        "taken": "Bool",
+        "formInterview": {
+            "create": {
+                "available": "Bool",
+                "approach": "Paragraph",
+                "courses": "Paragraph",
+                "starS": "Paragraph",
+                "starT": "Paragraph",
+                "starA": "Paragraph",
+                "starR": "Paragraph",
+                "motivation": "Paragraph",
+                "cdpRequirements": "Paragraph",
+                "questions": "Paragraph"
+            }
+        },
+        "mriForm": {
+            "create": {
+                "mri": { "connect": { "MRIID": "0..99[study]" } },
+                "experience": "Paragraph",
+                "knowledge": "Paragraph",
+                "ideas": "Paragraph",
+                "jeExperience": "0..25"
+            }
+        }
+    },
+    "select!": { "id": true }
+}
