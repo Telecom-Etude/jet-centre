@@ -107,6 +107,20 @@ bun x prisma reset
 >
 > You will loose all your data by running this command.
 
+### Seeding guide
+
+We now have lots of random data that is automatically added to the database. This is done by a tool called [random-data](https://github.com/t-webber/random-data) (not at all self-promoting here) that takes a `json` schema file and returns lots of prisma requests to seed the database.
+
+This is why you will be able to find some `json` files in `prisma/seed`, those were the ones used to generate the `ts` files. If you want more information about the syntax of those json files, have a look [here](https://github.com/t-webber/random-json/blob/main/USAGE.md).
+
+One small proble though, you can't write code in `JSON`. For example, what you want in a _Prisma_ query is
+
+```json
+{ "person": { "connect": { "id": person[some_random_number] } } }
+```
+
+but this isn't valid `JSON`. The solution is to simply add a small easy `sed` to add the array call around the number. You can find the exact command to copy paste in the documentation of each `prisma/seed/*.ts`.
+
 ## Contributing
 
 To view the documentation of the database; please refer to this [link](https://telecom-etude.github.io/jet-centre).
