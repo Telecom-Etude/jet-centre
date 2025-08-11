@@ -7,12 +7,16 @@ import { seedCompaniesTestData } from './seed/company';
 import { seedStudiesTestData } from './seed/study';
 import { seedStudyAssigneesTestData } from './seed/study-assignee';
 import { seedStudyClientsTestData } from './seed/study-client';
+import { seedMriTestData } from './seed/mri';
 
 const db = new PrismaClient();
 
 async function seedFirstUser() {
     const email = process.env.ADMIN_EMAIL;
-    if (!email) return console.error('ADMIN_EMAIL not provided. Skipping seed.');
+    if (!email)
+        return console.error(
+            '\x1b[31m🌱  ADMIN_EMAIL not provided. Skipping first user seed.\x1b[0m'
+        );
 
     const position = process.env.ADMIN_POSITION ?? 'Info';
 
@@ -39,7 +43,8 @@ async function seedTestData() {
 
     const admins = await seedAdminsTestData(db);
     const studies = await seedStudiesTestData(db, admins);
-    const studiesWithMri = studies.filter(
+    const mris = await seedMriTestData(db, studies);
+    const studiesWithMri = mris.filter(
         (study): study is { studyId: string; mriId: string } => study.mriId !== undefined
     );
     await seedStudyAssigneesTestData(db, assignees, studiesWithMri);
@@ -50,9 +55,8 @@ async function seedTestData() {
         .map((client) => client.clientId);
     await seedCompaniesTestData(db, companyClients);
 
-    const studyIds = studies.map((study) => study.studyId);
     const clientIds = clients.map((client) => client.clientId);
-    await seedStudyClientsTestData(db, clientIds, studyIds);
+    await seedStudyClientsTestData(db, clientIds, studies);
 }
 
 async function main() {
@@ -77,7 +81,7 @@ main()
         await db.$disconnect();
     })
     .catch(async (e) => {
-        console.error(`#####\n${e}\n#####`);
+        console.error(`\x1b[31m🌱  Error occurred while seeding:\x1b[0m\n${e}`);
         await db.$disconnect();
         process.exit(1);
     });

@@ -1,0 +1,15 @@
+{
+    "data": {
+        "study": { "connect": { "STUDYID": "0..99" } },
+        "wageLowerBound": "50..50000",
+        "wageUpperBound": "50..50000",
+        "wageLevel": "High|Medium|Low",
+        "difficulty": "High|Medium|Low",
+        "mainDomain": "Chatbot|DataScience|MachineLearning|IntelligenceArtificielle|WebDev|MobileDev|AppDev|Cybersecurity|Cryptography|Networks|Telecommunications|Internet|IoT|EmbeddedSystems|Image|ComputerVision|ComputerGraphics|d_3D|MarketAnalysis|StateOfTheArt",
+        "status": "InProgress|Finished|Validated|Sent|Expired",
+        "introductionText": "Paragraph",
+        "descriptionText": "Paragraph",
+        "timeLapsText": "Paragraph"
+    },
+    "select!": { "id": true, "studyId": true }
+}
