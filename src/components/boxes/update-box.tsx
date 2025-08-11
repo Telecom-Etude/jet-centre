@@ -153,7 +153,7 @@ export function UpdateBox({
                     <BoxButtonIcon
                         {...getUpdateBoxStatusInfos(status, editable)}
                         onClick={() => {
-                            editable && update();
+                            if (editable) update();
                         }}
                     />
                 </BoxHeaderBlock>

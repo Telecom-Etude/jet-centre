@@ -2,10 +2,10 @@ import { PrismaClient } from '@prisma/client';
 
 import { seedAdminsTestData } from './seed/admins';
 import { seedAssigneesTestData } from './seed/assignees';
-import { seedStudiesTestData } from './seed/study';
-import { seedStudyAssigneesTestData } from './seed/study-assignee';
 import { seedClientsTestData } from './seed/client';
 import { seedCompaniesTestData } from './seed/company';
+import { seedStudiesTestData } from './seed/study';
+import { seedStudyAssigneesTestData } from './seed/study-assignee';
 import { seedStudyClientsTestData } from './seed/study-client';
 
 const db = new PrismaClient();
@@ -32,6 +32,7 @@ async function seedFirstUser() {
             },
         },
     });
+}
 
 async function seedTestData() {
     const assignees = await seedAssigneesTestData(db);
