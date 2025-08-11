@@ -10,7 +10,7 @@ import { seedStudyClientsTestData } from './seed/study-client';
 
 const db = new PrismaClient();
 
-async function seedDev() {
+async function seedFirstUser() {
     const email = process.env.ADMIN_EMAIL;
     if (!email) return console.error('ADMIN_EMAIL not provided. Skipping seed.');
 
@@ -33,38 +33,7 @@ async function seedDev() {
         },
     });
 
-async function seedProd() {
-    const email = 'admin@telecom-etude.fr';
-
-    await db.admin.create({
-        data: {
-            position: 'Info',
-            user: {
-                create: {
-                    person: {
-                        create: {
-                            email,
-                            firstName: 'admin',
-                            lastName: 'admin',
-                        },
-                    },
-                },
-            },
-        },
-    });
-}
-
-async function main() {
-    if (process.env.ENV === 'prod') return await seedProd();
-    if (process.env.ENV !== 'dev')
-        throw new Error(
-            `Invalid ENV var in .env: expected 'prod' or 'dev', found ${process.env.ENV}`
-        );
-
-    process.stdout.write('🌱  Adding the test data for development database.');
-
-    await seedDev();
-
+async function seedTestData() {
     const assignees = await seedAssigneesTestData(db);
 
     const admins = await seedAdminsTestData(db);
@@ -83,6 +52,21 @@ async function main() {
     const studyIds = studies.map((study) => study.studyId);
     const clientIds = clients.map((client) => client.clientId);
     await seedStudyClientsTestData(db, clientIds, studyIds);
+}
+
+async function main() {
+    await seedFirstUser();
+
+    if (process.env.ENV === 'prod') return;
+    if (process.env.ENV !== 'dev')
+        throw new Error(
+            `Invalid ENV var in .env: expected 'prod' or 'dev', found ${process.env.ENV}`
+        );
+
+    if (!process.env.NO_DB_INIT) {
+        process.stdout.write('🌱  Adding the test data for development database.');
+        seedTestData();
+    }
 
     return;
 }
