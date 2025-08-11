@@ -15,7 +15,7 @@
                 },
                 "admin": {
                     "create": {
-                        "position": "DirCo|Info|VPO|SecGe|Trez"
+                        "position": "president|internal_vice_president|operational_vice_president|external_vice_president|treasurer|vice_treasurer|general_secretary|commercial_director|info"
                     }
                 }
             }
