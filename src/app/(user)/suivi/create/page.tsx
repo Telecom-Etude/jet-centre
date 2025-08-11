@@ -24,7 +24,7 @@ export default async function CreateStudy() {
                 number: company.address?.streetNumber,
                 street: company.address?.streetName,
                 city: company.address?.city,
-                zip: company.address?.zipCode,
+                zip: company.address?.postalCode,
                 country: company.address?.country,
             };
         }

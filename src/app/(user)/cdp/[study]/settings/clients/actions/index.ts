@@ -63,7 +63,7 @@ export async function getStudyClients(
                     street: client.person.address.streetName,
                     city: client.person.address.city,
                     country: client.person.address.country,
-                    zipCode: client.person.address.zipCode,
+                    postalCode: client.person.address.postalCode,
                 };
             }
 
@@ -82,7 +82,7 @@ export async function getStudyClients(
                         street: client.company.address.streetName,
                         city: client.company.address.city,
                         country: client.company.address.country,
-                        zipCode: client.company.address.zipCode,
+                        postalCode: client.company.address.postalCode,
                     };
                 }
             }
@@ -137,7 +137,7 @@ export async function newStudyClient(studyId: string, clientData: ClientFormType
                     streetName: clientData.address?.street,
                     city: clientData.address?.city,
                     country: clientData.address?.country,
-                    zipCode: clientData.address?.zipCode,
+                    postalCode: clientData.address?.postalCode,
                 },
             };
         }
@@ -166,7 +166,7 @@ export async function newStudyClient(studyId: string, clientData: ClientFormType
                         streetName: clientData.company?.address?.street,
                         city: clientData.company?.address?.city,
                         country: clientData.company?.address?.country,
-                        zipCode: clientData.company?.address?.zipCode,
+                        postalCode: clientData.company?.address?.postalCode,
                     },
                 };
             }

@@ -4,10 +4,10 @@ import { seedAdminsTestData } from './seed/admins';
 import { seedAssigneesTestData } from './seed/assignees';
 import { seedClientsTestData } from './seed/client';
 import { seedCompaniesTestData } from './seed/company';
+import { seedMriTestData } from './seed/mri';
 import { seedStudiesTestData } from './seed/study';
 import { seedStudyAssigneesTestData } from './seed/study-assignee';
 import { seedStudyClientsTestData } from './seed/study-client';
-import { seedMriTestData } from './seed/mri';
 
 const db = new PrismaClient();
 

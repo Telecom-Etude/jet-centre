@@ -101,7 +101,7 @@ function EditClientForm({ onSubmit, client, isLoading }: EditClientFormProps) {
                                         className="mb-0"
                                         form={form}
                                         label="Code postal"
-                                        name="address.zipCode"
+                                        name="address.postalCode"
                                     />
                                 </div>
                                 <InputFormElement form={form} label="Pays" name="address.country" />
@@ -176,7 +176,7 @@ function EditClientForm({ onSubmit, client, isLoading }: EditClientFormProps) {
                                                 className="mb-0"
                                                 form={form}
                                                 label="Code postal"
-                                                name="company.address.zipCode"
+                                                name="company.address.postalCode"
                                             />
                                         </div>
                                         <InputFormElement

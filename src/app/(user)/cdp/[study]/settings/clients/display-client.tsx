@@ -43,7 +43,7 @@ function ViewClientDialog({ isOpen, setIsOpen, client }: ViewClientDialogProps) 
                         <p>
                             {client.address === undefined
                                 ? 'Inconnue'
-                                : `${client.address.number} ${client.address.street}, ${client.address.zipCode}, ${client.address.city}, ${client.address.country}`}
+                                : `${client.address.number} ${client.address.street}, ${client.address.postalCode}, ${client.address.city}, ${client.address.country}`}
                         </p>
                     </div>
                     {client.company === undefined ? (
@@ -73,7 +73,7 @@ function ViewClientDialog({ isOpen, setIsOpen, client }: ViewClientDialogProps) 
                                 <p>
                                     {client.company.address === undefined
                                         ? 'Inconnue'
-                                        : `${client.company.address.number} ${client.company.address.street}, ${client.company.address.zipCode}, ${client.company.address.city}, ${client.company.address.country}`}
+                                        : `${client.company.address.number} ${client.company.address.street}, ${client.company.address.postalCode}, ${client.company.address.city}, ${client.company.address.country}`}
                                     ,
                                 </p>
                             </div>

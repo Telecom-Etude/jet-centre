@@ -55,13 +55,13 @@ export function UpsertAddress({
 
     const updateServer = () => {
         setStatus(UpdateBoxStatus.Loading);
-        if (!streetName || !streetNumber || !city || !zipCode || !country)
+        if (!streetName || !streetNumber || !city || !postalCode || !country)
             return setStatus(UpdateBoxStatus.UserPending);
         upsertAddress({
             id,
             streetName,
             streetNumber,
-            zipCode,
+            postalCode,
             city,
             country,
             personId: address?.personId ?? personId ?? null,
@@ -75,7 +75,7 @@ export function UpsertAddress({
             if (
                 serverAddress.streetNumber !== streetNumber ||
                 serverAddress.streetName !== streetName ||
-                serverAddress.zipCode !== zipCode ||
+                serverAddress.postalCode !== postalCode ||
                 serverAddress.city !== city ||
                 serverAddress.country !== country
             ) {
@@ -89,7 +89,7 @@ export function UpsertAddress({
     const [id, setId] = useState(address?.id);
     const [streetNumber, setStreetNumber] = useState(address?.streetNumber);
     const [streetName, setStreetName] = useState(address?.streetName);
-    const [zipCode, setZipCode] = useState(address?.zipCode);
+    const [postalCode, setZipCode] = useState(address?.postalCode);
     const [city, setCity] = useState(address?.city);
     const [country, setCountry] = useState(address?.country);
 
@@ -127,7 +127,7 @@ export function UpsertAddress({
                     />
                     <UpdateAddressElement
                         name="Code postal"
-                        value={zipCode}
+                        value={postalCode}
                         setValue={setZipCode}
                         updateServer={updateServer}
                         setStatus={setStatus}

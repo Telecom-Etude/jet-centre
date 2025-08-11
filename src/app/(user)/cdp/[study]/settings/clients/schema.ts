@@ -7,7 +7,7 @@ const addressSchema = z.object({
     street: z.string(),
     city: z.string(),
     country: z.string(),
-    zipCode: z.string(),
+    postalCode: z.string(),
 });
 
 const companySchema = z.object({

@@ -83,7 +83,7 @@ export function stringifyAddress(address: Address): string {
         ' ' +
         address.streetName +
         ', ' +
-        address.zipCode +
+        address.postalCode +
         ' ' +
         address.city +
         ', ' +

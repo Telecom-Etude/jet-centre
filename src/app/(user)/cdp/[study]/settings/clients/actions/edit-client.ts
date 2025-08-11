@@ -35,7 +35,7 @@ export async function editStudyClient(clientId: string, clientData: ClientFormTy
                 streetName: clientData.address.street,
                 city: clientData.address.city,
                 country: clientData.address.country,
-                zipCode: clientData.address.zipCode,
+                postalCode: clientData.address.postalCode,
             };
 
             if (clientData.address.id) {
@@ -87,7 +87,7 @@ export async function editStudyClient(clientId: string, clientData: ClientFormTy
                     streetName: clientData.company.address?.street,
                     city: clientData.company.address?.city,
                     country: clientData.company.address?.country,
-                    zipCode: clientData.company.address?.zipCode,
+                    postalCode: clientData.company.address?.postalCode,
                 };
 
                 if (data.company.create && clientData.address?.id) {

@@ -86,7 +86,7 @@ export async function createNewStudy(data: StudyCreationSchema) {
                                     streetNumber: company.address?.number,
                                     streetName: company.address?.street,
                                     city: company.address?.city,
-                                    zipCode: company.address?.zip,
+                                    postalCode: company.address?.zip,
                                     country: company.address?.country,
                                 },
                             };
