@@ -1,4 +1,4 @@
-name: Migrations
+name: Seed
 
 on:
     push:
@@ -9,7 +9,7 @@ on:
             - '*'
 
 jobs:
-    migrate:
+    seed:
         runs-on: ubuntu-latest
 
         services:
@@ -57,9 +57,6 @@ jobs:
             - name: Reset prisma
               env:
                   DB_URL: postgres://postgres:postgres@localhost:5432/maindb
-              run: bun x prisma migrate deploy
-
-            - name: Check if migrations up-to-date
-              env:
-                  DB_URL: postgres://postgres:postgres@localhost:5432/maindb
-              run: bun x prisma migrate diff --from-migrations ./prisma/migrations --to-schema-datamodel ./prisma  --exit-code --shadow-database-url postgres://postgres:postgres@localhost:5432/maindb
+                  ENV: dev
+                  ADMIN_EMAIL: bob.bob@bob.bob
+              run: bun x prisma migrate reset --force
