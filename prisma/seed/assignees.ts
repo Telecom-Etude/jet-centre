@@ -35,9 +35,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 0,
                 },
             },
@@ -70,9 +68,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
             },
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 7,
                 },
             },
@@ -113,9 +109,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'Donia.Franklin@hotmail.co.uk',
@@ -194,9 +188,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 2,
                 },
             },
@@ -236,9 +228,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 13,
                 },
             },
@@ -279,9 +269,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'Dallas.Wells@seznam.cz',
@@ -303,9 +291,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 4,
                 },
             },
@@ -345,9 +331,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 9,
                 },
             },
@@ -409,9 +393,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'Calder.Sampson@ntlworld.co.uk',
@@ -511,9 +493,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 6,
                 },
             },
@@ -554,9 +534,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 11,
                 },
             },
@@ -589,9 +567,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
             },
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 1,
                 },
             },
@@ -701,9 +677,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'Alecia.Woods@charter.net',
@@ -743,9 +717,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 1,
                 },
             },
@@ -817,9 +789,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 11,
                 },
             },
@@ -1129,9 +1099,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             firstName: 'Griffin',
@@ -1263,9 +1231,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 5,
                 },
             },
@@ -1289,9 +1255,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 7,
                 },
             },
@@ -1345,9 +1309,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 12,
                 },
             },
@@ -1388,9 +1350,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 8,
                 },
             },
@@ -1414,9 +1374,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 12,
                 },
             },
@@ -1534,9 +1492,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 8,
                 },
             },
@@ -1569,9 +1525,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
             },
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 13,
                 },
             },
@@ -1595,9 +1549,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 2,
                 },
             },
@@ -1668,9 +1620,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
             },
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 6,
                 },
             },
@@ -1750,9 +1700,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 9,
                 },
             },
@@ -1793,9 +1741,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'Kristin.Allison@aliceadsl.fr',
@@ -1873,9 +1819,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 8,
                 },
             },
@@ -1947,9 +1891,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 11,
                 },
             },
@@ -1981,9 +1923,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 10,
                 },
             },
@@ -2190,9 +2130,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
             },
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 8,
                 },
             },
@@ -2231,9 +2169,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 0,
                 },
             },
@@ -2305,9 +2241,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 6,
                 },
             },
@@ -2347,9 +2281,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 8,
                 },
             },
@@ -2390,9 +2322,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 6,
                 },
             },
@@ -2462,9 +2392,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 6,
                 },
             },
@@ -2504,9 +2432,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 2,
                 },
             },
@@ -2538,9 +2464,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             firstName: 'Elaina',
@@ -2570,9 +2494,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 8,
                 },
             },
@@ -2603,9 +2525,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 11,
                 },
             },
@@ -2677,9 +2597,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 10,
                 },
             },
@@ -2703,9 +2621,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 1,
                 },
             },
@@ -2746,9 +2662,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 3,
                 },
             },
@@ -2780,9 +2694,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
             },
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 12,
                 },
             },
@@ -2806,9 +2718,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 6,
                 },
             },
@@ -2831,9 +2741,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             firstName: 'Maurice',
@@ -2855,9 +2763,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 13,
                 },
             },
@@ -2898,9 +2804,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 1,
                 },
             },
@@ -2940,9 +2844,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'London.Simpson@tutanota.com',
@@ -3022,9 +2924,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 3,
                 },
             },
@@ -3085,9 +2985,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 5,
                 },
             },
@@ -3127,9 +3025,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 9,
                 },
             },
@@ -3152,9 +3048,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
         data: {
             assignee: {
                 create: {
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 2,
                 },
             },
@@ -3194,9 +3088,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 4,
                 },
             },
@@ -3236,9 +3128,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 8,
                 },
             },
@@ -3370,9 +3260,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 9,
                 },
             },
@@ -3412,9 +3300,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'Jamie.Gomez@gmail.de',
@@ -3475,9 +3361,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                 },
             },
             email: 'Dexter.Hale@live.in',
@@ -3517,9 +3401,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: false,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 5,
                 },
             },
@@ -3598,9 +3480,7 @@ export async function seedAssigneesTestData(db: PrismaClient): Promise<string[]>
                             oldJet: true,
                         },
                     },
-                    mriReceiver: {
-                        create: {},
-                    },
+                    mriSubscriber: true,
                     nbApplications: 5,
                 },
             },

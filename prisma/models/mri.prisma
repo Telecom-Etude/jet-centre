@@ -56,7 +56,7 @@ model Assignee {
     person          Person          @relation(fields: [peopleId], references: [id], onDelete: Cascade)
     peopleId        String          @unique
     assignedStudies StudyAssignee[]
-    mriReceiver     MriReceiver?
+    mriSubscriber   Boolean         @default(false)
 }
 
 /// Personal information of an assignee
@@ -183,9 +183,4 @@ model FormInterviews {
     cdpRequirements String
     /// Questions asked by the assignee during the interview
     questions       String
-}
-
-model MriReceiver {
-    assignee   Assignee @relation(fields: [assigneeId], references: [id])
-    assigneeId String   @id
 }
