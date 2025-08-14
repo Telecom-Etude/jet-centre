@@ -18,7 +18,7 @@ async function seedFirstUser() {
             '\x1b[31m🌱  ADMIN_EMAIL not provided. Skipping first user seed.\x1b[0m'
         );
 
-    const position = process.env.ADMIN_POSITION ?? 'Info';
+    const position = process.env.ADMIN_POSITION ?? 'info';
 
     await db.admin.create({
         data: {
