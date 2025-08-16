@@ -108,6 +108,16 @@ export default function MRICreationForm({ setNotSaved, form, updateServer }: MRI
                     onChange={setNotSaved}
                     resizable
                 />
+                <InputFormElement
+                    label="Formulaire"
+                    name="gformUrl"
+                    type="url"
+                    form={form}
+                    onChange={() => {
+                        setNotSaved();
+                    }}
+                    onBlur={() => updateServer()}
+                />
             </form>
         </FormProvider>
     );

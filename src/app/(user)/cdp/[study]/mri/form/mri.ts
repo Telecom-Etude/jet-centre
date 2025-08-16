@@ -1,6 +1,6 @@
 'use server';
 
-import { MriStatus } from '@prisma/client';
+import { Mri, MriStatus } from '@prisma/client';
 
 import prisma from '@/db';
 import { dbg } from '@/lib/utils';
@@ -119,18 +119,9 @@ export async function createNewMri(studyCode: string): Promise<MriServerData | u
 
 export async function storeMriData(mriId: string, data: MriFormType): Promise<string | undefined> {
     try {
-        const mriData = {
-            title: data.title,
-            wageLowerBound: data.wageLowerBound,
-            wageUpperBound: data.wageUpperBound,
-            wageLevel: data.wageLevel,
-            difficulty: data.difficulty,
-            mainDomain: data.mainDomain,
-            introductionText: data.introductionText,
-            descriptionText: data.descriptionText,
-            timeLapsText: data.timeLapsText,
-            requiredSkillsText: data.requiredSkillsText,
+        const mriData: Omit<Mri, 'id' | 'studyId'> = {
             status: MriStatus.InProgress,
+            ...data,
         };
 
         dbg(mriData, 'storing');
