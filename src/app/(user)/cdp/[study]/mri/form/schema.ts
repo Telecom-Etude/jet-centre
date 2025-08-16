@@ -33,6 +33,7 @@ export const mriCreationSchema = z
         descriptionText: z.string(),
         timeLapsText: z.string(),
         requiredSkillsText: z.string(),
+        gformUrl: z.string(),
     })
     .superRefine((data, ctx) => {
         if (data.wageLowerBound > data.wageUpperBound) {
@@ -57,19 +58,21 @@ export const DEFAULT_MRI_VALUES: MriFormType = {
     descriptionText: 'Le but de cette étude est de...',
     timeLapsText: 'Le client désire commencer le plus tôt possible.',
     requiredSkillsText: 'Nous recherchons un.e intervenant.e ayant des compétences en...',
+    gformUrl: '',
 };
 
 export function equalMri(left: MriFormType, right: MriFormType): boolean {
     return (
-        left.title == right.title &&
-        left.wageLowerBound == right.wageLowerBound &&
-        left.wageUpperBound == right.wageUpperBound &&
-        left.wageLevel == right.wageLevel &&
-        left.difficulty == right.difficulty &&
-        left.mainDomain == right.mainDomain &&
-        left.introductionText == right.introductionText &&
-        left.descriptionText == right.descriptionText &&
-        left.timeLapsText == right.timeLapsText &&
-        left.requiredSkillsText == right.requiredSkillsText
+        left.title === right.title &&
+        left.wageLowerBound === right.wageLowerBound &&
+        left.wageUpperBound === right.wageUpperBound &&
+        left.wageLevel === right.wageLevel &&
+        left.difficulty === right.difficulty &&
+        left.mainDomain === right.mainDomain &&
+        left.introductionText === right.introductionText &&
+        left.descriptionText === right.descriptionText &&
+        left.timeLapsText === right.timeLapsText &&
+        left.requiredSkillsText === right.requiredSkillsText &&
+        left.gformUrl === right.gformUrl
     );
 }

@@ -26,13 +26,17 @@ export async function loadStudyMris(code: string): Promise<MriServerData[] | und
                 },
             },
         });
+
         if (!infos) {
             throw new Error('Failed to fetch mission in database.');
         }
+
         const study = infos.study;
+
         if (!study) {
             throw new Error('studyInfo exists without study.');
         }
+
         const mris = study.mris;
 
         return mris.map((mri) => {
@@ -48,7 +52,9 @@ export async function loadStudyMris(code: string): Promise<MriServerData[] | und
                 timeLapsText: mri?.timeLapsText ?? DEFAULT_MRI_VALUES.timeLapsText,
                 requiredSkillsText:
                     mri?.requiredSkillsText ?? DEFAULT_MRI_VALUES.requiredSkillsText,
+                gformUrl: mri.gformUrl ?? DEFAULT_MRI_VALUES.gformUrl,
             };
+
             return {
                 mriId: mri.id,
                 admins: study.cdps.map(adminDisplay),

@@ -19,6 +19,7 @@ function assertAllFieldsFull(mri: Mri | undefined): MriFormType | undefined | nu
     if (mri.timeLapsText === null) return;
     if (mri.requiredSkillsText === null) return;
     if (mri.title === null) return;
+    if (mri.gformUrl === null) return;
 
     return {
         wageLowerBound: mri.wageLowerBound,
@@ -31,6 +32,7 @@ function assertAllFieldsFull(mri: Mri | undefined): MriFormType | undefined | nu
         timeLapsText: mri.timeLapsText,
         requiredSkillsText: mri.requiredSkillsText,
         title: mri.title,
+        gformUrl: mri.gformUrl,
     };
 }
 
