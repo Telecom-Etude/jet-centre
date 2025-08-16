@@ -42,6 +42,8 @@ model Mri {
     status             MriStatus @default(InProgress)
     study              Study     @relation(fields: [studyId], references: [id], onDelete: Cascade)
     studyId            String
+    /// Url of the google form for a MRI. Only for version 0.1
+    gformUrl           String?
     formMRIs           MriForm[]
 }
 

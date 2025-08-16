@@ -1,6 +1,6 @@
 'use server';
 
-import { MriStatus } from '@prisma/client';
+import { Mri, MriStatus } from '@prisma/client';
 
 import prisma from '@/db';
 import { dbg } from '@/lib/utils';
@@ -26,13 +26,17 @@ export async function loadStudyMris(code: string): Promise<MriServerData[] | und
                 },
             },
         });
+
         if (!infos) {
             throw new Error('Failed to fetch mission in database.');
         }
+
         const study = infos.study;
+
         if (!study) {
             throw new Error('studyInfo exists without study.');
         }
+
         const mris = study.mris;
 
         return mris.map((mri) => {
@@ -48,7 +52,9 @@ export async function loadStudyMris(code: string): Promise<MriServerData[] | und
                 timeLapsText: mri?.timeLapsText ?? DEFAULT_MRI_VALUES.timeLapsText,
                 requiredSkillsText:
                     mri?.requiredSkillsText ?? DEFAULT_MRI_VALUES.requiredSkillsText,
+                gformUrl: mri.gformUrl ?? DEFAULT_MRI_VALUES.gformUrl,
             };
+
             return {
                 mriId: mri.id,
                 admins: study.cdps.map(adminDisplay),
@@ -113,18 +119,9 @@ export async function createNewMri(studyCode: string): Promise<MriServerData | u
 
 export async function storeMriData(mriId: string, data: MriFormType): Promise<string | undefined> {
     try {
-        const mriData = {
-            title: data.title,
-            wageLowerBound: data.wageLowerBound,
-            wageUpperBound: data.wageUpperBound,
-            wageLevel: data.wageLevel,
-            difficulty: data.difficulty,
-            mainDomain: data.mainDomain,
-            introductionText: data.introductionText,
-            descriptionText: data.descriptionText,
-            timeLapsText: data.timeLapsText,
-            requiredSkillsText: data.requiredSkillsText,
+        const mriData: Omit<Mri, 'id' | 'studyId'> = {
             status: MriStatus.InProgress,
+            ...data,
         };
 
         dbg(mriData, 'storing');
