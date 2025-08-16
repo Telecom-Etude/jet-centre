@@ -14,7 +14,6 @@ import BirdLogo from '@/../public/mri/bird.png';
 import { Button } from '@/components/ui/button';
 import { NBSP } from '@/lib/utils';
 import {
-    applyUrl,
     CONTACT_EMAIL,
     FACEBOOK_URL,
     INSTAGRAM_URL,
@@ -32,8 +31,16 @@ interface RenderMRIProps {
     admins: AdminDisplay[];
 }
 
-export function RenderMRI({ mri, admins, study }: RenderMRIProps) {
+export function RenderMRI({ mri, admins }: RenderMRIProps) {
     const h4cn = 'text-2xl font-bold my-1 text-mri-headers';
+
+    const titleUrlEncoded = encodeURIComponent(mri.title);
+    let mailto = 'mailto:';
+    for (const admin of admins) {
+        mailto += admin.email;
+        mailto += ',';
+    }
+    mailto += `?subject=Envoi%20du%20CV%20pour%20l'%C3%A9tude%20${titleUrlEncoded}`;
 
     return (
         <div className="@container bg-white text-black">
@@ -75,10 +82,30 @@ export function RenderMRI({ mri, admins, study }: RenderMRIProps) {
                         <p>{mri.descriptionText}</p>
                     </section>
                     <hr className="my-6 border-mri-separator" />
-                    <div className="flex flex-col items-center">
-                        <Button asChild className="w-fit mb-6 bg-je-red font-semibold">
-                            <Link href={applyUrl(study)} className="p-4 rounded">
-                                Je postule !
+                    <div className="flex flex-col items-center gap-main">
+                        <p>
+                            Vous désirez postuler? Répondez au formulaire et envoyez-nous votre CV
+                            par mail!
+                        </p>
+
+                        <Button asChild className="w-fit bg-je-red font-semibold">
+                            <Link
+                                target="_blank"
+                                title="J'envoie mon CV"
+                                href={mailto}
+                                className="p-4 rounded"
+                            >
+                                J&apos;envoie mon CV
+                            </Link>
+                        </Button>
+                        <Button asChild className="w-fit bg-je-red font-semibold">
+                            <Link
+                                target="_blank"
+                                title="Je réponds au formulaire"
+                                href={mri.gformUrl}
+                                className="p-4 rounded"
+                            >
+                                Je réponds au formulaire
                             </Link>
                         </Button>
 
