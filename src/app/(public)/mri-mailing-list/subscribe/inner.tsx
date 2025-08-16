@@ -36,7 +36,7 @@ export function Inner() {
             person?.id,
             person?.assignee?.id,
             changeEmail,
-            !!person?.assignee?.mriReceiver?.assigneeId
+            !!person?.assignee?.mriSubscriber
         ).then((data) => {
             setServerData(data);
             setLoading(false);

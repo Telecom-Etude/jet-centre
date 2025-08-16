@@ -15,7 +15,7 @@ async function findPerson({
             select: {
                 id: true,
                 email: true,
-                assignee: { select: { id: true, mriReceiver: true } },
+                assignee: { select: { id: true, mriSubscriber: true } },
             },
         });
         return person;
@@ -26,13 +26,10 @@ async function findPerson({
 
 async function subscribeNewPerson({ firstName, lastName, email }: MriSubscriptionType) {
     try {
-        return db.mriReceiver.create({
+        return db.assignee.create({
             data: {
-                assignee: {
-                    create: {
-                        person: { create: { email, lastName, firstName } },
-                    },
-                },
+                person: { create: { email, lastName, firstName } },
+                mriSubscriber: true,
             },
         });
     } catch (e) {
@@ -42,13 +39,10 @@ async function subscribeNewPerson({ firstName, lastName, email }: MriSubscriptio
 
 async function subscribeNewAssignee(id: string) {
     try {
-        return db.mriReceiver.create({
+        return db.assignee.create({
             data: {
-                assignee: {
-                    create: {
-                        person: { connect: { id } },
-                    },
-                },
+                person: { connect: { id } },
+                mriSubscriber: true,
             },
         });
     } catch (e) {
@@ -58,12 +52,9 @@ async function subscribeNewAssignee(id: string) {
 
 async function subscribeExisting(id: string) {
     try {
-        return db.mriReceiver.create({
-            data: {
-                assignee: {
-                    connect: { id },
-                },
-            },
+        return db.assignee.update({
+            where: { id },
+            data: { mriSubscriber: true },
         });
     } catch (e) {
         console.error(`[subscribeNewExisting] ${e}`);
@@ -120,7 +111,7 @@ export async function subscribePerson(
 
             personId = person.id;
             assigneeId = person.assignee?.id;
-            isMriReceiver = !!person.assignee?.mriReceiver?.assigneeId;
+            isMriReceiver = !!person.assignee?.mriSubscriber;
         } else {
             personId = previousPersonId;
             assigneeId = previousAssigneeId;

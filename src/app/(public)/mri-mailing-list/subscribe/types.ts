@@ -1,7 +1,7 @@
 export interface FoundPerson {
     id: string;
     email: string | null;
-    assignee: { id: string; mriReceiver: { assigneeId: string } | null } | null;
+    assignee: { id: string; mriSubscriber: boolean } | null;
 }
 
 export type SubscribePersonReturn =
