@@ -73,10 +73,55 @@ export function reloadWindow() {
     if (typeof window != 'undefined') location.reload();
 }
 
+/**
+ * Returns a string with the full name of person
+ */
 export function personName({ firstName, lastName }: { firstName: string; lastName: string }) {
     return firstName + ' ' + lastName;
 }
 
+/**
+ * Returns a string with the full name of person and the email address between parentheses.
+ */
+export function personNameEmail({
+    email,
+    ...name
+}: {
+    firstName: string;
+    lastName: string;
+    email: string;
+}): string {
+    return `${personName(name)} (${email})`;
+}
+
+/**
+ * Returns a string with the full name and email address
+ * of every person of the given list of people
+ */
+export function peopleNameEmail(
+    people: { firstName: string; lastName: string; email: string }[]
+): string {
+    const len = people.length;
+    if (len === 0) return personNameEmail(people[0]);
+
+    let display = '';
+    for (let i = 0; i < len; ++i) {
+        display += `${personNameEmail(people[i])}`;
+        if (i === len - 1) {
+            break;
+        } else if (i === len - 2) {
+            display += ' et ';
+        } else {
+            display += ', ';
+        }
+    }
+
+    return display;
+}
+
+/**
+ * Returns a string with the full address, from an address database instance.
+ */
 export function stringifyAddress(address: Address): string {
     return (
         address.streetNumber +
@@ -89,4 +134,18 @@ export function stringifyAddress(address: Address): string {
         ', ' +
         address.country
     );
+}
+
+/**
+ * Escape HTML in user input, that shouldn't contain HTML.
+ *
+ * This function must be used on user input that is put in a dangerouslySetInnerHTML.
+ */
+export function sanitiseHtml(value: string) {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
