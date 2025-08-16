@@ -20,7 +20,7 @@ function base64UrlEncode(value: string): string {
         .replace(/=+$/g, '');
 }
 
-export interface EmailBuilder {
+interface EmailBuilder {
     from?: string;
     to: string;
     subject: string;
