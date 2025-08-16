@@ -12,7 +12,7 @@ export const MIDDLEWARE_ERRORS = {
 const NON_AUTH_PUBLIC_ROUTE_PREFIXES = [ERROR_PREFIX, 'mri-mailing-list', 'posulter'];
 
 export function isNonAuthPublicRoute(pathname: string) {
-    if (pathname === '/') return true;
+    // if (pathname === '/') return true;
 
     for (const prefix of NON_AUTH_PUBLIC_ROUTE_PREFIXES)
         if (pathname.startsWith(prefix)) return true;
@@ -21,6 +21,7 @@ export function isNonAuthPublicRoute(pathname: string) {
 }
 
 export function isAuthorisedToRoute(pathname: string, position: keyof typeof ROLES_SIDEBARS) {
+    if (pathname === '/') return true;
     if (pathname.startsWith('/cdp/')) return true;
     const sidebar: RoleSideBar = ROLES_SIDEBARS[position];
     return sidebar.sidebar.find((section) =>
