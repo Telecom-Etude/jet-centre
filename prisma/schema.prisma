@@ -18,5 +18,5 @@ datasource db {
 /// It creates a web based documentation in the output folder.
 generator docs {
     provider = "node node_modules/prisma-docs-generator"
-    output   = "../../docs/schema"
+    output   = "../docs/schema"
 }
