@@ -4,15 +4,16 @@
 
 We use [PostgreSQL](https://www.postgresql.org/) as our [BDMS](https://en.wikipedia.org/wiki/Database#Database_management_system) and [Prisma](https://www.prisma.io/) to write schema, migration and access to the data in typescript.
 
-## Important notice
+## Installation
+
+### Important notice
 
 > [!IMPORTANT]
 > This tutorial isn't needed anymore.
 >
-> We recommend now using docker. Thus, you don't need to setup PostgreSQL manually anymore, so you don't need this tutorial.
-> Even though it is not the prefered installation method, this page is still maintained and opened to improvement.
-
-## Setup (installation)
+> We recommend now using Docker. Thus, you don't need to setup PostgreSQL manually anymore, so you don't need this tutorial.
+>
+> Even though it is not the prefered installation method, this page is still maintained and opened to improvements.
 
 To set up the database, first install postgresql and connect the server.
 
@@ -23,8 +24,17 @@ sudo apt install postgresql       # Install PostgreSQL
 sudo systemctl start postgresql   # Start the PostgreSQL daemon
 sudo systemctl enable postgresql  # (optional) automatically start the daemon
                                   # when you turn on your computer
-sudo -u postgres psql             # Connect the server using the `psql` command as the `postgres` user
-# sudo sudo -u postgres psql      # If the first version fails, try this one
+
+sudo - postgres createuser "your_user_name" -P
+        # Enter your desired password when prompted.
+        # Remove the `-P` for no password
+sudo - postgres createdb "your_db_name"
+```
+
+Assuming you entered `your_password` when prompted in `createuser`, you can now add this to your `.env` and move on to the next step of the installation guide.
+
+```bash
+DB_URL="postgresql://your_user_name:your_password@localhost:5432/your_db_name"
 ```
 
 ### macOS (with Homebrew)
@@ -36,19 +46,24 @@ brew services start postgresql@17   # Start the PostgreSQL daemon
 brew services run postgresql@17     # (optional) automatically start the daemon
                                     # when you turn on your computer
 export PATH="$PATH:/opt/homebrew/postgresql@17/bin" # add this to your .bashrc, .zshrc, etc.
-createuser -s user
-createdb db
+
+createuser -s "your_user_name"
+        # Enter your desired password when prompted.
+        # Remove the `-P` for no password
+createdb "your_db_name"
 ```
 
-You can now use
+Assuming you entered `your_password` when prompted in `createuser`, you can now add this to your `.env` and move on to the next step of the installation guide.
 
 ```bash
-DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
+DB_URL="postgresql://your_user_name:your_password@localhost:5432/your_db_name"
 ```
 
-and skip the weird `CREATE ROLE` SQL command in the next section.
-
 ### Windows
+
+> [!TIP]
+>
+> This section is out-of-date. New insights are welcome on how to use createuser/createdb on Windows.
 
 > Download the installer from [this page](https://www.postgresql.org/download/windows/)
 > Make sure you install PostgreSQL on port 5432
@@ -57,8 +72,6 @@ and skip the weird `CREATE ROLE` SQL command in the next section.
 ```bash
 psql -U postgres    # Connect the server using the `psql` command as the `postgres` user
 ```
-
-## Setup (database creation)
 
 Here, create a new role (user in postgresql) who can create a database, login and have a password.
 
@@ -72,6 +85,8 @@ Finally, create a file named `.env` at the root of your project (if it doesn't a
 DB_URL="postgresql://your_pg_user:your_pg_password@localhost:5432/your_pg_database_name?schema=public"
 ```
 
+## Initialisation
+
 To initialize the database, run a prisma migration.
 
 ```bash
@@ -81,8 +96,10 @@ bun x prisma migrate deploy
 ## Schemas
 
 Schemas are defined in `*.prisma` files in the `prisma` directory.
+
 The file `schema.prisma` contains configuration for prisma.
-You do not need to include those files in any way, prisma will look at all `*.prisma` files in the `prisma` directory.
+
+These files are loaded by the `prisma.config.ts` file at the root of the repository.
 
 ## Migration
 
