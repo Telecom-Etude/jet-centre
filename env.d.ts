@@ -85,11 +85,6 @@ interface OtherEnv {
      * */
     NO_CACHE?: string;
     /**
-     * Redis connection URI.
-     * @see https://redis.io/docs/latest/operate/configuration/cli/connection-strings/
-     */
-    REDIS_URL: string;
-    /**
      * Gives unconditional access to all data and pages.
      * This breaks middleware logic.
      */

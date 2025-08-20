@@ -25,11 +25,9 @@ services:
 
         networks:
             - db-network
-            - cache-network
             - internet
         depends_on:
             - postgres
-            - cache
 
     studio:
         image: oven/bun:1
@@ -60,30 +58,14 @@ services:
         networks:
             - db-network
 
-    cache:
-        image: redis:latest
-        container_name: jc-redis
-        restart: always
-        ports:
-            - '6379:6379'
-        command: redis-server --save 20 1
-        volumes:
-            - cache:/data
-        networks:
-            - cache-network
-
 networks:
     db-network:
-        external: false
-    cache-network:
         external: false
     internet:
         driver: bridge
 
 volumes:
     postgres:
-    cache:
-    bun-cache:
     app-data:
     prisma-generated:
     prisma-client:

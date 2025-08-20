@@ -3,7 +3,6 @@ EXEC := docker exec
 
 APP_CONTAINER_NAME := jc-app
 DB_CONTAINER_NAME := jc-postgres
-CACHE_CONTAINER_NAME := jc-redis
 
 APP_SERVICE_NAME := app
 DB_SERVICE_NAME := postgres

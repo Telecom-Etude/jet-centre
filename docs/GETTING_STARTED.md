@@ -24,8 +24,6 @@ Create a file named `.env` at the root of the project.
 
 Add the `DB_URL` variable in your `.env` file like so : `DB_URL=postgres://postgres:postgres@localhost:5432/maindb?schema=public`
 
-Add the `REDIS_URL` variable in your `.env` file like so : `REDIS_URL=redis://cache:6379/0`
-
 _The port and database names are defined in the `docker-compose.yml` file._
 
 > If you just want to test the project locally with access to all pages, you can just set `DEV_MODE=true` and enter rubbish in the 3 `AUTH_` variables.
@@ -49,7 +47,6 @@ AUTH_GOOGLE_SECRET="your_google_secret"
 
 # Database
 DB_URL=postgres://postgres:postgres@localhost:5432/maindb?schema=public
-REDIS_URL=redis://cache:6379/0
 
 # Drive
 DOSSIER_SUIVI="LJHlkj1LjhLEKJhlKJDHlkjhIUY3063hOIU89367IGd"
