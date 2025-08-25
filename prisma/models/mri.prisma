@@ -45,6 +45,8 @@ model Mri {
     /// Url of the google form for a MRI. Only for version 0.1
     gformUrl           String?
     formMRIs           MriForm[]
+    lastEditedAction   Action    @relation(fields: [lastEditedActionId], references: [id])
+    lastEditedActionId String
 }
 
 /// Links all the data related to an assignee

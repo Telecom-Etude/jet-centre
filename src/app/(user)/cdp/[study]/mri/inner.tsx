@@ -127,7 +127,7 @@ export default function Inner({ studyCode, loadedMriData }: InnerProps) {
     };
 
     return selectedMriId && selectedMri ? (
-        <div className="flex flex-col space-y-main w-full">
+        <div className="flex flex-col space-y-main w-full h-full">
             <Box className="w-full">
                 <BoxHeader>
                     <BoxTitle>Choix du MRI</BoxTitle>
@@ -163,7 +163,7 @@ export default function Inner({ studyCode, loadedMriData }: InnerProps) {
                         study={studyCode}
                     />
                 </UpdateBox>
-                <Box className="w-full">
+                <Box className="w-full overflow-hidden">
                     <BoxHeader>
                         <BoxTitle>Prévisualisation du MRI</BoxTitle>
                     </BoxHeader>

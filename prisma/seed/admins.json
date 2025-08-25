@@ -30,5 +30,5 @@
             }
         }
     },
-    "select!": { "user": { "select": { "admin": { "select": { "id": true } } } } }
+    "select!": { "user": { "select": { "admin": { "select": { "id": true } }, "id": true } } }
 }

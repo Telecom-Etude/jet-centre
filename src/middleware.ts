@@ -50,6 +50,7 @@ function rewrite(url: string, request: NextAuthRequest): NextResponse {
  * Handles the logic for redis in the middleware
  */
 async function redisMiddleware() {
+    return;
     if (!process.env.NO_CACHE) {
         const res = await redis?.get('test');
         console.log('redis returned', res);

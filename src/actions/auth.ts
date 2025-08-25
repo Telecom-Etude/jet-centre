@@ -81,6 +81,8 @@ const config = {
             const lastName = family_name;
             const image = picture;
 
+            console.log('Upserting the user profile picture');
+
             await prisma.person.upsert({
                 where: { email },
 
@@ -134,6 +136,7 @@ const config = {
             profile?: Profile;
         }) {
             if (trigger === 'update') {
+                console.log('Doing getUserPosition (line 138)');
                 token.position = (await getUserPosition(token.email)) ?? token.position;
             }
             if (!trigger) return token;
@@ -153,6 +156,7 @@ const config = {
 
             token.firstName = firstName;
             token.lastName = lastName;
+            console.log('Doing getUserPosition (line 158');
             token.position = (await getUserPosition(email)) ?? token.position;
             return token;
         },

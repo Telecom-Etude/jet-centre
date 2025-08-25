@@ -26,7 +26,10 @@ down:
 build:
 	$(COMPOSE) -f $(DEV_COMPOSE) build
 
-reload: down up
+reload:
+	$(COMPOSE) -f $(DEV_COMPOSE) restart $(APP_SERVICE_NAME)
+
+restart: down up
 
 logs:
 	$(COMPOSE) -f $(DEV_COMPOSE) logs -f

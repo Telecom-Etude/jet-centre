@@ -19,31 +19,11 @@ import { cn } from '@/lib/utils';
  */
 const avenir: NextFont = localFont({
     src: [
-        {
-            path: '../fonts/Avenir/Avenir-Bold.otf',
-            weight: '700',
-            style: 'normal',
-        },
-        {
-            path: '../fonts/Avenir/Avenir-Demi.otf',
-            weight: '600',
-            style: 'normal',
-        },
-        {
-            path: '../fonts/Avenir/Avenir-DemiIt.otf',
-            weight: '600',
-            style: 'italic',
-        },
-        {
-            path: '../fonts/Avenir/Avenir-It.otf',
-            weight: '400',
-            style: 'italic',
-        },
-        {
-            path: '../fonts/Avenir/Avenir-Regular.otf',
-            weight: '400',
-            style: 'normal',
-        },
+        { path: '../fonts/Avenir/Avenir-Bold.otf', weight: '700' },
+        { path: '../fonts/Avenir/Avenir-Demi.otf', weight: '600' },
+        { path: '../fonts/Avenir/Avenir-DemiIt.otf', weight: '600', style: 'italic' },
+        { path: '../fonts/Avenir/Avenir-It.otf', weight: '400', style: 'italic' },
+        { path: '../fonts/Avenir/Avenir-Regular.otf', weight: '400' },
     ],
 });
 
@@ -59,14 +39,14 @@ const avenir: NextFont = localFont({
  */
 export default async function RootLayout({
     children,
-}: Readonly<{
+}: {
     children: ReactNode;
-}>): Promise<ReactNode> {
+}): Promise<ReactNode> {
     const session = await auth();
 
     return (
         <html lang="fr">
-            <body className={cn(avenir.className, 'h-dvh')}>
+            <body className={cn(avenir.className, 'h-dvh w-dvw')}>
                 {session ? <AdminSideBar session={session}>{children}</AdminSideBar> : children}
             </body>
         </html>
@@ -74,16 +54,18 @@ export default async function RootLayout({
 }
 
 async function AdminSideBar({ children, session }: { children: ReactNode; session: Session }) {
+    const userInfo = await get_user_sidebar_info(session.user);
+
     return (
         <SessionProvider>
             <SidebarProvider>
-                <SidebarApp userInfo={await get_user_sidebar_info(session.user)} />
-                <SidebarInset>
-                    <header className="flex px-4 p-2 shrink-0 items-center gap-2 transition-[width,height] ease-linear">
+                <SidebarApp userInfo={userInfo} />
+                <SidebarInset className="flex h-dvh w-full flex-col">
+                    <header className="sticky top-0 flex w-full items-center gap-2 p-2 px-4 bg-background">
                         <TopBar />
                     </header>
-                    <main className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                        <div className="min-h-0 flex-1">{children}</div>
+                    <main className="flex flex-1 flex-col gap-4 overflow-auto p-4 pt-0">
+                        <div className="flex-1 min-h-0">{children}</div>
                     </main>
                 </SidebarInset>
             </SidebarProvider>

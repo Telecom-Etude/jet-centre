@@ -1,8 +1,8 @@
 'use client';
 
 import { LogOut } from 'lucide-react';
-import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 import {
     DropdownMenu,
@@ -14,7 +14,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { UserAvatar } from '@/components/ui/user-avatar';
-import { ROUTES } from '@/routes';
+
+import { Button } from '../ui/button';
 
 interface UserDropdownMenuProps {
     isMobile: boolean;
@@ -57,10 +58,10 @@ export const UserDropdownMenu = ({ isMobile, isOpen }: UserDropdownMenuProps) =>
                             className="space-x-2 cursor-pointer focus:text-primary-foreground"
                             asChild
                         >
-                            <Link href={ROUTES.signOut}>
+                            <Button onClick={() => signOut()}>
                                 <LogOut />
-                                <p>Log out</p>
-                            </Link>
+                                <div>Log out</div>
+                            </Button>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
