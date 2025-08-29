@@ -54,7 +54,9 @@ export function ReportBug() {
 
     return (
         <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
-            <DialogTrigger className="fixed bottom-8 right-8">Trigger</DialogTrigger>
+            <DialogTrigger className="fixed bottom-8 right-8" asChild>
+                <Button variant="destructive">Ticket</Button>
+            </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -83,7 +85,9 @@ export function ReportBug() {
                             )}
                         />
                         <DialogFooter className="pt-4">
-                            <Button type="submit">Envoyer le rapport</Button>
+                            <Button type="submit" variant="secondary">
+                                Envoyer le rapport
+                            </Button>
                         </DialogFooter>
                     </form>
                 </Form>
