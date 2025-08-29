@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from '@/db';
+
 import { Viewer } from './user';
 
 export async function registerBug(viewer: Viewer | null, history: string, description: string) {

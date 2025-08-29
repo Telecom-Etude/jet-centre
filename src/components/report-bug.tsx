@@ -1,5 +1,15 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { registerBug } from '@/data/bug';
+
+import { useUserLogs } from './hooks/use-user-logs';
+import { useViewer } from './hooks/use-viewer';
+import { Button } from './ui/button';
 import {
     Dialog,
     DialogContent,
@@ -9,17 +19,8 @@ import {
     DialogTitle,
     DialogTrigger,
 } from './ui/dialog';
-import { Button } from './ui/button';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
 import { Textarea } from './ui/textarea';
-import { useState } from 'react';
-import { useViewer } from './hooks/use-viewer';
-import { registerBug } from '@/data/bug';
-import { useUserLogs } from './hooks/use-user-logs';
 
 const formSchema = z.object({
     description: z.string().min(10, {
