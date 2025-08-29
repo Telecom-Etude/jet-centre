@@ -1,6 +1,9 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+'use client';
 
-export type UserLog = {
+import React, { createContext, useContext, ReactNode } from 'react';
+import useStorageState from 'use-storage-state';
+
+type UserLog = {
     id: string;
     action: string;
     timestamp: number;
@@ -16,7 +19,7 @@ type UserLogsContextType = {
 const UserLogsContext = createContext<UserLogsContextType | undefined>(undefined);
 
 export const UserLogsProvider = ({ children }: { children: ReactNode }) => {
-    const [logs, setLogs] = useState<UserLog[]>([]);
+    const [logs, setLogs] = useStorageState<UserLog[]>('user-logs', { defaultValue: [] });
 
     const addLog = (action: string, metadata: Record<string, any> = {}) => {
         const newLog: UserLog = {
@@ -25,7 +28,7 @@ export const UserLogsProvider = ({ children }: { children: ReactNode }) => {
             timestamp: Date.now(),
             metadata,
         };
-        setLogs((prev) => [...prev, newLog]);
+        setLogs((prev) => (prev === undefined ? [newLog] : [...prev, newLog]));
     };
 
     const clearLogs = () => setLogs([]);

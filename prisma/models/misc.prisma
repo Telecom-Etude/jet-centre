@@ -5,3 +5,12 @@ model Action {
   userId String
   Mri    Mri[]
 }
+
+model BugReport {
+  id          String   @id @default(cuid())
+  description String
+  history     String
+  date        DateTime
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String
+}
