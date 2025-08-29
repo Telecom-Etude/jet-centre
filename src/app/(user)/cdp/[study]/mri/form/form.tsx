@@ -3,7 +3,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { TextAreaFormElement } from '@/components/meta-components/form/textarea';
-import { FormProvider, FormRow, FormRule } from '@/components/ui/form';
+import { Form, FormRow, FormRule } from '@/components/ui/form';
 import { LEVELS, DOMAINS, DOMAIN_NAMES, LEVEL_NAMES } from '@/db/types';
 
 import { MriFormType } from './schema';
@@ -16,7 +16,7 @@ interface MRICreationProps {
 
 export default function MRICreationForm({ setNotSaved, form, updateServer }: MRICreationProps) {
     return (
-        <FormProvider {...form}>
+        <Form {...form}>
             <form>
                 <InputFormElement
                     label="Titre"
@@ -119,6 +119,6 @@ export default function MRICreationForm({ setNotSaved, form, updateServer }: MRI
                     onBlur={() => updateServer()}
                 />
             </form>
-        </FormProvider>
+        </Form>
     );
 }

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { Button } from '@/components/ui/button';
-import { FormProvider, FormRow } from '@/components/ui/form';
+import { Form, FormRow } from '@/components/ui/form';
 
 import { adminCreationSchema, AdminCreationSchema, NewAdmin } from './settingsSchema';
 
@@ -27,7 +27,7 @@ export function AdminForm({ defaultValues, onSubmit: onSubmit_, onCancel }: Admi
     };
 
     return (
-        <FormProvider {...form}>
+        <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <FormRow>
                     <InputFormElement
@@ -71,6 +71,6 @@ export function AdminForm({ defaultValues, onSubmit: onSubmit_, onCancel }: Admi
                     </Button>
                 </div>
             </form>
-        </FormProvider>
+        </Form>
     );
 }

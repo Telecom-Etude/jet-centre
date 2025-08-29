@@ -5,7 +5,7 @@ import { UpdateBoxStatus } from '@/components/boxes/update-box';
 import { LoadingFullStops } from '@/components/loading';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { Button } from '@/components/ui/button';
-import { FormProvider } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 
 import { NewEmployeeSchemaType, newEmployeeSchema } from './schema';
 
@@ -23,7 +23,7 @@ export function CreateEmployee({
     });
 
     return (
-        <FormProvider {...form}>
+        <Form {...form}>
             <form
                 onSubmit={form.handleSubmit((values) => {
                     setStatus(UpdateBoxStatus.Loading);
@@ -42,6 +42,6 @@ export function CreateEmployee({
                     </Button>
                 )}
             </form>
-        </FormProvider>
+        </Form>
     );
 }
