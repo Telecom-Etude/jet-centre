@@ -28,6 +28,7 @@ model User {
     settings       UserSettings? @relation(fields: [userSettingsId], references: [id])
     admin          Admin?
     userSettingsId String?
+    actions        Action[]
 }
 
 /// An admin represents an administrator of Telecom Etude, i.e. a person that is in mandate.

@@ -15,9 +15,9 @@ services:
             - .env
 
         volumes:
-            - .:/app
-            - /app/node_modules
-            - /app/.next
+            - .:/app:cached
+            - modules_build:/app/node_modules
+            - next_build:/app/.next
             - prisma-generated:/app/node_modules/.prisma
             - prisma-client:/app/node_modules/@prisma/client
         ports:
@@ -85,5 +85,7 @@ volumes:
     cache:
     bun-cache:
     app-data:
+    modules_build:
+    next_build:
     prisma-generated:
     prisma-client:

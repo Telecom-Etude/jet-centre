@@ -9,7 +9,14 @@
         "status": "InProgress|Finished|Validated|Sent|Expired",
         "introductionText": "Paragraph",
         "descriptionText": "Paragraph",
-        "timeLapsText": "Paragraph"
+        "timeLapsText": "Paragraph",
+        "lastEditedAction": {
+            "create": {
+                "user": {
+                    "connect": { "USERID": "0..99" }
+                }
+            }
+        }
     },
     "select!": { "id": true, "studyId": true }
 }

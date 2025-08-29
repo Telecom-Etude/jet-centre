@@ -15,6 +15,31 @@ import Google, { GoogleProfile } from 'next-auth/providers/google';
 import prisma from '@/db';
 import { ROUTES } from '@/routes';
 
+async function getUserId(email: string): Promise<string | undefined> {
+    try {
+        const person = await prisma.person.findUnique({
+            where: {
+                email,
+            },
+
+            select: {
+                user: true,
+            },
+        });
+
+        const admin = await prisma.user.findFirst({
+            where: { id: person?.user?.id },
+            select: {
+                id: true,
+            },
+        });
+
+        return admin?.id ?? undefined;
+    } catch (e) {
+        console.error(`[auth:getUserId] ${e}`);
+    }
+}
+
 async function getUserPosition(email: string): Promise<string | undefined> {
     try {
         const person = await prisma.person.findUnique({
@@ -80,6 +105,8 @@ const config = {
             const firstName = given_name;
             const lastName = family_name;
             const image = picture;
+
+            console.log('Upserting the user profile picture');
 
             await prisma.person.upsert({
                 where: { email },
@@ -153,6 +180,7 @@ const config = {
 
             token.firstName = firstName;
             token.lastName = lastName;
+            token.userId = await getUserId(email);
             token.position = (await getUserPosition(email)) ?? token.position;
             return token;
         },
@@ -160,6 +188,7 @@ const config = {
         async session({ session, token }: { session: Session; token: JWT }) {
             session.user.firstName = token.firstName;
             session.user.lastName = token.lastName;
+            session.user.id = token.userId;
 
             return {
                 ...session,

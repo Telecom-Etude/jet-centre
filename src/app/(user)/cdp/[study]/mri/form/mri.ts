@@ -104,6 +104,7 @@ export async function createNewMri(studyCode: string): Promise<MriServerData | u
                 study: {
                     connect: { id: study.id },
                 },
+                lastEditedAction: {},
             },
         });
         return {
@@ -119,7 +120,7 @@ export async function createNewMri(studyCode: string): Promise<MriServerData | u
 
 export async function storeMriData(mriId: string, data: MriFormType): Promise<string | undefined> {
     try {
-        const mriData: Omit<Mri, 'id' | 'studyId'> = {
+        const mriData: Omit<Mri, 'id' | 'studyId' | 'lastEditedActionId'> = {
             status: MriStatus.InProgress,
             ...data,
         };

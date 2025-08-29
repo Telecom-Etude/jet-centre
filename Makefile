@@ -26,7 +26,13 @@ down:
 build:
 	$(COMPOSE) -f $(DEV_COMPOSE) build
 
-reload: down up
+reload:
+	$(COMPOSE) -f $(DEV_COMPOSE) restart $(APP_SERVICE_NAME)
+
+install:
+	$(EXEC) -it $(APP_CONTAINER_NAME) bun install --frozen-lockfile --verbose
+
+restart: down up
 
 logs:
 	$(COMPOSE) -f $(DEV_COMPOSE) logs -f

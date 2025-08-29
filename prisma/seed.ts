@@ -41,9 +41,9 @@ async function seedFirstUser() {
 async function seedTestData() {
     const assignees = await seedAssigneesTestData(db);
 
-    const admins = await seedAdminsTestData(db);
+    const [admins, users] = await seedAdminsTestData(db);
     const studies = await seedStudiesTestData(db, admins);
-    const mris = await seedMriTestData(db, studies);
+    const mris = await seedMriTestData(db, studies, users);
     const studiesWithMri = mris.filter(
         (study): study is { studyId: string; mriId: string } => study.mriId !== undefined
     );

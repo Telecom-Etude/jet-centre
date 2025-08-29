@@ -1,0 +1,7 @@
+model Action {
+    id     String   @id @default(cuid())
+    user   User     @relation(fields: [userId], references: [id])
+    date   DateTime @default(now())
+    userId String
+    Mri    Mri[]
+}

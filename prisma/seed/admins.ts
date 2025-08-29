@@ -7,42 +7,28 @@
  * The data created here was generated with the following command (cf database.md for mor information):
  *
  * ```
-random-json -c 100 -f admins.json --before $'\nperson = await db.person.create(' --after $');\n\nadmins.push(person!.user!.admin!.id);'
+random-json -c 100 -f admins.json --before $'\nperson = await db.person.create(' --after $');\n\nadmins.push(person!.user!.admin!.id);\nusers.push(person!.user!.id);'
  * ```
  */
 
 import { PrismaClient } from '@prisma/client';
 
-export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
+export async function seedAdminsTestData(db: PrismaClient): Promise<[string[], string[]]> {
     const admins = [];
+    const users = [];
     let person;
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Shanghai',
-                    country: 'Sao Tome and Principe',
-                    postalCode: '48356',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '49',
-                },
-            },
-            email: 'Celina.Baker@btopenworld.com',
-            firstName: 'Jim',
-            lastName: 'Swanson',
+            email: 'Adonis.Hall@sfr.fr',
+            firstName: 'Cara',
+            lastName: 'Ray',
+            phone_number: '257792976583721',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'High',
-                            theme: 'Material Darker',
+                            position: 'internal_vice_president',
                         },
                     },
                 },
@@ -56,198 +42,29 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Kuala Lumpur',
-                    country: 'Afghanistan',
-                    postalCode: '88399',
-                    streetName: 'Bourbon Street',
-                    streetNumber: '646',
+                    city: 'Chongqing',
+                    country: 'Madagascar',
+                    postalCode: '45104',
+                    streetName: 'Las Ramblas',
+                    streetNumber: '695',
                 },
             },
-            firstName: 'Maria',
-            lastName: 'Wilson',
-            phone_number: '211003100099425',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Jalandhar',
-                    country: 'Poland',
-                    postalCode: '38417',
-                    streetName: 'Champs Elysees',
-                    streetNumber: '590',
-                },
-            },
-            email: 'Rocco.Holland@hushmail.com',
-            firstName: 'Martin',
-            lastName: 'Barker',
-            phone_number: '287882396018542',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Material Darker',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Jakarta',
-                    country: 'Angola',
-                    postalCode: '42088',
-                    streetName: 'Queen Street',
-                    streetNumber: '864',
-                },
-            },
-            firstName: 'Pauline',
-            lastName: 'Wheeler',
-            phone_number: '658437808056545',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Panda',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Billy.Taylor@yahoo.co.jp',
-            firstName: 'Kora',
-            lastName: 'Burns',
-            phone_number: '411114242661134',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Solarized Dark',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Noida',
-                    country: 'Azerbaijan',
-                    postalCode: '44246',
-                    streetName: 'Kurfürstendamm',
-                    streetNumber: '268 bis',
-                },
-            },
-            email: 'Graham.Andrews@hotmail.com',
-            firstName: 'Moses',
-            lastName: 'Vincent',
-            phone_number: '780880677453452',
+            email: 'Doria.Dixon@laposte.net',
+            firstName: 'Dawn',
+            lastName: 'Manning',
             user: {
                 create: {
                     admin: {
@@ -257,134 +74,9 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     },
                     settings: {
                         create: {
-                            gui: false,
-                            notificationLevel: 'Medium',
-                            theme: 'Shades of Purple',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Tiruchirappalli',
-                    country: 'Jamaica',
-                    postalCode: '53078',
-                    streetName: 'Nanjing Road',
-                    streetNumber: '720 bis',
-                },
-            },
-            email: 'Grace.Dickson@outlook.in',
-            firstName: 'Aja',
-            lastName: 'Yates',
-            phone_number: '833446767610388',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Nanjing',
-                    country: 'Uruguay',
-                    postalCode: '65046',
-                    streetName: 'Las Olas Boulevard',
-                    streetNumber: '371',
-                },
-            },
-            email: 'Dale.Webster@ntlworld.com',
-            firstName: 'Craig',
-            lastName: 'Palmer',
-            phone_number: '644756337475209',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
                             gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'Selenized Dark',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Kate.Vargas@runbox.com',
-            firstName: 'Elin',
-            lastName: 'Patrick',
-            phone_number: '412504444121097',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
                             notificationLevel: 'High',
-                            theme: 'Firefly',
+                            theme: 'Merbivore Soft',
                         },
                     },
                 },
@@ -398,19 +90,20 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            email: 'Emmy.Yates@yahoo.fr',
-            firstName: 'Johnathon',
-            lastName: 'Hoffman',
-            phone_number: '362705172651183',
+            email: 'Nestor.Jimenez@web.de',
+            firstName: 'Allegra',
+            lastName: 'Fritz',
             user: {
                 create: {
                     admin: {
@@ -418,246 +111,10 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             position: 'president',
                         },
                     },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Aqua.Hodges@icloud.com',
-            firstName: 'Malcolm',
-            lastName: 'Watts',
-            phone_number: '138018121609485',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
                     settings: {
                         create: {
                             gui: true,
                             notificationLevel: 'Low',
-                            theme: 'Night Fox',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Ranchi',
-                    country: 'Uzbekistan',
-                    postalCode: '70065',
-                    streetName: 'Market Street',
-                    streetNumber: '131',
-                },
-            },
-            firstName: 'Jason',
-            lastName: 'Hicks',
-            phone_number: '2415989826842',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Base16 Default Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Miami',
-                    country: 'Monaco',
-                    postalCode: '06364',
-                    streetName: 'Lombard Street',
-                    streetNumber: '259 bis',
-                },
-            },
-            firstName: 'Keri',
-            lastName: 'Nolan',
-            phone_number: '327091511919396',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'Dracula',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Kelli',
-            lastName: 'Pugh',
-            phone_number: '305801713649195',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Zenburnesque',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Rory.Evans@westnet.com.au',
-            firstName: 'Dallin',
-            lastName: 'Faulkner',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'vice_treasurer',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Johannesburg',
-                    country: 'Republic of the Congo',
-                    postalCode: '41370',
-                    streetName: 'Gran Via',
-                    streetNumber: '137',
-                },
-            },
-            email: 'Leilani.Olsen@orange.fr',
-            firstName: 'Dave',
-            lastName: 'Barber',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Medium',
                             theme: 'LAZY',
                         },
                     },
@@ -672,448 +129,34 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Sydney',
-                    country: 'Holy See',
-                    postalCode: '05101',
-                    streetName: 'Fifth Avenue',
-                    streetNumber: '431 ter',
+                    city: 'Tehran',
+                    country: 'Angola',
+                    postalCode: '09405',
+                    streetName: 'Oxford Street',
+                    streetNumber: '990',
                 },
             },
-            email: 'Sam.Wiggins@outlook.co.uk',
-            firstName: 'Dailey',
-            lastName: 'Alexander',
-            phone_number: '272766355678014',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Zebra',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Theodore.Turner@yahoo.co.jp',
-            firstName: 'Haven',
-            lastName: 'Schneider',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Clearnight',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Seoul',
-                    country: 'Seychelles',
-                    postalCode: '84171',
-                    streetName: 'Sunshine Coast Highway',
-                    streetNumber: '853 ter',
-                },
-            },
-            email: 'Uriah.Hale@mail.com.au',
-            firstName: 'Pierre',
-            lastName: 'Ward',
-            phone_number: '605146915168382',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Gruvbox Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Marseille',
-                    country: 'Sierra Leone',
-                    postalCode: '43157',
-                    streetName: 'Khao San Road',
-                    streetNumber: '449',
-                },
-            },
-            email: 'Willa.Lowe@sbcglobal.net',
-            firstName: 'Wallace',
-            lastName: 'Shaw',
-            phone_number: '207375152516826',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Sublime Text',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Aden.Holland@live.fr',
-            firstName: 'Yusuf',
-            lastName: 'Pierce',
-            phone_number: '388085976207389',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'vice_treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'High',
-                            theme: 'Material Oceanic',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Shanghai',
-                    country: 'Barbados',
-                    postalCode: '42466',
-                    streetName: 'Bourbon Street',
-                    streetNumber: '536 ter',
-                },
-            },
-            email: 'Pierre.Kelley@zoho.com',
-            firstName: 'June',
-            lastName: 'Pierce',
-            phone_number: '746063958639799',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'PaperColour Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Paris',
-                    country: 'China',
-                    postalCode: '76046',
-                    streetName: 'Broadway',
-                    streetNumber: '676 bis',
-                },
-            },
-            email: 'Joy.Hale@sbcglobal.net',
-            firstName: 'Easton',
-            lastName: 'Montgomery',
-            phone_number: '642864124685507',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'president',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Atlanta',
-                    country: 'Czech Republic',
-                    postalCode: '66033',
-                    streetName: 'Friedrichstrasse',
-                    streetNumber: '52 ter',
-                },
-            },
-            firstName: 'Scarlett',
-            lastName: 'Kent',
-            phone_number: '597464577798163',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Meredith.Armstrong@inbox.ru',
-            firstName: 'Grace',
-            lastName: 'Mclean',
+            email: 'Eula.Dean@centrum.cz',
+            firstName: 'Macy',
+            lastName: 'Stokes',
             user: {
                 create: {
                     admin: {
                         create: {
                             position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Medium',
-                            theme: 'One Dark',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Zhengzhou',
-                    country: 'Brunei',
-                    postalCode: '85035',
-                    streetName: 'Unter den Linden',
-                    streetNumber: '215 ter',
-                },
-            },
-            firstName: 'Kayla',
-            lastName: 'Harris',
-            phone_number: '267157717082075',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'High',
-                            theme: 'Monokai',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Gallagher',
-            lastName: 'Faulkner',
-            phone_number: '562596788656941',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'vice_treasurer',
                         },
                     },
                     settings: {
@@ -1134,119 +177,70 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Gaynor.Hayes@netcourrier.com',
+            firstName: 'Bella',
+            lastName: 'Reese',
+            phone_number: '369477413597023',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Neon',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Buenos Aires',
-                    country: 'Moldova',
-                    postalCode: '13399',
-                    streetName: 'Bourbon Street',
-                    streetNumber: '401',
+                    city: 'Paris',
+                    country: 'Guinea',
+                    postalCode: '19117',
+                    streetName: 'Baker Street',
+                    streetNumber: '427',
                 },
             },
-            email: 'Geraldine.Atkins@gmail.com',
-            firstName: 'Penelope',
-            lastName: 'Raymond',
-            phone_number: '335264957692291',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Trevor.May@talktalk.net',
-            firstName: 'Bret',
-            lastName: 'Burke',
-            phone_number: '81307190373928',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'president',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Doane',
-            lastName: 'Larson',
-            phone_number: '313294873306514',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'general_secretary',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Joelle',
-            lastName: 'Hernandez',
-            phone_number: '789300959940236',
+            email: 'Isaac.Gilliam@westnet.com.au',
+            firstName: 'Olivia',
+            lastName: 'Franklin',
+            phone_number: '853981950225683',
             user: {
                 create: {
                     admin: {
@@ -1265,199 +259,30 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Aurangabad',
-                    country: 'Antigua and Barbuda',
-                    postalCode: '58452',
-                    streetName: "King's Road",
-                    streetNumber: '763',
+                    city: 'Rome',
+                    country: 'Dominica',
+                    postalCode: '01283',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '120 bis',
                 },
             },
-            email: 'Carla.Stevens@sbcglobal.net',
-            firstName: 'Tanya',
-            lastName: 'Hall',
-            phone_number: '435352670833036',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'general_secretary',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Monterrey',
-                    country: 'Gabon',
-                    postalCode: '02148',
-                    streetName: 'Sunset Boulevard',
-                    streetNumber: '348',
-                },
-            },
-            firstName: 'Lilly',
-            lastName: 'Meyer',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Lima',
-                    country: 'United Arab Emirates',
-                    postalCode: '32164',
-                    streetName: 'Wall Street',
-                    streetNumber: '998',
-                },
-            },
-            email: 'Joy.Allison@yahoo.co.jp',
-            firstName: 'Alessia',
-            lastName: 'Slater',
-            phone_number: '765051318808885',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Horizon',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Noida',
-                    country: 'Somalia',
-                    postalCode: '57231',
-                    streetName: 'La Rambla',
-                    streetNumber: '297',
-                },
-            },
-            email: 'Bobbi.Lloyd@hushmail.com',
-            firstName: 'Exie',
-            lastName: 'Webster',
-            phone_number: '56596563397690',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Iceberg',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Liverpool',
-                    country: 'Cyprus',
-                    postalCode: '40234',
-                    streetName: 'Champs Elysees',
-                    streetNumber: '978',
-                },
-            },
-            firstName: 'Percy',
-            lastName: 'Mcmillan',
-            phone_number: '205263289559067',
+            email: 'Darnell.Hudson@gmail.fr',
+            firstName: 'Gregory',
+            lastName: 'Mckenzie',
+            phone_number: '782783917788683',
             user: {
                 create: {
                     admin: {
@@ -1467,8 +292,8 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     },
                     settings: {
                         create: {
-                            gui: true,
-                            notificationLevel: 'Low',
+                            gui: false,
+                            notificationLevel: 'Medium',
                             theme: 'Base16 Material',
                         },
                     },
@@ -1483,28 +308,60 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Hattie',
+            lastName: 'Kim',
+            phone_number: '906863111413999',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Manchester',
-                    country: 'Guatemala',
-                    postalCode: '27057',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '672',
+                    city: 'Gwalior',
+                    country: 'Bulgaria',
+                    postalCode: '70454',
+                    streetName: 'Oxford Street',
+                    streetNumber: '92',
                 },
             },
-            email: 'Haley.Conway@bigpond.com',
-            firstName: 'Brandt',
-            lastName: 'Hall',
-            phone_number: '819651304625616',
+            firstName: 'Chaim',
+            lastName: 'Wright',
             user: {
                 create: {
                     admin: {
@@ -1514,9 +371,9 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     },
                     settings: {
                         create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'Bluloco',
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Gruvbox Dark Medium',
                         },
                     },
                 },
@@ -1530,31 +387,74 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            email: 'Brayan.Dennis@docomo.ne.jp',
-            firstName: 'Issac',
-            lastName: 'Wallace',
-            phone_number: '179294115706893',
+            email: 'Elin.Nicholson@mail.com',
+            firstName: 'Colleen',
+            lastName: 'Whitaker',
+            phone_number: '154061913546373',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'info',
+                            position: 'operational_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Jabalpur',
+                    country: 'Norway',
+                    postalCode: '81285',
+                    streetName: 'Lombard Street',
+                    streetNumber: '700',
+                },
+            },
+            firstName: 'Cosima',
+            lastName: 'Zamora',
+            phone_number: '69560442591193',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
                         },
                     },
                     settings: {
                         create: {
                             gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'One Dark Pro Monokai Darker',
+                            notificationLevel: 'High',
+                            theme: 'Shades of Purple',
                         },
                     },
                 },
@@ -1568,58 +468,117 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Josue.Burns@gmail.com',
-            firstName: 'General',
-            lastName: 'Gibson',
-            phone_number: '292438714600003',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
                     city: 'Seoul',
-                    country: 'Angola',
-                    postalCode: '89078',
-                    streetName: 'Avenida Paulista',
-                    streetNumber: '733',
+                    country: 'Barbados',
+                    postalCode: '34124',
+                    streetName: 'Bourbon Street',
+                    streetNumber: '689',
                 },
             },
-            email: 'Larry.Kim@msn.com',
-            firstName: 'Eliezer',
-            lastName: 'Graham',
+            email: 'Foster.Hayes@sbcglobal.net',
+            firstName: 'Bryna',
+            lastName: 'Velez',
+            phone_number: '613270097266804',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Base16 Material',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Delphia.Hill@rocketmail.com',
+            firstName: 'Claudia',
+            lastName: 'Richardson',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Blackboard',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Philadelphia',
+                    country: 'Colombia',
+                    postalCode: '03084',
+                    streetName: 'Ginza',
+                    streetNumber: '252',
+                },
+            },
+            firstName: 'Clyde',
+            lastName: 'Wolfe',
+            phone_number: '834197084577293',
             user: {
                 create: {
                     admin: {
@@ -1627,13 +586,6 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             position: 'vice_treasurer',
                         },
                     },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'High',
-                            theme: 'Monokai',
-                        },
-                    },
                 },
             },
         },
@@ -1645,75 +597,30 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Bhopal',
-                    country: 'Qatar',
-                    postalCode: '57489',
-                    streetName: 'Pennsylvania Avenue',
-                    streetNumber: '901',
+                    city: 'Leicester',
+                    country: 'Netherlands',
+                    postalCode: '35024',
+                    streetName: 'Michigan Avenue',
+                    streetNumber: '276',
                 },
             },
-            email: 'Douglas.Brady@virginmedia.com',
-            firstName: 'Gabriel',
-            lastName: 'Faulkner',
-            phone_number: '489690022229598',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'general_secretary',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'PaperColour Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Hefei',
-                    country: 'Poland',
-                    postalCode: '53349',
-                    streetName: 'Avenida Paulista',
-                    streetNumber: '880',
-                },
-            },
-            email: 'Duncan.Andrews@yahoo.co.jp',
-            firstName: 'Reuben',
-            lastName: 'Vogel',
-            phone_number: '886044459101206',
+            email: 'Bea.Ives@freenet.de',
+            firstName: 'Geno',
+            lastName: 'Bowers',
+            phone_number: '160331291077278',
             user: {
                 create: {
                     admin: {
@@ -1724,8 +631,8 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     settings: {
                         create: {
                             gui: true,
-                            notificationLevel: 'Low',
-                            theme: "SynthWave '84",
+                            notificationLevel: 'High',
+                            theme: 'Darkula',
                         },
                     },
                 },
@@ -1739,152 +646,20 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Guayaquil',
-                    country: 'Sweden',
-                    postalCode: '85292',
-                    streetName: 'Wall Street',
-                    streetNumber: '29',
-                },
-            },
-            email: 'Caia.Johnson@zoho.com',
-            firstName: 'Vickie',
-            lastName: 'Conner',
-            phone_number: '438211317269987',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'One Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Alexandria',
-                    country: 'Libya',
-                    postalCode: '06171',
-                    streetName: 'Unter den Linden',
-                    streetNumber: '388',
-                },
-            },
-            email: 'Sheldon.Green@inbox.com',
-            firstName: 'Darell',
-            lastName: 'Alvarez',
-            phone_number: '555451534532103',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Vernon',
-            lastName: 'Barnett',
-            phone_number: '751830638282861',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'operational_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Bluloco Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Patna',
-                    country: 'Iceland',
-                    postalCode: '53271',
-                    streetName: 'Kurfürstendamm',
-                    streetNumber: '648 bis',
-                },
-            },
-            email: 'Augustine.Schmidt@yahoo.de',
-            firstName: 'Garland',
-            lastName: 'Tucker',
-            phone_number: '235981651703505',
+            email: 'Alan.Vernon@outlook.in',
+            firstName: 'Domitila',
+            lastName: 'Hicks',
             user: {
                 create: {
                     admin: {
@@ -1895,55 +670,8 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     settings: {
                         create: {
                             gui: false,
-                            notificationLevel: 'Medium',
-                            theme: 'Misterioso',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Osaka',
-                    country: 'Papua New Guinea',
-                    postalCode: '40047',
-                    streetName: 'Champs Elysees',
-                    streetNumber: '675',
-                },
-            },
-            email: 'Josiah.Ward@comcast.net',
-            firstName: 'Bowen',
-            lastName: 'Gray',
-            phone_number: '241337837295108',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'operational_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
                             notificationLevel: 'High',
-                            theme: 'Zenburn',
+                            theme: 'Gruvbox Dark Hard',
                         },
                     },
                 },
@@ -1957,27 +685,109 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Bobbi',
+            lastName: 'Barnett',
+            phone_number: '474878585761358',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Eiffel',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Helsinki',
-                    country: 'Liechtenstein',
-                    postalCode: '31216',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '887',
+                    city: 'Washington, D.C.',
+                    country: 'Cabo Verde',
+                    postalCode: '17401',
+                    streetName: 'Friedrichstrasse',
+                    streetNumber: '827',
                 },
             },
-            email: 'Ellen.Torres@email.cz',
-            firstName: 'Agosto',
-            lastName: 'Vega',
+            email: 'Adele.Weber@live.ca',
+            firstName: 'Sandra',
+            lastName: 'Barber',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Recife',
+                    country: 'Syria',
+                    postalCode: '13157',
+                    streetName: 'Portobello Road',
+                    streetNumber: '728',
+                },
+            },
+            firstName: 'Madison',
+            lastName: 'Woodward',
+            phone_number: '51391359114126',
             user: {
                 create: {
                     admin: {
@@ -1987,9 +797,9 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     },
                     settings: {
                         create: {
-                            gui: true,
+                            gui: false,
                             notificationLevel: 'Medium',
-                            theme: 'Solarized Light',
+                            theme: 'Nord',
                         },
                     },
                 },
@@ -2003,33 +813,205 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Livia.Gill@me.com',
+            firstName: 'Camilla',
+            lastName: 'Gordon',
+            phone_number: '962486009193783',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'vice_treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Bluloco Dark',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Caissa.Travis@mail.com.au',
+            firstName: 'Ayanna',
+            lastName: 'Bailey',
+            phone_number: '849065022848150',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'operational_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Sydney',
+                    country: 'Malta',
+                    postalCode: '04384',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '881',
+                },
+            },
+            email: 'Dalen.Thornton@live.fr',
+            firstName: 'Germain',
+            lastName: 'Leonard',
+            phone_number: '246854591914464',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'internal_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Blackboard',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Dallas',
+                    country: 'Mongolia',
+                    postalCode: '66219',
+                    streetName: 'Queen Street',
+                    streetNumber: '823',
+                },
+            },
+            email: 'Caissa.Mills@mail.ua',
+            firstName: 'Perry',
+            lastName: 'Nolan',
+            phone_number: '615063993833084',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Ay Light',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
                     city: 'Guangzhou',
-                    country: 'Maldives',
-                    postalCode: '31061',
-                    streetName: 'Orchard Road',
-                    streetNumber: '753',
+                    country: 'Argentina',
+                    postalCode: '73234',
+                    streetName: 'Baker Street',
+                    streetNumber: '842',
                 },
             },
-            email: 'Teddy.Payne@laposte.net',
-            firstName: 'Uma',
-            lastName: 'Barr',
-            phone_number: '282222804942579',
+            firstName: 'Gary',
+            lastName: 'Allison',
+            phone_number: '204173616219754',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'info',
+                            position: 'vice_treasurer',
                         },
                     },
                     settings: {
@@ -2050,1085 +1032,32 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            email: 'Cora.Banks@docomo.ne.jp',
-            firstName: 'Tanya',
-            lastName: 'Howard',
-            phone_number: '155123805621106',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Material Theme',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Chengdu',
-                    country: 'Sierra Leone',
-                    postalCode: '20272',
-                    streetName: 'Baker Street',
-                    streetNumber: '871',
-                },
-            },
-            firstName: 'Kai',
-            lastName: 'Wilkinson',
-            phone_number: '70384275050429',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'general_secretary',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Belo Horizonte',
-                    country: 'Egypt',
-                    postalCode: '65243',
-                    streetName: 'Ginza',
-                    streetNumber: '636',
-                },
-            },
-            email: 'Rosetta.Jones@wow.com',
-            firstName: 'Beau',
-            lastName: 'Edwards',
-            phone_number: '545264918484129',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Zenburnesque',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Amsterdam',
-                    country: 'Bosnia and Herzegovina',
-                    postalCode: '29057',
-                    streetName: 'Las Olas Boulevard',
-                    streetNumber: '271',
-                },
-            },
-            email: 'Valentina.Holmes@hotmail.co.uk',
-            firstName: 'Connor',
-            lastName: 'Cox',
-            phone_number: '204795675323713',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Hopscotch',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Jaxson.Lawson@bt.com',
-            firstName: 'Jazmine',
-            lastName: 'Carlson',
-            phone_number: '938596486113636',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Jakarta',
-                    country: 'Albania',
-                    postalCode: '73228',
-                    streetName: 'Champs Elysees',
-                    streetNumber: '274',
-                },
-            },
-            email: 'Ricky.Abbott@inbox.ru',
-            firstName: 'Whitney',
-            lastName: 'Vega',
-            phone_number: '523412802749683',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Firefly',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Chicago',
-                    country: 'Tunisia',
-                    postalCode: '89371',
-                    streetName: 'Ginza',
-                    streetNumber: '764',
-                },
-            },
-            firstName: 'Sarah',
-            lastName: 'Oliver',
-            phone_number: '557130065431576',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'vice_treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'Bespin',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Vadodara',
-                    country: 'Philippines',
-                    postalCode: '24176',
-                    streetName: 'Rodeo Drive',
-                    streetNumber: '103',
-                },
-            },
-            email: 'Kristian.Nicholson@gmail.co.jp',
-            firstName: 'Gian',
-            lastName: 'Peck',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Dominic.Sherman@yahoo.fr',
-            firstName: 'Cassidy',
-            lastName: 'Fisher',
-            phone_number: '663926921239201',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'general_secretary',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Shenzhen',
-                    country: 'Burundi',
-                    postalCode: '65176',
-                    streetName: 'Las Ramblas',
-                    streetNumber: '290',
-                },
-            },
-            email: 'Carson.Mullen@tutanota.com',
-            firstName: 'Lydia',
-            lastName: 'Sutton',
-            phone_number: '686603586794328',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'Terminal',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Jackson.Fisher@numericable.fr',
-            firstName: 'Gavin',
-            lastName: 'Walters',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Medium',
-                            theme: 'Vibrant Ink',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Atlanta',
-                    country: 'Marshall Islands',
-                    postalCode: '06488',
-                    streetName: "King's Road",
-                    streetNumber: '613',
-                },
-            },
-            email: 'Waylon.Willis@sympatico.ca',
-            firstName: 'Ayanna',
-            lastName: 'Conway',
-            phone_number: '62164710256785',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Material Theme',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Mysore',
-                    country: 'Nauru',
-                    postalCode: '54436',
-                    streetName: 'Bourbon Street',
-                    streetNumber: '674',
-                },
-            },
-            firstName: 'Tyler',
-            lastName: 'Parrish',
-            phone_number: '318735296031488',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Visual Studio Dark',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Jakarta',
-                    country: 'Maldives',
-                    postalCode: '17448',
-                    streetName: 'Champs Elysees',
-                    streetNumber: '936',
-                },
-            },
-            firstName: 'Upton',
-            lastName: 'Ward',
-            phone_number: '616814311102439',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Edinburgh',
-                    country: 'Haiti',
-                    postalCode: '20219',
-                    streetName: 'Orchard Road',
-                    streetNumber: '168 bis',
-                },
-            },
-            email: 'Maxine.Ward@inbox.com',
-            firstName: 'Branch',
-            lastName: 'Schultz',
-            phone_number: '322197501360905',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'IDLE',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Rolando.Poole@yahoo.co.jp',
-            firstName: 'Danila',
-            lastName: 'Parrish',
-            phone_number: '910039287218441',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Chicago',
-                    country: 'Algeria',
-                    postalCode: '28443',
-                    streetName: 'Oxford Street',
-                    streetNumber: '318 ter',
-                },
-            },
-            email: 'Kollin.Ford@bt.com',
-            firstName: 'Lissa',
-            lastName: 'Ericson',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'general_secretary',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'High',
-                            theme: 'Gruvbox',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Cairo',
-                    country: 'Iceland',
-                    postalCode: '95397',
-                    streetName: 'Market Street',
-                    streetNumber: '894',
-                },
-            },
-            firstName: 'Carla',
-            lastName: 'Kerr',
-            phone_number: '926327498307727',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Medium',
-                            theme: 'Material Ocean',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Singapore',
-                    country: 'Belgium',
-                    postalCode: '78110',
-                    streetName: 'Hollywood Boulevard',
-                    streetNumber: '322',
-                },
-            },
-            email: 'George.Pierce@telus.net',
-            firstName: 'Bryleigh',
-            lastName: 'Christensen',
-            phone_number: '192285132641187',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Devonta.Palmer@outlook.in',
-            firstName: 'Rick',
-            lastName: 'Harvey',
-            phone_number: '833587513240864',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'One Dark Pro Monokai Darker',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Anderson',
-            lastName: 'Harmon',
-            phone_number: '882728972483922',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'KR Theme',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Guayaquil',
-                    country: 'Ireland',
-                    postalCode: '94485',
-                    streetName: 'Beale Street',
-                    streetNumber: '491',
-                },
-            },
-            firstName: 'Tyson',
-            lastName: 'Roberts',
-            phone_number: '627213682460197',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'operational_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'Material',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Helsinki',
-                    country: 'Paraguay',
-                    postalCode: '58067',
-                    streetName: 'Hollywood Boulevard',
-                    streetNumber: '784',
-                },
-            },
-            email: 'Edna.Watson@shaw.ca',
-            firstName: 'Zadie',
-            lastName: 'Vargas',
-            phone_number: '69409428833773',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'operational_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Firefly',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Zurich',
-                    country: 'Jamaica',
-                    postalCode: '75296',
-                    streetName: 'Fifth Avenue',
-                    streetNumber: '555 bis',
-                },
-            },
-            email: 'Cristian.Barry@rambler.ru',
-            firstName: 'Kendra',
-            lastName: 'Jacobs',
-            phone_number: '807447434192418',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'vice_treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Selenized Dark',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Rome',
-                    country: 'Lesotho',
-                    postalCode: '22401',
-                    streetName: 'Avenida Paulista',
-                    streetNumber: '616',
-                },
-            },
-            email: 'Renee.Poole@zoho.com',
-            firstName: 'Blanche',
-            lastName: 'Thomas',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'general_secretary',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Low',
-                            theme: 'Gruvbox Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Jabalpur',
-                    country: 'Nigeria',
-                    postalCode: '02094',
-                    streetName: 'Friedrichstrasse',
-                    streetNumber: '771',
-                },
-            },
-            email: 'Darby.Wiggins@bigpond.com',
-            firstName: 'Ezekiel',
+            email: 'Dakota.Burnett@live.fr',
+            firstName: 'Porter',
             lastName: 'Velasquez',
-            phone_number: '700441213006224',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'internal_vice_president',
+                            position: 'external_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Bluloco Dark',
                         },
                     },
                 },
@@ -3142,28 +1071,29 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Baghdad',
-                    country: 'Papua New Guinea',
-                    postalCode: '52244',
-                    streetName: 'Baker Street',
-                    streetNumber: '515',
+                    city: 'Luanda',
+                    country: 'Pakistan',
+                    postalCode: '20234',
+                    streetName: 'Ginza',
+                    streetNumber: '957',
                 },
             },
-            email: 'Bernie.Park@fastmail.com',
-            firstName: 'Baylee',
-            lastName: 'Montgomery',
-            phone_number: '768927304511712',
+            email: 'Bobby.Kirk@sbcglobal.net',
+            firstName: 'Cornelius',
+            lastName: 'Suarez',
             user: {
                 create: {
                     admin: {
@@ -3182,28 +1112,110 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Shenzhen',
-                    country: 'Holy See',
-                    postalCode: '95274',
-                    streetName: 'Sunshine Coast Highway',
-                    streetNumber: '476',
+                    city: 'Hefei',
+                    country: 'Brunei',
+                    postalCode: '13020',
+                    streetName: 'Rodeo Drive',
+                    streetNumber: '484',
                 },
             },
-            email: 'Deloris.Silva@hotmail.fr',
-            firstName: 'Amya',
-            lastName: 'Page',
-            phone_number: '322709506964043',
+            firstName: 'Trudy',
+            lastName: 'Carlson',
+            phone_number: '31806593143342',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'internal_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Miami',
+                    country: 'Spain',
+                    postalCode: '88295',
+                    streetName: 'Yonge Street',
+                    streetNumber: '6',
+                },
+            },
+            email: 'Alfred.Walker@ntlworld.co.uk',
+            firstName: 'Constantine',
+            lastName: 'Mclean',
+            phone_number: '689112967406011',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'external_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Dark+ (default dark)',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Beverley.Suarez@free.fr',
+            firstName: 'Georgina',
+            lastName: 'Petersen',
             user: {
                 create: {
                     admin: {
@@ -3213,130 +1225,8 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     },
                     settings: {
                         create: {
-                            gui: false,
+                            gui: true,
                             notificationLevel: 'High',
-                            theme: 'Zenburn',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Glenn',
-            lastName: 'Schultz',
-            phone_number: '886459323960171',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'commercial_director',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Base16 Solarized Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Ahmedabad',
-                    country: 'Eritrea',
-                    postalCode: '60309',
-                    streetName: 'Unter den Linden',
-                    streetNumber: '470',
-                },
-            },
-            email: 'Ivy.Marshall@live.com',
-            firstName: 'Dominik',
-            lastName: 'Gordon',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'treasurer',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Agra',
-                    country: 'Switzerland',
-                    postalCode: '07434',
-                    streetName: 'Fifth Avenue',
-                    streetNumber: '622',
-                },
-            },
-            email: 'Carolina.Clarke@aliceadsl.fr',
-            firstName: 'Caitlin',
-            lastName: 'Blake',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
                             theme: 'Kuroir',
                         },
                     },
@@ -3351,273 +1241,29 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Tokyo',
-                    country: 'Djibouti',
-                    postalCode: '94491',
-                    streetName: 'Friedrichstrasse',
-                    streetNumber: '281',
+                    city: 'Barcelona',
+                    country: 'Argentina',
+                    postalCode: '82086',
+                    streetName: 'Hollywood Boulevard',
+                    streetNumber: '169',
                 },
             },
-            firstName: 'Kian',
-            lastName: 'Blake',
-            phone_number: '975358071168096',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'Low',
-                            theme: 'Base16 Default Dark',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Atlanta',
-                    country: 'Germany',
-                    postalCode: '07456',
-                    streetName: 'Unter den Linden',
-                    streetNumber: '11',
-                },
-            },
-            email: 'Cait.Andrews@t-online.de',
-            firstName: 'Ila',
-            lastName: 'Chambers',
-            phone_number: '543342411814613',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'internal_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Darcula',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Gwyneth',
-            lastName: 'Montgomery',
-            phone_number: '349221751777551',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'info',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'High',
-                            theme: 'Pastels on Dark',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Dhanbad',
-                    country: 'North Macedonia',
-                    postalCode: '34245',
-                    streetName: 'Via del Corso',
-                    streetNumber: '570',
-                },
-            },
-            email: 'Hilary.Foster@charter.net',
-            firstName: 'Enrique',
-            lastName: 'Reynolds',
-            phone_number: '809229539392434',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Palenight',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            firstName: 'Valentina',
-            lastName: 'Buckley',
-            phone_number: '406577982301685',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'vice_treasurer',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            address: {
-                create: {
-                    city: 'Shenyang',
-                    country: 'Lesotho',
-                    postalCode: '24288',
-                    streetName: 'Baker Street',
-                    streetNumber: '511',
-                },
-            },
-            email: 'Bridgette.Ives@mail.com.au',
-            firstName: 'Dixie',
-            lastName: 'Simpson',
-            phone_number: '970862005096008',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'treasurer',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Kimbie Light',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Baxter.Mack@yahoo.co.in',
-            firstName: 'Jocelyn',
-            lastName: 'Potter',
-            phone_number: '11249536433954',
+            firstName: 'Yosef',
+            lastName: 'Ross',
+            phone_number: '343221073370869',
             user: {
                 create: {
                     admin: {
@@ -3628,6 +1274,262 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     settings: {
                         create: {
                             gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Bluloco Light',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Diego',
+            lastName: 'Harding',
+            phone_number: '687867340827098',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Espresso',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Veronica',
+            lastName: 'Gomez',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Cobalt',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Salvador',
+                    country: 'Bolivia',
+                    postalCode: '35350',
+                    streetName: 'Unter den Linden',
+                    streetNumber: '707',
+                },
+            },
+            email: 'Douglas.Silva@bigpond.com',
+            firstName: 'Richard',
+            lastName: 'Baker',
+            phone_number: '724013672791318',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'operational_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Cobalt2',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Helsinki',
+                    country: 'Seychelles',
+                    postalCode: '04170',
+                    streetName: 'Portobello Road',
+                    streetNumber: '647',
+                },
+            },
+            firstName: 'Campbell',
+            lastName: 'Turner',
+            phone_number: '319891742933748',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'internal_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Low',
+                            theme: 'Clouds Midnight',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Leonidas.Wade@gmail.co.in',
+            firstName: 'Erwin',
+            lastName: 'Ruiz',
+            phone_number: '909440022462917',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Mysore',
+                    country: 'Tanzania',
+                    postalCode: '49248',
+                    streetName: 'Nevsky Prospekt',
+                    streetNumber: '764',
+                },
+            },
+            email: 'Bridgett.Merrill@gmx.de',
+            firstName: 'Anderson',
+            lastName: 'Harper',
+            phone_number: '880904089636723',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
                             notificationLevel: 'Medium',
                             theme: 'Katzenmilch',
                         },
@@ -3643,24 +1545,42 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            email: 'Erick.Meyer@gmail.co.jp',
-            firstName: 'Albion',
-            lastName: 'Burke',
-            phone_number: '172787622843846',
+            address: {
+                create: {
+                    city: 'Addis Ababa',
+                    country: 'Zimbabwe',
+                    postalCode: '69113',
+                    streetName: 'Wall Street',
+                    streetNumber: '92 bis',
+                },
+            },
+            email: 'Arnulfo.Gardner@zoho.com',
+            firstName: 'Dahlia',
+            lastName: 'Reed',
+            phone_number: '587604968625876',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'vice_treasurer',
+                            position: 'general_secretary',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Neon',
                         },
                     },
                 },
@@ -3674,28 +1594,21 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Jodhpur',
-                    country: 'Egypt',
-                    postalCode: '49338',
-                    streetName: 'Abbey Road',
-                    streetNumber: '825',
-                },
-            },
-            email: 'Bryna.Gilbert@web.de',
-            firstName: 'Keegan',
-            lastName: 'Harding',
-            phone_number: '291096435785259',
+            email: 'Christopher.Douglas@juno.com',
+            firstName: 'Bethany',
+            lastName: 'Cross',
+            phone_number: '393663308654392',
             user: {
                 create: {
                     admin: {
@@ -3706,8 +1619,8 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     settings: {
                         create: {
                             gui: false,
-                            notificationLevel: 'Medium',
-                            theme: 'XCode',
+                            notificationLevel: 'High',
+                            theme: 'Sqlserver',
                         },
                     },
                 },
@@ -3721,27 +1634,205 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Phoenix',
-                    country: 'Syria',
-                    postalCode: '94073',
-                    streetName: 'Gran Via',
-                    streetNumber: '717 bis',
+                    city: 'Hangzhou',
+                    country: 'Palestine State',
+                    postalCode: '90194',
+                    streetName: 'Las Ramblas',
+                    streetNumber: '685',
                 },
             },
-            firstName: 'Bianca',
-            lastName: 'Mcgrath',
-            phone_number: '738092274961915',
+            email: 'Dennis.Dunn@voila.fr',
+            firstName: 'Colby',
+            lastName: 'Warren',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'external_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Dracula Official',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Vijayawada',
+                    country: 'Thailand',
+                    postalCode: '86098',
+                    streetName: 'Baker Street',
+                    streetNumber: '423',
+                },
+            },
+            email: 'Alvaro.Glover@gmail.co.in',
+            firstName: 'Myra',
+            lastName: 'Douglas',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'general_secretary',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Solarized Light (official)',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Manila',
+                    country: 'Burkina Faso',
+                    postalCode: '43282',
+                    streetName: 'Sunshine Coast Highway',
+                    streetNumber: '855',
+                },
+            },
+            email: 'Dolores.Cross@neuf.fr',
+            firstName: 'Frankie',
+            lastName: 'Graves',
+            phone_number: '949886102688616',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Low',
+                            theme: 'Atom Dark',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Jesse.Garrison@inbox.com',
+            firstName: 'Floyd',
+            lastName: 'Gross',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Light+ (default light)',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Adelicia.Bradley@outlook.co.uk',
+            firstName: 'Brody',
+            lastName: 'Reilly',
+            phone_number: '106854705747778',
             user: {
                 create: {
                     admin: {
@@ -3749,11 +1840,51 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             position: 'vice_treasurer',
                         },
                     },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Bristol',
+                    country: 'Syria',
+                    postalCode: '31075',
+                    streetName: 'Orchard Road',
+                    streetNumber: '88',
+                },
+            },
+            firstName: 'Irena',
+            lastName: 'Davis',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'info',
+                        },
+                    },
                     settings: {
                         create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Bluloco',
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Kimbie Dark',
                         },
                     },
                 },
@@ -3767,23 +1898,253 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            firstName: 'Ira',
-            lastName: 'Holland',
-            phone_number: '279219607540270',
+            address: {
+                create: {
+                    city: 'Southampton',
+                    country: 'Sao Tome and Principe',
+                    postalCode: '83077',
+                    streetName: "King's Road",
+                    streetNumber: '39',
+                },
+            },
+            email: 'Todd.Fisher@yahoo.co.uk',
+            firstName: 'Augustine',
+            lastName: 'Atkins',
+            phone_number: '145394335370073',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'president',
+                            position: 'operational_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Iceberg',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Patrick.Paul@ukr.net',
+            firstName: 'Katrina',
+            lastName: 'Pearson',
+            phone_number: '115235124156311',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'internal_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Los Angeles',
+                    country: 'Honduras',
+                    postalCode: '58262',
+                    streetName: 'Oxford Street',
+                    streetNumber: '504 ter',
+                },
+            },
+            firstName: 'Emmeline',
+            lastName: 'Christensen',
+            phone_number: '760998339561215',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'general_secretary',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Mumbai',
+                    country: 'Nicaragua',
+                    postalCode: '11140',
+                    streetName: 'Beale Street',
+                    streetNumber: '913',
+                },
+            },
+            firstName: 'Osmond',
+            lastName: 'Garrison',
+            phone_number: '400781894176687',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'external_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Pastels on Dark',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Jodhpur',
+                    country: 'Cyprus',
+                    postalCode: '48221',
+                    streetName: 'Broadway',
+                    streetNumber: '506',
+                },
+            },
+            firstName: 'Roger',
+            lastName: 'Hogan',
+            phone_number: '822613699327763',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Low',
+                            theme: 'Base16 Eighties',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Aligarh',
+                    country: 'Belgium',
+                    postalCode: '70252',
+                    streetName: 'Las Olas Boulevard',
+                    streetNumber: '952',
+                },
+            },
+            email: 'Bryleigh.Logan@list.ru',
+            firstName: 'Emery',
+            lastName: 'Saunders',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
                         },
                     },
                     settings: {
@@ -3804,19 +2165,310 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            email: 'Emmanuel.Berry@hotmail.co.jp',
-            firstName: 'Ali',
-            lastName: 'Pugh',
-            phone_number: '309642192968993',
+            email: 'Ethan.Randall@laposte.net',
+            firstName: 'Ephraim',
+            lastName: 'Jordan',
+            phone_number: '383011856659913',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'info',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Bluloco',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Amelia.Schultz@mail.com',
+            firstName: 'Harmony',
+            lastName: 'Olson',
+            phone_number: '271893599807512',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Gruvbox',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Jaylin.Brooks@gmail.co.uk',
+            firstName: 'Anjelica',
+            lastName: 'Mueller',
+            phone_number: '733080198852585',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Base16',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Rome',
+                    country: 'Laos',
+                    postalCode: '48376',
+                    streetName: 'Beale Street',
+                    streetNumber: '257',
+                },
+            },
+            email: 'Benji.Horton@list.ru',
+            firstName: 'Aidan',
+            lastName: 'Lamar',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'operational_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Kaiden',
+            lastName: 'Porter',
+            phone_number: '93414733189507',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'general_secretary',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Brasília',
+                    country: 'Cambodia',
+                    postalCode: '20263',
+                    streetName: 'Oxford Street',
+                    streetNumber: '387',
+                },
+            },
+            email: 'Gillian.Erickson@btconnect.com',
+            firstName: 'Calla',
+            lastName: 'Abbott',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Material Ocean',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Tokyo',
+                    country: 'Comoros',
+                    postalCode: '31488',
+                    streetName: 'Beale Street',
+                    streetNumber: '559',
+                },
+            },
+            firstName: 'Garrison',
+            lastName: 'Adkins',
+            phone_number: '666804688050536',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Low',
+                            theme: 'Darkula',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Ardian.Mcfadden@yandex.ru',
+            firstName: 'Dorthy',
+            lastName: 'Rose',
+            phone_number: '105613696741242',
             user: {
                 create: {
                     admin: {
@@ -3835,27 +2487,111 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Boston',
-                    country: 'Belgium',
-                    postalCode: '83116',
-                    streetName: 'Las Ramblas',
-                    streetNumber: '242',
+                    city: 'Budapest',
+                    country: 'Benin',
+                    postalCode: '13360',
+                    streetName: 'Nevsky Prospekt',
+                    streetNumber: '930 ter',
                 },
             },
-            email: 'Bryn.Dallas@bell.net',
+            email: 'Dot.Sanchez@mail.com',
+            firstName: 'Crystal',
+            lastName: 'Sears',
+            phone_number: '951793421991020',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Trey.Williams@ntlworld.com',
+            firstName: 'Ira',
+            lastName: 'Parrish',
+            phone_number: '905380816937875',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Gruvbox',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Rangoon',
+                    country: 'United Arab Emirates',
+                    postalCode: '03104',
+                    streetName: 'Broadway',
+                    streetNumber: '293',
+                },
+            },
+            email: 'Anita.Holmes@posteo.de',
             firstName: 'Justine',
-            lastName: 'Vinson',
+            lastName: 'Harvey',
             user: {
                 create: {
                     admin: {
@@ -3865,47 +2601,9 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                     },
                     settings: {
                         create: {
-                            gui: true,
-                            notificationLevel: 'High',
-                            theme: 'Brogrammer',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Yosef.Zamora@yahoo.de',
-            firstName: 'Eileen',
-            lastName: 'Ives',
-            phone_number: '49929309649409',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'operational_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
                             gui: false,
                             notificationLevel: 'Medium',
-                            theme: 'Misterioso',
+                            theme: 'Iceberg',
                         },
                     },
                 },
@@ -3919,40 +2617,34 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
             address: {
                 create: {
-                    city: 'Shenyang',
-                    country: 'El Salvador',
-                    postalCode: '46378',
-                    streetName: 'Broadway',
-                    streetNumber: '545',
+                    city: 'Glasgow',
+                    country: 'North Macedonia',
+                    postalCode: '47377',
+                    streetName: 'Beale Street',
+                    streetNumber: '67',
                 },
             },
-            email: 'Odin.Dean@mail.com.au',
-            firstName: 'Pauline',
-            lastName: 'Sampson',
-            phone_number: '189442634772958',
+            firstName: 'Rory',
+            lastName: 'Gates',
+            phone_number: '451448146899527',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'info',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: false,
-                            notificationLevel: 'High',
-                            theme: 'Paraiso Light',
+                            position: 'internal_vice_president',
                         },
                     },
                 },
@@ -3966,18 +2658,61 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            firstName: 'Kameron',
-            lastName: 'Robbins',
-            phone_number: '366117171629280',
+            address: {
+                create: {
+                    city: 'Southampton',
+                    country: 'South Africa',
+                    postalCode: '46354',
+                    streetName: 'Queen Street',
+                    streetNumber: '688',
+                },
+            },
+            firstName: 'Hilma',
+            lastName: 'Anderson',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Drew.Rhodes@yahoo.fr',
+            firstName: 'Isadora',
+            lastName: 'Emerson',
+            phone_number: '449702356648265',
             user: {
                 create: {
                     admin: {
@@ -3996,40 +2731,33 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'London',
-                    country: 'Romania',
-                    postalCode: '14237',
-                    streetName: 'Las Ramblas',
-                    streetNumber: '187',
-                },
-            },
-            email: 'Amanda.Suarez@windstream.net',
-            firstName: 'Eunice',
-            lastName: 'Lane',
-            phone_number: '636049901712704',
+            email: 'Geri.Townsend@windstream.net',
+            firstName: 'Esther',
+            lastName: 'Stark',
+            phone_number: '691040870219909',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'treasurer',
+                            position: 'info',
                         },
                     },
                     settings: {
                         create: {
                             gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'Material Darker',
+                            notificationLevel: 'High',
+                            theme: 'Base16 Solarized Dark',
                         },
                     },
                 },
@@ -4043,65 +2771,20 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            address: {
-                create: {
-                    city: 'Luanda',
-                    country: 'India',
-                    postalCode: '93243',
-                    streetName: 'Hollywood Boulevard',
-                    streetNumber: '230',
-                },
-            },
-            firstName: 'Randy',
-            lastName: 'Mitchell',
-            phone_number: '476716221007741',
-            user: {
-                create: {
-                    admin: {
-                        create: {
-                            position: 'external_vice_president',
-                        },
-                    },
-                    settings: {
-                        create: {
-                            gui: true,
-                            notificationLevel: 'Medium',
-                            theme: 'One Dark Pro Monokai Darker',
-                        },
-                    },
-                },
-            },
-        },
-        select: {
-            user: {
-                select: {
-                    admin: {
-                        select: {
-                            id: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
-
-    admins.push(person!.user!.admin!.id);
-
-    person = await db.person.create({
-        data: {
-            email: 'Shelia.Travis@live.ca',
-            firstName: 'Frieda',
-            lastName: 'Shaw',
-            phone_number: '425603187587676',
+            firstName: 'Harlan',
+            lastName: 'Burgess',
+            phone_number: '910148168979426',
             user: {
                 create: {
                     admin: {
@@ -4120,30 +2803,121 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
     person = await db.person.create({
         data: {
-            email: 'Latoya.Blackwell@westnet.com.au',
-            firstName: 'Darren',
-            lastName: 'Hancock',
-            phone_number: '52503068767206',
+            address: {
+                create: {
+                    city: 'Nagoya',
+                    country: 'United States of America',
+                    postalCode: '40392',
+                    streetName: 'Queen Street',
+                    streetNumber: '321',
+                },
+            },
+            email: 'Cristina.Graves@runbox.com',
+            firstName: 'Hayley',
+            lastName: 'Logan',
             user: {
                 create: {
                     admin: {
                         create: {
-                            position: 'operational_vice_president',
+                            position: 'general_secretary',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Kolkata',
+                    country: 'Sao Tome and Principe',
+                    postalCode: '13465',
+                    streetName: 'Fifth Avenue',
+                    streetNumber: '863',
+                },
+            },
+            firstName: 'Mason',
+            lastName: 'Ramirez',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'São Paulo',
+                    country: 'Central African Republic',
+                    postalCode: '54138',
+                    streetName: 'Rue de Rivoli',
+                    streetNumber: '993 ter',
+                },
+            },
+            email: 'Saul.Dixon@runbox.com',
+            firstName: 'Gene',
+            lastName: 'Morrison',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'info',
                         },
                     },
                     settings: {
                         create: {
                             gui: true,
-                            notificationLevel: 'Low',
+                            notificationLevel: 'High',
                             theme: 'Brogrammer',
                         },
                     },
@@ -4158,12 +2932,1404 @@ export async function seedAdminsTestData(db: PrismaClient): Promise<string[]> {
                             id: true,
                         },
                     },
+                    id: true,
                 },
             },
         },
     });
 
     admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
 
-    return admins;
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Yangon',
+                    country: 'Georgia',
+                    postalCode: '74170',
+                    streetName: 'Hollywood Boulevard',
+                    streetNumber: '561',
+                },
+            },
+            email: 'Clementine.Riley@yahoo.co.in',
+            firstName: 'Zoey',
+            lastName: "O'connor",
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'vice_treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Base16 Solarized Light',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Leone',
+            lastName: 'Mccoy',
+            phone_number: '272665338795772',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'external_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Zurich',
+                    country: 'Kyrgyzstan',
+                    postalCode: '56299',
+                    streetName: 'Unter den Linden',
+                    streetNumber: '689',
+                },
+            },
+            email: 'Burdette.Ochoa@fastmail.com',
+            firstName: 'Atlas',
+            lastName: 'Whitaker',
+            phone_number: '699075945752192',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Medium',
+                            theme: 'Merbivore',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Chongqing',
+                    country: 'Italy',
+                    postalCode: '70259',
+                    streetName: 'Broadway',
+                    streetNumber: '468',
+                },
+            },
+            firstName: 'Benton',
+            lastName: 'Wyatt',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'internal_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Selenized Dark',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Wuhan',
+                    country: 'Algeria',
+                    postalCode: '10070',
+                    streetName: 'Khao San Road',
+                    streetNumber: '755',
+                },
+            },
+            email: 'Elysia.Fleming@rambler.ru',
+            firstName: 'Ephron',
+            lastName: 'Hernandez',
+            phone_number: '597128114441800',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Darkula',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Nell.Quinn@gmx.de',
+            firstName: 'Carys',
+            lastName: 'Lamar',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'internal_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Solarized Light',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Curitiba',
+                    country: 'Angola',
+                    postalCode: '86227',
+                    streetName: 'Broadway',
+                    streetNumber: '52 ter',
+                },
+            },
+            email: 'Bert.Savage@yahoo.co.jp',
+            firstName: 'Bert',
+            lastName: 'Leonard',
+            phone_number: '658459420843176',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Medium',
+                            theme: 'Shades of Purple',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Rajkot',
+                    country: 'Iran',
+                    postalCode: '49098',
+                    streetName: 'Pennsylvania Avenue',
+                    streetNumber: '509',
+                },
+            },
+            email: 'Dale.Travis@bellsouth.net',
+            firstName: 'Cassandra',
+            lastName: 'Holt',
+            phone_number: '239591664425762',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'external_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Rio de Janeiro',
+                    country: 'Colombia',
+                    postalCode: '27112',
+                    streetName: 'Champs Elysees',
+                    streetNumber: '141',
+                },
+            },
+            firstName: 'Aidan',
+            lastName: 'Stokes',
+            phone_number: '86454693640741',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'operational_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Kimbie Light',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Daley.Pierce@yandex.com',
+            firstName: 'Kori',
+            lastName: 'Valdez',
+            phone_number: '400875038057297',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Paraiso Dark',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Naples',
+                    country: 'Libya',
+                    postalCode: '15287',
+                    streetName: 'Beale Street',
+                    streetNumber: '983 bis',
+                },
+            },
+            email: 'Lena.Morrison@runbox.com',
+            firstName: 'Arena',
+            lastName: 'Warren',
+            phone_number: '188553899741812',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'general_secretary',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Visual Studio Dark',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Aligarh',
+                    country: 'Uruguay',
+                    postalCode: '13335',
+                    streetName: 'Rodeo Drive',
+                    streetNumber: '284',
+                },
+            },
+            firstName: 'Jay',
+            lastName: 'Valentine',
+            phone_number: '277543248613820',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'info',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Selenized Dark',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Otis',
+            lastName: 'Vasquez',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Solarized Dark Higher Contrast',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Ludhiana',
+                    country: 'Norway',
+                    postalCode: '05172',
+                    streetName: 'Baker Street',
+                    streetNumber: '315',
+                },
+            },
+            firstName: 'Kinley',
+            lastName: 'Berry',
+            phone_number: '262681537684696',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'operational_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Phoenix',
+                    country: 'Liberia',
+                    postalCode: '37066',
+                    streetName: 'Market Street',
+                    streetNumber: '23',
+                },
+            },
+            email: 'Adley.Cox@optusnet.com.au',
+            firstName: 'Garrison',
+            lastName: 'Wiley',
+            phone_number: '735860062719425',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Twilight',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Wuhan',
+                    country: 'Jamaica',
+                    postalCode: '53195',
+                    streetName: 'Nevsky Prospekt',
+                    streetNumber: '305 bis',
+                },
+            },
+            firstName: 'Haleigh',
+            lastName: 'Clayton',
+            phone_number: '811243653192431',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'operational_vice_president',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'MagicWB',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Lyon',
+                    country: 'Ghana',
+                    postalCode: '12141',
+                    streetName: 'Kurfürstendamm',
+                    streetNumber: '946',
+                },
+            },
+            email: 'Dione.Clayton@free.fr',
+            firstName: 'Pollyanna',
+            lastName: 'Harvey',
+            phone_number: '458807793261589',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Meerut',
+                    country: 'Iraq',
+                    postalCode: '13299',
+                    streetName: 'Hollywood Boulevard',
+                    streetNumber: '882',
+                },
+            },
+            email: 'Braydon.Abbott@comcast.net',
+            firstName: 'Elin',
+            lastName: 'Walker',
+            phone_number: '412656171110759',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Lahore',
+                    country: 'Niger',
+                    postalCode: '89129',
+                    streetName: 'La Rambla',
+                    streetNumber: '362 bis',
+                },
+            },
+            email: 'Alfreda.Warner@gmail.com',
+            firstName: 'Epona',
+            lastName: 'Sullivan',
+            phone_number: '557621777340911',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Misterioso',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Detroit',
+                    country: 'India',
+                    postalCode: '02466',
+                    streetName: 'Rodeo Drive',
+                    streetNumber: '940',
+                },
+            },
+            firstName: 'Donovan',
+            lastName: 'Weber',
+            phone_number: '851947359092352',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'commercial_director',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Medium',
+                            theme: 'Brogrammer',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            firstName: 'Humphrey',
+            lastName: 'Richards',
+            phone_number: '309980723449118',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'vice_treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Winter is Coming',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Jabalpur',
+                    country: 'Dominica',
+                    postalCode: '54059',
+                    streetName: 'Yonge Street',
+                    streetNumber: '408',
+                },
+            },
+            email: 'Daxton.Morgan@gmail.co.uk',
+            firstName: 'Chandler',
+            lastName: 'Romero',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            email: 'Dominic.Banks@bbox.fr',
+            firstName: 'Devon',
+            lastName: 'Solomon',
+            phone_number: '71636837854359',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Vibrant Ink',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Kabul',
+                    country: 'Singapore',
+                    postalCode: '94182',
+                    streetName: 'Nevsky Prospekt',
+                    streetNumber: '242',
+                },
+            },
+            firstName: 'Ruby',
+            lastName: 'Lucas',
+            phone_number: '405692153977033',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'internal_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Brasília',
+                    country: 'Germany',
+                    postalCode: '77146',
+                    streetName: 'Portobello Road',
+                    streetNumber: '638',
+                },
+            },
+            email: 'Blake.Mullen@outlook.in',
+            firstName: 'Emmeline',
+            lastName: 'Palmer',
+            phone_number: '283886792142687',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'vice_treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Low',
+                            theme: 'Vibrant Ink',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Baghdad',
+                    country: 'Uganda',
+                    postalCode: '25167',
+                    streetName: 'Champs Elysees',
+                    streetNumber: '520',
+                },
+            },
+            firstName: 'Caden',
+            lastName: 'Malone',
+            phone_number: '380481691867813',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'operational_vice_president',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Ahmedabad',
+                    country: 'Mauritius',
+                    postalCode: '09251',
+                    streetName: 'Sunset Boulevard',
+                    streetNumber: '896',
+                },
+            },
+            email: 'Shaun.Vega@live.ca',
+            firstName: 'Nicola',
+            lastName: 'McDonald',
+            phone_number: '985222470168469',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'info',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'Medium',
+                            theme: 'Iceberg',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Solapur',
+                    country: 'Slovakia',
+                    postalCode: '37209',
+                    streetName: 'Ginza',
+                    streetNumber: '509',
+                },
+            },
+            email: 'Francine.Ellis@fastmail.com',
+            firstName: 'Deanna',
+            lastName: 'Green',
+            phone_number: '15363070100235',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'general_secretary',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Night Owl',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Baghdad',
+                    country: 'Sao Tome and Principe',
+                    postalCode: '49437',
+                    streetName: 'Via del Corso',
+                    streetNumber: '298',
+                },
+            },
+            firstName: 'Jesus',
+            lastName: 'Vega',
+            phone_number: '64157543158126',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'info',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'Medium',
+                            theme: 'Brogrammer',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Varanasi',
+                    country: 'Cambodia',
+                    postalCode: '55413',
+                    streetName: 'Orchard Road',
+                    streetNumber: '282',
+                },
+            },
+            email: 'Colleen.Wilcox@bigpond.com',
+            firstName: 'Dianne',
+            lastName: 'Briggs',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'vice_treasurer',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: false,
+                            notificationLevel: 'High',
+                            theme: 'Base16 Default Light',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    person = await db.person.create({
+        data: {
+            address: {
+                create: {
+                    city: 'Thane',
+                    country: 'North Korea',
+                    postalCode: '84447',
+                    streetName: 'Champs Elysees',
+                    streetNumber: '88',
+                },
+            },
+            firstName: 'Bert',
+            lastName: 'Sargent',
+            phone_number: '139965157165660',
+            user: {
+                create: {
+                    admin: {
+                        create: {
+                            position: 'general_secretary',
+                        },
+                    },
+                    settings: {
+                        create: {
+                            gui: true,
+                            notificationLevel: 'High',
+                            theme: 'Solarized Light',
+                        },
+                    },
+                },
+            },
+        },
+        select: {
+            user: {
+                select: {
+                    admin: {
+                        select: {
+                            id: true,
+                        },
+                    },
+                    id: true,
+                },
+            },
+        },
+    });
+
+    admins.push(person!.user!.admin!.id);
+    users.push(person!.user!.id);
+
+    return [admins, users];
 }

@@ -1,8 +1,11 @@
 {
-    "editor.formatOnSave": true,
+    // "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always"
     },
-    "eslint.validate": ["javascript"]
+    "eslint.validate": ["javascript", "typescript", "typescriptreact"],
+    "files.watcherExclude": {
+        "**/*.prisma": true
+    }
 }
