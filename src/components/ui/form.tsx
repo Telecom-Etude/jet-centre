@@ -159,6 +159,36 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = 'FormMessage';
 
+const FormRow = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+    ({ className, ...props }, ref) => {
+        return (
+            <div
+                ref={ref}
+                className={cn('flex flex-row gap-4 items-start', className)}
+                {...props}
+            />
+        );
+    }
+);
+FormRow.displayName = 'FormRow';
+
+interface FormRuleProps extends React.HTMLAttributes<HTMLHRElement> {
+    primary?: boolean;
+}
+
+const FormRule = React.forwardRef<HTMLHRElement, FormRuleProps>(
+    ({ className, primary, ...props }, ref) => {
+        return (
+            <hr
+                ref={ref}
+                className={cn('mb-5', primary && 'border-primary mb-8', className)}
+                {...props}
+            />
+        );
+    }
+);
+FormRule.displayName = 'FormRule';
+
 export {
     useFormField,
     Form,
@@ -168,4 +198,6 @@ export {
     FormDescription,
     FormMessage,
     FormField,
+    FormRow,
+    FormRule,
 };

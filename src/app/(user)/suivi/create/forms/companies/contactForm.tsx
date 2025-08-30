@@ -22,7 +22,8 @@ export function ContactForm({ defaultValues, onSubmit: onSubmit_, onCancel }: Co
     });
 
     const onSubmit = (data: ContactCreationSchema) => {
-        onSubmit_({ ...data, isNew: true });
+        const parsedData = contactCreationSchema.parse(data);
+        onSubmit_({ ...parsedData, isNew: true });
         form.reset();
     };
 
