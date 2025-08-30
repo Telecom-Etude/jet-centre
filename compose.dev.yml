@@ -32,16 +32,19 @@ services:
             - cache
 
     studio:
-        image: oven/bun:1
+        # image: oven/bun:1
         container_name: jc-studio
+        build:
+            context: docker/prisma-studio
+            target: studio
+
         working_dir: /app
         volumes:
             - .:/app
         ports:
-            - '5555:5555'
+            - 5555:5555
         env_file:
             - .env
-        command: sh -c "bun install --save-dev prisma && bunx prisma studio --hostname 0.0.0.0 --port 5555"
         networks:
             - internet
             - db-network

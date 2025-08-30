@@ -4,20 +4,20 @@
 /// refer to
 /// <a href="https://github.com/Telecom-Etude/jet-centre/blob/main/prisma/seed.ts">google_drive.md</a>
 model Document {
-    /// Don't use this id to reference the document. Use googleId.
-    id                     String        @id @default(cuid())
-    title                  String
-    //// Id of the google document. Refer to google_drive.md
-    googleId               String        @unique
-    /// Mime type of the file. Refer to google_drive.md.
-    type                   String
-    status                 DocStatus?    @relation(fields: [statusId], references: [id])
-    /// Identity card
-    assigneeCni            AssigneeDocs? @relation("cni")
-    assigneeSocialSecurity AssigneeDocs? @relation("socialSecurity")
-    assigneeStudentCard    AssigneeDocs? @relation("studentCard")
-    studyDocsId            String?
-    statusId               String?
+  /// Don't use this id to reference the document. Use googleId.
+  id                     String        @id @default(cuid())
+  title                  String
+  //// Id of the google document. Refer to google_drive.md
+  googleId               String        @unique
+  /// Mime type of the file. Refer to google_drive.md.
+  type                   String
+  status                 DocStatus?    @relation(fields: [statusId], references: [id])
+  /// Identity card
+  assigneeCni            AssigneeDocs? @relation("cni")
+  assigneeSocialSecurity AssigneeDocs? @relation("socialSecurity")
+  assigneeStudentCard    AssigneeDocs? @relation("studentCard")
+  studyDocsId            String?
+  statusId               String?
 }
 
 /// Status of a study document.
@@ -25,29 +25,29 @@ model Document {
 /// This follows at what date the documents were wrote,
 /// audited, signed, and approved by the clients.
 model DocStatus {
-    id               String     @id @default(cuid())
-    docsId           String     @unique
-    /// The template was cloned at this date.
-    created          DateTime?
-    /// Writing finished by the project managers.
-    /// <br />
-    /// The document was sent to audit at this date.
-    wrote            DateTime?
-    /// Audited ended at this date.
-    audited          DateTime?
-    /// Sent to the client at this date.
-    sent             DateTime?
-    /// Approved by the client at this date.
-    /// <br />
-    /// This is only applicable when the client wants
-    /// access to the documents before signing them.
-    approved         DateTime?
-    /// Signed by all parties at this date.
-    signed           DateTime?
-    /// End of validty of the document.
-    end_of_validity  DateTime?
-    /// Deadline for delivering the document.
-    writing_deadline DateTime?
-    document         Document[]
-    documentId       String     @unique
+  id               String     @id @default(cuid())
+  docsId           String     @unique
+  /// The template was cloned at this date.
+  created          DateTime?
+  /// Writing finished by the project managers.
+  /// <br />
+  /// The document was sent to audit at this date.
+  wrote            DateTime?
+  /// Audited ended at this date.
+  audited          DateTime?
+  /// Sent to the client at this date.
+  sent             DateTime?
+  /// Approved by the client at this date.
+  /// <br />
+  /// This is only applicable when the client wants
+  /// access to the documents before signing them.
+  approved         DateTime?
+  /// Signed by all parties at this date.
+  signed           DateTime?
+  /// End of validty of the document.
+  end_of_validity  DateTime?
+  /// Deadline for delivering the document.
+  writing_deadline DateTime?
+  document         Document[]
+  documentId       String     @unique
 }
