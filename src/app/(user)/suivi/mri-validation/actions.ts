@@ -1,6 +1,6 @@
 'use server';
 
-import { MriStatus } from '@prisma/client';
+import { Mri, MriStatus, Prisma, StudyInfos } from '@prisma/client';
 
 import prisma from '@/db';
 
@@ -30,13 +30,33 @@ export async function fetchMriById(mriId: string) {
     }
 }
 
-export async function listMriToValidate() {
+export interface MriToValidate extends Mri {
+    study: {
+        information: StudyInfos;
+        cdps: {
+            user: {
+                person: { email: string | null };
+            };
+        }[];
+    };
+}
+
+export async function listMriToValidate(): Promise<MriToValidate[] | undefined> {
     try {
         return await prisma.mri.findMany({
             include: {
                 study: {
                     include: {
                         information: true,
+                        cdps: {
+                            select: {
+                                user: {
+                                    select: {
+                                        person: { select: { email: true } },
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
             },

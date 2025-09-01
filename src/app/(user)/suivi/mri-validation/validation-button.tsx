@@ -8,15 +8,16 @@ import { LoadingFullStops } from '@/components/loading';
 import { Button } from '@/components/ui/button';
 
 import { setMriStatus } from '../../cdp/[study]/mri/form/mri';
+import { MriToValidate } from './actions';
 
-interface ValidationButtonProps {
-    status: MriStatus;
-    mriId: string;
-}
-
-export function ValidationButton({ status, mriId }: ValidationButtonProps) {
-    const [getStatus, setStatus] = useState<MriStatus | undefined>(status);
+export function ValidationButton({ mri }: { mri: MriToValidate }) {
+    const [getStatus, setStatus] = useState<MriStatus | undefined>(mri.status);
     const [loading, setLoading] = useState(false);
+
+    const setError = () => {
+        setLoading(false);
+        setStatus(undefined);
+    };
 
     return loading ? (
         <div className="flex space-x-2 items-center">
@@ -45,7 +46,7 @@ export function ValidationButton({ status, mriId }: ValidationButtonProps) {
                         setLoading(false);
                     });
                 } else {
-                    setMriStatus(mriId, MriStatus.Validated).then((mri) => {
+                    setMriStatus(mri.id, MriStatus.Validated).then((mri) => {
                         setStatus(mri?.status);
                         setLoading(false);
                     });

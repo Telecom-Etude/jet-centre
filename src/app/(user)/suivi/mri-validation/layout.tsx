@@ -30,7 +30,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
                                     >
                                         {mri.study.information.code + ' - ' + mri.title}
                                     </Link>
-                                    <ValidationButton status={mri.status} mriId={mri.id} />
+                                    <ValidationButton mri={mri} />
                                 </div>
                             ))}
                         </div>
