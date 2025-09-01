@@ -2,24 +2,26 @@
 
 import { useState } from 'react';
 
-import { sendEmail } from '@/google/mail/send';
-
 import { Input } from '../ui/input';
+import { sendCampaign } from '@/actions/mailchimp';
 
-export function MailSender() {
+import { sendEmail } from '@/google/mail/send';
+export function MailSender({ google = false }: { google?: boolean }) {
     const [value, setValue] = useState('');
     const [good, setGood] = useState<boolean | undefined>();
 
     const onBlur = () => {
         if (value) {
             setGood(undefined);
-            sendEmail({
-                to: value,
-                subject: 'Hello, World!',
-                html: '<p style="color: red">Hello world</p>"',
-                text: 'Hello world',
-                replyTo: 'info@telecom-etude.fr',
-            }).then((res) => setGood(res));
+            if (google)
+                sendEmail({
+                    to: value,
+                    subject: 'Hello, World!',
+                    html: '<p style="color: red">Hello world</p>"',
+                    text: 'Hello world',
+                    replyTo: 'info@telecom-etude.fr',
+                }).then((res) => setGood(res));
+            else sendCampaign(value).then((res) => setGood(res));
         }
     };
 
