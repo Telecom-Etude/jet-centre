@@ -74,6 +74,24 @@ interface SeedEnv {
     NO_DB_INIT?: true;
 }
 
+/** Environment variables needed for Mailchimp */
+interface MailchimpEnv {
+    /**
+     * API key for mailchimp. You can create one here: @link <https://us22.admin.mailchimp.com/account/api/manage/#create.
+     */
+    MAILCHIMP_API_KEY: string;
+    /**
+     * Mailchimp server prefix associated with the mailchimp account.
+     *
+     * This prefix is the first subdomain of the mailchimp interface. Thus, to get this prefix, connect to your account on mailchimp.com, then you should be redirected to <prefix>.admin.mailchimp.com. Put the prefix in this variable
+     */
+    MAILCHIMP_SERVER_PREFIX: string;
+    /**
+     * List id of the audience you want to use for sending MRIs to.
+     */
+    MAILCHIMP_MRI_LIST_ID: string;
+}
+
 interface OtherEnv {
     WEBSITE_URL: string;
     /**
@@ -94,18 +112,8 @@ interface OtherEnv {
      * This breaks middleware logic.
      */
     DEV_MODE?: true;
-    /**
-     * API key for mailchimp. You can create one here: @link <https://us22.admin.mailchimp.com/account/api/manage/#create.
-     */
-    MAILCHIMP_API_KEY: string;
-    /**
-     * Mailchimp server prefix associated with the mailchimp account.
-     *
-     * This prefix is the first subdomain of the mailchimp interface. Thus, to get this prefix, connect to your account on mailchimp.com, then you should be redirected to <prefix>.admin.mailchimp.com. Put the prefix in this variable
-     */
-    MAILCHIMP_SERVER_PREFIX: string;
 }
 
 declare namespace NodeJS {
-    interface ProcessEnv extends AuthEnv, GoogleDriveEnv, SeedEnv, OtherEnv {}
+    interface ProcessEnv extends AuthEnv, GoogleDriveEnv, SeedEnv, MailchimpEnv, OtherEnv {}
 }

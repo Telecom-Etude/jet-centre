@@ -6,6 +6,7 @@ import { Input } from '../ui/input';
 import { sendCampaign } from '@/actions/mailchimp';
 
 import { sendEmail } from '@/google/mail/send';
+import { MailChimpList } from '@/actions/mailchimp/types';
 export function MailSender({ google = false }: { google?: boolean }) {
     const [value, setValue] = useState('');
     const [good, setGood] = useState<boolean | undefined>();
@@ -21,7 +22,7 @@ export function MailSender({ google = false }: { google?: boolean }) {
                     text: 'Hello world',
                     replyTo: 'info@telecom-etude.fr',
                 }).then((res) => setGood(res));
-            else sendCampaign(value).then((res) => setGood(res));
+            else sendCampaign(value, MailChimpList.MRI).then((res) => setGood(res));
         }
     };
 
