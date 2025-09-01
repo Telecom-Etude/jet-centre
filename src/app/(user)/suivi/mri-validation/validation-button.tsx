@@ -6,6 +6,7 @@ import { FaBug, FaCheck } from 'react-icons/fa6';
 
 import { LoadingFullStops } from '@/components/loading';
 import { Button } from '@/components/ui/button';
+import { sendMRI } from '@/actions/mailchimp/mri';
 
 import { setMriStatus } from '../../cdp/[study]/mri/form/mri';
 import { MriToValidate } from './actions';
@@ -40,10 +41,12 @@ export function ValidationButton({ mri }: { mri: MriToValidate }) {
             onClick={() => {
                 setLoading(true);
                 if (getStatus == MriStatus.Validated) {
-                    // TODO: send the MRI
-                    setMriStatus(mriId, MriStatus.Sent).then((mri) => {
-                        setStatus(mri?.status);
-                        setLoading(false);
+                    sendMRI(mri).then((res) => {
+                        if (!res) return setError();
+                        setMriStatus(mri.id, MriStatus.Sent).then((mri) => {
+                            setStatus(mri?.status);
+                            setLoading(false);
+                        });
                     });
                 } else {
                     setMriStatus(mri.id, MriStatus.Validated).then((mri) => {
