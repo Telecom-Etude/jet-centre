@@ -18,7 +18,7 @@ const zIsNew = z.object({
 const zContact = z.object({
     firstName: z.string(),
     lastName: z.string(),
-    email: z.string().email().optional(),
+    email: z.email().optional(),
     job: z.string(),
     excluded: z.boolean().default(false),
     id: z.string(),
@@ -28,14 +28,14 @@ const zContact = z.object({
 export const contactCreationSchema = z.object({
     firstName: z.string().superRefine(required),
     lastName: z.string().superRefine(required),
-    email: z.string().email().optional(),
+    email: z.email().optional(),
     tel: z.string().or(EMPTY_STRING),
     job: z.string(),
     description: z.string(),
-    excluded: z.boolean().default(false),
+    excluded: z.boolean().prefault(false),
 });
 
-export type ContactCreationSchema = z.infer<typeof contactCreationSchema>;
+export type ContactCreationSchema = z.input<typeof contactCreationSchema>;
 export const emptyContactCreationSchema: ContactCreationSchema = {
     firstName: '',
     lastName: '',

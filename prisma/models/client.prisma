@@ -2,14 +2,14 @@
 /// <br />
 /// This table includes private individuals.
 model Client {
-    id                String        @id @default(cuid())
-    privateIndividual Boolean       @default(false)
-    company           Company?      @relation(fields: [companyId], references: [id])
-    companyId         String?
-    person            Person        @relation("ClientToPerson", fields: [personId], references: [id])
-    personId          String        @unique
-    job               String
-    studyClients      StudyClient[]
+  id                String        @id @default(cuid())
+  privateIndividual Boolean       @default(false)
+  company           Company?      @relation(fields: [companyId], references: [id])
+  companyId         String?
+  person            Person        @relation("ClientToPerson", fields: [personId], references: [id])
+  personId          String        @unique
+  job               String
+  studyClients      StudyClient[]
 }
 
 /// An interface to link a client to a study.
@@ -21,37 +21,37 @@ model Client {
 /// multiple studies with a same company but with different members
 /// of the comany.
 model StudyClient {
-    id           String        @id @default(cuid())
-    study        Study         @relation(fields: [studyId], references: [id], onDelete: Cascade)
-    studyId      String
-    client       Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
-    clientId     String
-    satisfaction Satisfaction?
+  id           String        @id @default(cuid())
+  study        Study         @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  studyId      String
+  client       Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId     String
+  satisfaction Satisfaction?
 }
 
 /// QS
 model Satisfaction {
-    id                     String      @id @default(cuid())
-    studyClient            StudyClient @relation(fields: [studyClientId], references: [id], onDelete: Cascade)
-    studyClientId          String      @unique
-    publish                Boolean
-    howKnowUs              String
-    whyUs                  String
-    satisfactionObjectives Int
-    easiness               Int
-    timeElapsed            Int
-    recommendUs            Int
+  id                     String      @id @default(cuid())
+  studyClient            StudyClient @relation(fields: [studyClientId], references: [id], onDelete: Cascade)
+  studyClientId          String      @unique
+  publish                Boolean
+  howKnowUs              String
+  whyUs                  String
+  satisfactionObjectives Int
+  easiness               Int
+  timeElapsed            Int
+  recommendUs            Int
 }
 
 /// Represents the company that the client represents.
 model Company {
-    id             String       @id @default(cuid())
-    name           String       @unique
-    address        Address?
-    companyInfos   CompanyInfos @relation(fields: [companyInfosId], references: [id])
-    /// Members of the company we are likely to encounter.
-    members        Client[]
-    companyInfosId String
+  id             String       @id @default(cuid())
+  name           String       @unique
+  address        Address?
+  companyInfos   CompanyInfos @relation(fields: [companyInfosId], references: [id])
+  /// Members of the company we are likely to encounter.
+  members        Client[]
+  companyInfosId String
 }
 
 /// Size of the company, measured by its number of employees.
@@ -60,71 +60,71 @@ model Company {
 /// <a href="https://www.economie.gouv.fr/cedef/entreprises-categories">
 /// https://www.economie.gouv.fr/cedef/entreprises-categories</a>
 enum CompanySize {
-    MicroEntreprise
-    PetiteEntreprise
-    MoyenneEntreprise
-    GrandeEntreprise
+  MicroEntreprise
+  PetiteEntreprise
+  MoyenneEntreprise
+  GrandeEntreprise
 }
 
 /// Additional information concerning a company.
 model CompanyInfos {
-    id      String       @id @default(cuid())
-    domains Domain[]
-    ca      Int?
-    size    CompanySize?
-    company Company[]
+  id      String       @id @default(cuid())
+  domains Domain[]
+  ca      Int?
+  size    CompanySize?
+  company Company[]
 }
 
 /// Domain of the study or of a company.
 enum Domain {
-    /**
-     * IA
-     */
+  /**
+   * IA
+   */
 
-    Chatbot
-    DataScience
-    MachineLearning
-    IntelligenceArtificielle
+  Chatbot
+  DataScience
+  MachineLearning
+  IntelligenceArtificielle
 
-    /**
-     * Dev
-     */
+  /**
+   * Dev
+   */
 
-    WebDev
-    MobileDev
-    AppDev
+  WebDev
+  MobileDev
+  AppDev
 
-    /**
-     * Networks
-     */
+  /**
+   * Networks
+   */
 
-    Cybersecurity
-    Cryptography
-    Networks
-    Telecommunications
-    Internet
+  Cybersecurity
+  Cryptography
+  Networks
+  Telecommunications
+  Internet
 
-    /**
-     * Systems
-     */
+  /**
+   * Systems
+   */
 
-    IoT
-    EmbeddedSystems
+  IoT
+  EmbeddedSystems
 
-    /**
-     * Image
-     */
+  /**
+   * Image
+   */
 
-    Image
-    ComputerVision
-    ComputerGraphics
-    /// Prefixed by d_ because a variant must begin with a letter.
-    d_3D
+  Image
+  ComputerVision
+  ComputerGraphics
+  /// Prefixed by d_ because a variant must begin with a letter.
+  d_3D
 
-    /**
-     * SES
-     */
+  /**
+   * SES
+   */
 
-    MarketAnalysis
-    StateOfTheArt
+  MarketAnalysis
+  StateOfTheArt
 }

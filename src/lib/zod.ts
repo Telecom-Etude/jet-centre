@@ -1,16 +1,7 @@
-import i18next from 'i18next';
 import { z, RefinementCtx } from 'zod';
-import { zodI18nMap } from 'zod-i18n-map';
-import translation from 'zod-i18n-map/locales/fr/zod.json';
+import { fr } from 'zod/v4/locales';
 
-// lng and resources key depend on your locale.
-i18next.init({
-    lng: 'fr',
-    resources: {
-        es: { zod: translation },
-    },
-});
-z.setErrorMap(zodI18nMap);
+z.config(fr());
 
 // export configured zod instance
 export { z };
@@ -20,7 +11,7 @@ export const EMPTY_STRING = z.string().max(0);
 export function required<T>(val: T, ctx: RefinementCtx) {
     if (val === undefined || (typeof val === 'string' && val.length === 0)) {
         ctx.addIssue({
-            code: z.ZodIssueCode.custom,
+            code: 'custom',
             message: 'Requis',
         });
     }
@@ -32,17 +23,15 @@ export function stringDate<T>(val: T, ctx: RefinementCtx) {
     if (typeof val === 'string') {
         if (!dateRegex.test(val)) {
             ctx.addIssue({
-                code: z.ZodIssueCode.custom,
+                code: 'custom',
                 message: 'Invalid date format, expected dd/mm/yyyy',
             });
         }
     } else {
         ctx.addIssue({
-            code: z.ZodIssueCode.invalid_type,
-            expected: z.ZodParsedType.string,
-            received:
-                z.ZodParsedType[typeof val as keyof typeof z.ZodParsedType] ||
-                z.ZodParsedType.unknown,
+            code: 'invalid_type',
+            expected: 'string',
+            received: typeof val,
         });
     }
 }
@@ -50,7 +39,8 @@ export function stringDate<T>(val: T, ctx: RefinementCtx) {
 export function nonEmptyExcluded<T>(val: T[], ctx: RefinementCtx) {
     if (val.every((v) => (v as { excluded: boolean }).excluded ?? false)) {
         ctx.addIssue({
-            code: z.ZodIssueCode.too_small,
+            origin: 'array',
+            code: 'too_small',
             message: 'Array must contain at least 1 non excluded element',
             minimum: 1,
             inclusive: true,

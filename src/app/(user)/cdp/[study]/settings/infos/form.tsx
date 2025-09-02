@@ -8,7 +8,7 @@ import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { CheckboxFormElement } from '@/components/meta-components/form/checkbox';
 import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
 import { InputFormElement } from '@/components/meta-components/form/input';
-import { FormProvider } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { DOMAIN_NAMES, DOMAINS } from '@/db/types';
 import { dbg } from '@/lib/utils';
 
@@ -52,7 +52,7 @@ export function StudyInfosParamsEditor({
 
     return (
         <UpdateBox title={title} update={updateServer} status={status}>
-            <FormProvider {...form}>
+            <Form {...form}>
                 <form className="space-y-main">
                     <InputFormElement
                         form={form}
@@ -77,7 +77,7 @@ export function StudyInfosParamsEditor({
                         displayValue={(domain) => DOMAINS[domain].display}
                     />
                 </form>
-            </FormProvider>
+            </Form>
         </UpdateBox>
     );
 }
