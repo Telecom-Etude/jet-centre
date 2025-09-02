@@ -1,14 +1,7 @@
 import { CompanySize, DeliverableStatus, Domain, Level, StudyProgressStep } from '@prisma/client';
 import { StaticImageData } from 'next/image';
 
-import Cyber from '@/../public/mri/domains/cyber.png';
-import Data from '@/../public/mri/domains/data.png';
-import Dev from '@/../public/mri/domains/dev.png';
-import Ima from '@/../public/mri/domains/ima.png';
-import Market from '@/../public/mri/domains/market.png';
-import Reseaux from '@/../public/mri/domains/reseaux.png';
-import Se from '@/../public/mri/domains/se.png';
-
+import { DOMAIN_IMAGES, DoubleImage } from './images';
 interface EnumInfo {
     display: string;
 }
@@ -46,37 +39,37 @@ export const LEVELS: Record<Level, EnumInfo> = {
 export const LEVEL_NAMES: Level[] = Object.keys(LEVELS) as Level[];
 
 interface DomainInfo extends EnumInfo {
-    image: StaticImageData;
+    image: DoubleImage;
 }
 
 export const DOMAINS: Record<Domain, DomainInfo> = {
     // data
-    Chatbot: { display: 'Chatbot', image: Data },
-    DataScience: { display: 'Data Science', image: Data },
-    MachineLearning: { display: 'Machine Learning', image: Data },
-    IntelligenceArtificielle: { display: 'IA', image: Data },
+    Chatbot: { display: 'Chatbot', image: DOMAIN_IMAGES.data },
+    DataScience: { display: 'Data Science', image: DOMAIN_IMAGES.data },
+    MachineLearning: { display: 'Machine Learning', image: DOMAIN_IMAGES.data },
+    IntelligenceArtificielle: { display: 'IA', image: DOMAIN_IMAGES.data },
     // dev
-    WebDev: { display: 'Développement Web', image: Dev },
-    MobileDev: { display: 'Développement Mobile', image: Dev },
-    AppDev: { display: 'Développement Logiciel', image: Dev },
+    WebDev: { display: 'Développement Web', image: DOMAIN_IMAGES.dev },
+    MobileDev: { display: 'Développement Mobile', image: DOMAIN_IMAGES.dev },
+    AppDev: { display: 'Développement Logiciel', image: DOMAIN_IMAGES.dev },
     // cyber
-    Cybersecurity: { display: 'Cybersécurité', image: Cyber },
-    Cryptography: { display: 'Cryptographie', image: Cyber },
+    Cybersecurity: { display: 'Cybersécurité', image: DOMAIN_IMAGES.cyber },
+    Cryptography: { display: 'Cryptographie', image: DOMAIN_IMAGES.cyber },
     // réseaux
-    Networks: { display: 'Réseaux', image: Reseaux },
-    Telecommunications: { display: 'Télécommunications', image: Reseaux },
-    Internet: { display: 'Internet', image: Reseaux },
-    IoT: { display: 'IoT', image: Reseaux },
+    Networks: { display: 'Réseaux', image: DOMAIN_IMAGES.networks },
+    Telecommunications: { display: 'Télécommunications', image: DOMAIN_IMAGES.networks },
+    Internet: { display: 'Internet', image: DOMAIN_IMAGES.networks },
+    IoT: { display: 'IoT', image: DOMAIN_IMAGES.networks },
     // se
-    EmbeddedSystems: { display: 'Systèmes Embarqués', image: Se },
+    EmbeddedSystems: { display: 'Systèmes Embarqués', image: DOMAIN_IMAGES.se },
     // ima
-    Image: { display: 'Image', image: Ima },
-    ComputerVision: { display: 'Computer Vision', image: Ima },
-    ComputerGraphics: { display: 'Computer Graphics', image: Ima },
-    d_3D: { display: '3D', image: Ima },
+    Image: { display: 'Image', image: DOMAIN_IMAGES.Ima },
+    ComputerVision: { display: 'Computer Vision', image: DOMAIN_IMAGES.ima },
+    ComputerGraphics: { display: 'Computer Graphics', image: DOMAIN_IMAGES.ima },
+    d_3D: { display: '3D', image: DOMAIN_IMAGES.Ima },
     // marché
-    MarketAnalysis: { display: 'Étude de marché', image: Market },
-    StateOfTheArt: { display: "État de l'art", image: Market },
+    MarketAnalysis: { display: 'Étude de marché', image: DOMAIN_IMAGES.market },
+    StateOfTheArt: { display: "État de l'art", image: DOMAIN_IMAGES.market },
 };
 
 export const DOMAIN_NAMES: Domain[] = Object.keys(DOMAINS) as Domain[];
