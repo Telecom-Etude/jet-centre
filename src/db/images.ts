@@ -1,3 +1,6 @@
+import { Level } from '@prisma/client';
+import { StaticImageData } from 'next/image';
+
 import Cyber from '@/../public/mri/domains/cyber.png';
 import Data from '@/../public/mri/domains/data.png';
 import Dev from '@/../public/mri/domains/dev.png';
@@ -5,8 +8,6 @@ import Ima from '@/../public/mri/domains/ima.png';
 import Market from '@/../public/mri/domains/market.png';
 import Networks from '@/../public/mri/domains/reseaux.png';
 import Se from '@/../public/mri/domains/se.png';
-import { Level } from '@prisma/client';
-import { StaticImageData } from 'next/image';
 
 export interface DoubleImage {
     next: StaticImageData;

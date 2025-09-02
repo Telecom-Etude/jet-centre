@@ -1,4 +1,42 @@
-export function htmlMRI() {
+import { DIFFICULTY_IMAGES, PAYCHECK_LEVEL_IMAGES } from '@/db/images';
+import { DOMAINS, LEVELS } from '@/db/types';
+import { personName } from '@/lib/utils';
+
+import { ValidMri } from './types';
+
+export function htmlMRI(mri: ValidMri) {
+    const domain = DOMAINS[mri.mainDomain];
+    const difficulty = {
+        display: LEVELS[mri.difficulty].display,
+        image: DIFFICULTY_IMAGES[mri.difficulty],
+    };
+    const paycheckLevel = {
+        display: LEVELS[mri.wageLevel].display,
+        image: PAYCHECK_LEVEL_IMAGES[mri.wageLevel],
+    };
+
+    const nbCdps = mri.cdps.length;
+
+    let mailTo = '';
+    for (let i = 0; i < nbCdps; ++i) {
+        mailTo += mri.cdps[i].email;
+        mailTo += ',';
+    }
+    mailTo += '?subject=' + encodeURIComponent(`Envoi du CV pour l'étude: ${mri.title}`);
+
+    let cdpNameEmail = '';
+    for (let i = 0; i < nbCdps; ++i) {
+        if (nbCdps > 1) {
+            if (i == nbCdps - 1) cdpNameEmail += ' ou ';
+            else cdpNameEmail += ', ';
+        }
+
+        const cdp = mri.cdps[i];
+        const name = personName(cdp);
+        const email = cdp.email;
+        cdpNameEmail += `${name} (<a href="mailto:${email}">${email}</a>)`;
+    }
+
     return `<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
     <head>
@@ -542,7 +580,7 @@ export function htmlMRI() {
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
-                            <h1>Titre de l'étude</h1>
+                            <h1>${mri.title}</h1>
 
 <div id="gtx-trans" style="position: absolute; left: -41px; top: -8px;">
 <div class="gtx-trans-icon">&nbsp;</div>
@@ -597,11 +635,8 @@ export function htmlMRI() {
                     <tbody><tr>
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
-                        
                             <br>
-Bonjour à toutes et à tous,<br>
-<br>
-Nous vous proposons aujourd’hui une étude ...
+${mri.introductionText}
                         </td>
                     </tr>
                 </tbody></table>
@@ -628,7 +663,7 @@ Nous vous proposons aujourd’hui une étude ...
         
             
 
-            <img alt="Domaine" src="https://mcusercontent.com/d64b9431d63c83512b8b612ee/images/ad81493a-5281-4772-adef-4bcebee00243.png" width="100%" style="max-width: 250px; border-top-left-radius: 0%; border-top-right-radius: 0%; border-bottom-right-radius: 0%; border-bottom-left-radius: 0%;" class="mcnImage">
+            <img alt="${domain.display}" src="${domain.image.mailchimp}" width="100%" style="max-width: 250px; border-top-left-radius: 0%; border-top-right-radius: 0%; border-bottom-right-radius: 0%; border-bottom-left-radius: 0%;" class="mcnImage">
             
         
         </td>
@@ -636,7 +671,7 @@ Nous vous proposons aujourd’hui une étude ...
     <tr>
         <td class="mcnTextContent" valign="top" style="padding:0 9px 0 9px;" width="100%">
             <h4 class="null" style="text-align: center; font-size: smaller; font-weight: lighter; color: #757575;">DOMAINE</h4>
-			<h4 class="null" style="text-align: center;">Data Science</h4>
+			<h4 class="null" style="text-align: center;">${domain.display}</h4>
 
         </td>
     </tr>
@@ -648,7 +683,7 @@ Nous vous proposons aujourd’hui une étude ...
         
             
 
-            <img alt="Rétribution" src="https://mcusercontent.com/d64b9431d63c83512b8b612ee/images/ad81493a-5281-4772-adef-4bcebee00243.png" width="100%" style="max-width: 250px; border-top-left-radius: 0%; border-top-right-radius: 0%; border-bottom-right-radius: 0%; border-bottom-left-radius: 0%;" class="mcnImage">
+            <img alt="Rétribution ${paycheckLevel.display}" src="${paycheckLevel.image}" width="100%" style="max-width: 250px; border-top-left-radius: 0%; border-top-right-radius: 0%; border-bottom-right-radius: 0%; border-bottom-left-radius: 0%;" class="mcnImage">
             
         
         </td>
@@ -656,7 +691,7 @@ Nous vous proposons aujourd’hui une étude ...
     <tr>
         <td class="mcnTextContent" valign="top" style="padding:0 9px 0 9px;" width="100%">
             <h4 class="null" style="text-align: center; font-size: smaller; font-weight: lighter; color: #757575;">RÉTRIBUTION</h4>
-			<h4 class="null" style="text-align: center;">1000-1500€</h4>
+			<h4 class="null" style="text-align: center;">${mri.wageLowerBound}-${mri.wageUpperBound}€</h4>
 
         </td>
     </tr>
@@ -668,7 +703,7 @@ Nous vous proposons aujourd’hui une étude ...
         
             
 
-            <img alt="Difficulté" src="https://mcusercontent.com/d64b9431d63c83512b8b612ee/images/ad81493a-5281-4772-adef-4bcebee00243.png" width="100%" style="max-width: 250px; border-top-left-radius: 0%; border-top-right-radius: 0%; border-bottom-right-radius: 0%; border-bottom-left-radius: 0%;" class="mcnImage">
+            <img alt="Difficulté ${difficulty.display}" src="${difficulty.image}" width="100%" style="max-width: 250px; border-top-left-radius: 0%; border-top-right-radius: 0%; border-bottom-right-radius: 0%; border-bottom-left-radius: 0%;" class="mcnImage">
             
         
         </td>
@@ -676,7 +711,7 @@ Nous vous proposons aujourd’hui une étude ...
     <tr>
         <td class="mcnTextContent" valign="top" style="padding:0 9px 0 9px;" width="100%">
             <h4 class="null" style="text-align: center; font-size: smaller; font-weight: lighter; color: #757575;">DIFFICULTÉ</h4>
-			<h4 class="null" style="text-align: center;">Moyenne</h4>
+			<h4 class="null" style="text-align: center;">Difficulté ${difficulty.display}</h4>
 
         </td>
     </tr>
@@ -720,7 +755,7 @@ Nous vous proposons aujourd’hui une étude ...
                         <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px; font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif;">
                         
                             <h3>Compétences :</h3>
-Nous recherchons un.e ou plusieurs intervenant.e.s ...
+${mri.requiredSkillsText}
                         </td>
                     </tr>
                 </tbody></table>
@@ -753,7 +788,7 @@ Nous recherchons un.e ou plusieurs intervenant.e.s ...
                         <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px; font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif;">
                         
                             <h3>Échéances :</h3>
-Le client désire commencer le plus tôt possible.
+${mri.timeLapsText}
                         </td>
                     </tr>
                 </tbody></table>
@@ -786,7 +821,7 @@ Le client désire commencer le plus tôt possible.
                         <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px; font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif;">
                         
                             <h3>Description :</h3>
-Le but de l’étude est de ...
+${mri.descriptionText}
                         </td>
                     </tr>
                 </tbody></table>
@@ -860,7 +895,7 @@ Le but de l’étude est de ...
                     <tbody>
                         <tr>
                             <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Helvetica; font-size: 18px; padding: 18px;">
-                                <a class="mcnButton " title="Je répond au formulaire" href="https://docs.google.com/forms/d/e/1FAIpQLSduG7os1IrYWhV_BDVNz8CA-NSQDPAnBZrZVvXTzyeOshDSwQ/viewform?usp=sf_link" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">Je répond au formulaire</a>
+                                <a class="mcnButton " title="Je répond au formulaire" href="${mri.gformUrl}" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">Je répond au formulaire</a>
                             </td>
                         </tr>
                     </tbody>
@@ -876,7 +911,7 @@ Le but de l’étude est de ...
                     <tbody>
                         <tr>
                             <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial; font-size: 18px; padding: 18px;">
-                                <a class="mcnButton " title="J'envoie mon CV" href="mailto:email1@telecom-etude.fr,email2@telecom-etude.fr,?subject=Envoi%20du%20CV%20pour%20l'%C3%A9tude%20%22Data%20Science%22" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">J'envoie mon CV</a>
+                                <a class="mcnButton " title="J'envoie mon CV" href="${mailTo}" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">J'envoie mon CV</a>
                             </td>
                         </tr>
                     </tbody>
@@ -901,7 +936,7 @@ Le but de l’étude est de ...
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
-                            N'hésitez pas à demander plus d'informations ou des détails à ...<br>
+                            N'hésitez pas à demander plus d'informations à ${cdpNameEmail}<br>
 <br>
 À bientôt,<br>
 L'équipe Telecom Etude

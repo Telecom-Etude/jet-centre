@@ -13,7 +13,6 @@ import { setMriStatus } from '../../cdp/[study]/mri/form/mri';
 
 import { MriToValidate } from './actions';
 
-
 function checkAndSendMri(mri: MriToValidate, setError: () => void, setSuccess: () => void) {
     const mriParsingResult = validateMri(mri);
     switch (mriParsingResult.status) {

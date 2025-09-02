@@ -29,7 +29,7 @@ export function ImageElt({
 }
 
 export function getDomain(domain: Domain) {
-    return { label: 'DOMAIN', value: DOMAINS[domain].display, image: DOMAINS[domain].image };
+    return { label: 'DOMAIN', value: DOMAINS[domain].display, image: DOMAINS[domain].image.next };
 }
 
 export function getPay(wageLowerBound: number, wageUpperBound: number, pay_level: Level) {

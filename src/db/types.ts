@@ -1,5 +1,4 @@
 import { CompanySize, DeliverableStatus, Domain, Level, StudyProgressStep } from '@prisma/client';
-import { StaticImageData } from 'next/image';
 
 import { DOMAIN_IMAGES, DoubleImage } from './images';
 interface EnumInfo {

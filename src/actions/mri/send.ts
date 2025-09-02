@@ -13,7 +13,7 @@ export async function sendMRI(mri: ValidMri) {
         fromName: 'Telecom Etude',
         replyTo: mri.cdps[0].email,
         subject: `[Telecom Etude] ${mri.title}`,
-        html: htmlMRI(),
+        html: htmlMRI(mri),
         plainText: plainTextMRI(mri),
     });
 }
