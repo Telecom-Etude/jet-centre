@@ -1,6 +1,6 @@
 'use server';
 
-import { Mri, MriStatus, Prisma, StudyInfos } from '@prisma/client';
+import { Mri, MriStatus, StudyInfos } from '@prisma/client';
 
 import prisma from '@/db';
 
@@ -35,7 +35,7 @@ export interface MriToValidate extends Mri {
         information: StudyInfos;
         cdps: {
             user: {
-                person: { email: string | null };
+                person: { email: string | null; firstName: string; lastName: string };
             };
         }[];
     };
@@ -52,7 +52,13 @@ export async function listMriToValidate(): Promise<MriToValidate[] | undefined> 
                             select: {
                                 user: {
                                     select: {
-                                        person: { select: { email: true } },
+                                        person: {
+                                            select: {
+                                                email: true,
+                                                firstName: true,
+                                                lastName: true,
+                                            },
+                                        },
                                     },
                                 },
                             },

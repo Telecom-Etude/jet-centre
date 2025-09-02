@@ -1,6 +1,7 @@
 'use server';
 
 import { MriToValidate } from '@/app/(user)/suivi/mri-validation/actions';
+
 import { sendCampaign } from '../mailchimp';
 import { MailChimpList } from '../mailchimp/types';
 

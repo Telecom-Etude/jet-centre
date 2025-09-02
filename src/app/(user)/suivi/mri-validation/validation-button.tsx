@@ -4,11 +4,12 @@ import { MriStatus } from '@prisma/client';
 import { useState } from 'react';
 import { FaBug, FaCheck } from 'react-icons/fa6';
 
+import { sendMRI } from '@/actions/mailchimp/mri';
 import { LoadingFullStops } from '@/components/loading';
 import { Button } from '@/components/ui/button';
-import { sendMRI } from '@/actions/mailchimp/mri';
 
 import { setMriStatus } from '../../cdp/[study]/mri/form/mri';
+
 import { MriToValidate } from './actions';
 
 export function ValidationButton({ mri }: { mri: MriToValidate }) {
