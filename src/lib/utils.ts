@@ -73,24 +73,26 @@ export function reloadWindow() {
     if (typeof window != 'undefined') location.reload();
 }
 
+export interface PersonName {
+    firstName: string;
+    lastName: string;
+}
+
+export interface PersonNameEmail extends PersonName {
+    email: string;
+}
+
 /**
  * Returns a string with the full name of person
  */
-export function personName({ firstName, lastName }: { firstName: string; lastName: string }) {
+export function personName({ firstName, lastName }: PersonName) {
     return firstName + ' ' + lastName;
 }
 
 /**
  * Returns a string with the full name of person and the email address between parentheses.
  */
-export function personNameEmail({
-    email,
-    ...name
-}: {
-    firstName: string;
-    lastName: string;
-    email: string;
-}): string {
+export function personNameEmail({ email, ...name }: PersonNameEmail): string {
     return `${personName(name)} (${email})`;
 }
 
@@ -98,9 +100,7 @@ export function personNameEmail({
  * Returns a string with the full name and email address
  * of every person of the given list of people
  */
-export function peopleNameEmail(
-    people: { firstName: string; lastName: string; email: string }[]
-): string {
+export function peopleNameEmail(people: PersonNameEmail[]): string {
     const len = people.length;
     if (len === 0) return personNameEmail(people[0]);
 
