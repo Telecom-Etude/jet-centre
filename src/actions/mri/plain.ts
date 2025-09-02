@@ -2,7 +2,7 @@ import { MriToValidate } from '@/app/(user)/suivi/mri-validation/actions';
 import { DOMAINS, LEVELS } from '@/db/types';
 import { peopleNameEmail } from '@/lib/utils';
 
-export function PlainMRI(mri: MriToValidate) {
+export function plainTextMRI(mri: MriToValidate) {
     const cdps = mri.study.cdps.map((cdp) => cdp.user.person);
 
     if (cdps.some((cdp) => cdp.email === null) || !mri.mainDomain || !mri.difficulty) {
