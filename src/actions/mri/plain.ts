@@ -1,20 +1,13 @@
-import { MriToValidate } from '@/app/(user)/suivi/mri-validation/actions';
 import { DOMAINS, LEVELS } from '@/db/types';
 import { peopleNameEmail } from '@/lib/utils';
 
-export function plainTextMRI(mri: MriToValidate) {
-    const cdps = mri.study.cdps.map((cdp) => cdp.user.person);
+import { ValidMri } from './types';
 
-    if (cdps.some((cdp) => cdp.email === null) || !mri.mainDomain || !mri.difficulty) {
-        return;
-    }
-
-    const safeCdps = cdps as { firstName: string; lastName: string; email: string }[];
-
-    const cdpEmailDisplay = peopleNameEmail(safeCdps);
+export function plainTextMRI(mri: ValidMri) {
+    const cdpEmailDisplay = peopleNameEmail(mri.cdps);
 
     let mailTo = '';
-    for (const cdp of safeCdps) {
+    for (const cdp of mri.cdps) {
         mailTo += cdp.email;
         mailTo += ',';
     }

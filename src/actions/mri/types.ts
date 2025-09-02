@@ -1,6 +1,7 @@
-import { MriToValidate } from '@/app/(user)/suivi/mri-validation/actions';
-import { PersonName, PersonNameEmail, sanitiseHtml } from '@/lib/utils';
 import { Domain, Level, MriStatus } from '@prisma/client';
+
+import { MriToValidate } from '@/app/(user)/suivi/mri-validation/actions';
+import { personName, PersonName, PersonNameEmail, sanitiseHtml } from '@/lib/utils';
 
 export interface ValidMri {
     cdps: PersonNameEmail[];
@@ -14,9 +15,10 @@ export interface ValidMri {
     descriptionText: string;
     timeLapsText: string;
     requiredSkillsText: string;
+    gformUrl: string;
 }
 
-enum MriValidationStatus {
+export enum MriValidationStatus {
     Ok,
     MissingField,
     MissingCdpEmail,
@@ -26,7 +28,8 @@ enum MriValidationStatus {
 type Result =
     | { status: MriValidationStatus.Ok; validatedMri: ValidMri }
     | { status: MriValidationStatus.MissingField; field: string }
-    | { status: MriValidationStatus.MissingCdpEmail | MriValidationStatus.UnvalidatedMri };
+    | { status: MriValidationStatus.MissingCdpEmail; name: string }
+    | { status: MriValidationStatus.UnvalidatedMri };
 
 function hasEmail(person: PersonName & { email: string | null }): person is PersonNameEmail {
     return person.email !== null;
@@ -53,6 +56,7 @@ export function validateMri(mri: MriToValidate): Result {
         if (!hasEmail(person)) {
             return {
                 status: MriValidationStatus.MissingCdpEmail,
+                name: personName(person),
             };
         }
 
@@ -63,18 +67,17 @@ export function validateMri(mri: MriToValidate): Result {
         return {
             validatedMri: {
                 cdps,
-                title: sanitiseHtml(unwrap(mri.title, 'title')),
-                introductionText: sanitiseHtml(unwrap(mri.introductionText, 'introductionText')),
-                descriptionText: sanitiseHtml(unwrap(mri.descriptionText, 'descriptionText')),
-                timeLapsText: sanitiseHtml(unwrap(mri.timeLapsText, 'timeLapsText')),
-                requiredSkillsText: sanitiseHtml(
-                    unwrap(mri.requiredSkillsText, 'requiredSkillsText')
-                ),
-                wageLowerBound: unwrap(mri.wageLowerBound, 'wageLowerBound'),
-                wageUpperBound: unwrap(mri.wageUpperBound, 'wageUpperBound'),
-                wageLevel: unwrap(mri.wageLevel, 'wageLevel'),
-                difficulty: unwrap(mri.difficulty, 'difficulty'),
-                mainDomain: unwrap(mri.mainDomain, 'mainDomain'),
+                title: sanitiseHtml(unwrap(mri.title, 'Titre')),
+                introductionText: sanitiseHtml(unwrap(mri.introductionText, 'Introduction')),
+                descriptionText: sanitiseHtml(unwrap(mri.descriptionText, 'Description')),
+                timeLapsText: sanitiseHtml(unwrap(mri.timeLapsText, 'Échéances')),
+                requiredSkillsText: sanitiseHtml(unwrap(mri.requiredSkillsText, 'Compétences')),
+                wageLowerBound: unwrap(mri.wageLowerBound, 'Rétribution minimale'),
+                wageUpperBound: unwrap(mri.wageUpperBound, 'Rétribution maximale'),
+                wageLevel: unwrap(mri.wageLevel, 'Niveau de rétribution'),
+                difficulty: unwrap(mri.difficulty, 'Difficultée'),
+                mainDomain: unwrap(mri.mainDomain, 'Domain'),
+                gformUrl: unwrap(mri.gformUrl, 'Questionnaire Google'),
             },
             status: MriValidationStatus.Ok,
         };

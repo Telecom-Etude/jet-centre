@@ -1,19 +1,17 @@
 'use server';
 
-import { MriToValidate } from '@/app/(user)/suivi/mri-validation/actions';
-
 import { sendCampaign } from '../mailchimp';
 import { MailChimpList } from '../mailchimp/types';
-import { plainTextMRI } from './plain';
-import { htmlMRI } from './html';
 
-export async function sendMRI(mri: MriToValidate) {
-    const cdpEmail = mri.study.cdps[0].user.person.email;
-    if (!mri.title || !cdpEmail) return false;
+import { htmlMRI } from './html';
+import { plainTextMRI } from './plain';
+import { ValidMri } from './types';
+
+export async function sendMRI(mri: ValidMri) {
     return await sendCampaign({
         recipients: MailChimpList.MRI,
         fromName: 'Telecom Etude',
-        replyTo: cdpEmail,
+        replyTo: mri.cdps[0].email,
         subject: `[Telecom Etude] ${mri.title}`,
         html: htmlMRI(),
         plainText: plainTextMRI(mri),
