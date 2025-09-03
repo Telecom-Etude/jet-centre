@@ -1,9 +1,9 @@
-import Link from 'next/link';
 import { ReactNode } from 'react';
 
+import { signOut } from '@/actions/auth';
 import { Button } from '@/components/ui/button';
 
-import { MIDDLEWARE_ERRORS, ROUTES } from '.';
+import { MIDDLEWARE_ERRORS } from '.';
 
 interface ErrorDisplayInformation {
     title: string;
@@ -28,9 +28,14 @@ export function getErrorDisplayInformation(error: string): ErrorDisplayInformati
                 title: 'Votre rôle dans la JE a été mal défini.',
                 text: "Ceci n'est pas normal, merci de vous déconnecter/reconnecter. Si vous voyez toujours cette erreur, merci de contacter le pôle info au plus vite!",
                 children: (
-                    <Button asChild>
-                        <Link href={ROUTES.signOut}>Déconnectez-vous</Link>
-                    </Button>
+                    <form
+                        action={async () => {
+                            'use server';
+                            await signOut();
+                        }}
+                    >
+                        <Button variant="link">Déconnectez-vous</Button>
+                    </form>
                 ),
             };
         default:
