@@ -1,7 +1,6 @@
 import { Address, Prisma } from '@prisma/client';
 
 import prisma from '@/db';
-import { dbg } from '@/lib/utils';
 
 import { ClientFormType } from '../schema';
 
@@ -13,8 +12,6 @@ type PlainAddress = Omit<Address, 'id' | 'personId' | 'companyId'>;
 
 export async function editStudyClient(clientId: string, clientData: ClientFormType) {
     try {
-        dbg(clientData, '############## new client data ##############');
-
         const data: Data<Prisma.ClientUpdateInput, Prisma.ClientUncheckedUpdateInput> = {
             job: clientData.job,
             person: {
@@ -101,8 +98,6 @@ export async function editStudyClient(clientId: string, clientData: ClientFormTy
                 } else throw new Error('unreachable: company has neither create or update');
             }
         }
-
-        dbg(data, '############## data ##############');
 
         await prisma.client.update({
             where: { id: clientId },

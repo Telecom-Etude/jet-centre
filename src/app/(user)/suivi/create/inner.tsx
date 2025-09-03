@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
@@ -29,15 +28,10 @@ export default function Inner({ companies, admins }: CreateStudyProps) {
         defaultValues: emptyStudyCreationSchema,
     });
 
-    useEffect(() => {
-        console.log('errors', formStudy.formState.errors);
-    }, [formStudy.formState.errors]);
-
     return (
         <>
             <form
                 onSubmit={formStudy.handleSubmit(async (d) => {
-                    console.log('// Study submit //', d);
                     await createNewStudy(d);
                     router.push(`/cdp/${d.settings.code}/dashboard`);
                 })}

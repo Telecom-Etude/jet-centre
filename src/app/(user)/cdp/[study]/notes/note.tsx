@@ -31,11 +31,7 @@ export default function Notes({
             <BoxHeader>
                 <BoxTitle>{title}</BoxTitle>
                 <BoxHeaderBlock>
-                    <BoxCollapseButton
-                        collapse={collapse}
-                        setCollapse={setCollapse}
-                        onClick={() => console.log('98798778456456456')}
-                    />
+                    <BoxCollapseButton collapse={collapse} setCollapse={setCollapse} />
                     <BoxDragHandle {...dragHandleProps} />
                 </BoxHeaderBlock>
             </BoxHeader>

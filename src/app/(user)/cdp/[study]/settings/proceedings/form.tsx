@@ -11,7 +11,7 @@ import { DropdownSingleFormElement } from '@/components/meta-components/form/dro
 import { Button } from '@/components/ui/button';
 import { FormProvider } from '@/components/ui/form';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
-import { dbg, reloadWindow } from '@/lib/utils';
+import { reloadWindow } from '@/lib/utils';
 
 import {
     addPhase,
@@ -77,14 +77,11 @@ export function StudyProceedingsParamsEditor({
     const [status, setStatus] = useState(UpdateBoxStatus.Ok);
 
     const updateServer = () => {
-        const values = form.watch();
-        dbg(values, 'saving values');
         setStatus(UpdateBoxStatus.Loading);
     };
 
     const updateStep = () => {
         const newStep = form.watch().studyProcessStep;
-        dbg(newStep, 'saving step');
         setStatus(UpdateBoxStatus.Loading);
         updateStudyStep(newStep, serverStudyProceedingId).then(() => {
             getStudyProceedings(studyCode).then((serverProceeding) => {
@@ -105,9 +102,7 @@ export function StudyProceedingsParamsEditor({
 
     const checkServerValues = () => {
         setStatus(UpdateBoxStatus.Loading);
-        dbg('checking', 'checking');
         getStudyProceedings(studyCode).then((data) => {
-            dbg('checked', 'checked');
             if (!data) {
                 setStatus(UpdateBoxStatus.Error);
             } else if (checkEqual(data.serverStudyProceeding, form.getValues())) {

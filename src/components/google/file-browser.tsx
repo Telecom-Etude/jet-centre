@@ -19,10 +19,6 @@ function FileComponent({ pFile }: { pFile: Promise<DriveFile> | null }) {
 
     const isFolder = isLoaded && file.mimeType == 'application/vnd.google-apps.folder';
 
-    if (isLoaded) {
-        console.log(file);
-    }
-
     return (
         <button
             onDoubleClick={() => {

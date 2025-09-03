@@ -10,7 +10,6 @@ import { DropdownManyFormElement } from '@/components/meta-components/form/dropd
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { FormProvider } from '@/components/ui/form';
 import { DOMAIN_NAMES, DOMAINS } from '@/db/types';
-import { dbg } from '@/lib/utils';
 
 import { ServerStudyInfos, updateStudyInfos } from './actions';
 import {
@@ -38,10 +37,8 @@ export function StudyInfosParamsEditor({
 
     const updateServer = () => {
         const mri = form.watch();
-        dbg(mri, 'sending update for data');
         setStatus(UpdateBoxStatus.Loading);
         updateStudyInfos(studyInfoId, mri).then((data) => {
-            dbg(data, 'response data from server');
             if (data && checkEqual(data, mri)) {
                 setStatus(UpdateBoxStatus.Ok);
             } else {

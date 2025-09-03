@@ -106,8 +106,6 @@ const config = {
             const lastName = family_name;
             const image = picture;
 
-            console.log('Upserting the user profile picture');
-
             await prisma.person.upsert({
                 where: { email },
 

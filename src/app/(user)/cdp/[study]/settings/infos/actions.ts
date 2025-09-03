@@ -1,7 +1,6 @@
 'use server';
 
 import prisma from '@/db';
-import { dbg } from '@/lib/utils';
 
 import { StudyInfosParamsEditorFormType } from './schema';
 
@@ -35,7 +34,6 @@ export async function updateStudyInfos(
     data: StudyInfosParamsEditorFormType
 ): Promise<StudyInfosParamsEditorFormType | undefined> {
     try {
-        dbg(data, 'storing data');
         const studyInfos = await prisma.studyInfos.update({ where: { id: studyInfoId }, data });
         return {
             title: studyInfos.title ?? undefined,

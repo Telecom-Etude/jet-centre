@@ -2,7 +2,6 @@
 
 import prisma from '@/db';
 import { googleDrive } from '@/google/api';
-import { log } from '@/lib/utils';
 
 import { driveFileToDriveFile, FileType } from './types';
 
@@ -19,7 +18,6 @@ async function getMissionFolderIdFromDrive(code: string): Promise<string | null>
         if (missionFolderId) {
             return missionFolderId;
         }
-        log(`Creating folder for study ${code}`);
         const fileMetadata = {
             name: code,
             mimeType: FileType.Folder,

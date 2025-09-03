@@ -15,7 +15,6 @@ import type { NextRequest } from 'next/server';
 import type { Session } from 'next-auth';
 
 import { auth } from './actions/auth';
-import { log } from './lib/utils';
 import { isAuthorisedToRoute, isNonAuthPublicRoute, ROUTES } from './routes';
 import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
 
@@ -86,7 +85,6 @@ export default auth(async (request: NextAuthRequest) => {
     const isLoggedIn = !!session?.user?.email;
     const position = session?.user?.position;
     const { pathname } = request.nextUrl;
-    log(`middleware at ${pathname} [loggedIn=${isLoggedIn}] [pos=${position}] `);
 
     if (process.env.DEV_MODE) return NextResponse.next();
 

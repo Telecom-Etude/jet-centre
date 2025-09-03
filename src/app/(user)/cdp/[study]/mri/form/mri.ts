@@ -3,7 +3,6 @@
 import { Mri, MriStatus } from '@prisma/client';
 
 import prisma from '@/db';
-import { dbg } from '@/lib/utils';
 
 import { adminDisplay, DEFAULT_MRI_VALUES, MriFormType, MriServerData } from './schema';
 
@@ -124,8 +123,6 @@ export async function storeMriData(mriId: string, data: MriFormType): Promise<st
             status: MriStatus.InProgress,
             ...data,
         };
-
-        dbg(mriData, 'storing');
 
         const updatedMri = await prisma.mri.update({
             where: { id: mriId },

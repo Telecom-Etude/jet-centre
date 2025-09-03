@@ -3,7 +3,6 @@
 import { Prisma } from '@prisma/client';
 
 import prisma from '@/db';
-import { dbg } from '@/lib/utils';
 
 import { ClientFormType, StudyClientsFormType } from '../schema';
 
@@ -100,8 +99,6 @@ export async function getStudyClients(
 
 export async function newStudyClient(studyId: string, clientData: ClientFormType) {
     try {
-        dbg(clientData, `adding data for ${studyId}`);
-
         const data: Data<Prisma.StudyUpdateInput, Prisma.StudyUncheckedUpdateInput> = {
             clients: {
                 create: {

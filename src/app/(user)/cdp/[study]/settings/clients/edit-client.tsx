@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { COMPANY_SIZE_NAMES, COMPANY_SIZES, DOMAIN_NAMES, DOMAINS } from '@/db/types';
-import { dbg, personName, reloadWindow } from '@/lib/utils';
+import { personName, reloadWindow } from '@/lib/utils';
 
 import { editStudyClient } from './actions/edit-client';
 import { clientFormSchema, ClientFormType } from './schema';
@@ -44,8 +44,6 @@ function EditClientForm({ onSubmit, client, isLoading }: EditClientFormProps) {
         resolver: zodResolver(clientFormSchema),
         defaultValues: client,
     });
-
-    dbg(client, '=============== editing client ==============');
 
     const [editCompany, setEditCompany] = useState(!!client.address?.id);
     const [editAddress, setEditAddress] = useState(!!client.company?.id);

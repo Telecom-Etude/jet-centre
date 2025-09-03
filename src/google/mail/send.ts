@@ -8,7 +8,6 @@
 'use server';
 
 import { auth } from '@/actions/auth';
-import { dbg } from '@/lib/utils';
 
 import { googleMail } from '../api';
 
@@ -66,12 +65,11 @@ function rfc2822FromEmailBuilder(emailBuilder: EmailBuilder): string {
 
     rfc2822Message += `--${boundary}--`;
 
-    return dbg(rfc2822Message, 'msg');
+    return rfc2822Message;
 }
 
 export async function sendEmail(emailBuilder: EmailBuilder): Promise<boolean> {
     try {
-        console.log('sending');
         const gmail = await googleMail();
         const session = await auth();
 

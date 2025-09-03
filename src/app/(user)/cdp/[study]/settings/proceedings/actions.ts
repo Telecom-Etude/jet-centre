@@ -146,6 +146,6 @@ export async function updateStudyStep(
             },
         });
     } catch (e) {
-        console.log(`[updateStudyStep] ${e}`);
+        console.error(`[updateStudyStep] ${e}`);
     }
 }

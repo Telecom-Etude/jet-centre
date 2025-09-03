@@ -79,9 +79,6 @@ export default function Inner({ studyCode, loadedMriData }: InnerProps) {
         if (serverMriData.length === 0) {
             createNewMri(studyCode).then((newMriData) => {
                 if (newMriData) {
-                    console.log(
-                        `New MRI was successfully created for study ${studyCode}, id=${newMriData}`
-                    );
                     setServerMriData([newMriData]);
                     setSelectedMriId(newMriData.mriId);
                 } else {
@@ -94,7 +91,6 @@ export default function Inner({ studyCode, loadedMriData }: InnerProps) {
     const mri = form.watch();
 
     const updateServer = () => {
-        console.log('UPDATING SERVER');
         setStatus(UpdateBoxStatus.Loading);
         const formData = form.watch();
         if (!selectedMriId) {
@@ -268,9 +264,6 @@ function MriSelector({
                         onClick={() => {
                             createNewMri(studyCode).then((newMriData) => {
                                 if (newMriData) {
-                                    console.log(
-                                        `New MRI was successfully created for study ${studyCode}, id=${newMriData}`
-                                    );
                                     setServerMriData([newMriData, ...serverMriData]);
                                     setSelectedId(newMriData.mriId);
                                 } else {

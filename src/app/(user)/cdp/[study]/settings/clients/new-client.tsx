@@ -18,11 +18,7 @@ function NewStudyClientForm({ onSubmit }: { onSubmit: (values: ClientFormType) =
     return (
         <>
             <FormProvider {...form}>
-                <form
-                    className="space-y-main py-main"
-                    action={() => console.log('hahahah')}
-                    onSubmit={() => console.log('héhéhéh')}
-                >
+                <form className="space-y-main py-main">
                     <InputFormElement
                         className="mb-0"
                         form={form}
