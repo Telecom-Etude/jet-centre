@@ -32,17 +32,8 @@ export function cn(...inputs: ClassValue[]): string {
  */
 export const NBSP: string = '\u00A0';
 
-export function dbg<T>(value: T, msg?: string): T {
-    console.log(`\x1b[36m 🐞 ${(msg && msg + ' ') || ''}\x1b[0m${JSON.stringify(value, null, 2)}`);
-    return value;
-}
-
 export function getProperty(obj: any, path: string) {
     return path.split('.').reduce((acc, key) => acc[key], obj);
-}
-
-export function log(msg: string) {
-    console.log(`\x1b[33m 📢 ${msg}\x1b[0m`);
 }
 
 export function unwrap<T>(x: T | undefined | null): T {
@@ -139,7 +130,7 @@ export function stringifyAddress(address: Address): string {
 /**
  * Escape HTML in user input, that shouldn't contain HTML.
  *
- * This function must be used on user input that is put in a dangerouslySetInnerHTML.
+ * This function must be used on user input that is put as string in an HTML content (dangerouslySetInnerHTML, HTML email, etc.)
  */
 export function sanitiseHtml(value: string) {
     return value

@@ -2,7 +2,7 @@ import { KnipConfig } from 'knip';
 
 const config: KnipConfig = {
     ignore: [
-        'src/lib/utils.ts',
+        'src/lib/dev-utils.ts',
         'src/components/ui/**',
         'src/components/meta-components/multiple-selector.tsx',
         '.github/**',
