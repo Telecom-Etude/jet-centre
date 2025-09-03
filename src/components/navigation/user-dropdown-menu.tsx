@@ -58,9 +58,13 @@ export const UserDropdownMenu = ({ isMobile, isOpen }: UserDropdownMenuProps) =>
                             className="space-x-2 cursor-pointer focus:text-primary-foreground"
                             asChild
                         >
-                            <Button onClick={() => signOut()}>
+                            <Button
+                                variant="ghost"
+                                className="w-full flex justify-start"
+                                onClick={() => signOut()}
+                            >
                                 <LogOut />
-                                <div>Log out</div>
+                                <div>Déconnexion</div>
                             </Button>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
