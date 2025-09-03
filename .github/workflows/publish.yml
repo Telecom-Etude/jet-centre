@@ -2,15 +2,16 @@ name: pipeline
 on:
     push:
         branches:
-            - 'main'
+            - 'prod'
 jobs:
     deploy:
         name: build && push image to docker hub
         runs-on: ubuntu-latest
+        if: github.repository == 'Telecom-Etude/jet-centre'
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: main
+                  ref: prod
 
             - name: setup docker buildx
               uses: docker/setup-buildx-action@v2
