@@ -36,11 +36,6 @@ export function getProperty(obj: any, path: string) {
     return path.split('.').reduce((acc, key) => acc[key], obj);
 }
 
-export function unwrap<T>(x: T | undefined | null): T {
-    if (x === undefined || x === null) throw new Error('Option unwrap on a None value');
-    return x;
-}
-
 export function arrayEqual<T>(
     lhs: T[],
     rhs: T[],
@@ -83,7 +78,7 @@ export function personName({ firstName, lastName }: PersonName) {
 /**
  * Returns a string with the full name of person and the email address between parentheses.
  */
-export function personNameEmail({ email, ...name }: PersonNameEmail): string {
+function personNameEmail({ email, ...name }: PersonNameEmail): string {
     return `${personName(name)} (${email})`;
 }
 
