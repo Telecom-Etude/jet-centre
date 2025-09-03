@@ -1,10 +1,7 @@
 services:
     app:
         container_name: jc-app
-        build:
-            context: ./
-            target: runner
-
+        image: smeag0l/jet-centre:prod
         env_file:
             - .env.production
         environment:
