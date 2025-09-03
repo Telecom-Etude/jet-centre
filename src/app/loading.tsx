@@ -9,7 +9,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { ErrorPage } from '@/components/error';
+import { LoadingPage } from '@/components/loading';
 
 const DELAY_TO_SHOW_LOADING_PAGE = 500; // milliseconds
 
@@ -22,5 +22,5 @@ export default function Loading() {
     }, []);
 
     if (!show) return null;
-    return <ErrorPage title="Loading..." />;
+    return <LoadingPage />;
 }

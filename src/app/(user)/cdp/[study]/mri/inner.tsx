@@ -16,6 +16,7 @@ import {
     BoxTitle,
 } from '@/components/boxes/boxes';
 import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
+import { LoadingPage } from '@/components/loading';
 import { LoadingFullStops } from '@/components/loading';
 import {
     AlertDialog,
@@ -174,7 +175,7 @@ export default function Inner({ studyCode, loadedMriData }: InnerProps) {
             </div>
         </div>
     ) : (
-        <LoadingFullStops />
+        <LoadingPage />
     );
 }
 

@@ -12,6 +12,7 @@ import {
     BoxTitle,
 } from '@/components/boxes/boxes';
 import { ErrorPage } from '@/components/error';
+import { LoadingPage } from '@/components/loading';
 
 import { FullCompany, getCompanyFromId } from './actions';
 import { CompanyTable } from './data-table';
@@ -33,7 +34,7 @@ function CompanyBoxContent({
                 </ErrorPage>
             );
         case LoadingState.Loading:
-            return <ErrorPage title="Chargement en cours" />;
+            return <LoadingPage />;
         case LoadingState.Error:
             return (
                 <ErrorPage title="Erreur innattendue">

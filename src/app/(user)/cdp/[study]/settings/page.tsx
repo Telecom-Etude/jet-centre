@@ -2,6 +2,7 @@ import { ReactNode, Suspense } from 'react';
 
 import { Box, BoxContent, BoxHeader, BoxTitle } from '@/components/boxes/boxes';
 import { ErrorPage } from '@/components/error';
+import { LoadingPage } from '@/components/loading';
 import { StudyParams } from '@/routes';
 
 import { getStudyClients } from './clients/actions';
@@ -89,9 +90,7 @@ function FakeBox({ children, title }: Title & { children: ReactNode }) {
 function LoadingFallback({ title }: Title) {
     return (
         <FakeBox title={title}>
-            <div className="h-full p-6">
-                <p>Loading</p>
-            </div>
+            <LoadingPage />
         </FakeBox>
     );
 }
