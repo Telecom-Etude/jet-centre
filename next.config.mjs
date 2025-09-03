@@ -12,6 +12,7 @@ const nextConfig = {
                 hostname: '**.googleusercontent.com',
             },
         ],
+        domains: ['erp.telecom-etude.fr']
     },
     env: {
         // ⚠️ Make sure data put here isn't sensitive ⚠️

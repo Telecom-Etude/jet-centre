@@ -1,5 +1,5 @@
 services:
-    jet-centre:
+    app:
         container_name: jc-app
         build:
             context: ./
@@ -12,7 +12,7 @@ services:
 
         restart: always
         ports:
-            - 3000:3000
+            - "[::]:80:3000"
         networks:
             - db-network
             - internet
@@ -35,7 +35,7 @@ networks:
     db-network:
         external: false
     internet:
-        driver: bridge
+        enable_ipv6: true
 
 volumes:
     postgres:
