@@ -19,6 +19,7 @@ services:
     postgres:
         image: postgres:15
         container_name: jc-postgres
+        restart: always
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
@@ -27,17 +28,16 @@ services:
             - postgres:/var/lib/postgresql/data
         networks:
             - db-network
-        restart: always
     watchtower:
         container_name: watchtower
         image: containrrr/watchtower
+        restart: always
         environment:
             - WATCHTOWER_CLEANUP=true
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - ~/.docker/config.json:/config.json:ro
         command: --interval 30 jc-app
-        restart: always
 
 networks:
     db-network:
