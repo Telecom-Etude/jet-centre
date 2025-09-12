@@ -9,8 +9,9 @@ on:
             - 'v*.*.*'
 
 jobs:
-    build-and-push:
+    deploy:
         runs-on: ubuntu-latest
+        if: github.repository == 'Telecom-Etude/jet-centre'
 
         steps:
             - name: Checkout source
