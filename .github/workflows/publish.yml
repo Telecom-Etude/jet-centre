@@ -56,10 +56,11 @@ jobs:
                   echo "DIGEST=${{ steps.build.outputs.digest }}" >> $GITHUB_ENV
                   echo "Image digest: ${{ steps.build.outputs.digest }}"
 
+            - name: Write digest to file
+              run: echo "${{ steps.build.outputs.digest }}" > digest.txt
+
             - name: Save digest artifact
               uses: actions/upload-artifact@v3
               with:
                   name: image-digest
-                  path: |
-                      digest.txt
-              run: echo "${{ steps.build.outputs.digest }}" > digest.txt
+                  path: digest.txt
