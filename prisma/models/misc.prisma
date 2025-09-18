@@ -1,7 +1,16 @@
 model Action {
-    id     String   @id @default(cuid())
-    user   User     @relation(fields: [userId], references: [id])
-    date   DateTime @default(now())
-    userId String
-    Mri    Mri[]
+  id     String   @id @default(cuid())
+  user   User     @relation(fields: [userId], references: [id])
+  date   DateTime @default(now())
+  userId String
+  Mri    Mri[]
+}
+
+model BugReport {
+  id          String   @id @default(cuid())
+  description String
+  history     String
+  date        DateTime
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
 }

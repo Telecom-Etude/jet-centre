@@ -23,7 +23,7 @@ import {
     SortableList,
     useSortableList,
 } from '@/components/meta-components/sortableList';
-import { FormProvider, FormRule } from '@/components/ui/form';
+import { Form, FormRule } from '@/components/ui/form';
 import { COMPANY_SIZE_NAMES, COMPANY_SIZES, DOMAIN_NAMES } from '@/db/types';
 import { cn } from '@/lib/utils';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
@@ -186,7 +186,7 @@ function CompanyForm({
             <BoxCollapser collapse={collapse}>
                 <BoxContent>
                     <div className="flex flex-col gap-2">
-                        <FormProvider {...formStudy}>
+                        <Form {...formStudy}>
                             <InputFormElement
                                 label="Nom de l'entreprise"
                                 name={field('name')}
@@ -265,7 +265,7 @@ function CompanyForm({
                                     unwritable={!isNew}
                                 />
                             </div>
-                        </FormProvider>
+                        </Form>
 
                         <FormRule primary />
                         <h4>Contacts</h4>
@@ -291,9 +291,9 @@ function CompanyForm({
                                     );
                                 }}
                             />
-                            <FormProvider {...formStudy}>
+                            <Form {...formStudy}>
                                 <LightFormElement form={formStudy} name={field('members')} />
-                            </FormProvider>
+                            </Form>
                             <div className="flex flex-col">
                                 <BoxCollapser collapse={collapseContactForm}>
                                     <BoxContent>
