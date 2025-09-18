@@ -18,9 +18,7 @@ function NewStudyClientForm({ onSubmit }: { onSubmit: (values: ClientFormType) =
     return (
         <>
             <Form {...form}>
-                <form
-                    className="space-y-main py-main"
-                >
+                <form className="space-y-main py-main">
                     <InputFormElement
                         className="mb-0"
                         form={form}
