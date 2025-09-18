@@ -1,6 +1,6 @@
 'use client';
 
-import { Prisma } from '@prisma/client';
+import { MriStatus, Prisma } from '@prisma/client';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import Image from 'next/image';
@@ -26,6 +26,7 @@ import { getDifficulty, getDomain, getPay, ImageElt } from '@/app/(user)/cdp/[st
 import { useViewer } from '@/components/hooks/use-viewer';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
+    finishMRI,
     setMRIDescriptionText,
     setMRIIntroductionText,
     setMRIRequiredSkillsText,
@@ -47,6 +48,7 @@ import {
     MRIModifyFieldResult,
     MriWithStudyAndAssignees,
     StudyMRIListItem,
+    mriFinishErrorCodeToString,
     mriModifyFieldErrorCodeToString,
 } from '@/types/mri';
 
@@ -154,6 +156,12 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         return <div>Impossible d&apos;accéder au MRI</div>;
     }
 
+    if (viewerResult.status !== 'success') {
+        return <div>Utilisateur invalide.</div>;
+    }
+
+    const viewer = viewerResult.viewer;
+
     const titleLoading = isLoading || mri === undefined || mri === null;
     const introductionLoading = isLoading || mri === undefined || mri === null;
     const requiredSkillsLoading = isLoading || mri === undefined || mri === null;
@@ -173,17 +181,15 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
     const updateTitle = async (text: string) => {
         if (!mri?.id) return;
 
-        if (viewerResult.status === 'error') return;
-
         const now = new Date();
         const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
             ...mri.lastEditedAction,
             date: now,
             user: {
-                id: viewerResult.viewer.id,
+                id: viewer.id,
                 person: {
-                    firstName: viewerResult.viewer.firstName,
-                    lastName: viewerResult.viewer.lastName,
+                    firstName: viewer.firstName,
+                    lastName: viewer.lastName,
                 },
             },
         };
@@ -192,9 +198,7 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         // It is REALLY important to not revalidate here
         mutate(
             async () => {
-                const error = handleMRIModifyFieldResult(
-                    await setMRITitle(viewerResult.viewer, mriId, text)
-                );
+                const error = handleMRIModifyFieldResult(await setMRITitle(viewer, mriId, text));
                 // Here I don't think returning the updated data via the server action makes sense...
                 // The best option would be to use a web socket anyways :)
                 if (error) {
@@ -247,17 +251,15 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
     const updateIntroduction = async (text: string) => {
         if (!mri?.id) return;
 
-        if (viewerResult.status === 'error') return;
-
         const now = new Date();
         const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
             ...mri.lastEditedAction,
             date: now,
             user: {
-                id: viewerResult.viewer.id,
+                id: viewer.id,
                 person: {
-                    firstName: viewerResult.viewer.firstName,
-                    lastName: viewerResult.viewer.lastName,
+                    firstName: viewer.firstName,
+                    lastName: viewer.lastName,
                 },
             },
         };
@@ -267,7 +269,7 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         mutate(
             async () => {
                 const error = handleMRIModifyFieldResult(
-                    await setMRIIntroductionText(viewerResult.viewer, mriId, text)
+                    await setMRIIntroductionText(viewer, mriId, text)
                 );
                 // Here I don't think returning the updated data via the server action makes sense...
                 // The best option would be to use a web socket anyways :)
@@ -296,17 +298,15 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
     const updateRequiredSkillsText = async (text: string) => {
         if (!mri?.id) return;
 
-        if (viewerResult.status === 'error') return;
-
         const now = new Date();
         const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
             ...mri.lastEditedAction,
             date: now,
             user: {
-                id: viewerResult.viewer.id,
+                id: viewer.id,
                 person: {
-                    firstName: viewerResult.viewer.firstName,
-                    lastName: viewerResult.viewer.lastName,
+                    firstName: viewer.firstName,
+                    lastName: viewer.lastName,
                 },
             },
         };
@@ -316,7 +316,7 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         mutate(
             async () => {
                 const error = handleMRIModifyFieldResult(
-                    await setMRIRequiredSkillsText(viewerResult.viewer, mriId, text)
+                    await setMRIRequiredSkillsText(viewer, mriId, text)
                 );
                 // Here I don't think returning the updated data via the server action makes sense...
                 // The best option would be to use a web socket anyways :)
@@ -345,17 +345,15 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
     const updateTimeLapsText = async (text: string) => {
         if (!mri?.id) return;
 
-        if (viewerResult.status === 'error') return;
-
         const now = new Date();
         const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
             ...mri.lastEditedAction,
             date: now,
             user: {
-                id: viewerResult.viewer.id,
+                id: viewer.id,
                 person: {
-                    firstName: viewerResult.viewer.firstName,
-                    lastName: viewerResult.viewer.lastName,
+                    firstName: viewer.firstName,
+                    lastName: viewer.lastName,
                 },
             },
         };
@@ -365,7 +363,7 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         mutate(
             async () => {
                 const error = handleMRIModifyFieldResult(
-                    await setMRITimeLapsText(viewerResult.viewer, mriId, text)
+                    await setMRITimeLapsText(viewer, mriId, text)
                 );
                 if (error) {
                     return Promise.reject();
@@ -394,17 +392,15 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
     const updatedescriptionText = async (text: string) => {
         if (!mri?.id) return;
 
-        if (viewerResult.status === 'error') return;
-
         const now = new Date();
         const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
             ...mri.lastEditedAction,
             date: now,
             user: {
-                id: viewerResult.viewer.id,
+                id: viewer.id,
                 person: {
-                    firstName: viewerResult.viewer.firstName,
-                    lastName: viewerResult.viewer.lastName,
+                    firstName: viewer.firstName,
+                    lastName: viewer.lastName,
                 },
             },
         };
@@ -415,7 +411,7 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
             mutate(
                 async () => {
                     const error = handleMRIModifyFieldResult(
-                        await setMRIDescriptionText(viewerResult.viewer, mriId, text)
+                        await setMRIDescriptionText(viewer, mriId, text)
                     );
                     // Here I don't think returning the updated data via the server action makes sense...
                     // The best option would be to use a web socket anyways :)
@@ -444,8 +440,70 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         }
     };
 
+    const requestMriValidationCallback = async () => {
+        if (!mri?.id) return;
+
+        const now = new Date();
+        const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
+            ...mri.lastEditedAction,
+            date: now,
+            user: {
+                id: viewer.id,
+                person: {
+                    firstName: viewer.firstName,
+                    lastName: viewer.lastName,
+                },
+            },
+        };
+
+        // Update locally immediately
+        // It is REALLY important to not revalidate here
+        mutate(
+            async () => {
+                const finishResult = await finishMRI(viewer, mriId);
+                // Here I don't think returning the updated data via the server action makes sense...
+                // The best option would be to use a web socket anyways :)
+                if (finishResult.status == 'error') {
+                    globalMutate(['/api/mri/study/', mri.study.information.code]);
+                    toast.error(mriFinishErrorCodeToString(finishResult.error));
+                    return Promise.reject();
+                }
+                return {
+                    ...mri,
+                    status: 'Finished',
+                    lastEditedAction: updatedAction,
+                };
+            },
+            {
+                optimisticData: {
+                    ...mri,
+                    status: 'Finished',
+                    lastEditedAction: updatedAction,
+                },
+                rollbackOnError: true,
+                throwOnError: false,
+                revalidate: false,
+            }
+        );
+
+        // The optimistic update here doesn't account for any error that might happen server-side
+        // If we wanted to account for them it would be better to use a custom server action that
+        // updated the title AND returns the modified list, as the second argument to globalMutate
+
+        globalMutate(
+            ['/api/mri/study/', mri.study.information.code],
+            (currentMris?: StudyMRIListItem[]) => {
+                if (!currentMris) return [];
+                return currentMris.map((mriItem) =>
+                    mriItem.id === mri.id ? { ...mriItem, mriStatus: MriStatus.Finished } : mriItem
+                );
+            },
+            { revalidate: false }
+        );
+    };
+
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full relative">
             <div className="flex justify-between text-sm p-0.5">
                 {mri ? (
                     <div className="italic">
@@ -656,6 +714,22 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
 
                     <p className="mb-8"></p>
                 </div>
+            </div>
+
+            <div className="absolute right-4 bottom-4">
+                {mri && (
+                    <Button
+                        variant="highlight"
+                        disabled={isValidating || mri.status != 'InProgress'}
+                        className="gap-2"
+                        onClick={requestMriValidationCallback}
+                    >
+                        {isValidating && <Spinner variant="circle" className="size-4" />}
+                        {mri.status == 'InProgress'
+                            ? 'Envoyer le MRI en validation'
+                            : 'MRI en attente de validation'}
+                    </Button>
+                )}
             </div>
         </div>
     );

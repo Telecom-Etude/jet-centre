@@ -1,9 +1,8 @@
 import { DOMAINS, LEVELS } from '@/db/types';
 import { peopleNameEmail } from '@/lib/utils';
+import { PublishableMri } from '@/types/mri';
 
-import { ValidMri } from './types';
-
-export function plainTextMRI(mri: ValidMri) {
+export function plainTextMRI(mri: PublishableMri) {
     const cdpEmailDisplay = peopleNameEmail(mri.cdps);
 
     let mailTo = '';

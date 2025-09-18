@@ -1,11 +1,10 @@
 import { ErrorPage } from '@/components/error';
-import { getStudyMRIsFromCode } from '@/data/mri';
+import { getMRIsToValidate } from '@/data/mri';
 import { getViewer } from '@/data/user';
-import { StudyParams } from '@/routes';
 
-import MriStudyEditor from './mri-study-editor';
+import MRIList from './mri-list';
 
-export default async function MRIs({ params }: StudyParams) {
+export default async function MRIs() {
     const viewerResult = await getViewer();
 
     if (viewerResult.status === 'error') {
@@ -18,9 +17,7 @@ export default async function MRIs({ params }: StudyParams) {
         );
     }
 
-    const { study: studyCode } = await params;
+    const initialMRIs = await getMRIsToValidate(viewerResult.viewer);
 
-    const initialMRIs = await getStudyMRIsFromCode(viewerResult.viewer, studyCode);
-
-    return <MriStudyEditor studyCode={studyCode} initialMRIs={initialMRIs} />;
+    return <MRIList initialMRIs={initialMRIs} />;
 }

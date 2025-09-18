@@ -3,8 +3,8 @@
 import { useState } from 'react';
 
 import { sendCampaign } from '@/actions/mailchimp';
-import { MailChimpList } from '@/actions/mailchimp/types';
 import { sendEmail } from '@/google/mail/send';
+import { MailChimpList } from '@/types/mailchimp';
 
 import { Input } from '../ui/input';
 export function MailSender({ google = false }: { google?: boolean }) {
@@ -29,7 +29,7 @@ export function MailSender({ google = false }: { google?: boolean }) {
                     replyTo: 'contact@telecom-etude.fr',
                     subject: 'Test email',
                     plainText: value,
-                }).then((res) => setGood(res));
+                }).then((res) => setGood(res.status == 'success'));
         }
     };
 

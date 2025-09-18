@@ -1,11 +1,25 @@
 'use server';
 
-import { Mri, Prisma } from '@prisma/client';
+import { Mri, MriStatus, Prisma } from '@prisma/client';
 
+import { sendCampaign, SendCampaignErrorCode } from '@/actions/mailchimp';
 import prisma from '@/db';
+import { htmlMRI } from '@/lib/mailchimp/html-mri';
+import { plainTextMRI } from '@/lib/mailchimp/plain-mri';
+import { getPublishableMri } from '@/lib/mailchimp/publish-mri';
+import { MailChimpList } from '@/types/mailchimp';
 import {
+    MRIFinishErrorCode,
+    MRIFinishResult,
     MRIModifyFieldErrorCode,
     MRIModifyFieldResult,
+    MriPublishabilityStatus,
+    MRISendErrorCode,
+    mriSendErrorCodeToString,
+    MRISendResult,
+    MriToValidate,
+    MRIValidateErrorCode,
+    MRIValidateResult,
     MriWithStudyAndAssignees,
     PublicMRI,
     StudyMRIListItem,
@@ -39,15 +53,19 @@ export async function getPublicMRIs(viewer: Viewer): Promise<PublicMRI[]> {
     });
 }
 
-function getStudyMRIListItemFromMri(mri: {
-    id: Mri['id'];
-    status: Mri['status'];
-    title: Mri['title'];
-}): StudyMRIListItem {
+function getStudyMRIListItemFromMri(
+    mri: {
+        id: Mri['id'];
+        status: Mri['status'];
+        title: Mri['title'];
+    },
+    validationActionsCount: number
+): StudyMRIListItem {
     return {
         id: mri.id,
         mriStatus: mri.status,
         mriTitle: mri.title,
+        mriValidationCount: validationActionsCount,
     };
 }
 
@@ -73,9 +91,14 @@ export async function getStudyMRIsFromCode(
                 id: true,
                 status: true,
                 title: true,
+                _count: {
+                    select: {
+                        validationActions: true,
+                    },
+                },
             },
         })
-    ).map(getStudyMRIListItemFromMri);
+    ).map((mri) => getStudyMRIListItemFromMri(mri, mri._count.validationActions));
 }
 
 export async function getMRIFromId(
@@ -91,6 +114,77 @@ export async function getMRIFromId(
                 },
             },
             lastEditedAction: {
+                include: {
+                    user: {
+                        include: {
+                            person: {
+                                select: {
+                                    firstName: true,
+                                    lastName: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            validationActions: {
+                include: {
+                    user: {
+                        include: {
+                            person: {
+                                select: {
+                                    firstName: true,
+                                    lastName: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        where: {
+            AND: [
+                {
+                    id: mriId,
+                },
+                isMriAccessibleToViewer(viewer),
+            ],
+        },
+    });
+}
+
+async function getMriToValidateById(viewer: Viewer, mriId: string): Promise<MriToValidate | null> {
+    return await prisma.mri.findFirst({
+        include: {
+            study: {
+                include: {
+                    cdps: {
+                        include: {
+                            user: {
+                                include: {
+                                    person: true,
+                                },
+                            },
+                        },
+                    },
+                    information: true,
+                },
+            },
+            lastEditedAction: {
+                include: {
+                    user: {
+                        include: {
+                            person: {
+                                select: {
+                                    firstName: true,
+                                    lastName: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            validationActions: {
                 include: {
                     user: {
                         include: {
@@ -200,7 +294,7 @@ const registerViewerActionOnMRIs = async (viewer: Viewer, ids: string[]) => {
 
     await prisma.action.updateMany({
         where: {
-            Mri: {
+            editedMri: {
                 some: {
                     id: {
                         in: ids,
@@ -349,5 +443,241 @@ export async function createEmptyStudyMRI(
     viewer: Viewer,
     studyCode: string
 ): Promise<StudyMRIListItem> {
-    return getStudyMRIListItemFromMri(await createEmptyMRI(viewer, studyCode));
+    return getStudyMRIListItemFromMri(await createEmptyMRI(viewer, studyCode), 0);
+}
+
+export async function getMRIsToValidate(viewer: Viewer): Promise<StudyMRIListItem[]> {
+    return (
+        await prisma.mri.findMany({
+            where: {
+                AND: [
+                    {
+                        status: {
+                            in: ['InProgress', 'Finished', 'InProgress'],
+                        },
+                    },
+                    isMriAccessibleToViewer(viewer),
+                ],
+            },
+            select: {
+                id: true,
+                status: true,
+                title: true,
+                _count: {
+                    select: {
+                        validationActions: true,
+                    },
+                },
+            },
+            orderBy: [
+                {
+                    status: 'desc',
+                },
+                {
+                    validationActions: {
+                        _count: 'desc',
+                    },
+                },
+            ],
+        })
+    ).map((mri) => getStudyMRIListItemFromMri(mri, mri._count.validationActions));
+}
+
+export async function validateMRI(viewer: Viewer, mriId: string): Promise<MRIValidateResult> {
+    try {
+        const validated = await prisma.mri.findUnique({
+            where: {
+                id: mriId,
+            },
+            include: {
+                validationActions: true,
+            },
+        });
+
+        if (!validated) {
+            return { status: 'error', error: MRIValidateErrorCode.NoMRIOrLocked };
+        }
+
+        const alreadyValidated = validated.validationActions.some(
+            (action) => action.userId == viewer.id
+        );
+
+        if (alreadyValidated) {
+            return { status: 'success' };
+        }
+
+        const newStatus =
+            validated.validationActions.length > 0 ? MriStatus.Validated : validated.status;
+
+        const now = new Date();
+
+        await prisma.mri.update({
+            where: {
+                id: mriId,
+            },
+            data: {
+                validationActions: {
+                    create: {
+                        date: now,
+                        user: {
+                            connect: {
+                                id: viewer.id,
+                            },
+                        },
+                    },
+                },
+                status: newStatus,
+            },
+        });
+        return { status: 'success' };
+    } catch {
+        return { status: 'error', error: MRIValidateErrorCode.Unknown };
+    }
+}
+
+export async function sendMRI(viewer: Viewer, mriId: string): Promise<MRISendResult> {
+    try {
+        const validated = await prisma.mri.findUnique({
+            where: {
+                id: mriId,
+            },
+            include: {
+                _count: {
+                    select: {
+                        validationActions: true,
+                    },
+                },
+            },
+        });
+
+        if (!validated) {
+            return { status: 'error', error: MRISendErrorCode.NoMRIOrLocked };
+        }
+
+        if (validated.status != MriStatus.Validated && validated._count.validationActions > 0) {
+            return { status: 'error', error: MRISendErrorCode.NotValidated };
+        }
+
+        const mri = await getMriToValidateById(viewer, mriId);
+        if (mri === null) return { status: 'error', error: MRISendErrorCode.Unknown };
+
+        const mriParsingResult = getPublishableMri(mri);
+        switch (mriParsingResult.status) {
+            case MriPublishabilityStatus.Ok: {
+                const result = await sendMRI(viewer, mri.id);
+                if (result.status == 'error') {
+                    return {
+                        status: 'error',
+                        error: MRISendErrorCode.Unknown,
+                        message: mriSendErrorCodeToString(result.error),
+                    };
+                }
+
+                break;
+            }
+
+            case MriPublishabilityStatus.MissingField: {
+                return {
+                    status: 'error',
+                    error: MRISendErrorCode.Unknown,
+                    message: `Le champ '${mriParsingResult.field}' est manquant sur ce MRI`,
+                };
+            }
+
+            case MriPublishabilityStatus.UnvalidatedMri: {
+                return {
+                    status: 'error',
+                    error: MRISendErrorCode.Unknown,
+                    message: `Ce MRI n'a pas encore été validé.`,
+                };
+            }
+
+            case MriPublishabilityStatus.MissingCdpEmail: {
+                return {
+                    status: 'error',
+                    error: MRISendErrorCode.Unknown,
+                    message: `${mriParsingResult.name} ne s'est jamais connecté à l'outil donc des informations sont manquantes...`,
+                };
+            }
+        }
+
+        const publishableMri = mriParsingResult.validatedMri;
+
+        const sendResult = await sendCampaign({
+            recipients: MailChimpList.MRI,
+            fromName: 'Telecom Etude',
+            replyTo: publishableMri.cdps[0].email,
+            subject: `[Telecom Etude] ${publishableMri.title}`,
+            html: htmlMRI(publishableMri),
+            plainText: plainTextMRI(publishableMri),
+        });
+
+        if (sendResult.status == 'error') {
+            switch (sendResult.error) {
+                case SendCampaignErrorCode.CantCreateCampaign:
+                    return {
+                        status: 'error',
+                        error: MRISendErrorCode.Unknown,
+                        message: 'Impossible de créer la campagne',
+                    };
+                case SendCampaignErrorCode.CantCreateCampaignForRecipientList:
+                    return {
+                        status: 'error',
+                        error: MRISendErrorCode.Unknown,
+                        message:
+                            'Impossible de créer la campagne à cause de la liste des destinataires',
+                    };
+                case SendCampaignErrorCode.FailedToAttachContentToCampaign:
+                    return {
+                        status: 'error',
+                        error: MRISendErrorCode.Unknown,
+                        message: 'Impossible de rattacher le contenu à la campagne',
+                    };
+                case SendCampaignErrorCode.Unknown:
+                    return {
+                        status: 'error',
+                        error: MRISendErrorCode.Unknown,
+                        message: 'Erreur inconnue',
+                    };
+            }
+        }
+
+        await prisma.mri.update({
+            where: {
+                id: mriId,
+            },
+            data: {
+                status: MriStatus.Sent,
+            },
+        });
+        return { status: 'success' };
+    } catch {
+        return { status: 'error', error: MRISendErrorCode.Unknown };
+    }
+}
+
+export async function finishMRI(viewer: Viewer, mriId: string): Promise<MRIFinishResult> {
+    try {
+        const ids = (
+            await prisma.mri.updateManyAndReturn({
+                where: isMriEditable(viewer, mriId),
+                data: {
+                    status: 'Finished',
+                },
+                select: {
+                    id: true,
+                },
+            })
+        ).map((el) => el.id);
+
+        registerViewerActionOnMRIs(viewer, ids);
+
+        if (ids.length > 0) {
+            return { status: 'success' };
+        } else {
+            return { status: 'error', error: MRIFinishErrorCode.NoMRIOrLocked };
+        }
+    } catch {
+        return { status: 'error', error: MRIFinishErrorCode.Unknown };
+    }
 }

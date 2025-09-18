@@ -10,14 +10,14 @@ import {
 import { SideBarGroup } from '@/settings/sidebars/types';
 
 interface SidebarListProps {
-    sidebar_groups: SideBarGroup[];
-    missionCode?: string;
+    sidebarGroups: SideBarGroup[];
+    studyCode?: string;
 }
 
-export function SidebarList({ sidebar_groups, missionCode }: SidebarListProps) {
+export function SidebarList({ sidebarGroups, studyCode }: SidebarListProps) {
     return (
         <div className="flex-grow">
-            {sidebar_groups.map((sidebar_group, i) => (
+            {sidebarGroups.map((sidebar_group, i) => (
                 <SidebarGroup key={i}>
                     <SidebarGroupLabel>{sidebar_group.title}</SidebarGroupLabel>
                     <SidebarMenu>
@@ -30,9 +30,7 @@ export function SidebarList({ sidebar_groups, missionCode }: SidebarListProps) {
                                 >
                                     <Link
                                         href={
-                                            missionCode
-                                                ? '/cdp/' + missionCode + item.href
-                                                : item.href
+                                            studyCode ? '/cdp/' + studyCode + item.href : item.href
                                         }
                                     >
                                         <item.icon />

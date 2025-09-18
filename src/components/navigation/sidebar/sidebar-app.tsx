@@ -11,17 +11,14 @@ import {
     SidebarFooter,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
+import { StudyWithCode } from '@/types/user';
 
 import { UserDropdownMenu } from '../user-dropdown-menu';
 
 import { SidebarLogo } from './sidebar-logo';
 import { SidebarSwitch } from './sidebar-switch';
 
-interface Props {
-    userInfo?: { missions: string[]; position?: string };
-}
-
-export function SidebarApp({ ...props }: Props) {
+export function SidebarApp({ initialStudies }: { initialStudies: StudyWithCode[] }) {
     const { state } = useSidebar();
     const expanded = state == 'expanded';
 
@@ -34,7 +31,7 @@ export function SidebarApp({ ...props }: Props) {
             <SidebarSeparator />
 
             <SidebarContent>
-                <SidebarSwitch isOpen={expanded} {...props.userInfo} />
+                <SidebarSwitch isOpen={expanded} initialStudies={initialStudies} />
             </SidebarContent>
 
             <SidebarFooter>

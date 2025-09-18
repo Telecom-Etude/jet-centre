@@ -1,6 +1,6 @@
 import { GoOrganization } from 'react-icons/go';
 
-import { CREATE_STUDY } from './tabs';
+import { CREATE_STUDY, MRI_VALIDATION } from './tabs';
 import { RoleSideBar } from './types';
 
 export const VPO_SIDEBAR: RoleSideBar = {
@@ -8,7 +8,7 @@ export const VPO_SIDEBAR: RoleSideBar = {
     sidebar: [
         {
             title: 'Nouvelles études',
-            items: [CREATE_STUDY],
+            items: [CREATE_STUDY, MRI_VALIDATION],
         },
     ],
 };

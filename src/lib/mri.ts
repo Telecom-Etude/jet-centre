@@ -21,3 +21,7 @@ export function MRIStatusText(status: MriStatus): string {
     };
     return data[status];
 }
+
+export function MRIValidationCountColor(validationCount: number): string {
+    return ['red-500', 'orange-500', 'green-500'][Math.min(Math.max(validationCount, 0), 2)];
+}

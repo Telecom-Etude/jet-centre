@@ -3,8 +3,10 @@
 import { User } from 'next-auth';
 
 import { auth } from '@/actions/auth';
+import prisma from '@/db';
+import { StudyWithCode } from '@/types/user';
 
-import { isValidPosition, Position } from './positions';
+import { isExecutiveBoard, isValidPosition, Position } from './positions';
 
 export type Viewer = Omit<User, 'id'> & {
     id: NonNullable<User['id']>;
@@ -55,3 +57,61 @@ export const getViewer = async (): Promise<ViewerResult> => {
         },
     };
 };
+
+const isStudyAccessibleToViewer = (viewer: Viewer) => ({
+    OR: [
+        {
+            // If the study is not confidential
+            information: {
+                confidential: false,
+            },
+        },
+        {
+            // If the user is a member of the executive board
+            information: {
+                confidential: isExecutiveBoard(viewer),
+            },
+        },
+        {
+            // If the user is a CDP on the study
+            cdps: {
+                some: {
+                    userId: viewer.id,
+                },
+            },
+        },
+    ],
+});
+
+export async function getUserStudies(viewer: Viewer): Promise<StudyWithCode[]> {
+    return (
+        await prisma.study.findMany({
+            include: {
+                information: {
+                    select: {
+                        code: true,
+                    },
+                },
+            },
+            where: {
+                AND: [
+                    {
+                        cdps: {
+                            some: {
+                                userId: viewer.id,
+                            },
+                        },
+                    },
+                    isStudyAccessibleToViewer(viewer),
+                ],
+            },
+        })
+    ).map((study) => {
+        return {
+            id: study.id,
+            information: {
+                code: study.information.code,
+            },
+        };
+    });
+}

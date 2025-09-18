@@ -1,10 +1,9 @@
 import { DIFFICULTY_IMAGES, PAYCHECK_LEVEL_IMAGES } from '@/db/images';
 import { DOMAINS, LEVELS } from '@/db/types';
 import { personName } from '@/lib/utils';
+import { PublishableMri } from '@/types/mri';
 
-import { ValidMri } from './types';
-
-export function htmlMRI(mri: ValidMri) {
+export function htmlMRI(mri: PublishableMri) {
     const domain = DOMAINS[mri.mainDomain];
     const difficulty = {
         display: LEVELS[mri.difficulty].display,

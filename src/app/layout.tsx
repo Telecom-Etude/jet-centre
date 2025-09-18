@@ -1,16 +1,15 @@
 import './globals.css';
 import { NextFont } from 'next/dist/compiled/@next/font';
 import localFont from 'next/font/local';
-import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import React, { ReactNode } from 'react';
 
-import { auth } from '@/actions/auth';
-import { get_user_sidebar_info } from '@/actions/cdp';
+import { ViewerProvider } from '@/components/hooks/use-viewer';
 import { SidebarApp } from '@/components/navigation/sidebar/sidebar-app';
 import { TopBar } from '@/components/navigation/topbar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/sonner';
+import { getUserStudies, getViewer } from '@/data/user';
 import { cn } from '@/lib/utils';
 
 /**
@@ -43,34 +42,44 @@ export default async function RootLayout({
 }: {
     children: ReactNode;
 }): Promise<ReactNode> {
-    const session = await auth();
-
     return (
         <html lang="fr">
             <body className={cn(avenir.className, 'h-dvh w-dvw')}>
-                {session ? <AdminSideBar session={session}>{children}</AdminSideBar> : children}
+                <AdminSideBar>{children}</AdminSideBar>
             </body>
         </html>
     );
 }
 
-async function AdminSideBar({ children, session }: { children: ReactNode; session: Session }) {
-    const userInfo = await get_user_sidebar_info(session.user);
+async function AdminSideBar({ children }: { children: ReactNode }) {
+    const viewerResult = await getViewer();
+
+    const viewerValid = viewerResult.status == 'success';
+
+    const initialStudies = viewerValid ? await getUserStudies(viewerResult.viewer) : [];
 
     return (
         <SessionProvider>
-            <SidebarProvider>
-                <Toaster richColors position="bottom-right" closeButton />
-                <SidebarApp userInfo={userInfo} />
-                <SidebarInset className="flex h-dvh w-full flex-col">
-                    <header className="sticky top-0 flex w-full items-center gap-2 p-2 px-4 bg-background">
-                        <TopBar />
-                    </header>
-                    <main className="flex flex-1 flex-col gap-4 overflow-auto p-4 pt-0">
-                        <div className="flex-1 min-h-0">{children}</div>
-                    </main>
-                </SidebarInset>
-            </SidebarProvider>
+            {viewerValid ? (
+                <ViewerProvider value={viewerResult}>
+                    <SidebarProvider>
+                        <Toaster richColors position="bottom-right" closeButton />
+                        <SidebarApp initialStudies={initialStudies} />
+                        <SidebarInset className="flex h-dvh w-full flex-col">
+                            <header className="sticky top-0 flex w-full items-center gap-2 p-2 px-4 bg-background">
+                                <TopBar />
+                            </header>
+                            <main className="flex flex-1 flex-col gap-4 overflow-auto p-4 pt-0">
+                                <div className="flex-1 min-h-0">{children}</div>
+                            </main>
+                        </SidebarInset>
+                    </SidebarProvider>
+                </ViewerProvider>
+            ) : (
+                <main className="flex flex-1 flex-col gap-4 overflow-auto p-4 pt-0">
+                    <div className="flex-1 min-h-0">{children}</div>
+                </main>
+            )}
         </SessionProvider>
     );
 }

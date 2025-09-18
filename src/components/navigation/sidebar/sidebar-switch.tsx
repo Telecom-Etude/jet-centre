@@ -4,12 +4,16 @@ import { ReactNode, useState } from 'react';
 import React from 'react';
 import { FaQuestion, FaUser } from 'react-icons/fa6';
 import { IconType } from 'react-icons/lib';
+import useSWR from 'swr';
 
+import { useViewer } from '@/components/hooks/use-viewer';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { getPositionName } from '@/data/positions';
 import { cn } from '@/lib/utils';
 import { ROLES_SIDEBARS } from '@/settings/sidebars/sidebars';
 import { RoleSideBar } from '@/settings/sidebars/types';
+import { StudyWithCode } from '@/types/user';
 
 import SidebarCdp from './sidebar-cdp';
 import { SidebarList } from './sidebar-list';
@@ -21,36 +25,65 @@ interface Tab {
     content: ReactNode;
 }
 
+const fetcherUserStudies = (url: string): Promise<StudyWithCode[]> =>
+    fetch(url).then((r) => r.json());
+
 export function SidebarSwitch({
     isOpen,
-    missions,
-    position,
+    initialStudies,
 }: {
     isOpen: boolean;
-    missions?: string[];
-    position?: string;
+    initialStudies: StudyWithCode[];
 }) {
+    const { data: studies, error } = useSWR(
+        ['/api/user/studies/'],
+        ([url]) => fetcherUserStudies(url),
+        {
+            revalidateOnFocus: false,
+            fallbackData: initialStudies,
+        }
+    );
+
+    const viewerResult = useViewer();
+    const [tab, setTab] = useState(0);
+    const [api, setApi] = React.useState<CarouselApi>();
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     const tabs: Tab[] = [];
-    if (missions && missions.length !== 0) {
+    if (studies && studies.length !== 0) {
         tabs.push({
             id: 'cdp',
             title: 'CDP',
             icon: FaUser,
-            content: <SidebarCdp missions={missions} isOpen={isOpen} />,
+            content: <SidebarCdp studies={studies} isOpen={isOpen} />,
         });
     }
 
-    const positionStr = (position ?? 'Non défini') as keyof typeof ROLES_SIDEBARS;
-    const roleSidebar: RoleSideBar | undefined = ROLES_SIDEBARS[positionStr];
+    if (viewerResult.status == 'error') {
+        return (
+            <div>
+                Trying to render the siderbar switch without a logged-in user:{' '}
+                {viewerResult.message}
+            </div>
+        );
+    }
+    const viewer = viewerResult.viewer;
+
+    const positionStr = viewer.position ? getPositionName(viewer.position).shortName : 'Non défini';
+
+    const roleSidebar: RoleSideBar | undefined = viewer.position
+        ? ROLES_SIDEBARS[viewer.position]
+        : undefined;
     tabs.push({
         id: 'role',
         title: positionStr,
         icon: roleSidebar?.icon || FaQuestion,
-        content: <SidebarList sidebar_groups={roleSidebar?.sidebar ?? []} />,
+        content: <SidebarList sidebarGroups={roleSidebar?.sidebar ?? []} />,
     });
 
-    const [tab, setTab] = useState(0);
-    const [api, setApi] = React.useState<CarouselApi>();
     api?.scrollTo(tab);
     const item = tabs[tab];
 

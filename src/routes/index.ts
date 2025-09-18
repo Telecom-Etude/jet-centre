@@ -21,7 +21,8 @@ export function isNonAuthPublicRoute(pathname: string) {
 export function isAuthorisedToRoute(pathname: string, position: keyof typeof ROLES_SIDEBARS) {
     if (pathname === '/') return true;
     if (pathname.startsWith('/cdp/')) return true;
-    const sidebar: RoleSideBar = ROLES_SIDEBARS[position];
+    if (!Object.keys(ROLES_SIDEBARS).includes(position)) return false;
+    const sidebar: RoleSideBar = ROLES_SIDEBARS[position] as RoleSideBar;
     return sidebar.sidebar.find((section) =>
         section.items.find((item) => pathname.startsWith(item.href))
     );

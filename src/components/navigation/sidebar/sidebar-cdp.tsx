@@ -4,31 +4,40 @@ import { useState } from 'react';
 
 import { SidebarSeparator } from '@/components/ui/sidebar';
 import { CDP_SIDEBAR } from '@/settings/sidebars/sidebars';
+import { StudyWithCode } from '@/types/user';
 
 import { SidebarList } from './sidebar-list';
 import { StudySelection } from './sidebar-study-selection';
 
-export default function SidebarCdp({ missions, isOpen }: { missions: string[]; isOpen: boolean }) {
-    const [selectedMission, setSelectedMission] = useState(0);
-    const missionCode = missions[selectedMission];
+export default function SidebarCdp({
+    studies,
+    isOpen,
+}: {
+    studies: StudyWithCode[];
+    isOpen: boolean;
+}) {
+    const [selectedStudyIndex, setSelectedStudyIndex] = useState(0);
+    const study = studies[selectedStudyIndex];
 
     return (
         <div className="h-full flex flex-col justify-between">
-            <SidebarList sidebar_groups={CDP_SIDEBAR} missionCode={missionCode} />
+            <SidebarList sidebarGroups={CDP_SIDEBAR} studyCode={study.information.code} />
             {isOpen ? (
                 <div className="flex flex-col items-center gap-1">
                     <div className="flex flex-col items-center gap-1">
-                        <div>{missionCode}</div>
+                        <div>{study.information.code}</div>
                         <SidebarSeparator className="h-1 w-[calc(100%+1rem)] rounded-full bg-secondary" />
                     </div>
                     <StudySelection
-                        missions={missions}
-                        selectedMission={selectedMission}
-                        setSelectedMission={setSelectedMission}
+                        studies={studies}
+                        selectedStudyIndex={selectedStudyIndex}
+                        setSelectedStudyIndex={setSelectedStudyIndex}
                     />
                 </div>
             ) : (
-                <p className="-rotate-90 flex flex-col items-center gap-1 p-4">{missionCode}</p>
+                <p className="-rotate-90 flex flex-col items-center gap-1 p-4">
+                    {study.information.code}
+                </p>
             )}
         </div>
     );

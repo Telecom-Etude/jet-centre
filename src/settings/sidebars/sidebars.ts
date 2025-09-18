@@ -12,7 +12,7 @@ import { TREASURER_SIDEBAR } from './treasurer';
 import { RoleSideBar, SideBarGroup } from './types';
 import { VPO_SIDEBAR } from './vpo';
 
-export const ROLES_SIDEBARS = {
+export const ROLES_SIDEBARS: Partial<Record<ExtendedPosition, RoleSideBar>> = {
     treasurer: TREASURER_SIDEBAR,
     operational_vice_president: VPO_SIDEBAR,
     general_secretary: SECRETARY_GENERAL_SIDEBAR,
@@ -33,7 +33,7 @@ export const CDP_SIDEBAR: SideBarGroup[] = [
             {
                 title: 'Écriture MRI',
                 icon: MRI_ICON,
-                href: '/mri',
+                href: '/mris',
             },
             {
                 title: "Sélection d'intervenants",

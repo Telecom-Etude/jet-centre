@@ -6,15 +6,16 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
+import { StudyWithCode } from '@/types/user';
 
 export function StudySelection({
-    missions,
-    selectedMission,
-    setSelectedMission,
+    studies,
+    selectedStudyIndex,
+    setSelectedStudyIndex,
 }: {
-    missions: string[];
-    selectedMission: number;
-    setSelectedMission: (selectedMission: number) => void;
+    studies: StudyWithCode[];
+    selectedStudyIndex: number;
+    setSelectedStudyIndex: (selectedStudyIndex: number) => void;
 }) {
     return (
         <Pagination>
@@ -22,24 +23,26 @@ export function StudySelection({
                 <PaginationItem>
                     <PaginationPrevious
                         onClick={() =>
-                            setSelectedMission(
-                                (selectedMission - 1 + missions.length) % missions.length
+                            setSelectedStudyIndex(
+                                (selectedStudyIndex - 1 + studies.length) % studies.length
                             )
                         }
                     ></PaginationPrevious>
                 </PaginationItem>
-                {missions.map((m, i) => (
+                {studies.map((m, i) => (
                     <PaginationItem key={i} className="flex items-center">
                         <Button
                             className="rounded-full aspect-square w-4 h-4 border-0 p-0"
-                            variant={selectedMission === i ? 'default' : 'secondary'}
-                            onClick={() => setSelectedMission(i)}
+                            variant={selectedStudyIndex === i ? 'default' : 'secondary'}
+                            onClick={() => setSelectedStudyIndex(i)}
                         />
                     </PaginationItem>
                 ))}
                 <PaginationItem>
                     <PaginationNext
-                        onClick={() => setSelectedMission((selectedMission + 1) % missions.length)}
+                        onClick={() =>
+                            setSelectedStudyIndex((selectedStudyIndex + 1) % studies.length)
+                        }
                     />
                 </PaginationItem>
             </PaginationContent>

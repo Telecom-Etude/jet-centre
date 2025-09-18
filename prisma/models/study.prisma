@@ -1,115 +1,115 @@
 /// Links all the data related to a study
 /// (clients, admins, informations, assignees, forms, etc.)
 model Study {
-    id                 String            @id @default(cuid())
-    cdps               Admin[]           @relation("cdp")
-    auditors           Admin[]           @relation("auditor")
-    information        StudyInfos        @relation(fields: [informationId], references: [id])
-    informationId      String            @unique
-    studyProceedings   StudyProceedings?
-    clients            StudyClient[]
-    mris               Mri[]
-    studyAssignees     StudyAssignee[]
-    studyProceedingsId String?
+  id                 String            @id @default(cuid())
+  cdps               Admin[]           @relation("cdp")
+  auditors           Admin[]           @relation("auditor")
+  information        StudyInfos        @relation(fields: [informationId], references: [id])
+  informationId      String            @unique
+  studyProceedings   StudyProceedings?
+  clients            StudyClient[]
+  mris               Mri[]
+  studyAssignees     StudyAssignee[]
+  studyProceedingsId String?
 }
 
 /// Information about a study
 model StudyInfos {
-    id                String    @id @default(cuid())
-    code              String    @unique
-    /// Id of the folder in Google Drive that contains the study.
-    /// <br />
-    /// This folder is normally in the "Dossiers de suivi" directory.
-    googleFolder      String?   @unique
-    /// Title of the study
-    title             String?
-    /// The client usually pays for administrative costs.
-    /// <br />
-    /// Unit: percentage added to the price for this cost.
-    applicationFee    Float     @default(5)
-    /// Indicates whether the mission is a CC or not.
-    cc                Boolean
-    /// Different domains related to the mission
-    domains           Domain[]
-    /// Estimated duration of the mission
-    /// <br />
-    /// Unit: number of JEH
-    estimatedDuration Int?
-    /// Deadline for signing the CE
-    deadlinePreStudy  DateTime?
-    study             Study?
-    /// If confidential, only the president and selected people should know about the study
-    confidential      Boolean   @default(false)
+  id                String    @id @default(cuid())
+  code              String    @unique
+  /// Id of the folder in Google Drive that contains the study.
+  /// <br />
+  /// This folder is normally in the "Dossiers de suivi" directory.
+  googleFolder      String?   @unique
+  /// Title of the study
+  title             String?
+  /// The client usually pays for administrative costs.
+  /// <br />
+  /// Unit: percentage added to the price for this cost.
+  applicationFee    Float     @default(5)
+  /// Indicates whether the mission is a CC or not.
+  cc                Boolean
+  /// Different domains related to the mission
+  domains           Domain[]
+  /// Estimated duration of the mission
+  /// <br />
+  /// Unit: number of JEH
+  estimatedDuration Int?
+  /// Deadline for signing the CE
+  deadlinePreStudy  DateTime?
+  study             Study?
+  /// If confidential, only the president and selected people should know about the study
+  confidential      Boolean   @default(false)
 }
 
 /// Information to follow the study
 model StudyProceedings {
-    id               String            @id @default(cuid())
-    studyId          String            @unique
-    phases           Phase[]
-    studyProcessStep StudyProgressStep @default(Created)
-    study            Study             @relation(fields: [studyId], references: [id])
+  id               String            @id @default(cuid())
+  studyId          String            @unique
+  phases           Phase[]
+  studyProcessStep StudyProgressStep @default(Created)
+  study            Study             @relation(fields: [studyId], references: [id])
 }
 
 enum StudyProgressStep {
-    /// Study created
-    Created
-    /// Assignee recruited
-    Recruited
-    /// Tripartite meeting done
-    TripartiteMeeting
-    /// Documents written
-    DocumentsWrote
-    /// Documents signed
-    InStudy
-    /// PVRF signed
-    Ended
-    /// Received money from company
-    CompanyFactored
-    /// Assignee paid
-    AssigneePaid
-    /// QS sent
-    SatisfactionFormSent
-    /// Warranty expired
-    /// <ul style="list-style-type:disc;">
-    /// <li>3 months for a tech deliverable</li>
-    /// <li>15 days for paper deliverable</li>
-    /// </ul>
-    WarrantyExpired
+  /// Study created
+  Created
+  /// Assignee recruited
+  Recruited
+  /// Tripartite meeting done
+  TripartiteMeeting
+  /// Documents written
+  DocumentsWrote
+  /// Documents signed
+  InStudy
+  /// PVRF signed
+  Ended
+  /// Received money from company
+  CompanyFactored
+  /// Assignee paid
+  AssigneePaid
+  /// QS sent
+  SatisfactionFormSent
+  /// Warranty expired
+  /// <ul style="list-style-type:disc;">
+  /// <li>3 months for a tech deliverable</li>
+  /// <li>15 days for paper deliverable</li>
+  /// </ul>
+  WarrantyExpired
 }
 
 /// Represents a phase of a study
 model Phase {
-    id                 String           @id @default(cuid())
-    /// Number of JEH in the phase
-    jehs               Int
-    title              String
-    deliverable        Deliverable?
-    /// HT price of one JEH, usually between 400 and 450
-    unitPrice          Float
-    startDate          DateTime?
-    endDate            DateTime?
-    studyProceedings   StudyProceedings @relation(fields: [studyProceedingsId], references: [id])
-    studyProceedingsId String
+  id                 String           @id @default(cuid())
+  /// Number of JEH in the phase
+  jehs               Int
+  title              String
+  deliverable        Deliverable?
+  /// HT price of one JEH, usually between 400 and 450
+  unitPrice          Float
+  startDate          DateTime?
+  endDate            DateTime?
+  studyProceedings   StudyProceedings @relation(fields: [studyProceedingsId], references: [id])
+  studyProceedingsId String
 }
 
 model Deliverable {
-    id          String            @id @default(cuid())
-    description String
-    status      DeliverableStatus @default(NotStarted)
-    phase       Phase             @relation(fields: [phaseId], references: [id], onDelete: Cascade)
-    phaseId     String            @unique
+  id          String            @id @default(cuid())
+  description String
+  status      DeliverableStatus @default(NotStarted)
+  phase       Phase             @relation(fields: [phaseId], references: [id], onDelete: Cascade)
+  phaseId     String            @unique
 }
 
 enum DeliverableStatus {
-    /// Phase not started
-    NotStarted
-    /// Phase in progress
-    InProgress
-    /// Deliverable ready
-    /// <br />
-    /// A meeting can be set with the client
-    Finished
-    /// PVRI.F signed and deliverable given to the client.
-    Given
+  /// Phase not started
+  NotStarted
+  /// Phase in progress
+  InProgress
+  /// Deliverable ready
+  /// <br />
+  /// A meeting can be set with the client
+  Finished
+  /// PVRI.F signed and deliverable given to the client.
+  Given
 }

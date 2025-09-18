@@ -1,7 +1,8 @@
 model Action {
-    id     String   @id @default(cuid())
-    user   User     @relation(fields: [userId], references: [id])
-    date   DateTime @default(now())
-    userId String
-    Mri    Mri[]
+  id           String   @id @default(cuid())
+  user         User     @relation(fields: [userId], references: [id])
+  date         DateTime @default(now())
+  userId       String
+  editedMri    Mri[]    @relation("edition")
+  validatedMri Mri[]    @relation("validation")
 }
