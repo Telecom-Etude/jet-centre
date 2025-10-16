@@ -2,7 +2,7 @@ services:
     app:
         container_name: jc-app
         build:
-            dockerfile: docker/app
+            dockerfile: docker/app/Dockerfile
             context: .
             target: dev
         restart: always
@@ -33,7 +33,7 @@ services:
     studio:
         container_name: jc-studio
         build:
-            dockerfile: docker/studio
+            dockerfile: docker/studio/Dockerfile
             context: .
         working_dir: /app
         volumes:
