@@ -7,7 +7,7 @@ const config: UserConfig = {
         'type-enum': [
             2,
             'always',
-            ['feat', 'fix', 'chore', 'docs', 'style', 'ref', 'perf', 'test'],
+            ['feat', 'fix', 'chore', 'docs', 'style', 'ref', 'refactor', 'perf', 'test'],
         ],
     },
 };
