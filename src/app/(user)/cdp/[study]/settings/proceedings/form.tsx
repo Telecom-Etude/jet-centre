@@ -9,7 +9,7 @@ import { UpdateBox, UpdateBoxStatus } from '@/components/boxes/update-box';
 import { AddButton } from '@/components/buttons';
 import { DropdownSingleFormElement } from '@/components/meta-components/form/dropdownSingle';
 import { Button } from '@/components/ui/button';
-import { FormProvider } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { STUDY_STEPS, STUDY_STEPS_NAMES } from '@/db/types';
 import { reloadWindow } from '@/lib/utils';
 
@@ -123,7 +123,7 @@ export function StudyProceedingsParamsEditor({
 
     return (
         <UpdateBox title={title} update={updateServer} status={status}>
-            <FormProvider {...form}>
+            <Form {...form}>
                 <form className="space-y-main">
                     <DropdownSingleFormElement
                         form={form}
@@ -134,7 +134,7 @@ export function StudyProceedingsParamsEditor({
                         displayValue={(step) => STUDY_STEPS[step].display}
                     />
                 </form>
-            </FormProvider>
+            </Form>
             {values.phases.map((study, i) => (
                 <SinglePhaseInnerBox
                     key={i}
