@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { Button } from '@/components/ui/button';
-import { FormProvider, FormRow } from '@/components/ui/form';
+import { Form, FormRow } from '@/components/ui/form';
 
 import { contactCreationSchema, ContactCreationSchema, NewContact } from './companiesSchema';
 
@@ -22,12 +22,13 @@ export function ContactForm({ defaultValues, onSubmit: onSubmit_, onCancel }: Co
     });
 
     const onSubmit = (data: ContactCreationSchema) => {
-        onSubmit_({ ...data, isNew: true });
+        const parsedData = contactCreationSchema.parse(data);
+        onSubmit_({ ...parsedData, isNew: true });
         form.reset();
     };
 
     return (
-        <FormProvider {...form}>
+        <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <FormRow>
                     <InputFormElement
@@ -67,6 +68,6 @@ export function ContactForm({ defaultValues, onSubmit: onSubmit_, onCancel }: Co
                     </Button>
                 </div>
             </form>
-        </FormProvider>
+        </Form>
     );
 }

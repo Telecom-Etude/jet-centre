@@ -6,3 +6,12 @@ model Action {
   editedMri    Mri[]    @relation("edition")
   validatedMri Mri[]    @relation("validation")
 }
+
+model BugReport {
+  id          String   @id @default(cuid())
+  description String
+  history     String
+  date        DateTime
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+}

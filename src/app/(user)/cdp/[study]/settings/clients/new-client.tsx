@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dispatch, SetStateAction } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Form, useForm } from 'react-hook-form';
 
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ function NewStudyClientForm({ onSubmit }: { onSubmit: (values: ClientFormType) =
 
     return (
         <>
-            <FormProvider {...form}>
+            <Form {...form}>
                 <form className="space-y-main py-main">
                     <InputFormElement
                         className="mb-0"
@@ -28,7 +28,7 @@ function NewStudyClientForm({ onSubmit }: { onSubmit: (values: ClientFormType) =
                     <InputFormElement form={form} label="Prénom" name="firstName" />
                     <InputFormElement form={form} label="Nom de famille" name="lastName" />
                 </form>
-            </FormProvider>
+            </Form>
             <Button
                 type="button"
                 className="w-full"

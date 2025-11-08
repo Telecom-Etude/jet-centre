@@ -6,7 +6,7 @@ import { useForm, UseFormReturn } from 'react-hook-form';
 import { LoadingFullStops } from '@/components/loading';
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { Button } from '@/components/ui/button';
-import { FormProvider } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 
 import { mriSubscriptionSchema, MriSubscriptionType } from './schema';
 
@@ -22,7 +22,7 @@ export function MriSubscriptionForm({
     });
 
     return (
-        <FormProvider {...form}>
+        <Form {...form}>
             <form className="flex flex-col" onSubmit={form.handleSubmit(subscribePerson)}>
                 <InputFormElement label="Prénom" name="firstName" form={form} disabled={disabled} />
                 <InputFormElement label="Nom" name="lastName" form={form} disabled={disabled} />
@@ -41,6 +41,6 @@ export function MriSubscriptionForm({
                     )}
                 </div>
             </form>
-        </FormProvider>
+        </Form>
     );
 }
