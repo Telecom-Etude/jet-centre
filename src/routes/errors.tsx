@@ -20,7 +20,7 @@ export function getErrorDisplayInformation(error: string): ErrorDisplayInformati
     switch (error) {
         case MIDDLEWARE_ERRORS.unauthorised:
             return {
-                title: "Vous n'êtes pas autotisés à accéder à cette page.",
+                title: "Vous n'êtes pas autorisés à accéder à cette page.",
                 text: "Merci de contacter le pôle info s'il vous manque des permissions.",
             };
         case MIDDLEWARE_ERRORS.invalidPosition:
