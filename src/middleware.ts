@@ -15,8 +15,8 @@ import type { NextRequest } from 'next/server';
 import type { Session } from 'next-auth';
 
 import { auth } from './actions/auth';
+import { isValidPosition, Position } from './data/positions';
 import { isAuthorisedToRoute, isNonAuthPublicRoute, ROUTES } from './routes';
-import { ROLES_SIDEBARS } from './settings/sidebars/sidebars';
 
 /**
  * Redirect current url onto another page.
@@ -58,9 +58,9 @@ async function loggedInMiddleware(
 
     if (isNonAuthPublicRoute(pathname)) return NextResponse.next();
 
-    if (!position || !(position in ROLES_SIDEBARS)) return rewrite(ROUTES.invalidPosition, request);
+    if (!isValidPosition(position)) return rewrite(ROUTES.invalidPosition, request);
 
-    const isAuthorised = isAuthorisedToRoute(pathname, position as keyof typeof ROLES_SIDEBARS);
+    const isAuthorised = isAuthorisedToRoute(pathname, position as Position | undefined);
 
     if (!isAuthorised) return rewrite(ROUTES.unauthorised, request);
 

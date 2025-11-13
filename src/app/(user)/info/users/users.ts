@@ -10,9 +10,12 @@ export async function getAdmins() {
     }
 }
 
-export async function updatePosition(adminId: string, position: string) {
+export async function updatePosition(adminId: string, position?: string) {
     try {
-        return await prisma.admin.update({ where: { id: adminId }, data: { position } });
+        return await prisma.admin.update({
+            where: { id: adminId },
+            data: { position: position ?? null },
+        });
     } catch (e) {
         console.error(`[updatePosition] ${e}`);
     }

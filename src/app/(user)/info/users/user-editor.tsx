@@ -10,7 +10,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { getValidPositions } from '@/data/positions';
+import { getPositionName, getValidPositions } from '@/data/positions';
+import { Gender } from '@/types/misc';
 
 import { getPosition, updatePosition } from './users';
 
@@ -39,7 +40,7 @@ export function UserEditor({ adminId, email, position }: UserEditorProps) {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button className="w-full px-2 justify-start" variant="outline">
-                            {uiPosition || 'Unset'}
+                            {getPositionName(uiPosition, Gender.Other).name}
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start">
@@ -51,8 +52,8 @@ export function UserEditor({ adminId, email, position }: UserEditorProps) {
                                     await updatePosition(adminId, position);
                                     setStatus(Status.Checking);
                                     const dbPosition = await getPosition(adminId);
-                                    if (dbPosition) {
-                                        setUiPosition(dbPosition);
+                                    if (dbPosition !== undefined) {
+                                        setUiPosition(dbPosition ?? undefined);
                                         setStatus(Status.Ok);
                                         await update({ position });
                                     } else {
@@ -60,7 +61,7 @@ export function UserEditor({ adminId, email, position }: UserEditorProps) {
                                     }
                                 }}
                             >
-                                {position}
+                                {getPositionName(position, Gender.Other).name}
                             </DropdownMenuItem>
                         ))}
                     </DropdownMenuContent>
