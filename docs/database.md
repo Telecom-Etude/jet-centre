@@ -37,6 +37,14 @@ Assuming you entered `your_password` when prompted in `createuser`, you can now 
 DB_URL="postgresql://your_user_name:your_password@localhost:5432/your_db_name"
 ```
 
+> [!TIP]
+>
+> If you are not using `systemd`, you can can use these commands to manage the PostgreSQL daemon:
+>
+> - start the daemon and log to `/tmp/pglog`: `pg_ctl -D postgres -l /tmp/log start`
+> - stop the daemon: `pg_ctl -D postgres stop`
+> - get the status of the daemon: `pg_ctl -D postgres status`
+
 ### macOS (with Homebrew)
 
 ```bash
