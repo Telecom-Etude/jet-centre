@@ -1,5 +1,8 @@
 name: verify-lockfile
 
+permissions:
+    contents: read
+
 on:
     pull_request:
     push:
