@@ -8,7 +8,7 @@ export const studyCreationSchema = z.object({
     companies: companiesCreationSchema,
 });
 
-export type StudyCreationSchema = z.infer<typeof studyCreationSchema>;
+export type StudyCreationSchema = z.input<typeof studyCreationSchema>;
 
 export const emptyStudyCreationSchema: StudyCreationSchema = {
     settings: emptySettingsCreationSchema,

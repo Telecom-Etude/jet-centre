@@ -15,7 +15,7 @@ import { CheckboxFormElement } from '@/components/meta-components/form/checkbox'
 import { InputFormElement } from '@/components/meta-components/form/input';
 import { SearchBar } from '@/components/meta-components/searchbar';
 import { SortableList, useSortableList } from '@/components/meta-components/sortableList';
-import { FormProvider, FormRule } from '@/components/ui/form';
+import { Form, FormRule } from '@/components/ui/form';
 import { ANIMATION_DURATION_MS } from '@/settings/vars';
 
 import { StudyCreationSchema } from '../schema';
@@ -55,7 +55,7 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
             </BoxHeader>
             <BoxContent>
                 <div className="flex flex-col gap-2">
-                    <FormProvider {...formStudy}>
+                    <Form {...formStudy}>
                         <InputFormElement
                             label="Code de l'étude"
                             name="settings.code"
@@ -88,7 +88,7 @@ export function SettingsForm({ formStudy, formStudyId, admins }: SettingsFormPro
                             form={formStudy}
                             formId={formStudyId}
                         />
-                    </FormProvider>
+                    </Form>
                     <FormRule primary />
                     <div className="flex flex-col gap-4">
                         <h4>Chef·fe de projet</h4>

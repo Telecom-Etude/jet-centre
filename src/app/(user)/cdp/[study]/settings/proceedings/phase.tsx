@@ -15,7 +15,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { FormProvider } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { DELIVERABLE_STEPS, DELIVERABLE_STEPS_NAMES } from '@/db/types';
 
@@ -58,7 +58,7 @@ export function StudyPhaseEditor({ open, close, defaultValues, onSubmit }: Study
                     <DialogTitle className="text-center">Paramètres de phase</DialogTitle>
                 </DialogHeader>
                 <DialogFooter>
-                    <FormProvider {...form}>
+                    <Form {...form}>
                         <form
                             className="gap-y-main w-full flex flex-col"
                             onSubmit={form.handleSubmit(onSubmit)}
@@ -121,7 +121,7 @@ export function StudyPhaseEditor({ open, close, defaultValues, onSubmit }: Study
                                 Valider
                             </Button>
                         </form>
-                    </FormProvider>
+                    </Form>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

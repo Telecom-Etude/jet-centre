@@ -1,19 +1,21 @@
+'use client';
+
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
 import {
     Controller,
-    ControllerProps,
-    FieldPath,
-    FieldValues,
-    FormProvider as FP,
+    FormProvider,
     useFormContext,
+    type ControllerProps,
+    type FieldPath,
+    type FieldValues,
 } from 'react-hook-form';
 
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 
-const FormProvider = FP;
+const Form = FormProvider;
 
 type FormFieldContextValue<
     TFieldValues extends FieldValues = FieldValues,
@@ -72,7 +74,7 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 
         return (
             <FormItemContext.Provider value={{ id }}>
-                <div ref={ref} className={className} {...props} />
+                <div ref={ref} className={cn('space-y-2', className)} {...props} />
             </FormItemContext.Provider>
         );
     }
@@ -138,7 +140,7 @@ const FormMessage = React.forwardRef<
     React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, children, ...props }, ref) => {
     const { error, formMessageId } = useFormField();
-    const body = error ? String(error?.message) : children;
+    const body = error ? String(error?.message ?? '') : children;
 
     if (!body) {
         return null;
@@ -189,7 +191,7 @@ FormRule.displayName = 'FormRule';
 
 export {
     useFormField,
-    FormProvider,
+    Form,
     FormItem,
     FormLabel,
     FormControl,

@@ -1,13 +1,13 @@
 import { CompanySize as PgCompanySize } from '@prisma/client';
 
-import { z } from '@/lib/zod';
-
 /**
  * See {@link https://www.economie.gouv.fr/cedef/entreprises-categories}.
  */
-export type CompanySize = z.infer<
-    z.ZodEnum<['Micro-entreprise', 'Petite entreprise', 'Moyenne entreprise', 'Grande entreprise']>
->;
+export type CompanySize =
+    | 'Micro-entreprise'
+    | 'Petite entreprise'
+    | 'Moyenne entreprise'
+    | 'Grande entreprise';
 
 export function toPgCompanySize(companySize: CompanySize): PgCompanySize {
     switch (companySize) {

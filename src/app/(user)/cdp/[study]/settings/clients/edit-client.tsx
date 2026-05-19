@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dispatch, SetStateAction, useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Form, useForm } from 'react-hook-form';
 
 import { LoadingFullStops } from '@/components/loading';
 import { DropdownManyFormElement } from '@/components/meta-components/form/dropdownMany';
@@ -51,7 +51,7 @@ function EditClientForm({ onSubmit, client, isLoading }: EditClientFormProps) {
 
     return (
         <>
-            <FormProvider {...form}>
+            <Form {...form}>
                 <form className="grid grid-cols-2 gap-10">
                     <div className="space-y-main py-main">
                         <h2>Informations sur le client</h2>
@@ -188,7 +188,7 @@ function EditClientForm({ onSubmit, client, isLoading }: EditClientFormProps) {
                         )}
                     </div>
                 </form>
-            </FormProvider>
+            </Form>
             {isLoading ? (
                 <div className="flex items-center justify-center">
                     <LoadingFullStops />
