@@ -1,5 +1,8 @@
 name: Seed
 
+permissions:
+    contents: read
+
 on:
     push:
         branches:

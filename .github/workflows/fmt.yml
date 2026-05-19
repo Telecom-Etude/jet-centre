@@ -1,5 +1,8 @@
 name: Prettier formatting
 
+permissions:
+    contents: read
+
 on:
     push:
         branches:

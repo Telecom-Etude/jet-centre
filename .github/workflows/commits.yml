@@ -1,5 +1,8 @@
 name: Enforce Conventional Commits
 
+permissions:
+    contents: read
+
 on:
     push:
         branches:
