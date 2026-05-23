@@ -20,7 +20,7 @@ export function ImageElt({
     image: StaticImageData;
 }) {
     return (
-        <figure className="text-center">
+        <figure className="text-center h-fit">
             <Image src={image} alt={'Image de ' + value} />
             <figcaption className="text-center text-sm mt-2 mb-[-5px]">{label}</figcaption>
             <p className="text-center font-bold text-mri-headers m-0">{value}</p>
@@ -29,14 +29,14 @@ export function ImageElt({
 }
 
 export function getDomain(domain: Domain) {
-    return { label: 'DOMAIN', value: DOMAINS[domain].display, image: DOMAINS[domain].image.next };
+    return { label: 'DOMAINE', value: DOMAINS[domain].display, image: DOMAINS[domain].image.next };
 }
 
-export function getPay(wageLowerBound: number, wageUpperBound: number, pay_level: Level) {
+export function getWage(wageLowerBound: number, wageUpperBound: number, wageLevel: Level) {
     const label = 'RÉTRIBUTION';
     const value = `${wageLowerBound}€ - ${wageUpperBound}€`;
 
-    switch (pay_level) {
+    switch (wageLevel) {
         case 'Low':
             return { label, value, image: PayLow };
         case 'Medium':

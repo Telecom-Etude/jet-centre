@@ -1,9 +1,9 @@
 'use client';
 
-import { MriStatus, Prisma } from '@prisma/client';
+import { Domain, Level, MriStatus, Prisma } from '@prisma/client';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -22,18 +22,23 @@ import { useDebouncedCallback } from 'use-debounce';
 
 import BirdLogo from '@/../public/mri/bird.png';
 
-import { getDifficulty, getDomain, getPay, ImageElt } from '@/app/(user)/cdp/[study]/mri/figures';
+import { getDifficulty, getDomain, getWage, ImageElt } from '@/app/(user)/cdp/[study]/mri/figures';
 import { useViewer } from '@/components/hooks/use-viewer';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
     finishMRI,
     setMRIDescriptionText,
+    setMRIDifficulty,
+    setMRIDomain,
     setMRIIntroductionText,
+    setMRIWage,
     setMRIRequiredSkillsText,
     setMRITimeLapsText,
     setMRITitle,
+    setMRIGformUrl,
 } from '@/data/mri';
 import { DEFAULT_MRI_VALUES } from '@/data/mri-defaults';
+import { DOMAINS, EnumInfo, LEVELS } from '@/db/types';
 import { cn } from '@/lib/utils';
 import {
     CONTACT_EMAIL,
@@ -53,6 +58,12 @@ import {
 } from '@/types/mri';
 
 import { Button } from '../ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
 import { Spinner } from '../ui/shadcn-io/spinner';
 
 const fetcher = (url: string, mriId: string): Promise<MriWithStudyAndAssignees> =>
@@ -105,7 +116,7 @@ function EditableText({
     };
 
     return (
-        <div className="w-full">
+        <div className="flex w-full">
             {editable ? (
                 <TextareaAutosize
                     value={text}
@@ -120,6 +131,49 @@ function EditableText({
                 <div className="w-full">{text}</div>
             )}
         </div>
+    );
+}
+
+interface ImageData {
+    label: string;
+    value: string;
+    image: StaticImageData;
+}
+
+function EditableImage<T extends string | number | symbol>({
+    initValue,
+    possibleValues,
+    updateValue,
+    getValue,
+}: {
+    initValue: T;
+    possibleValues: Record<T, EnumInfo>;
+    updateValue: (value: T) => Promise<void>;
+    getValue: (value: T) => ImageData;
+}) {
+    const [value, setValue] = useState<T>(initValue);
+
+    return (
+        <DropdownMenu modal={false}>
+            <DropdownMenuTrigger asChild>
+                <Button
+                    variant={'outline'}
+                    className="flex-1 bg-transparent hover:bg-transparent min-w-0 h-full"
+                >
+                    <ImageElt {...getValue(value)} />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="overflow-y-scroll max-h-60">
+                {(Object.keys(possibleValues) as T[]).map((k, i) => (
+                    <DropdownMenuItem
+                        key={i}
+                        onClick={() => updateValue(k).then(() => setValue(k))}
+                    >
+                        {possibleValues[k].display}
+                    </DropdownMenuItem>
+                ))}
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }
 
@@ -164,6 +218,7 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
 
     const titleLoading = isLoading || mri === undefined || mri === null;
     const introductionLoading = isLoading || mri === undefined || mri === null;
+    const wageLoading = isLoading || mri === undefined || mri === null;
     const requiredSkillsLoading = isLoading || mri === undefined || mri === null;
     const timeLapsTextLoading = isLoading || mri === undefined || mri === null;
     const descriptionTextLoading = isLoading || mri === undefined || mri === null;
@@ -176,6 +231,64 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         mutate((x) => x, {
             revalidate: true,
         });
+    };
+
+    const handleMRIModifyFieldResult = (res: MRIModifyFieldResult): string => {
+        if (res.status == 'error') {
+            const msg = mriModifyFieldErrorCodeToString(res.error);
+            toast.error(msg);
+            return msg;
+        }
+        return '';
+    };
+
+    const updateElement = async (
+        updatedElement: object,
+        updateMri: () => Promise<MRIModifyFieldResult>
+    ) => {
+        if (!mri?.id) return;
+
+        const now = new Date();
+        const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
+            ...mri.lastEditedAction,
+            date: now,
+            user: {
+                id: viewer.id,
+                person: {
+                    firstName: viewer.firstName,
+                    lastName: viewer.lastName,
+                },
+            },
+        };
+
+        // Update locally immediately
+        // It is REALLY important to not revalidate here
+        mutate(
+            async () => {
+                const error = handleMRIModifyFieldResult(await updateMri());
+                // Here I don't think returning the updated data via the server action makes sense...
+                // The best option would be to use a web socket anyways :)
+                if (error) {
+                    globalMutate(['/api/mri/study/', mri.study.information.code]);
+                    return Promise.reject();
+                }
+                return {
+                    ...mri,
+                    ...updatedElement,
+                    lastEditedAction: updatedAction,
+                };
+            },
+            {
+                optimisticData: {
+                    ...mri,
+                    ...updatedElement,
+                    lastEditedAction: updatedAction,
+                },
+                rollbackOnError: true,
+                throwOnError: false,
+                revalidate: false,
+            }
+        );
     };
 
     const updateTitle = async (text: string) => {
@@ -239,205 +352,84 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
         );
     };
 
-    const handleMRIModifyFieldResult = (res: MRIModifyFieldResult): string => {
-        if (res.status == 'error') {
-            const msg = mriModifyFieldErrorCodeToString(res.error);
-            toast.error(msg);
-            return msg;
-        }
-        return '';
-    };
-
-    const updateIntroduction = async (text: string) => {
-        if (!mri?.id) return;
-
-        const now = new Date();
-        const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
-            ...mri.lastEditedAction,
-            date: now,
-            user: {
-                id: viewer.id,
-                person: {
-                    firstName: viewer.firstName,
-                    lastName: viewer.lastName,
-                },
-            },
-        };
-
-        // Update locally immediately
-        // It is REALLY important to not revalidate here
-        mutate(
-            async () => {
-                const error = handleMRIModifyFieldResult(
-                    await setMRIIntroductionText(viewer, mriId, text)
-                );
-                // Here I don't think returning the updated data via the server action makes sense...
-                // The best option would be to use a web socket anyways :)
-                if (error) {
-                    return Promise.reject();
-                }
-                return {
-                    ...mri,
-                    introductionText: text,
-                    lastEditedAction: updatedAction,
-                };
-            },
+    const updateIntroduction = (text: string) =>
+        updateElement(
             {
-                optimisticData: {
-                    ...mri,
-                    introductionText: text,
-                    lastEditedAction: updatedAction,
-                },
-                rollbackOnError: true,
-                throwOnError: false,
-                revalidate: false,
-            }
+                introductionText: text,
+            },
+            () => setMRIIntroductionText(viewer, mriId, text)
+        );
+
+    const updateRequiredSkillsText = (text: string) =>
+        updateElement(
+            {
+                requiredSkillsText: text,
+            },
+            () => setMRIRequiredSkillsText(viewer, mriId, text)
+        );
+
+    const updateTimeLapsText = (text: string) =>
+        updateElement(
+            {
+                timeLapsText: text,
+            },
+            () => setMRITimeLapsText(viewer, mriId, text)
+        );
+
+    const updatedescriptionText = (text: string) =>
+        updateElement(
+            {
+                descriptionText: text,
+            },
+            () => setMRIDescriptionText(viewer, mriId, text)
+        );
+
+    const updateDifficulty = async (difficulty: Level) => {
+        updateElement(
+            {
+                difficulty: difficulty,
+            },
+            () => setMRIDifficulty(viewer, mriId, difficulty)
         );
     };
 
-    const updateRequiredSkillsText = async (text: string) => {
-        if (!mri?.id) return;
-
-        const now = new Date();
-        const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
-            ...mri.lastEditedAction,
-            date: now,
-            user: {
-                id: viewer.id,
-                person: {
-                    firstName: viewer.firstName,
-                    lastName: viewer.lastName,
-                },
-            },
-        };
-
-        // Update locally immediately
-        // It is REALLY important to not revalidate here
-        mutate(
-            async () => {
-                const error = handleMRIModifyFieldResult(
-                    await setMRIRequiredSkillsText(viewer, mriId, text)
-                );
-                // Here I don't think returning the updated data via the server action makes sense...
-                // The best option would be to use a web socket anyways :)
-                if (error) {
-                    return Promise.reject();
-                }
-                return {
-                    ...mri,
-                    requiredSkillsText: text,
-                    lastEditedAction: updatedAction,
-                };
-            },
+    const updateDomain = async (domain: Domain) => {
+        updateElement(
             {
-                optimisticData: {
-                    ...mri,
-                    requiredSkillsText: text,
-                    lastEditedAction: updatedAction,
-                },
-                rollbackOnError: true,
-                throwOnError: false,
-                revalidate: false,
-            }
+                mainDomain: domain,
+            },
+            () => setMRIDomain(viewer, mriId, domain)
         );
     };
 
-    const updateTimeLapsText = async (text: string) => {
-        if (!mri?.id) return;
-
-        const now = new Date();
-        const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
-            ...mri.lastEditedAction,
-            date: now,
-            user: {
-                id: viewer.id,
-                person: {
-                    firstName: viewer.firstName,
-                    lastName: viewer.lastName,
-                },
-            },
-        };
-
-        // Update locally immediately
-        // It is REALLY important to not revalidate here
-        mutate(
-            async () => {
-                const error = handleMRIModifyFieldResult(
-                    await setMRITimeLapsText(viewer, mriId, text)
-                );
-                if (error) {
-                    return Promise.reject();
-                }
-                // Here I don't think returning the updated data via the server action makes sense...
-                // The best option would be to use a web socket anyways :)
-                return {
-                    ...mri,
-                    timeLapsText: text,
-                    lastEditedAction: updatedAction,
-                };
-            },
+    const updateWage = async ({
+        wageLowerBound = mri?.wageLowerBound ?? 0,
+        wageUpperBound = mri?.wageUpperBound ?? 0,
+        wageLevel = mri?.wageLevel ?? Level.Medium,
+    }: {
+        wageLowerBound?: number;
+        wageUpperBound?: number;
+        wageLevel?: Level;
+    }) => {
+        if (Number.isNaN(wageLowerBound) || wageLowerBound < 0) return;
+        if (Number.isNaN(wageUpperBound) || wageUpperBound < 0) return;
+        updateElement(
             {
-                optimisticData: {
-                    ...mri,
-                    timeLapsText: text,
-                    lastEditedAction: updatedAction,
-                },
-                rollbackOnError: true,
-                throwOnError: false,
-                revalidate: false,
-            }
+                wageLowerBound: wageLowerBound,
+                wageUpperBound: wageUpperBound,
+                wageLevel: wageLevel,
+            },
+            () => setMRIWage(viewer, mriId, wageLowerBound, wageUpperBound, wageLevel)
         );
     };
 
-    const updatedescriptionText = async (text: string) => {
-        if (!mri?.id) return;
-
-        const now = new Date();
-        const updatedAction: Prisma.ActionGetPayload<ClassicLastActionPayload> = {
-            ...mri.lastEditedAction,
-            date: now,
-            user: {
-                id: viewer.id,
-                person: {
-                    firstName: viewer.firstName,
-                    lastName: viewer.lastName,
-                },
+    const updateGformUrl = async (url: string) => {
+        updateElement(
+            {
+                gformUrl: url,
             },
-        };
-
-        // Update locally immediately
-        // It is REALLY important to not revalidate here
-        try {
-            mutate(
-                async () => {
-                    const error = handleMRIModifyFieldResult(
-                        await setMRIDescriptionText(viewer, mriId, text)
-                    );
-                    // Here I don't think returning the updated data via the server action makes sense...
-                    // The best option would be to use a web socket anyways :)
-                    if (error) {
-                        return Promise.reject();
-                    }
-                    return {
-                        ...mri,
-                        descriptionText: text,
-                        lastEditedAction: updatedAction,
-                    };
-                },
-                {
-                    optimisticData: {
-                        ...mri,
-                        descriptionText: text,
-                        lastEditedAction: updatedAction,
-                    },
-                    rollbackOnError: true,
-                    throwOnError: false,
-                    revalidate: false,
-                }
-            );
-        } catch (e) {
-            console.error(e);
-        }
+            () => setMRIGformUrl(viewer, mriId, url)
+        );
     };
 
     const requestMriValidationCallback = async () => {
@@ -581,20 +573,67 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
 
                                 {}
                             </div>
-                            <div className="flex flex-col @sm:flex-row">
-                                {mri?.mainDomain !== null && mri?.mainDomain !== undefined ? (
-                                    <ImageElt {...getDomain(mri?.mainDomain)} />
-                                ) : (
-                                    <Skeleton />
-                                )}
-                                <ImageElt
-                                    {...getPay(
-                                        mri?.wageLowerBound ?? 0,
-                                        mri?.wageUpperBound ?? 0,
-                                        mri?.wageLevel ?? 'Medium'
-                                    )}
+                            <div className="flex flex-col @sm:flex-row items-stretch">
+                                <EditableImage<Domain>
+                                    initValue={
+                                        mri?.mainDomain ??
+                                        mri?.study.information.domains[0] ??
+                                        DEFAULT_MRI_VALUES.mainDomain
+                                    }
+                                    possibleValues={DOMAINS}
+                                    updateValue={updateDomain}
+                                    getValue={getDomain}
                                 />
-                                <ImageElt {...getDifficulty(mri?.difficulty ?? 'Medium')} />
+                                <EditableImage<Level>
+                                    initValue={mri?.wageLevel ?? Level.Medium}
+                                    possibleValues={LEVELS}
+                                    updateValue={(l) => updateWage({ wageLevel: l })}
+                                    getValue={(l) =>
+                                        getWage(
+                                            mri?.wageLowerBound ?? 0,
+                                            mri?.wageUpperBound ?? 0,
+                                            l
+                                        )
+                                    }
+                                />
+                                <EditableImage<Level>
+                                    initValue={mri?.difficulty ?? Level.Medium}
+                                    possibleValues={LEVELS}
+                                    updateValue={updateDifficulty}
+                                    getValue={getDifficulty}
+                                />
+                            </div>
+                            <div className="flex flex-row mt-6 gap-2 outline-1 outline-dashed items-center px-4 py-1">
+                                <h1 className="w-full">Rétribution basse: </h1>
+                                {!wageLoading ? (
+                                    <EditableText
+                                        initText={(mri?.wageLowerBound ?? 0).toString()}
+                                        updateText={(w) =>
+                                            updateWage({ wageLowerBound: parseInt(w) })
+                                        }
+                                        placeholder={'0'}
+                                        editable={editable}
+                                    />
+                                ) : (
+                                    <div className="w-full">
+                                        <Skeleton className="h-[1.5rem] w-[100px]" />
+                                    </div>
+                                )}
+                                <h1 className="w-full">Rétribution haute: </h1>
+                                {!wageLoading ? (
+                                    <EditableText
+                                        initText={(mri?.wageUpperBound ?? 0).toString()}
+                                        updateText={(w) =>
+                                            updateWage({ wageUpperBound: parseInt(w) })
+                                        }
+                                        placeholder={'0'}
+                                        editable={editable}
+                                    />
+                                ) : (
+                                    <div className="w-full">
+                                        <Skeleton className="h-[1.5rem] w-[100px]" />
+                                    </div>
+                                )}
                             </div>
                             <hr className="my-6 border-mri-separator" />
                             <section className="mb-5">
@@ -648,6 +687,23 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
                                     </div>
                                 )}
                             </section>
+                            <section className="mb-5">
+                                <h4 className={h4cn}>Lien du google form</h4>
+                                <div className="outline-1 outline-dashed items-center px-4 py-1">
+                                    {!wageLoading ? (
+                                        <EditableText
+                                            initText={mri?.gformUrl ?? ''}
+                                            updateText={updateGformUrl}
+                                            placeholder={'https://docs.google.com/forms/d/e/...'}
+                                            editable={editable}
+                                        />
+                                    ) : (
+                                        <div className="w-full">
+                                            <Skeleton className="h-[1.5rem] w-full" />
+                                        </div>
+                                    )}
+                                </div>
+                            </section>
                             <hr className="my-6 border-mri-separator" />
                             <div className="flex flex-col items-center">
                                 <Button asChild className="w-fit mb-6 bg-je-red font-semibold">
@@ -690,7 +746,7 @@ export function MRIRenderEditor({ mriId }: { mriId: string }) {
                     <hr className="my-6 border-mri-separator" />
 
                     <p className="text-center">
-                        This email was send to{' '}
+                        This email was sent to{' '}
                         <Link href="mailto:exemple@telecom-etude.fr" className="text-mri-emphasis">
                             exemple@telecom-etude.fr
                         </Link>

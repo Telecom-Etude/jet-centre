@@ -22,7 +22,7 @@ import {
     TWITTER_URL,
 } from '@/settings/links';
 
-import { getDifficulty, getDomain, getPay, ImageElt } from './figures';
+import { getDifficulty, getDomain, getWage, ImageElt } from './figures';
 import { AdminDisplay, MriFormType } from './form/schema';
 
 interface RenderMRIProps {
@@ -64,7 +64,7 @@ export function RenderMRI({ mri, admins }: RenderMRIProps) {
                     <div className="flex flex-col @sm:flex-row">
                         <ImageElt {...getDomain(mri.mainDomain)} />
                         <ImageElt
-                            {...getPay(mri.wageLowerBound, mri.wageUpperBound, mri.wageLevel)}
+                            {...getWage(mri.wageLowerBound, mri.wageUpperBound, mri.wageLevel)}
                         />
                         <ImageElt {...getDifficulty(mri.difficulty)} />
                     </div>

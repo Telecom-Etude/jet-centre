@@ -1,7 +1,8 @@
 import { CompanySize, DeliverableStatus, Domain, Level, StudyProgressStep } from '@prisma/client';
 
 import { DOMAIN_IMAGES, DoubleImage } from './images';
-interface EnumInfo {
+
+export interface EnumInfo {
     display: string;
 }
 
@@ -62,10 +63,10 @@ export const DOMAINS: Record<Domain, DomainInfo> = {
     // se
     EmbeddedSystems: { display: 'Systèmes Embarqués', image: DOMAIN_IMAGES.se },
     // ima
-    Image: { display: 'Image', image: DOMAIN_IMAGES.Ima },
+    Image: { display: 'Image', image: DOMAIN_IMAGES.ima },
     ComputerVision: { display: 'Computer Vision', image: DOMAIN_IMAGES.ima },
     ComputerGraphics: { display: 'Computer Graphics', image: DOMAIN_IMAGES.ima },
-    d_3D: { display: '3D', image: DOMAIN_IMAGES.Ima },
+    d_3D: { display: '3D', image: DOMAIN_IMAGES.ima },
     // marché
     MarketAnalysis: { display: 'Étude de marché', image: DOMAIN_IMAGES.market },
     StateOfTheArt: { display: "État de l'art", image: DOMAIN_IMAGES.market },

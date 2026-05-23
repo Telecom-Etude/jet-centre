@@ -36,6 +36,11 @@ export const CDP_SIDEBAR: SideBarGroup[] = [
                 href: '/mris',
             },
             {
+                title: 'Écriture MRI (ancienne version)',
+                icon: MRI_ICON,
+                href: '/mri',
+            },
+            {
                 title: "Sélection d'intervenants",
                 icon: PiStudent,
                 href: '/assignees',

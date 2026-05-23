@@ -1,6 +1,6 @@
 'use client';
 
-import { Prisma } from '@prisma/client';
+import { Mri, Prisma } from '@prisma/client';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import Image from 'next/image';
@@ -20,7 +20,7 @@ import useSWR, { useSWRConfig } from 'swr';
 
 import BirdLogo from '@/../public/mri/bird.png';
 
-import { getDifficulty, getDomain, getPay, ImageElt } from '@/app/(user)/cdp/[study]/mri/figures';
+import { getDifficulty, getDomain, getWage, ImageElt } from '@/app/(user)/cdp/[study]/mri/figures';
 import { Box, BoxContent, BoxHeader } from '@/components/boxes/boxes';
 import { useViewer } from '@/components/hooks/use-viewer';
 import { Button } from '@/components/ui/button';
@@ -72,6 +72,32 @@ type MriIssue = {
     severity: MriIssueSeverity;
 };
 
+function detectMriIssues(mri: Mri): MriIssue[] {
+    const detectedIssues: MriIssue[] = [];
+
+    for (const [key, value] of Object.entries(mri)) {
+        if ((value == null || value == '') && key != 'validationActions') {
+            detectedIssues.push({
+                message: `Absence de ${key}`,
+                severity: key == 'title' ? MriIssueSeverity.High : MriIssueSeverity.Low,
+            });
+        }
+    }
+
+    if (
+        mri.wageLowerBound !== null &&
+        mri.wageUpperBound !== null &&
+        mri.wageLowerBound! > mri.wageUpperBound!
+    ) {
+        detectedIssues.push({
+            message: "Fourchette de rétribution à l'envers",
+            severity: MriIssueSeverity.Low,
+        });
+    }
+
+    return detectedIssues;
+}
+
 export function MRIValidator({ mriId }: { mriId: string }) {
     const {
         data: mri,
@@ -105,25 +131,7 @@ export function MRIValidator({ mriId }: { mriId: string }) {
     const timeLapsTextLoading = isLoading || mri === undefined || mri === null;
     const descriptionTextLoading = isLoading || mri === undefined || mri === null;
 
-    const populateIssue = (prop: string | null, message: string, severity: MriIssueSeverity) =>
-        prop == null || prop == '' ? [{ message, severity }] : [];
-
-    const detectedIssues: MriIssue[] =
-        mri !== undefined
-            ? [
-                  ...populateIssue(mri.title, 'Absence de titre', MriIssueSeverity.High),
-                  ...populateIssue(
-                      mri.descriptionText,
-                      'Absence de description',
-                      MriIssueSeverity.Low
-                  ),
-                  ...populateIssue(
-                      mri.requiredSkillsText,
-                      'Absence de compétences recherchées',
-                      MriIssueSeverity.Low
-                  ),
-              ]
-            : [];
+    const detectedIssues = mri ? detectMriIssues(mri) : [];
 
     const h4cn = 'text-2xl font-bold my-1 text-mri-headers';
 
@@ -298,7 +306,7 @@ export function MRIValidator({ mriId }: { mriId: string }) {
                                     <Skeleton />
                                 )}
                                 <ImageElt
-                                    {...getPay(
+                                    {...getWage(
                                         mri?.wageLowerBound ?? 0,
                                         mri?.wageUpperBound ?? 0,
                                         mri?.wageLevel ?? 'Medium'
@@ -345,6 +353,17 @@ export function MRIValidator({ mriId }: { mriId: string }) {
                             </section>
                             <hr className="my-6 border-mri-separator" />
                             <div className="flex flex-col items-center">
+                                {mri?.gformUrl && (
+                                    <Button asChild className="w-fit mb-6 bg-je-red font-semibold">
+                                        <Link
+                                            href={mri.gformUrl}
+                                            target="_blank"
+                                            className="p-4 rounded"
+                                        >
+                                            Je réponds au formulaire
+                                        </Link>
+                                    </Button>
+                                )}
                                 <Button asChild className="w-fit mb-6 bg-je-red font-semibold">
                                     <Link href="#" className="p-4 rounded">
                                         Je postule !
