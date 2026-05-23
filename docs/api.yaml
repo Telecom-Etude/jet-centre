@@ -1,0 +1,70 @@
+openapi: 3.0.4
+info:
+    title: JetCentre
+    description: This is the API for JetCentre
+    version: 0.1.0
+servers:
+    - url: https://erp.telecom-etude.fr/api
+paths:
+    /mri/[id]:
+        get:
+            summary: Get MRI by id
+            responses:
+                '200':
+                    description: The MRI
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/MriWithStudyAndAssignees'
+components:
+    schemas:
+        Admin:
+            type: object
+            properties:
+                id:
+                    type: string
+                position:
+                    type: string
+                image:
+                    type: string
+
+        StudyInfos:
+            type: object
+            properties:
+                id:
+                    type: string
+                code:
+                    type: string
+                googleFolder:
+                    type: string
+                title:
+                    type: string
+                applicationFee:
+                    type: number
+                cc:
+                    type: boolean
+                estimatedDuration:
+                    type: integer
+                deadlinePreStudy:
+                    type: integer
+                confidential:
+                    type: boolean
+
+        MriWithStudyAndAssignees:
+            type: object
+            properties:
+                id:
+                    type: integer
+                title:
+                    type: string
+                study:
+                    type: object
+                    properties:
+                        cdps:
+                            type: array
+                            items:
+                                $ref: '#/components/schemas/Admin'
+                        information:
+                            $ref: '#/components/schemas/StudyInfos'
